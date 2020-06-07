@@ -1,0 +1,96 @@
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    margin: 0;
+    padding: 0;   
+}
+body{
+    line-height:1;
+}
+ol,ul{
+    list-style:none;
+}
+blockquote,q{
+    quotes:none;
+}
+blockquote:before,blockquote:after,q:before,q:after{
+    content:none;
+}
+:focus{outline:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+body{
+    margin: auto;
+    width: 100%;
+    height: auto;
+    background-color: #efefef;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color:black;    
+}
+.header{    
+    display: block; 
+    color:black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;    
+    margin-top: 5px;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid #e2e2e2;
+    -webkit-border-radius: 5px;
+    -webkit-box-shadow: rgba(0,0,0,0.1) 0px 2px 2px;
+    -moz-border-radius: 5px;
+    -moz-box-shadow: rgba(0,0,0,0.1) 0px 2px 2px;
+    border-radius: 5px;
+    box-shadow: rgba(0,0,0,0.1) 0px 2px 2px;
+}
+#content{
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid #e2e2e2;
+    -webkit-border-radius: 10px;
+    -webkit-box-shadow: rgba(0,0,0,0.1) 0px 2px 2px;
+    -moz-border-radius: 10px;
+    -moz-box-shadow: rgba(0,0,0,0.1) 0px 2px 2px;
+    border-radius: 10px;
+    box-shadow: rgba(0,0,0,0.1) 0px 2px 2px;
+}
+label{
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+td label{
+    padding-right: 10px;
+    text-align: left;
+}
+#content tr input {
+    padding-left: 10px;
+    width: 200px;
+    height: 30px;  
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+}
+#buttons{
+    text-align: right;    
+}
+.footer{
+    display: block;
+    margin-top: 6px;
+    margin-right: 7px;
+    font-size: 12px;
+    text-align: right;
+    color: #888888;
+}
+.link{   
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 10px;
+    text-align: left;
+    color: #006;
+}

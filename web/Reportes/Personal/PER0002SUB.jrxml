@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="REP0002PER_SUB" pageWidth="65" pageHeight="360" orientation="Landscape" columnWidth="65" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="5.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2018"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="MES" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["03"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["44469132"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+PM.NIMPORTE_MOVILIDAD,
+(SELECT COUNT(*) FROM SIPE_PLANILLA_MOVILIDAD MOV WHERE MOV.CPERIODO_CODIGO=PM.CPERIODO_CODIGO AND
+MOV.CMES_CODIGO=PM.CMES_CODIGO AND MOV.CESTADO_CODIGO='CE' AND MOV.NIMPORTE_MOVILIDAD=PM.NIMPORTE_MOVILIDAD) AS CANTIDAD
+FROM SIPE_PLANILLA_MOVILIDAD PM
+WHERE PM.CPERIODO_CODIGO=$P{PERIODO} AND PM.CMES_CODIGO=$P{MES} AND
+VUSUARIO_PLANILLA=$P{CODIGO} AND
+PM.CESTADO_CODIGO='CE'
+GROUP BY PM.VUSUARIO_PLANILLA,PM.NIMPORTE_MOVILIDAD,
+PM.CPERIODO_CODIGO,PM.CMES_CODIGO
+ORDER BY PM.NIMPORTE_MOVILIDAD]]>
+	</queryString>
+	<field name="NIMPORTE_MOVILIDAD" class="java.math.BigDecimal"/>
+	<field name="CANTIDAD" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="34" y="0" width="32" height="15"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{NIMPORTE_MOVILIDAD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="23" height="15"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="22" y="0" width="13" height="15"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[x]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

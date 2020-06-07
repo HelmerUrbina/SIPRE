@@ -1,0 +1,295 @@
+.Titulo {
+    height: 22px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #FFFFFF;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    text-align: center;
+    background-image: url(../Imagenes/Fondos/Titulo.gif);
+    padding-top: 4px;
+}
+.TituloFocus {
+    border-right: #666666 1px solid;
+    border-top: #666666 1px solid;
+    border-left: #666666 1px solid;
+    border-bottom: #666666 1px solid;
+    color: #006;    
+    font-size: 12px;   
+    font-weight: bold;    
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    background-color:#FFFFCC;    
+    padding-left: 5px;  
+}
+.TituloDetalle {
+    font-weight: bold;
+    font-size: 12px;
+    color: #000000;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    background-color: #F1F1F1;
+}
+.TituloPopUp {
+    font-weight: bold; 
+    font-size: 13px; 
+    text-align: center;
+    color: #FFFFFF; 
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    background-image: url(../Imagenes/Fondos/menubg.jpg);
+}
+.TituloPopUpYellow {
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    color: yellow;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+.Summit{
+    background: #DAD6D0;
+    height: 40px;
+    text-align: right;
+    padding: 10px; 
+}
+.inputboxBnerU {
+    border-right: #666666 1px solid;
+    border-top: #666666 1px solid;
+    font-weight: bold;
+    font-size:  11px;
+    border-left: #666666 1px solid;
+    color: #F60;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.inputlabel {
+    font-weight: normal; 
+    font-size: 12px; 
+    color: #666666; 
+    text-align: right; 
+    font-weight: bold; 
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+.inputlabel2 {
+    font-weight: normal; 
+    font-size: 10px; 
+    color: #666666; 
+    text-align: left; 
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+.inputlabel3 {
+    font-weight: normal; 
+    font-size: 12px; 
+    color: #666666; 
+    text-align: left; 
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+.inputCheckbox {
+    font-weight: normal; 
+    font-size: 10px; 
+    color: #003366; 
+    text-align: left; 
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    border-bottom: 1px solid #999999; 
+    border-left: 1px solid #999999; 
+    border-right:1px solid #999999
+}
+.tableAcceso{
+    border-bottom: 1px solid #FFFFFF; 
+    border-left: 1px solid #FFFFFF; 
+    border-right:1px solid #FFFFFF; 
+    border-top: 1px solid #FFFFFF
+}
+.copyright{
+    font-weight: normal; 
+    font-size: 10px; 
+    color: #666666; 
+    text-align: center; 
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+.toolstip{
+    border-right: #CCCCCC  thin;
+    border-top: #CCCCCC  thin;
+    font-weight: bold;
+    font-size: 10px;
+    border-left: #CCCCCC  thin;
+    color: #014167;
+    border-bottom: #CCCCCC  thin;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    background-image: url(../Imagenes/Fondos/background.jpg);
+}
+
+.inputboxBner {
+    border-right: #666666 1px solid;
+    border-top: #666666 1px solid;
+    font-weight: bold;
+    font-size:  11px;
+    border-left: #666666 1px solid;
+    color: #6F6;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.inputboxRed {
+    border-right: #666666 1px solid;
+    border-top: #666666 1px solid;
+    font-weight: bold;
+    font-size:  11px;
+    border-left: #666666 1px solid;
+    color:   red;
+    border-bottom: #666666 1px solid;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.inputboxFocusRed {
+    border-right: #666666 1px solid;
+    border-top: #666666 1px solid;
+    font-size: 11px;
+    border-left: #666666 1px solid;
+    color: red;
+    border-bottom: #666666 1px solid;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    background-color:#FFFFCC;
+    font-weight: bold;
+}
+.inputboxsaldo {
+    border-right: #666666 1px solid; 
+    border-top: #666666 1px solid; 
+    font-weight: bold; 
+    font-size: 11px; 
+    border-left: #666666 1px solid; 
+    color: #014167; 
+    border-bottom: #666666 1px solid; 
+    font-family: Verdana, Arial, Helvetica, sans-serif; 
+    background-color: #DFFFDF;
+}
+
+.inputSinBorde {
+    border-right: 0px; 
+    border-top: 0px; 
+    border-left: 0px; 
+    border-bottom: 0px; 
+    font-family: Verdana
+}
+.textoTabla {
+    font-size: 4px; 
+    color: #333333; 
+    font-family: verdana
+}
+.textoRequerido {
+    font-weight: bold; 
+    font-size: 10px; 
+    color: #336699; 
+    font-family: Verdana, Arial, Helvetica, sans-serif; 
+}
+.subTitulo{
+    border-right: #CCCCCC  thin ;
+    border-top: #CCCCCC  thin ;
+    font-weight: bold;
+    font-size: 12px;
+    border-left: #CCCCCC  thin ;
+    color: #014167;
+    border-bottom: #CCCCCC  thin ;
+    font-family: Verdana, Arial, Helvetica, sans-serif; 
+    background: #FFFFCC;
+    border-bottom: 2px solid #999999 ;
+}
+.textoBoton {
+    font-weight: bold;
+    font-size: 12px;
+    color:#00C;
+    font-family: verdana
+}
+.titulopopup {
+    font-weight: bold; 
+    font-size: 13px; 
+    color: #FFFFFF; 
+    font-family: Verdana, Arial, Helvetica, sans-serif
+}
+
+.TituloFormato {
+    font-weight: bold; 
+    font-size: 20px; 
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+TEXTAREA {
+    border-right: #aaaaaa 1px solid; 
+    border-top: #aaaaaa 1px solid; 
+    font-size: 11px; 
+    z-index: -3; 
+    background: #e9eff5; 
+    border-left: #aaaaaa 1px solid; 
+    color: #333333; 
+    border-bottom: #aaaaaa 1px solid; 
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+SELECT {
+    border-bottom: #aaaaaa 1px solid; 
+    border-right: #aaaaaa 1px solid; 
+    border-top: #aaaaaa 1px solid; 
+    border-left: #aaaaaa 1px solid; 
+    font-size: 11px; 
+    z-index: -3; 
+    background: #e9eff5; 
+    color: #333333;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+.load {
+    padding-left: 40%; 
+    padding-top: 5px; 
+    background: url(../img/cargando.gif) no-repeat 38% 50%;
+    margin: 10px; 
+    color: #dc2774;
+    height: 20px; 
+    text-align: left; 
+    font-variant: small-caps
+}
+.FondoFilaColor { 
+    background-color: #e4eced; 
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 12px; 
+    font-style: normal; 
+    font-weight: normal
+}
+.FondoFilaSinColor { 
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 12px; 
+    font-style: normal; 
+    font-weight: normal
+}
+.TextoCabeceraTabla { 
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 12px; 
+    font-style: normal ; 
+    color: #FFFFFF; 
+    font-weight: bold; 
+    background-color: #003366;
+}
+.redlabel {
+    font-weight: normal;
+    font-size: 10px;
+    color: #FF0000;
+    text-align: left;
+    font-weight: bold;
+    font-family: Verdana, Arial, Helvetica, sans-serif
+}
+.bluelabel {
+    font-weight: normal;
+    font-size: 12px;
+    color: #0000FF;
+    text-align: left;
+    font-weight: bold;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.inputlabelblue {
+    font-weight: normal;
+    font-size: 12px;
+    color:  green;
+    text-align: right;
+    font-weight: bold;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+.inputlabelred {
+    font-weight: normal;
+    font-size: 12px;
+    color:  red;
+    text-align: right;
+    font-weight: bold;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}

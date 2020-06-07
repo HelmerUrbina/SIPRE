@@ -1,0 +1,7 @@
+<%@include file="browser.jspf" %>
+<%      
+    String ID = (String) session.getAttribute("ID");
+    if ((ID == null) || (!ID.equals(session.getId()))) {
+        response.sendRedirect("../");
+    }
+%>

@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PER0003" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" uuid="befc0a8c-64ef-49e2-bbfe-d151a3c7e8b0">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="768"/>
+	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2018"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["3"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["F:\\datos hugo\\Desarrollo\\reportes\\SIPRE\\personal\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="USUARIO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["44469132"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT UTIL_NEW.FUN_NOMBRE_GRADO(RP.CCODIGO_GRADO) AS GRADO,
+RP.VDNI_PERSONAL AS DNI,
+UTIL_NEW.FUN_NOMBRE_PERSONAL(RP.VDNI_PERSONAL) AS PERSONAL,
+LOWER(UTIL.NUMERO_A_LETRAS(RV.NCANTIDAD_DIAS_SOL))||' ('||LPAD(RV.NCANTIDAD_DIAS_SOL,2,0)||')' AS DIAS,
+INITCAP(to_char(DFECHA_INICIO, 'DAY', 'NLS_DATE_LANGUAGE=SPANISH'))||' '||TO_CHAR(DFECHA_INICIO,'DD')||' de '||
+INITCAP(UTIL_NEW.FUN_NONMES(TO_CHAR(DFECHA_INICIO,'MM')))||' '||TO_CHAR(DFECHA_INICIO,'YYYY') AS EMPIEZA,
+INITCAP(to_char(DFECHA_FIN, 'DAY', 'NLS_DATE_LANGUAGE=SPANISH'))||' '||TO_CHAR(DFECHA_FIN,'DD')||' de '||
+INITCAP(UTIL_NEW.FUN_NONMES(TO_CHAR(DFECHA_FIN,'MM')))||' '||TO_CHAR(DFECHA_FIN,'YYYY') AS TERMINA,
+INITCAP(RP.VDIRECCION_PERSONAL) AS DIRECCION,
+RP.VNUMERO_TELEFONO AS TELEFONO,
+LPAD(RV.NCANTIDAD_DIAS_SOL,2,0) AS HACE_USO,
+LPAD(RV.NCANTIDAD_DIAS_REST,2,0) AS QUEDAN,
+LPAD((30-(RV.NCANTIDAD_DIAS_REST+RV.NCANTIDAD_DIAS_SOL)),2,0) AS HIZO_USO,
+TO_CHAR(RV.DUSUARIO_FECCRE,'DD')||' de '||INITCAP(UTIL_NEW.FUN_NONMES(TO_CHAR(RV.DUSUARIO_FECCRE,'MM')))||' del '||TO_CHAR(RV.DUSUARIO_FECCRE,'YYYY') AS FECHA,
+RV.VMOTIVO_VACACIONES AS MOTIVO
+FROM SIPE_REGISTRO_VACACIONES RV JOIN SIPE_REGISTRO_PERSONAL RP ON
+(RV.VCODIGO_PERSONAL=RP.VDNI_PERSONAL)
+WHERE
+RV.CPERIODO_CODIGO=$P{PERIODO} AND
+RV.NCORRELATIVO=$P{CODIGO} AND
+RV.VCODIGO_PERSONAL=$P{USUARIO} AND
+CESTADO_REGISTRO!='AN'
+UNION ALL
+SELECT UTIL_NEW.FUN_NOMBRE_GRADO(RP.CCODIGO_GRADO) AS GRADO,
+RP.VDNI_PERSONAL AS DNI,
+UTIL_NEW.FUN_NOMBRE_PERSONAL(RP.VDNI_PERSONAL) AS PERSONAL,
+LOWER(UTIL.NUMERO_A_LETRAS(RV.NCANTIDAD_DIAS_SOL))||' ('||LPAD(RV.NCANTIDAD_DIAS_SOL,2,0)||')' AS DIAS,
+INITCAP(to_char(DFECHA_INICIO, 'DAY', 'NLS_DATE_LANGUAGE=SPANISH'))||' '||TO_CHAR(DFECHA_INICIO,'DD')||' de '||
+INITCAP(UTIL_NEW.FUN_NONMES(TO_CHAR(DFECHA_INICIO,'MM')))||' '||TO_CHAR(DFECHA_INICIO,'YYYY') AS EMPIEZA,
+INITCAP(to_char(DFECHA_FIN, 'DAY', 'NLS_DATE_LANGUAGE=SPANISH'))||' '||TO_CHAR(DFECHA_FIN,'DD')||' de '||
+INITCAP(UTIL_NEW.FUN_NONMES(TO_CHAR(DFECHA_FIN,'MM')))||' '||TO_CHAR(DFECHA_FIN,'YYYY') AS TERMINA,
+INITCAP(RP.VDIRECCION_PERSONAL) AS DIRECCION,
+RP.VNUMERO_TELEFONO AS TELEFONO,
+LPAD(RV.NCANTIDAD_DIAS_SOL,2,0) AS HACE_USO,
+LPAD(RV.NCANTIDAD_DIAS_REST,2,0) AS QUEDAN,
+LPAD((30-(RV.NCANTIDAD_DIAS_REST+RV.NCANTIDAD_DIAS_SOL)),2,0) AS HIZO_USO,
+TO_CHAR(RV.DUSUARIO_FECCRE,'DD')||' de '||INITCAP(UTIL_NEW.FUN_NONMES(TO_CHAR(RV.DUSUARIO_FECCRE,'MM')))||' del '||TO_CHAR(RV.DUSUARIO_FECCRE,'YYYY') AS FECHA,
+RV.VMOTIVO_VACACIONES AS MOTIVO
+FROM SIPE_REGISTRO_VACACIONES RV JOIN SIPE_REGISTRO_PERSONAL RP ON
+(RV.VCODIGO_PERSONAL=RP.VDNI_PERSONAL)
+WHERE
+RV.CPERIODO_CODIGO=$P{PERIODO} AND
+RV.NCORRELATIVO=$P{CODIGO} AND
+RV.VCODIGO_PERSONAL=$P{USUARIO} AND
+CESTADO_REGISTRO!='AN']]>
+	</queryString>
+	<field name="GRADO" class="java.lang.String"/>
+	<field name="DNI" class="java.lang.String"/>
+	<field name="PERSONAL" class="java.lang.String"/>
+	<field name="DIAS" class="java.lang.String"/>
+	<field name="EMPIEZA" class="java.lang.String"/>
+	<field name="TERMINA" class="java.lang.String"/>
+	<field name="DIRECCION" class="java.lang.String"/>
+	<field name="TELEFONO" class="java.lang.String"/>
+	<field name="HACE_USO" class="java.lang.String"/>
+	<field name="QUEDAN" class="java.lang.String"/>
+	<field name="HIZO_USO" class="java.lang.String"/>
+	<field name="FECHA" class="java.lang.String"/>
+	<field name="MOTIVO" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="352" splitType="Stretch">
+			<staticText>
+				<reportElement x="27" y="85" width="477" height="20" uuid="7419aaab-10aa-4514-bcb0-fd6958826709"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[PAPELETA DE PERMISO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="385" y="51" width="101" height="45" uuid="15de67c4-f0d4-4b2d-8071-63c67b78d70c"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[CGE
+JEMGE
+OPRE
+SAN BORJA]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="49" y="115" width="418" height="13" uuid="e508afd8-5cfd-4490-a1d9-5e16ff90afb1"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["El Sr. Coronel Jefe de la Oficina de Presupuesto del Ejército, autoriza al "+$F{GRADO}+" "+$F{PERSONAL}+", para hacer uso de "+$F{DIAS}+" días de permiso a cuenta de su periodo vacacional del presente año, "+$F{MOTIVO}+"."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="49" y="136" width="78" height="15" uuid="603292f0-b6be-4c2d-a8ad-8695e80b6031"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Empieza]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="49" y="150" width="78" height="15" uuid="fd56ecea-4a5d-4a8d-83f5-3541d3d07db3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Termina]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="49" y="164" width="78" height="15" uuid="8dd4c7e6-cb7f-4b14-9f21-c8a6d669dc6d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Dirección]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="49" y="178" width="78" height="15" uuid="ef707911-2504-410b-9ceb-71655b3310f6"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Teléfono]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="126" y="136" width="14" height="15" uuid="35232f72-ee8a-425d-b478-f246a694414f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="126" y="150" width="14" height="15" uuid="9c179a69-31ee-47b2-89d5-233b01236c72"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="126" y="164" width="14" height="15" uuid="6fc8717f-e4e4-49a6-a8cc-0b928fbc7248"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="126" y="178" width="14" height="15" uuid="ef4b4428-925a-49f5-a37b-005227fdc95d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="139" y="136" width="365" height="15" uuid="8536f836-42a8-458e-826f-d752f3132665"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EMPIEZA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="139" y="150" width="365" height="15" uuid="a7fec760-daca-4416-97a0-3d200de94c9e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TERMINA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="139" y="164" width="365" height="15" uuid="2c0c966f-48bf-44e4-b6de-3e831084bdc8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DIRECCION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="139" y="178" width="365" height="15" uuid="b5e9a39f-b07c-4453-876f-132eff429557"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TELEFONO}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement positionType="Float" x="43" y="201" width="154" height="56" uuid="64f24701-9957-4bac-bc08-68d3c035c2e9"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<staticText>
+					<reportElement positionType="Float" x="8" y="7" width="88" height="15" uuid="382ac813-b7fe-4444-8dbd-26d8bd8874c6"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="11"/>
+					</textElement>
+					<text><![CDATA[HIZO USO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="8" y="21" width="88" height="15" uuid="9d5ae297-2d91-4dd4-b6b7-f48ef8218754"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="11"/>
+					</textElement>
+					<text><![CDATA[HACE USO]]></text>
+				</staticText>
+				<textField>
+					<reportElement positionType="Float" x="108" y="7" width="29" height="15" uuid="f0837926-3269-408f-aae2-68b180a829f2"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{HIZO_USO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement positionType="Float" x="108" y="21" width="29" height="15" uuid="fa675bd5-9c1c-4cd2-982b-1605f41f326d"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{HACE_USO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" x="8" y="35" width="88" height="15" uuid="e1dd99d4-15fd-43be-be09-b351259da620"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="11"/>
+					</textElement>
+					<text><![CDATA[QUEDAN]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="95" y="7" width="14" height="15" uuid="236b602e-8e54-45da-acb8-cb7009acd7c6"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="95" y="21" width="14" height="15" uuid="67fe88f9-f88a-4994-816c-6cd9c3052dba"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="95" y="35" width="14" height="15" uuid="af8e5be3-b889-4d7a-a1d6-ad2c28297c7f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<textField>
+					<reportElement positionType="Float" x="108" y="34" width="29" height="15" uuid="8eb444fa-3a40-413b-81d3-061f328f769a"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{QUEDAN}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<staticText>
+				<reportElement positionType="Float" x="323" y="276" width="156" height="13" uuid="bee7caa8-89e4-470c-ae99-6ff25baf4411"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[0-213891167-O]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="323" y="288" width="156" height="13" uuid="bfd40322-ade8-496a-a53f-9b29eeb4d860"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LUIS A. BAUTISTA SANCHEZ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="323" y="300" width="156" height="13" uuid="c444d595-2365-4fdb-8f6d-307425e50264"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[CRL EP.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="320" y="312" width="163" height="13" uuid="104ecbff-b65a-4af3-99eb-5bf0213973b5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Jefe de la Oficina de Presupuesto del Ejército]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="290" y="193" width="177" height="14" uuid="9cb9fa47-e01f-49a3-82ac-ce963cfad087"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["San Borja, "+$F{FECHA}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement positionType="Float" x="236" y="226" width="232" height="87" uuid="bd243dc3-b279-43c7-9beb-8c069e86c204"/>
+				<imageExpression><![CDATA["F:\\datos hugo\\Desarrollo\\reportes\\sello_opre.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="40" y="51" width="211" height="16" uuid="0ac4f098-cfd6-4178-94fa-b4cc83e16f0a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[CUARTEL GENERAL DEL EJERCITO - SIPRE
+PER0003]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="490" splitType="Stretch">
+			<staticText>
+				<reportElement x="307" y="59" width="142" height="20" uuid="7802eb99-e35c-4287-9d3f-7ce1f60c7bec"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[RECORD VACACIONES]]></text>
+			</staticText>
+			<subreport>
+				<reportElement positionType="Float" x="307" y="79" width="200" height="100" uuid="caacb118-8003-4b41-bba7-252431aacd9c"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CODIGO">
+					<subreportParameterExpression><![CDATA[$F{DNI}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PERIODO">
+					<subreportParameterExpression><![CDATA[$P{PERIODO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Personal\\PER0003SUB.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="307" y="387" width="200" height="100" uuid="05a8bad5-578c-40ff-90d7-db20f787d739"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CODIGO">
+					<subreportParameterExpression><![CDATA[$F{DNI}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PERIODO">
+					<subreportParameterExpression><![CDATA[$P{PERIODO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Personal\\PER0003SUB.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement positionType="Float" x="307" y="367" width="142" height="20" uuid="3c52dca2-211b-4d52-a693-027169160b6e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[RECORD VACACIONES]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

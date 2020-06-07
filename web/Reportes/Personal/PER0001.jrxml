@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PER0001" pageWidth="595" pageHeight="842" columnWidth="511" leftMargin="42" rightMargin="42" topMargin="56" bottomMargin="28">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="106"/>
+	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2018"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TIPO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["44469132"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["F:\\datos hugo\\Desarrollo\\reportes\\SIPRE\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT CPERIODO_CODIGO AS PERIODO,
+VUSUARIO_PLANILLA AS COD_USU,
+TO_CHAR(LAST_DAY(TO_DATE('01'||'/'||CMES_CODIGO||'/'||CPERIODO_CODIGO,'DD/MM/YYYY')),'DD') AS ULT_DIA,
+UTIL_NEW.FUN_NOMUSU('0003',VUSUARIO_PLANILLA) AS USUARIO,
+UTIL.NUMERO_A_LETRAS(UTIL_NEW.FUN_TOTAL_PLANILLA_MOVILIDAD(CPERIODO_CODIGO,CMES_CODIGO,VUSUARIO_PLANILLA)) AS NUM_LETRA,
+initcap(UTIL_NEW.FUN_NONMES(CMES_CODIGO)) AS MES,
+TO_CHAR(DFECHA_MOVILIDAD,'DD/MM/YYYY') AS FECHA_MOVILIDAD,
+UTIL_NEW.FUN_NOMBRE_UBIGEO(CLUGAR_ORIGEN) AS ORIGEN,
+CASE CLUGAR_DESTINO WHEN '150101' THEN 'CERCADO DE LIMA' ELSE
+UTIL_NEW.FUN_NOMBRE_UBIGEO(CLUGAR_DESTINO) END AS DESTINO,
+SUM(NIMPORTE_MOVILIDAD) AS IMPORTE,
+UTIL_NEW.FUN_TOTAL_PLANILLA_MOVILIDAD(CPERIODO_CODIGO,CMES_CODIGO,VUSUARIO_PLANILLA) AS TOTAL
+FROM SIPE_PLANILLA_MOVILIDAD
+WHERE CPERIODO_CODIGO=$P{PERIODO} AND CMES_CODIGO=$P{TIPO} AND
+VUSUARIO_PLANILLA=$P{CODIGO}
+GROUP BY DFECHA_MOVILIDAD,CLUGAR_ORIGEN,CLUGAR_DESTINO,
+VUSUARIO_PLANILLA,CPERIODO_CODIGO,CMES_CODIGO
+ORDER BY FECHA_MOVILIDAD]]>
+	</queryString>
+	<field name="PERIODO" class="java.lang.String"/>
+	<field name="COD_USU" class="java.lang.String"/>
+	<field name="ULT_DIA" class="java.lang.String"/>
+	<field name="USUARIO" class="java.lang.String"/>
+	<field name="NUM_LETRA" class="java.lang.String"/>
+	<field name="MES" class="java.lang.String"/>
+	<field name="FECHA_MOVILIDAD" class="java.lang.String"/>
+	<field name="ORIGEN" class="java.lang.String"/>
+	<field name="DESTINO" class="java.lang.String"/>
+	<field name="IMPORTE" class="java.math.BigDecimal"/>
+	<field name="TOTAL" class="java.math.BigDecimal"/>
+	<variable name="TOTAL_MOVILIDAD" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPORTE}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="144" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="19" y="114" width="100" height="30" backcolor="#CCFFCC"/>
+				<box>
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single" markup="html">
+					<font fontName="Arial" size="8" isBold="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="119" y="129" width="139" height="15" backcolor="#CCFFCC"/>
+				<box>
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="8" isBold="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[DE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="258" y="129" width="137" height="15" backcolor="#CCFFCC"/>
+				<box>
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="8" isBold="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[A]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="119" y="114" width="276" height="15" backcolor="#CCFFCC"/>
+				<box>
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="8" isBold="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[ITINERARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="395" y="114" width="100" height="30" backcolor="#CCFFCC"/>
+				<box>
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single" markup="styled">
+					<font fontName="Arial" size="8" isBold="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[IMPORTE S/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="7" width="511" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[DECLARACIÓN JURADA POR MOVILIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="31" width="46" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[N°]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="439" y="31" width="60" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="190" y="53" width="249" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Lima, "+$F{ULT_DIA}+" de "+$F{MES}+" del "+$F{PERIODO}+"."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="20" y="82" width="476" height="30"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="Arial" size="8" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Yo <style isBold='true'>"+$F{USUARIO}+"</style>, con DNI N° <style isBold='true'>"+$F{COD_USU}+"</style>, declaro haber recibido el importe de <style isBold='true'>"+$F{NUM_LETRA}+" Y 00/100 SOLES. (S/ "+$F{TOTAL}+")</style>, por gastos efectuados, según detalle siguiente:"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="19" y="0" width="100" height="15"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{FECHA_MOVILIDAD}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="119" y="0" width="139" height="15"/>
+				<box>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ORIGEN}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="258" y="0" width="137" height="15"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DESTINO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="395" y="0" width="100" height="15"/>
+				<box>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IMPORTE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="196" splitType="Stretch">
+			<staticText>
+				<reportElement x="19" y="0" width="376" height="15"/>
+				<box>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="395" y="0" width="100" height="15"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{TOTAL_MOVILIDAD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="18" y="18" width="238" height="20"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Arial" size="8" isBold="true" isUnderline="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[TOTAL RECIBIO EN NUEVOS SOLES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="38" width="25" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Son:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="43" y="38" width="452" height="15"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Arial" size="8" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NUM_LETRA}+" Y 00/100 SOLES. (S/ "+$F{TOTAL}+".00)"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="19" y="60" width="100" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Justificación:]]></text>
+			</staticText>
+			<subreport>
+				<reportElement positionType="Float" x="19" y="81" width="476" height="23"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CODIGO">
+					<subreportParameterExpression><![CDATA[$P{CODIGO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TIPO">
+					<subreportParameterExpression><![CDATA[$P{TIPO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PERIODO">
+					<subreportParameterExpression><![CDATA[$P{PERIODO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "Personal\\PER0001SUB.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement positionType="Float" x="18" y="114" width="100" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Recibí Conforme:]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="18" y="164" width="172" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{USUARIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="18" y="183" width="172" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["DNI "+$F{COD_USU}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

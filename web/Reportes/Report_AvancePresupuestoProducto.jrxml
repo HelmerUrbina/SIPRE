@@ -1,0 +1,929 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Report_AvancePresupuestoProducto" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="567" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14" uuid="f20f2036-8d60-4a2c-934e-09fd79e83ad4">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="CODPER" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2018"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="COPPTO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="COUUOO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["9003"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CODUSU" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["450535200"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CODGEN" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["3"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="NUSOCE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["3000726"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT  0 AS CERO, CODPER,
+COPPTO||':'|| UTIL_NEW.FUN_ABPPTO(COPPTO) ABPPTO,
+UTIL_NEW.FUN_NOMBRE_UNIDADES($P{COUUOO}) AS UNIDAD,
+COUUOO||':'|| UTIL_NEW.FUN_ABUUOO(COUUOO) ABUUOO,
+COMEOP||':'|| Util_NEW.FUN_NOMEOP(COMEOP) TAREA,
+COCAGA||':'|| UTIL_NEW.FUN_NOCLAS(COCAGA) CADENA_GASTO, 
+UTIL_NEW.FUN_DESCOM(CODCOM) AS PRODUCTO,
+SUM(PIM) PIM,
+SUM(CERTIFICADO) CERTIFICADO,
+SUM(COMP_ANUAL) AS COMP_ANUAL,
+SUM(EJECUTADO)  EJECUTADO,
+CASE WHEN $P{CODUSU} IN ('10714635','43305891','44469132') THEN 'Sección Telemática - SDPPTO' ELSE 
+UTIL_NEW.FUN_DESC_USUARIO($P{CODUSU}) END AS USU_IMPRESION 
+FROM V_AVANCE_EJE_REPORTE WHERE 
+CODPER = $P{CODPER} AND 
+COPPTO = $P{COPPTO} AND 
+COUUOO NOT IN ('0003') AND 
+SUBSTR(COCAGA,3,1) LIKE '%'||$P{CODGEN}||'%' 
+AND UTIL_NEW.FUN_CODIGO_SECFUN(CODPER,COPPTO,SECFUN,'CODCOM')=$P{NUSOCE} 
+GROUP BY CODPER, COPPTO, COUUOO, COMEOP, COCAGA,CODCOM 
+HAVING SUM(PIM)<>0 
+ORDER BY ABUUOO, TAREA, CADENA_GASTO]]>
+	</queryString>
+	<field name="CERO" class="java.math.BigDecimal"/>
+	<field name="CODPER" class="java.lang.String"/>
+	<field name="ABPPTO" class="java.lang.String"/>
+	<field name="UNIDAD" class="java.lang.String"/>
+	<field name="ABUUOO" class="java.lang.String"/>
+	<field name="TAREA" class="java.lang.String"/>
+	<field name="CADENA_GASTO" class="java.lang.String"/>
+	<field name="PRODUCTO" class="java.lang.String"/>
+	<field name="PIM" class="java.math.BigDecimal"/>
+	<field name="CERTIFICADO" class="java.math.BigDecimal"/>
+	<field name="COMP_ANUAL" class="java.math.BigDecimal"/>
+	<field name="EJECUTADO" class="java.math.BigDecimal"/>
+	<field name="USU_IMPRESION" class="java.lang.String"/>
+	<variable name="PIM_TAREA" class="java.math.BigDecimal" resetType="Group" resetGroup="TAREA" calculation="Sum">
+		<variableExpression><![CDATA[$F{PIM}]]></variableExpression>
+	</variable>
+	<variable name="CERT_TAREA" class="java.math.BigDecimal" resetType="Group" resetGroup="TAREA" calculation="Sum">
+		<variableExpression><![CDATA[$F{CERTIFICADO}]]></variableExpression>
+	</variable>
+	<variable name="COMP_TAREA" class="java.math.BigDecimal" resetType="Group" resetGroup="TAREA" calculation="Sum">
+		<variableExpression><![CDATA[$F{COMP_ANUAL}]]></variableExpression>
+	</variable>
+	<variable name="EJE_TAREA" class="java.math.BigDecimal" resetType="Group" resetGroup="TAREA" calculation="Sum">
+		<variableExpression><![CDATA[$F{EJECUTADO}]]></variableExpression>
+	</variable>
+	<variable name="PIM_META" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{PIM}]]></variableExpression>
+	</variable>
+	<variable name="CERT_META" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{CERTIFICADO}]]></variableExpression>
+	</variable>
+	<variable name="COMP_META" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{COMP_ANUAL}]]></variableExpression>
+	</variable>
+	<variable name="EJE_META" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{EJECUTADO}]]></variableExpression>
+	</variable>
+	<variable name="PIM_TIPO" class="java.math.BigDecimal" resetType="Group" resetGroup="TIPO" calculation="Sum">
+		<variableExpression><![CDATA[$F{PIM}]]></variableExpression>
+	</variable>
+	<variable name="CERT_TIPO" class="java.math.BigDecimal" resetType="Group" resetGroup="TIPO" calculation="Sum">
+		<variableExpression><![CDATA[$F{CERTIFICADO}]]></variableExpression>
+	</variable>
+	<variable name="COMP_TIPO" class="java.math.BigDecimal" resetType="Group" resetGroup="TIPO" calculation="Sum">
+		<variableExpression><![CDATA[$F{COMP_ANUAL}]]></variableExpression>
+	</variable>
+	<variable name="EJE_TIPO" class="java.math.BigDecimal" resetType="Group" resetGroup="TIPO" calculation="Sum">
+		<variableExpression><![CDATA[$F{EJECUTADO}]]></variableExpression>
+	</variable>
+	<variable name="PIM_TOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{PIM}]]></variableExpression>
+	</variable>
+	<variable name="CERT_TOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{CERTIFICADO}]]></variableExpression>
+	</variable>
+	<variable name="COMP_TOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{COMP_ANUAL}]]></variableExpression>
+	</variable>
+	<variable name="EJE_TOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{EJECUTADO}]]></variableExpression>
+	</variable>
+	<group name="TIPO">
+		<groupExpression><![CDATA[$F{ABUUOO}]]></groupExpression>
+		<groupHeader>
+			<band height="12" splitType="Stretch">
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField" mode="Opaque" x="0" y="0" width="192" height="12" backcolor="#FFFFCC" uuid="0d2af5e8-a38e-4835-b711-ed0a1afd9b4c"/>
+					<box leftPadding="1">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ABUUOO}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Auto" pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-26" mode="Opaque" x="192" y="0" width="50" height="12" backcolor="#FFFFCC" uuid="5ed17b1b-5eef-4123-a53c-7b695d22fdad"/>
+					<box leftPadding="1">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="7" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{PIM_TIPO}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Auto" pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-27" mode="Opaque" x="242" y="0" width="50" height="12" backcolor="#FFFFCC" uuid="ec5a3694-02b6-4ad6-8eab-0abff9dd853a"/>
+					<box leftPadding="1">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="7" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{CERT_TIPO}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Auto" pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-28" mode="Opaque" x="292" y="0" width="50" height="12" backcolor="#FFFFCC" uuid="d9ff0699-49b6-4797-9cb5-0f5bcc7ec7f6"/>
+					<box leftPadding="1">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="7" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new BigDecimal( ($V{PIM_TIPO}.doubleValue()) -($V{CERT_TIPO}.doubleValue()) )]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Auto" pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-29" mode="Opaque" x="342" y="0" width="50" height="12" backcolor="#FFFFCC" uuid="573d33d6-1ea8-4a1e-9556-a3432d8fe658"/>
+					<box leftPadding="1">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="7" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{COMP_TIPO}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Auto" pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-30" mode="Opaque" x="392" y="0" width="47" height="12" backcolor="#FFFFCC" uuid="4ae39832-49e3-4b85-aa6f-7f81e0b3a5f9"/>
+					<box leftPadding="1">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="7" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new BigDecimal( ($V{PIM_TIPO}.doubleValue()) -($V{COMP_TIPO}.doubleValue()) )]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Auto" pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-31" mode="Opaque" x="439" y="0" width="50" height="12" backcolor="#FFFFCC" uuid="ca8f83d3-296e-4002-b19b-b8f0ade19a21"/>
+					<box leftPadding="1">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="7" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{EJE_TIPO}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Auto" pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-32" mode="Opaque" x="489" y="0" width="47" height="12" backcolor="#FFFFCC" uuid="a2f4845e-ecc1-496d-b302-918552ab8cd7"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="7" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new BigDecimal( ($V{PIM_TIPO}.doubleValue()) -($V{EJE_TIPO}.doubleValue()) )]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Auto" pattern="#,##0.00 %" isBlankWhenNull="true">
+					<reportElement key="textField-36" mode="Opaque" x="536" y="0" width="31" height="12" backcolor="#FFFFCC" uuid="cacd299a-3ab6-4c07-899b-219ba00de63f"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $V{PIM_TIPO}.doubleValue() >0 ? new BigDecimal($V{EJE_TIPO}.doubleValue() / $V{PIM_TIPO}.doubleValue()):$F{CERO} )]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band splitType="Stretch"/>
+		</groupFooter>
+	</group>
+	<group name="TAREA">
+		<groupExpression><![CDATA[$F{TAREA}]]></groupExpression>
+		<groupHeader>
+			<band height="12" splitType="Stretch">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="192" height="12" backcolor="#CCFFFF" uuid="eb2fcce8-4c8c-4350-bb77-d8b351ed2b34"/>
+					<box leftPadding="1">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TAREA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Auto" pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField" stretchType="RelativeToTallestObject" mode="Opaque" x="192" y="0" width="50" height="12" backcolor="#CCFFFF" uuid="03bac2f5-ec79-4311-b48d-8b13b51c1ece"/>
+					<box rightPadding="1">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{PIM_TAREA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Auto" pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-13" stretchType="RelativeToTallestObject" mode="Opaque" x="242" y="0" width="50" height="12" backcolor="#CCFFFF" uuid="713c3120-1830-458c-9f63-b828b7b5beb8"/>
+					<box rightPadding="1">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{CERT_TAREA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Auto" pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-14" stretchType="RelativeToTallestObject" mode="Opaque" x="292" y="0" width="50" height="12" backcolor="#CCFFFF" uuid="837b170d-7dbc-41bb-b174-84faa320c3c6"/>
+					<box rightPadding="1">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new BigDecimal( ($V{PIM_TAREA}.doubleValue()) -($V{CERT_TAREA}.doubleValue()) )]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Auto" pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-15" stretchType="RelativeToTallestObject" mode="Opaque" x="342" y="0" width="50" height="12" backcolor="#CCFFFF" uuid="2e56617b-d7b8-4c2b-890b-d153f382a4c2"/>
+					<box rightPadding="1">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{COMP_TAREA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Auto" pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-16" stretchType="RelativeToTallestObject" mode="Opaque" x="392" y="0" width="47" height="12" backcolor="#CCFFFF" uuid="f9f9738a-3052-4942-b1cf-8db5c2762e3d"/>
+					<box rightPadding="1">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new BigDecimal( ($V{PIM_TAREA}.doubleValue()) -($V{COMP_TAREA}.doubleValue()) )]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Auto" pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-17" stretchType="RelativeToTallestObject" mode="Opaque" x="439" y="0" width="50" height="12" backcolor="#CCFFFF" uuid="ccb5b1bd-a5b1-424f-8b21-c3bf0ef1893b"/>
+					<box rightPadding="1">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{EJE_TAREA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Auto" pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-18" stretchType="RelativeToTallestObject" mode="Opaque" x="489" y="0" width="47" height="12" backcolor="#CCFFFF" uuid="43791d0a-fa45-496b-8f9f-310e70796644"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new BigDecimal( ($V{PIM_TAREA}.doubleValue()) -($V{EJE_TAREA}.doubleValue()) )]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Auto" pattern="#,##0.00 %" isBlankWhenNull="true">
+					<reportElement key="textField-34" stretchType="RelativeToTallestObject" mode="Opaque" x="536" y="0" width="31" height="12" backcolor="#CCFFFF" uuid="2783e9d6-c8f2-429e-b193-0532e3677666"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $V{PIM_TAREA}.doubleValue() >0 ? new BigDecimal($V{EJE_TAREA}.doubleValue() / $V{PIM_TAREA}.doubleValue()):$F{CERO} )]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band splitType="Stretch"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="132" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-1" x="449" y="11" width="50" height="10" uuid="bcb9a00e-2ecf-426c-9fc1-99d3d9a37bb7"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<text><![CDATA[Fecha Imp.:]]></text>
+			</staticText>
+			<textField evaluationTime="Report" pattern="dd/MM/yyyy h:mm a" isBlankWhenNull="false">
+				<reportElement key="textField-1" x="498" y="11" width="69" height="10" uuid="32507093-6474-4555-8573-16e47a662982"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-2" x="473" y="1" width="49" height="10" uuid="1ea0e533-ede4-4fe9-b21b-f663153bd043"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="6" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Página :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-2" x="522" y="1" width="32" height="10" uuid="a7fe3c3a-a398-4076-b7ec-e8d372f84338"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="6" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField-3" x="553" y="1" width="14" height="10" uuid="62737269-2879-4897-aed6-2e537b647464"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="6" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA["" + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-4" x="347" y="21" width="220" height="11" uuid="af82c68b-d46a-460c-a189-763c691fbe25"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Usu. Imp. : "+$F{USU_IMPRESION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-3" x="1" y="10" width="90" height="10" uuid="4eb4dd1d-f2c7-4dc1-96fc-568132e6a624"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<text><![CDATA[REP198COB
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="1" y="0" width="200" height="10" forecolor="#000000" uuid="7655112b-b86c-4365-9250-7cf6a1dde2f0"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="6" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[CUARTEL GENERAL DEL EJERCITO - SIPE]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-5" x="0" y="29" width="566" height="15" uuid="a279640c-842f-49d1-99bb-eabc711811cd"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["AVANCE EJECUCIÓN PRESUPUESTAL AF - "+$F{CODPER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-5" mode="Opaque" x="0" y="110" width="192" height="22" backcolor="#99FF99" uuid="3fdb8bc1-890a-45f3-84aa-822def08d81a"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[UUOO - TAREA - CADENA DE GASTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-6" mode="Opaque" x="192" y="110" width="50" height="22" backcolor="#99FF99" uuid="c0133bf3-0e4b-4cb8-baba-b31c280811cd"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[PIM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-7" mode="Opaque" x="242" y="110" width="50" height="22" backcolor="#99FF99" uuid="20caab79-8dec-407a-b952-64c5b0360f45"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[CERT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-8" mode="Opaque" x="292" y="110" width="50" height="22" backcolor="#99FF99" uuid="e3ec5517-b84f-4e15-97d5-2122419afced"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[SALDO CERT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-9" mode="Opaque" x="342" y="110" width="50" height="22" backcolor="#99FF99" uuid="4b397ae2-aec2-4f84-89d9-1c5256214df6"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[COMP. A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-10" mode="Opaque" x="392" y="110" width="47" height="22" backcolor="#99FF99" uuid="d117718c-c646-43bc-8620-7254f0d612dd"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[SALDO COMP. A.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-11" mode="Opaque" x="439" y="110" width="50" height="22" backcolor="#99FF99" uuid="b89fcc5b-bd24-418c-8e59-eff8d829106b"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[EJECUCIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-12" mode="Opaque" x="489" y="110" width="47" height="22" backcolor="#99FF99" uuid="6ee0d98e-db0c-4b1c-a7c6-cbdcce623163"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[SALDO EJE.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-13" mode="Opaque" x="536" y="110" width="31" height="22" backcolor="#99FF99" uuid="a5c19e7b-6dbb-49bd-9219-5c33f5ec1a8a"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[% EJE.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="0" y="44" width="567" height="16" uuid="cd137486-44e3-4522-a513-8c76f19fc828"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PRODUCTO : "+$F{PRODUCTO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="100" y="71" width="138" height="13" uuid="3b49a597-c9d3-4e68-bd00-5288e0b3d20d"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{UNIDAD}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="100" y="88" width="137" height="13" uuid="24c69700-7a10-4453-a87a-9b5cd78deadd"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ABPPTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-15" x="11" y="71" width="52" height="13" uuid="df9f5e0b-c3eb-4854-9bcb-1dc8a173513b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[UNIDAD ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-16" x="11" y="88" width="82" height="13" uuid="10d05610-017d-426a-80ab-0c36fd0133d0"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[F. FINANCIAMIENTO ]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="0" y="0" width="192" height="12" uuid="eaf7896c-5d7b-442b-8b1b-99a46337d770"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CADENA_GASTO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField" x="192" y="0" width="50" height="12" uuid="f05934b3-fca4-4f8f-9371-e45aa418ea58"/>
+				<box rightPadding="1">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PIM}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-7" x="242" y="0" width="50" height="12" uuid="45c2c317-adfa-40bb-8932-ce73858c3416"/>
+				<box rightPadding="1">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CERTIFICADO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-8" x="342" y="0" width="50" height="12" uuid="824c3ffb-eae3-40ce-956d-7f9a03e8ab16"/>
+				<box rightPadding="1">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMP_ANUAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-9" x="439" y="0" width="50" height="12" uuid="ae9086a0-a9d4-476d-a8cf-8433f3ce294e"/>
+				<box rightPadding="1">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EJECUTADO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-10" x="292" y="0" width="50" height="12" uuid="4406cf35-759e-4a99-8850-3023d2b95503"/>
+				<box rightPadding="1">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new BigDecimal( ($F{PIM}.doubleValue()) -($F{CERTIFICADO}.doubleValue()) )]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-11" x="392" y="0" width="47" height="12" uuid="3bf9f840-752a-4aad-bb07-888ceba8a5d5"/>
+				<box rightPadding="1">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new BigDecimal( ($F{PIM}.doubleValue()) -($F{COMP_ANUAL}.doubleValue()) )]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-12" x="489" y="0" width="47" height="12" uuid="c50a3b74-0f6f-49a0-9b20-8c0834920862"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new BigDecimal( ($F{PIM}.doubleValue()) -($F{EJECUTADO}.doubleValue()) )]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00 %" isBlankWhenNull="true">
+				<reportElement key="textField-33" x="536" y="0" width="31" height="12" uuid="ccbebfee-c8e6-4807-ab41-ca62f088af90"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{PIM}.doubleValue() >0 ? new BigDecimal($F{EJECUTADO}.doubleValue() / $F{PIM}.doubleValue()):$F{CERO} )]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-14" mode="Opaque" x="0" y="0" width="192" height="15" backcolor="#99FF99" uuid="d30c160f-c388-48ca-972d-924370bd0edf"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-37" mode="Opaque" x="192" y="0" width="50" height="15" backcolor="#99FF99" uuid="dcaede79-6ee2-4a73-ac3b-40c62592242e"/>
+				<box rightPadding="1">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PIM_TOTAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-38" mode="Opaque" x="242" y="0" width="50" height="15" backcolor="#99FF99" uuid="8dc67001-cecc-4ebf-a321-79115121b01a"/>
+				<box rightPadding="1">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{CERT_TOTAL}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Auto" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-39" mode="Opaque" x="292" y="0" width="50" height="15" backcolor="#99FF99" uuid="9dcaa34f-802c-46ac-b48b-809ba244da9c"/>
+				<box rightPadding="1">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new BigDecimal( ($V{PIM_TOTAL}.doubleValue()) -($V{CERT_TOTAL}.doubleValue()) )]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-40" mode="Opaque" x="342" y="0" width="50" height="15" backcolor="#99FF99" uuid="cd82efdd-3f8b-46c0-8e55-4a158a854f56"/>
+				<box rightPadding="1">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{COMP_TOTAL}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Auto" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-41" mode="Opaque" x="392" y="0" width="47" height="15" backcolor="#99FF99" uuid="070bb761-b683-47ef-9382-18f8d4a9d977"/>
+				<box rightPadding="1">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new BigDecimal( ($V{PIM_TOTAL}.doubleValue()) -($V{COMP_TOTAL}.doubleValue()) )]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-42" mode="Opaque" x="439" y="0" width="50" height="15" backcolor="#99FF99" uuid="d34ba579-9cc8-40cc-b3f6-82c5dfc881ff"/>
+				<box rightPadding="1">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{EJE_TOTAL}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Auto" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField-43" mode="Opaque" x="489" y="0" width="47" height="15" backcolor="#99FF99" uuid="c3549466-ff99-4320-80ec-7fead559cf1f"/>
+				<box rightPadding="1">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new BigDecimal( ($V{PIM_TOTAL}.doubleValue()) -($V{EJE_TOTAL}.doubleValue()) )]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Auto" pattern="#,##0.00 %" isBlankWhenNull="true">
+				<reportElement key="textField-44" mode="Opaque" x="536" y="0" width="31" height="15" backcolor="#99FF99" uuid="f73c9188-ef50-46ed-a2b8-0bab3ec21ec1"/>
+				<box rightPadding="1">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $V{PIM_TOTAL}.doubleValue() >0 ? new BigDecimal($V{EJE_TOTAL}.doubleValue() / $V{PIM_TOTAL}.doubleValue()):$F{CERO} )]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

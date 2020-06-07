@@ -1,0 +1,927 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PROG0014" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="567" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14" uuid="6402ecbd-7283-457a-bfb4-4bb03d4affa3">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.6105100000000012"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2018"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PRESUPUESTO" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<parameter name="UNIDAD_OPERATIVA" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["0702"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="USUARIO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["44469132"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="GENERICA" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT  0 AS CERO, CODPER,
+COPPTO||'-'|| UTIL_NEW.FUN_ABPPTO(COPPTO) PRESUPUESTO,
+COUUOO||'-'|| UTIL_NEW.FUN_ABUUOO(COUUOO) UNIDAD_OPERATIVA,
+COMEOP||':'|| Util_NEW.FUN_NOMEOP(COMEOP) TAREA,
+COCAGA||':'|| UTIL_NEW.FUN_NOCLAS(COCAGA) CADENA_GASTO,
+UTIL_NEW.FUN_PROGRAMA_SECFUN(CODPER, COPPTO, SECFUN) PROGRAMA,
+UTIL_NEW.FUN_PRODUCTO_SECFUN(CODPER, COPPTO, SECFUN) PRODUCTO,
+UTIL_NEW.FUN_ACTIVIDAD_SECFUN(CODPER, COPPTO, SECFUN) ACTIVIDAD,
+SUM(PIA) AS PIA,
+SUM(PIM) AS PIM,
+SUM(EJECUTADO) EJECUTADO,
+SUM(PIM)-SUM(EJECUTADO) AS SALDO,
+CASE WHEN $P{USUARIO} IN ('10714635','43305891','44469132') THEN 'Sección Telemática - OPRE' ELSE
+UTIL_NEW.FUN_DESC_USUARIO($P{USUARIO}) END AS USU_IMPRESION
+FROM V_AVANCE_EJE_REPORTE WHERE
+CODPER = $P{PERIODO} AND
+COPPTO = $P{PRESUPUESTO} AND
+COUUOO = $P{UNIDAD_OPERATIVA}
+AND CODGEN LIKE '%'||$P{GENERICA}||'%'
+--AND UTIL_NEW.FUN_CODIGO_SECFUN(CODPER,COPPTO,SECFUN,'COPRES')!='0032'
+GROUP BY CODPER, COPPTO, COUUOO, TIPPAU, SECFUN, COMEOP, COCAGA
+HAVING (SUM(PIA)+SUM(PIM))<>0
+ORDER BY  PROGRAMA, PRODUCTO, ACTIVIDAD, TAREA, CADENA_GASTO]]>
+	</queryString>
+	<field name="CERO" class="java.math.BigDecimal"/>
+	<field name="CODPER" class="java.lang.String"/>
+	<field name="PRESUPUESTO" class="java.lang.String"/>
+	<field name="UNIDAD_OPERATIVA" class="java.lang.String"/>
+	<field name="TAREA" class="java.lang.String"/>
+	<field name="CADENA_GASTO" class="java.lang.String"/>
+	<field name="PROGRAMA" class="java.lang.String"/>
+	<field name="PRODUCTO" class="java.lang.String"/>
+	<field name="ACTIVIDAD" class="java.lang.String"/>
+	<field name="PIA" class="java.math.BigDecimal"/>
+	<field name="PIM" class="java.math.BigDecimal"/>
+	<field name="EJECUTADO" class="java.math.BigDecimal"/>
+	<field name="SALDO" class="java.math.BigDecimal"/>
+	<field name="USU_IMPRESION" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="151" splitType="Stretch">
+			<crosstab>
+				<reportElement x="0" y="80" width="567" height="52" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" backcolor="#00B3B3" uuid="5585ded9-8519-4c20-8c47-f4c6aed99301"/>
+				<crosstabHeaderCell>
+					<cellContents backcolor="#00B3B3" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5"/>
+							<topPen lineWidth="0.5"/>
+							<leftPen lineWidth="0.5"/>
+							<bottomPen lineWidth="0.5"/>
+							<rightPen lineWidth="0.5"/>
+						</box>
+						<staticText>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="305" height="20" uuid="2d3938ea-a777-4ab2-ad0f-4a0a0ff6c599"/>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<text><![CDATA[PROGRAMA PRESUPUESTAL / PRODUCTO / ACTIVIDAD / TAREA PRESUPUESTAL / CADENA DE GASTO]]></text>
+						</staticText>
+					</cellContents>
+				</crosstabHeaderCell>
+				<rowGroup name="PROGRAMA" width="0" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{PROGRAMA}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#E0FFFF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#00B3B3" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="305" height="15" forecolor="#000000" uuid="c58ed47a-2453-43e7-8c74-32c0f4f00da6"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+								</textElement>
+								<text><![CDATA[TOTAL]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="PRODUCTO" width="0" totalPosition="Start">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{PRODUCTO}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#E0FFFF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#BFFFFF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="305" height="15" uuid="0bbbfef4-e853-4165-aa31-7874969cd8f8"/>
+								<box leftPadding="2"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{PROGRAMA}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="ACTIVIDAD" width="0" totalPosition="Start">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{ACTIVIDAD}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents/>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#66CCFF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="305" height="12" uuid="37cadb02-1efc-435a-9e26-60671593d47d"/>
+								<box leftPadding="12"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{PRODUCTO}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="TAREA" width="0" totalPosition="Start">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{TAREA}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents/>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#CCFFCC" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="305" height="12" uuid="ebf6a507-f83f-4714-aac5-5b88bd174993"/>
+								<box leftPadding="22"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{ACTIVIDAD}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="CADENA_GASTO" width="305" totalPosition="Start">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{CADENA_GASTO}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents>
+							<box>
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="305" height="12" uuid="f0374040-e62c-4ddd-ab56-477b97dc4f3f"/>
+								<box leftPadding="42"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{CADENA_GASTO}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents>
+							<box>
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="305" height="12" uuid="3aa699e1-3f97-45f5-8985-d16d90f34921"/>
+								<box leftPadding="32"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{TAREA}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="CERO" height="20" totalPosition="End">
+					<bucket class="java.math.BigDecimal">
+						<bucketExpression><![CDATA[$F{CERO}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#00B3B3" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="65" height="20" backcolor="#00B3B3" uuid="23461963-6dd9-41d2-a732-967ebf4f6e89"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle" markup="none">
+									<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+								</textElement>
+								<text><![CDATA[P.I.A.]]></text>
+							</staticText>
+							<staticText>
+								<reportElement style="Crosstab Data Text" x="65" y="0" width="65" height="20" uuid="f4efdcbe-c241-46dd-8bba-ac433b03d47d"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle" markup="none">
+									<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+								</textElement>
+								<text><![CDATA[P.I.M.]]></text>
+							</staticText>
+							<staticText>
+								<reportElement style="Crosstab Data Text" x="130" y="0" width="65" height="20" uuid="af70ec86-5b81-4c08-b4f9-1b0e9d9aba7c"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle" markup="none">
+									<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+								</textElement>
+								<text><![CDATA[EJECUTADO]]></text>
+							</staticText>
+							<staticText>
+								<reportElement style="Crosstab Data Text" x="195" y="0" width="65" height="20" uuid="140ced3b-35b6-4424-ba90-043e941226fe"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Middle" markup="none">
+									<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+								</textElement>
+								<text><![CDATA[SALDO]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents backcolor="#BFFFFF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="PIAMeasure" class="java.math.BigDecimal" calculation="Sum">
+					<measureExpression><![CDATA[$F{PIA}]]></measureExpression>
+				</measure>
+				<measure name="PIMMesasure" class="java.math.BigDecimal" calculation="Sum">
+					<measureExpression><![CDATA[$F{PIM}]]></measureExpression>
+				</measure>
+				<measure name="EJECUTADOMeasure" class="java.math.BigDecimal" calculation="Sum">
+					<measureExpression><![CDATA[$F{EJECUTADO}]]></measureExpression>
+				</measure>
+				<measure name="SALDOMeasure" class="java.math.BigDecimal" calculation="Sum">
+					<measureExpression><![CDATA[$F{SALDO}]]></measureExpression>
+				</measure>
+				<crosstabCell width="260" height="12">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="65" height="12" uuid="4380b6ee-d2a7-430a-be79-f2bc1d7dece9"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{PIAMeasure}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="65" y="0" width="65" height="12" uuid="e71788f9-703d-48e6-ae14-eded2e6e159a"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{PIMMesasure}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="130" y="0" width="65" height="12" uuid="7222ed77-97ef-45f1-88b2-d3b28791ae43"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{EJECUTADOMeasure}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="195" y="0" width="65" height="12" uuid="8ec83309-c417-4f21-8574-cba0df2dbf00"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{SALDOMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="260" height="15" rowTotalGroup="PROGRAMA">
+					<cellContents backcolor="#00B3B3" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="65" height="15" uuid="05b7eb88-985d-4f64-b758-1910d4aa9f70"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{PIAMeasure}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="65" y="0" width="65" height="15" uuid="78faa3e4-6c75-4c99-aaec-b602c0b6709d"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{PIMMesasure}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="130" y="0" width="65" height="15" uuid="51ee1a82-0e3e-459f-a1fa-df0ce5c43529"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{EJECUTADOMeasure}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="195" y="0" width="65" height="15" uuid="85e79b45-aca1-4817-91cd-412dac96f7c5"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{SALDOMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="0" height="12" columnTotalGroup="CERO">
+					<cellContents backcolor="#BFFFFF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="0" height="15" rowTotalGroup="PROGRAMA" columnTotalGroup="CERO">
+					<cellContents backcolor="#00B3B3" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="260" height="15" rowTotalGroup="PRODUCTO">
+					<cellContents backcolor="#BFFFFF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="65" height="15" uuid="8e8d245f-a583-4b7d-a96d-be4dd709199c"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{PIAMeasure}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="65" y="0" width="65" height="15" uuid="92846f3b-9183-4134-9e1f-ec0bda35a9f3"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{PIMMesasure}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="130" y="0" width="65" height="15" uuid="63b35953-43c6-4eae-80ef-b08ffc8e7547"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{EJECUTADOMeasure}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="195" y="0" width="65" height="15" uuid="86ba568a-765d-44f2-ad6c-e2fc5fe8a14f"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{SALDOMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="0" height="15" rowTotalGroup="PRODUCTO" columnTotalGroup="CERO">
+					<cellContents backcolor="#BFFFFF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="260" height="12" rowTotalGroup="ACTIVIDAD">
+					<cellContents backcolor="#66CCFF" mode="Opaque">
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="65" height="12" uuid="bb65bbe6-abd6-4204-8309-8265706221e1"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{PIAMeasure}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="65" y="0" width="65" height="12" uuid="4c949609-504f-42f4-8575-47626f140b96"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{PIMMesasure}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="130" y="0" width="65" height="12" uuid="968c79f9-c952-4056-9a20-49a100be3e76"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{EJECUTADOMeasure}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="195" y="0" width="65" height="12" uuid="7835804f-cfa9-424e-b434-cf9a95da9547"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{SALDOMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="0" height="12" rowTotalGroup="ACTIVIDAD" columnTotalGroup="CERO">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell width="260" height="12" rowTotalGroup="TAREA">
+					<cellContents backcolor="#CCFFCC" mode="Opaque">
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="65" height="12" uuid="9943f924-56c6-413b-be45-9b0987b80c1b"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{PIAMeasure}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="65" y="0" width="65" height="12" uuid="1c17eeaf-136d-4e47-a52d-d0e0437d8da7"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{PIMMesasure}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="130" y="0" width="65" height="12" uuid="efeff588-e6f2-4891-8640-a7b16d4ba06a"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{EJECUTADOMeasure}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="195" y="0" width="65" height="12" uuid="765a3d6f-d038-45e2-8ccc-65603ca80154"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{SALDOMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="0" height="12" rowTotalGroup="TAREA" columnTotalGroup="CERO">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell width="260" height="12" rowTotalGroup="CADENA_GASTO">
+					<cellContents>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="65" height="12" uuid="d6fcfe18-7266-402e-81fd-9dce52fd59b5"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{PIAMeasure}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="65" y="0" width="65" height="12" uuid="b50b9d4d-70b4-428e-8123-2f4c9f6ebcdf"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{PIMMesasure}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="130" y="0" width="65" height="12" uuid="25d03942-b5fa-46d2-98d2-4eae625fa05c"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{EJECUTADOMeasure}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.00">
+							<reportElement style="Crosstab Data Text" x="195" y="0" width="65" height="12" uuid="22de079a-5ea4-473f-b75c-00a86c4deccf"/>
+							<box rightPadding="2">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{SALDOMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="0" height="12" rowTotalGroup="CADENA_GASTO" columnTotalGroup="CERO">
+					<cellContents/>
+				</crosstabCell>
+			</crosstab>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-5" x="0" y="18" width="567" height="12" isPrintWhenDetailOverflows="true" uuid="1e647965-1106-4b12-9531-edfc68f57b6d"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["AVANCE EJECUCIÓN PRESUPUESTAL"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-6" x="0" y="30" width="567" height="12" isPrintWhenDetailOverflows="true" uuid="c94b8919-5e70-4c83-90e2-34860c0b9249"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["AF - "+$F{CODPER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-25" x="0" y="0" width="160" height="7" isPrintWhenDetailOverflows="true" forecolor="#000000" uuid="36b66308-a6e0-48c9-b8e0-815160a4de8d"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="5" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[CUARTEL GENERAL DEL EJERCITO - SIPRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-26" x="0" y="7" width="160" height="8" isPrintWhenDetailOverflows="true" forecolor="#000000" uuid="9d80c08d-67f0-46b4-93b1-e538ba6b7b8c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="5" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[PROG0014]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="375" y="15" width="192" height="8" isPrintWhenDetailOverflows="true" uuid="33e47243-c956-4745-aebd-38212410dc6e"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Usu. Imp. : "+$F{USU_IMPRESION}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField-2" x="559" y="0" width="9" height="7" isPrintWhenDetailOverflows="true" uuid="c06c7ff7-b20b-4811-bf4e-406735c67f3f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="5" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA["" + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-1" x="372" y="7" width="195" height="8" isPrintWhenDetailOverflows="true" uuid="0915ff9a-cadf-44c9-91ee-ede5f252c431"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fecha Imp. : "+(new java.text.SimpleDateFormat("dd'/'MM'/'yyyy h:mm a",Locale.getDefault())).format(new Date())]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-3" x="493" y="0" width="65" height="7" isPrintWhenDetailOverflows="true" uuid="2f405539-182b-49f5-a688-b91f4bea178d"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="5" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página : "+$V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-31" x="150" y="60" width="10" height="10" isPrintWhenDetailOverflows="true" uuid="340c829a-bc87-4348-a888-67df9e2a0514"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-21" x="160" y="50" width="407" height="10" isPrintWhenDetailOverflows="true" uuid="1ff48422-84db-4348-a0a1-458ece089256"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{UNIDAD_OPERATIVA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-25" x="0" y="50" width="150" height="10" isPrintWhenDetailOverflows="true" uuid="275158d6-cf8b-4e9a-8dc4-5264bda7a476"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[UNIDAD DE OPERACIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-26" x="0" y="60" width="150" height="10" isPrintWhenDetailOverflows="true" uuid="89e643ed-276c-4cae-b616-deca187ab2a5"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[FUENTE DE FINANCIAMIENTO ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-30" x="150" y="50" width="10" height="10" isPrintWhenDetailOverflows="true" uuid="1f8ce00f-c7c1-4c44-a4b4-3ef23375439c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-22" x="160" y="60" width="407" height="10" isPrintWhenDetailOverflows="true" uuid="9e23f1bd-5c9c-4ee9-b55c-331d0ae82a28"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRESUPUESTO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

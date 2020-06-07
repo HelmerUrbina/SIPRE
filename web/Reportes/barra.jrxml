@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="100" pageHeight="85" columnWidth="100" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d822663f-58ee-42fe-a1ec-5dfcbf650307">
+	<property name="ireport.zoom" value="5.054470284992946"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="96"/>
+	<style name="style1" isDefault="true" mode="Transparent" hAlign="Center" pattern="" fontName="Courier New" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Courier-Bold"/>
+	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["001598-2020"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="INSTITUCION" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["SERVICIO DE INTENDENCIA df asd fasdf asdfasd fasdfasd"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FECHA" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["06/06/2020 08:20 PM"]]></defaultValueExpression>
+	</parameter>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="85" splitType="Stretch">
+			<componentElement>
+				<reportElement style="style1" x="0" y="25" width="100" height="30" uuid="8abb622e-fc44-4fdd-a647-483fe2496551"/>
+				<jr:Codabar xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="bottom">
+					<jr:codeExpression><![CDATA[$P{CODIGO}]]></jr:codeExpression>
+				</jr:Codabar>
+			</componentElement>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="style1" x="0" y="55" width="100" height="10" isPrintWhenDetailOverflows="true" uuid="1a0250e1-7e71-45cc-a9b5-c6d47df440c1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="5" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{INSTITUCION}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement positionType="Float" x="0" y="65" width="100" height="10" uuid="4acafa8f-3492-43e8-a6b4-576950640986"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="5" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FECHA}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement positionType="Float" x="0" y="0" width="98" height="20" uuid="ad1e8d74-aef1-449a-879c-1f863a73ebab"/>
+				<imageExpression><![CDATA["C:\\Users\\helme\\OneDrive\\Email attachments\\Escritorio\\EstadoMayorEjercito.png"]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

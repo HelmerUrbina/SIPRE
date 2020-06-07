@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="175" pageHeight="82" columnWidth="165" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="5" uuid="fccd8732-4c3c-45b1-9ae0-ddf72203cce8">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2017"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["00058"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TIPO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["E"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="USUARIO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["44469132"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["../"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT CPERIODO_CODIGO||''||CDOCUMENTO_NUMERO||''||CDOCUMENTO_TIPO AS NUMERO,
+UTIL_NEW.FUN_NOMUSU('0003',$P{USUARIO}) AS USUARIO
+ FROM SIPE_DOCUMENTO
+WHERE CPERIODO_CODIGO=$P{PERIODO} AND
+CDOCUMENTO_NUMERO=$P{CODIGO} AND
+CDOCUMENTO_TIPO=$P{TIPO}]]>
+	</queryString>
+	<field name="NUMERO" class="java.lang.String"/>
+	<field name="USUARIO" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="72" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH:mm:ss">
+				<reportElement x="4" y="52" width="83" height="9" uuid="f3857674-1efd-4a50-9524-30484b8e2ddb"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="6" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="34" y="21" width="121" height="30" uuid="ed4aa71e-3880-451c-8278-3c1fa6ec9368"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39" drawText="true" checksumRequired="false">
+					<jr:codeExpression><![CDATA[$F{NUMERO}]]></jr:codeExpression>
+					<jr:applicationIdentifierExpression><![CDATA[$F{NUMERO}]]></jr:applicationIdentifierExpression>
+				</jr:barbecue>
+			</componentElement>
+			<staticText>
+				<reportElement x="36" y="4" width="122" height="10" uuid="2c096bc2-4258-49c7-9d57-36fe1889603c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="6"/>
+				</textElement>
+				<text><![CDATA[Oficina de Presupuesto del Ejército - Mesa de Partes]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="4" y="60" width="154" height="9" uuid="fd195c58-dadd-4425-86d5-ca7edba1e46f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="6" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Usuario: "+ $F{USUARIO}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="1" y="1" width="32" height="29" uuid="84e48a81-631f-4510-ada2-d393facaa23f"/>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"/Imagenes/escudoOpre_bn.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

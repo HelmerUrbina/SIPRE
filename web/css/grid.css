@@ -1,0 +1,47 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 21/03/2016, 10:05:15 AM
+    Author     : H-URBINA-M
+*/
+
+.RowBold{
+    font-weight: bold;
+}
+.RowBlue{
+    color: blue;
+    font-weight: bold;
+}
+.RowBrown{
+    color: brown;
+    font-weight: bold;
+}
+.RowRed{
+    color: red;
+    font-weight: bold;
+}
+.RowPurple{
+    color: purple;
+    font-weight: bold;
+}
+.RowGreen{
+    color: green;
+    font-weight: bold;
+}
+.RowDarkBlue{
+    color: darkblue;
+    font-weight: bold;
+}
+.RowGray{
+    color: gray;
+    font-weight: bold;
+}
+.RowAnulado {    
+    background-color: lightcoral;
+}
+.RowAnulado:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .RowAnulado:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
+    background-color: lightcoral;
+}
