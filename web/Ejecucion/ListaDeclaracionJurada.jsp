@@ -891,7 +891,7 @@
                     $("#div_GrillaRegistroJadpe").jqxGrid('clear');
                     $("#cbo_PeriodoJadpe").jqxDropDownList('clear');
                     $("#cbo_TipoBeneficio").jqxDropDownList('clear');
-                    fn_cargarComboAjax("#cbo_PeriodoJadpe", {mode: 'periodoResolucion', codigo: $("#cbo_ResolucionJadpe").val()});
+                    $("#cbo_ResolucionJadpe").jqxDropDownList('selectItem', 0);
                     $('#div_GrillaRegistroJadpe').jqxGrid('clearselection');
                 });
                 // delete selected row.
@@ -1449,7 +1449,6 @@
                 cancelButton: $('#btn_CancelarJadpe'),
                 initContent: function () {
                     $("#cbo_ResolucionJadpe").jqxDropDownList({animationType: 'fade', width: 250, height: 20});
-                    fn_cargarComboAjax("#cbo_PeriodoJadpe", {mode: 'periodoResolucion', codigo: $("#cbo_ResolucionJadpe").val()});
                     $('#cbo_ResolucionJadpe').on('change', function () {
                         $("#cbo_PeriodoJadpe").jqxDropDownList('clear');
                         $("#cbo_TipoBeneficio").jqxDropDownList('clear');
@@ -2110,6 +2109,7 @@
                     <td class="inputlabel">Resolución : </td>
                     <td>
                         <select id="cbo_ResolucionJadpe" name="cbo_ResolucionJadpe">
+                            <option value="0">Seleccione</option>
                             <option value="J">JADPE</option>
                             <option value="T">TESORERIA</option>
                         </select>

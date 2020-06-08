@@ -350,7 +350,7 @@ public class ReportesServlet extends HttpServlet {
             case "MAY0001":
                 nombre = "MesaAyuda/MAY0001.jasper";
                 break;
-                //MESA DE AYUDA
+            //MESA DE AYUDA
             case "UEO0003":
                 nombre = "UE-OPRE/UEO0003.jasper";
                 break;
@@ -371,8 +371,7 @@ public class ReportesServlet extends HttpServlet {
         parameters.put("CODIGO2", reporte.getCodigo2());
         parameters.put("USUARIO", objUsuario.getUsuario());
         parameters.put("GENERICA", reporte.getGenerica());
-        parameters.put("SUBREPORT_DIR", "D:\\SIPRE\\Reportes");
-        // parameters.put("SUBREPORT_DIR2", "F:\\Apache Tomcat\\webapps\\SIPRE\\web\\Reportes\\");
+        parameters.put("SUBREPORT_DIR", getServletContext().getRealPath("/Reportes"));
         parameters.put("SUBREPORT_DIR2", stream);
         response.setHeader("Cache-Control", "no-cache");
         response.setHeader("Pragma", "no-cache");

@@ -195,8 +195,9 @@ public class MesaParteDAOImpl implements MesaParteDAO {
     }
 
     @Override
-    public int iduMesaParte(BeanMesaParte objBeanMesaParte, String usuario) {
-        sql = "{CALL SP_IDU_MESAPARTE(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+    public String iduMesaParte(BeanMesaParte objBeanMesaParte, String usuario) {
+        String numero = "";
+        sql = "{CALL SP_IDU_MESAPARTE(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         try (CallableStatement cs = objConnection.prepareCall(sql)) {
             cs.setString(1, objBeanMesaParte.getPeriodo());
             cs.setString(2, objBeanMesaParte.getTipo());
@@ -223,7 +224,9 @@ public class MesaParteDAOImpl implements MesaParteDAO {
             cs.setString(23, objBeanMesaParte.getCorreo());
             cs.setString(24, usuario);
             cs.setString(25, objBeanMesaParte.getMode().toUpperCase());
+            cs.registerOutParameter(26, java.sql.Types.VARCHAR);
             s = cs.executeUpdate();
+            numero = cs.getString(26);
             cs.close();
         } catch (SQLException e) {
             System.out.println("Error al ejecutar iduMesaParte : " + e.toString());
@@ -234,9 +237,9 @@ public class MesaParteDAOImpl implements MesaParteDAO {
             objBnMsgerr.setTipo(objBeanMesaParte.getMode().toUpperCase());
             objBnMsgerr.setDescripcion(e.toString());
             s = objDsMsgerr.iduMsgerr(objBnMsgerr);
-            return 0;
+            return "0";
         }
-        return s;
+        return numero;
     }
 
     @Override

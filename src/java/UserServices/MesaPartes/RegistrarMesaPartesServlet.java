@@ -21,7 +21,6 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -30,7 +29,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 /**
@@ -43,7 +41,6 @@ public class RegistrarMesaPartesServlet extends HttpServlet {
 
     private ServletConfig config = null;
     private ServletContext context = null;
-    private RequestDispatcher dispatcher = null;
     private BeanMesaParte objBnMesaParte;
     private Connection objConnection;
     private MesaParteDAO objDsMesaParte;
@@ -67,7 +64,6 @@ public class RegistrarMesaPartesServlet extends HttpServlet {
         context = config.getServletContext();
         response.setContentType("text/html;charset=UTF-8");
         String result = null;
-        int k = 0;
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         sdf.setLenient(false); //No Complaciente en Fecha
         java.util.Date fecha_doc = sdf.parse(request.getParameter("fechaDocumento"));
@@ -106,12 +102,12 @@ public class RegistrarMesaPartesServlet extends HttpServlet {
                 part.write(objBnMesaParte.getPeriodo() + "-" + objBnMesaParte.getTipo() + "-" + objBnMesaParte.getNumero() + "-" + objBnMesaParte.getArchivo());
             }
         }
-        k = objDsMesaParte.iduMesaParte(objBnMesaParte, "");
-        if (k == 0) {
+        objBnMesaParte.setNumero(objDsMesaParte.iduMesaParte(objBnMesaParte, "0000"));
+        if (objBnMesaParte.getNumero().equals("0")) {
             // EN CASO DE HABER PROBLEMAS DESPACHAMOS UNA VENTANA DE ERROR, MOSTRANDO EL ERROR OCURRIDO.
             objBnMsgerr = new BeanMsgerr();
-            objBnMsgerr.setUsuario("");
-            objBnMsgerr.setTabla("SIPE_DOCUMENTOS");
+            objBnMsgerr.setUsuario("0000");
+            objBnMsgerr.setTabla("SIPE_DOCUMENTO");
             objBnMsgerr.setTipo(objBnMesaParte.getMode());
             objDsMsgerr = new MsgerrDAOImpl(objConnection);
             objBnMsgerr = objDsMsgerr.getMsgerr(objBnMsgerr);
@@ -120,10 +116,9 @@ public class RegistrarMesaPartesServlet extends HttpServlet {
         // EN CASO DE NO HABER PROBLEMAS RETORNAMOS UNA NUEVA CONSULTA CON TODOS LOS DATOS.
         if (result == null) {
             try (PrintWriter out = response.getWriter()) {
-                JavaMail mail = new JavaMail(objBnMesaParte);
-                String aaa = mail.SendMail();
-                System.out.println(aaa);
-                out.print("GUARDO" + aaa);
+                JavaMail mail = new JavaMail(objBnMesaParte, request, objConnection);
+                mail.SendMail();
+                out.print("GUARDO");
             }
         } else {
             //PROCEDEMOS A ELIMINAR TODO;
@@ -179,5 +174,4 @@ public class RegistrarMesaPartesServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

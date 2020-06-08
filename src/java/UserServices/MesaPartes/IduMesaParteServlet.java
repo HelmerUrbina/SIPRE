@@ -67,7 +67,7 @@ public class IduMesaParteServlet extends HttpServlet {
         session = request.getSession(true);
         response.setContentType("text/html;charset=UTF-8");
         String result = null;
-        int k = 0;
+        String k = "";
         String resulDetalle = null;
         BeanUsuario objUsuario = (BeanUsuario) session.getAttribute("objUsuario" + session.getId());
         if (objUsuario == null) {
@@ -124,7 +124,7 @@ public class IduMesaParteServlet extends HttpServlet {
             }
         }
         k = objDsMesaParte.iduMesaParte(objBnMesaParte, objUsuario.getUsuario());
-        if (k == 0) {
+        if (k.equals("0")) {
             // EN CASO DE HABER PROBLEMAS DESPACHAMOS UNA VENTANA DE ERROR, MOSTRANDO EL ERROR OCURRIDO.
             result = "ERROR";
             objBnMsgerr = new BeanMsgerr();
@@ -147,7 +147,7 @@ public class IduMesaParteServlet extends HttpServlet {
                     parametro.put("CODIGO", objBnMesaParte.getNumero());
                     parametro.put("TIPO", objBnMesaParte.getTipo());
                     parametro.put("USUARIO", objUsuario.getUsuario());
-                    parametro.put("SUBREPORT_DIR", "D:\\SITRADO\\Reportes");
+                    parametro.put("SUBREPORT_DIR", "D:\\SIPRE\\Reportes");
                     JasperPrint reporte = JasperFillManager.fillReport(stream, parametro, objConnection);
                     Utiles u = new Utiles();
                     u.printTicket(reporte);

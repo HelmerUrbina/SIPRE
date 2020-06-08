@@ -20,7 +20,7 @@ public interface MesaParteDAO {
 
     public String getNumeroDocumento(BeanMesaParte objBnMesaParte, String usuario);
 
-    public int iduMesaParte(BeanMesaParte objBeanMesaParte, String usuario);
+    public String iduMesaParte(BeanMesaParte objBeanMesaParte, String usuario);
 
     public String getDocumentosPendientes(String usuario);
 

@@ -38,7 +38,7 @@
         <script type="text/javascript" src="javascript/jqwidgets/jqxdata.js"></script>
         <title>.:: SIPRE - Registro de Mesa de Partes ::.</title>
         <script type="text/javascript">
-            var tipo = "I";
+            var tipo = "E";
             var institucion = '';
             var msg = '';
             $(document).ready(function () {
@@ -126,7 +126,7 @@
                 });
                 //FUNCION PARA GRABAR LOS DATOS DE LA VENTANA PRINCIPAL
                 function fn_GrabarDatos() {
-                     var fecha = new Date();
+                    var fecha = new Date();
                     var prioridad = $("#cbo_Prioridad").val();
                     var tipoDocumento = $("#cbo_TipoDocumento").val();
                     var numeroDocumento = $("#txt_NumeroDocumento").val();
@@ -144,7 +144,7 @@
                         var formData = new FormData(document.getElementById("frm_MesaParte"));
                         formData.append("mode", "I");
                         formData.append("periodo", fecha.getFullYear());
-                        formData.append("mes", fecha.getMonth()());
+                        formData.append("mes", fecha.getMonth());
                         formData.append("tipo", tipo);
                         formData.append("institucion", institucion);
                         formData.append("prioridad", prioridad);
@@ -173,7 +173,7 @@
                                 if (msg === "GUARDO") {
                                     $.confirm({
                                         title: 'AVISO DEL SISTEMA',
-                                        content: 'Datos procesados correctamente',
+                                        content: 'Se ha remito la confirmación al correo electronico',
                                         type: 'green',
                                         typeAnimated: true,
                                         autoClose: 'cerrarAction|1000',
@@ -181,10 +181,7 @@
                                             cerrarAction: {
                                                 text: 'Cerrar',
                                                 action: function () {
-                                                   
-                                                   
-                                                   
-                                                   
+                                                    window.location = "index.jsp";
                                                 }
                                             }
                                         }
