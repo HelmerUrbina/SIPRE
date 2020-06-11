@@ -2429,7 +2429,6 @@ public class CombosDAOImpl implements CombosDAO {
                     + "GROUP BY ANO_RESOL "
                     + "ORDER BY CODIGO DESC";
         }
-        System.out.println(sql);
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objResultSet = objPreparedStatement.executeQuery();

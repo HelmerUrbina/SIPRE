@@ -13,17 +13,18 @@
         $("#cbo_Periodo").jqxComboBox({theme: theme, autoOpen: true, promptText: "Seleccione", width: 100, dropDownWidth: 150, height: 20});        
         $('#cbo_Periodo').on('change', function () {
             fn_CargarBusqueda();
-        });        
+        });
         fn_CargarBusqueda();
     });
     function fn_CargarBusqueda() {
         var msg = "";
         if (msg === "")
-            msg = fn_validaCombos('#cbo_Periodo', "Seleccione el Periodo.");        
+            msg = fn_validaCombos('#cbo_Periodo', "Seleccione el Periodo.");
         if (msg === "") {
-            var periodo = $("#cbo_Periodo").val();            
+            var periodo = $("#cbo_Periodo").val();
             $("#div_ContextMenu").remove();
             $("#div_VentanaPrincipal").remove();
+            $("#div_GrillaPrincipal").remove();
             var $contenidoAjax = $('#div_Detalle').html('<img src="../Imagenes/Fondos/cargando.gif">');
             $.ajax({
                 type: "POST",

@@ -13,14 +13,23 @@ import DataService.Despachadores.MesaParteDAO;
 import DataService.Despachadores.MsgerrDAO;
 import Utiles.JavaMail;
 import Utiles.Utiles;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -30,6 +39,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import net.sf.jasperreports.engine.DefaultJasperReportsContext;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 
 /**
  *
@@ -95,6 +109,7 @@ public class RegistrarMesaPartesServlet extends HttpServlet {
         objBnMesaParte.setReferencia(request.getParameter("referencia"));
         objBnMesaParte.setCorreo(request.getParameter("correo"));
         objDsMesaParte = new MesaParteDAOImpl(objConnection);
+        objBnMesaParte.setNumero(objDsMesaParte.iduMesaParte(objBnMesaParte, "0000"));
         Collection<Part> parts = request.getParts();
         for (Part part : parts) {
             if (null != Utiles.getFileName(part)) {
@@ -102,7 +117,6 @@ public class RegistrarMesaPartesServlet extends HttpServlet {
                 part.write(objBnMesaParte.getPeriodo() + "-" + objBnMesaParte.getTipo() + "-" + objBnMesaParte.getNumero() + "-" + objBnMesaParte.getArchivo());
             }
         }
-        objBnMesaParte.setNumero(objDsMesaParte.iduMesaParte(objBnMesaParte, "0000"));
         if (objBnMesaParte.getNumero().equals("0")) {
             // EN CASO DE HABER PROBLEMAS DESPACHAMOS UNA VENTANA DE ERROR, MOSTRANDO EL ERROR OCURRIDO.
             objBnMsgerr = new BeanMsgerr();
@@ -113,12 +127,35 @@ public class RegistrarMesaPartesServlet extends HttpServlet {
             objBnMsgerr = objDsMsgerr.getMsgerr(objBnMsgerr);
             result = objBnMsgerr.getDescripcion();
         }
+        InputStream stream = request.getServletContext().getResourceAsStream("/Reportes/MesaParte/MPA0004.jasper");
+        if (stream == null) {
+            System.out.println("No se encuentra el reporte");
+        }
+        Map parameters = new HashMap();
+        parameters.put("REPORT_LOCALE", new Locale("en", "US"));
+        parameters.put("PERIODO", objBnMesaParte.getPeriodo());
+        parameters.put("TIPO", objBnMesaParte.getTipo());
+        parameters.put("CODIGO", objBnMesaParte.getNumero());
+        parameters.put("SUBREPORT_DIR", getServletContext().getRealPath("/Reportes"));
+        String imagen = "";
+        try {
+            JasperPrint jasperPrint = JasperFillManager.fillReport(stream, parameters, objConnection);
+            imagen = extractPrintImage("D:\\SIPRE\\DOCUMENTOS\\Registro\\" + objBnMesaParte.getPeriodo() + "-" + objBnMesaParte.getNumero() + ".jpg", jasperPrint);
+        } catch (JRException ex) {
+            System.out.println(ex.getMessage());
+        }
         // EN CASO DE NO HABER PROBLEMAS RETORNAMOS UNA NUEVA CONSULTA CON TODOS LOS DATOS.
         if (result == null) {
             try (PrintWriter out = response.getWriter()) {
-                JavaMail mail = new JavaMail(objBnMesaParte, request, objConnection);
-                mail.SendMail();
+                System.out.println("Enviar correo");
+                JavaMail mail = new JavaMail(objBnMesaParte.getCorreo(), imagen);
+                String aaaa = mail.SendMail();
+                System.out.println(aaaa);
                 out.print("GUARDO");
+            } catch (Exception e) {
+                try (PrintWriter out2 = response.getWriter()) {
+                    out2.print(e.getMessage());
+                }
             }
         } else {
             //PROCEDEMOS A ELIMINAR TODO;
@@ -126,6 +163,24 @@ public class RegistrarMesaPartesServlet extends HttpServlet {
                 out.print(result);
             }
         }
+    }
+
+    private String extractPrintImage(String filePath, JasperPrint print) {
+        System.out.println("prepara iagem");
+        System.out.println(filePath);
+        File file = new File(filePath);
+        OutputStream ouputStream = null;
+        try {
+            ouputStream = new FileOutputStream(file);
+            DefaultJasperReportsContext.getInstance();
+            JasperPrintManager printManager = JasperPrintManager.getInstance(DefaultJasperReportsContext.getInstance());
+            BufferedImage rendered_image = null;
+            rendered_image = (BufferedImage) printManager.printPageToImage(print, 0, 1.6f);
+            ImageIO.write(rendered_image, "jpg", ouputStream);
+        } catch (IOException | JRException e) {
+            System.out.println(e.getMessage());
+        }
+        return "" + file;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

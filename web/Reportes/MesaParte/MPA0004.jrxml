@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MPA0004" pageWidth="200" pageHeight="100" columnWidth="200" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d822663f-58ee-42fe-a1ec-5dfcbf650307">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MPA0004" pageWidth="200" pageHeight="110" columnWidth="200" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d822663f-58ee-42fe-a1ec-5dfcbf650307">
 	<property name="ireport.zoom" value="3.138428376721005"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
-	<style name="style1" isDefault="true" mode="Transparent" hAlign="Center" pattern="" fontName="Courier New" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold"/>
+	<property name="ireport.y" value="85"/>
 	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["01625"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["D:\\Desarrollo\\SIPRE\\web\\Reportes"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["D:\\Desarrollo\\SIPRE\\web\\Reportes\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["2019"]]></defaultValueExpression>
@@ -19,7 +18,8 @@
 	<queryString>
 		<![CDATA[SELECT CDOCUMENTO_NUMERO||'-'||CPERIODO_CODIGO AS NUMERO, 
 INST.VINSTITUCION_DESCRIPCION AS INSTITUCION,
-TO_CHAR(DOCU.DUSUARIO_FECCRE,'DD/MM/YYYY HH24:MM:SS') AS RECEPCION
+TO_CHAR(DOCU.DUSUARIO_FECCRE,'DD/MM/YYYY HH24:MM:SS') AS RECEPCION,
+DOCU.VDOCUMENTO_DIGITAL AS DIGITAL
 FROM SIPE_DOCUMENTO DOCU INNER JOIN SIPE_INSTITUCION INST ON(
 DOCU.CORGANISMO_CODIGO=INST.CORGANISMO_CODIGO AND 
 DOCU.CINSTITUCION_CODIGO=INST.CINSTITUCION_CODIGO)
@@ -31,6 +31,7 @@ CDOCUMENTO_NUMERO=$P{CODIGO}]]>
 	<field name="NUMERO" class="java.lang.String"/>
 	<field name="INSTITUCION" class="java.lang.String"/>
 	<field name="RECEPCION" class="java.lang.String"/>
+	<field name="DIGITAL" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -41,11 +42,11 @@ CDOCUMENTO_NUMERO=$P{CODIGO}]]>
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="90" splitType="Stretch">
+		<band height="100" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
 				<reportElement x="0" y="60" width="200" height="10" isPrintWhenDetailOverflows="true" uuid="1a0250e1-7e71-45cc-a9b5-c6d47df440c1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Century Gothic" size="5" isBold="true" pdfFontName="Helvetica-Bold"/>
+					<font fontName="Arial" size="5" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{INSTITUCION}]]></textFieldExpression>
 			</textField>
@@ -62,7 +63,7 @@ CDOCUMENTO_NUMERO=$P{CODIGO}]]>
 			<textField pattern="dd/MM/yyyy h.mm a">
 				<reportElement positionType="Float" x="0" y="70" width="200" height="10" uuid="0d2ef1ed-eed0-4a6b-ab06-e8e470ab0e4f"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Century Gothic" size="5"/>
+					<font fontName="Arial" size="5" pdfFontName="Helvetica"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{RECEPCION}]]></textFieldExpression>
 			</textField>
@@ -72,6 +73,21 @@ CDOCUMENTO_NUMERO=$P{CODIGO}]]>
 					<font fontName="Courier New" size="8" isBold="false" pdfFontName="Courier"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CODIGO}+"-"+$P{PERIODO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="80" width="30" height="10" uuid="efeba961-b83f-4d12-8a5d-216f3e28a454"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="5" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[ADJUNTO : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="30" y="80" width="170" height="10" uuid="d055d9a3-58f6-4ca9-a80d-251c7e0cfceb"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="5" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DIGITAL}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -84,7 +100,7 @@ CDOCUMENTO_NUMERO=$P{CODIGO}]]>
 				<reportElement x="0" y="0" width="200" height="10" uuid="cb5c0137-f0df-4423-9261-e90b9e5e6637"/>
 				<box rightPadding="3"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="5" isBold="true" pdfFontName="Times-Roman"/>
+					<font fontName="Times New Roman" size="5" isBold="true" pdfFontName="Times-Bold"/>
 				</textElement>
 				<text><![CDATA[MESA DE PARTES - OFICINA DE PRESUPUESTO DEL EJERCITO]]></text>
 			</staticText>

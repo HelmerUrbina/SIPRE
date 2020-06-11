@@ -58,6 +58,15 @@
                 $("#btn_MesaPartes").jqxButton({theme: theme, template: "info", width: '150'});
                 $("#btn_MesaPartes").on('click', function () {
                     window.location = "MesaPartes.jsp";
+                   /* $.alert({
+                        theme: 'material',
+                        title: 'Mensaje!',
+                        content: "En construcción",
+                        animation: 'zoom',
+                        closeAnimation: 'zoom',
+                        type: 'orange',
+                        typeAnimated: true
+                    });*/
                 });
                 $("#btn_Ingresar").on('click', function () {
                     $('#frm_Login').jqxValidator('validate');
@@ -300,8 +309,6 @@
                                 <li class="link"> 1. <a href="Descarga/SIPRE_ManualUsuario.pdf" target="_blank">SIPRE - Manual</a></li>
                                 <li class="link"> 2. <a href="Descarga/SIPRE_ProgramacionMultianual.pdf" target="_blank">SIPRE - Programación Multianual</a></li>
                                 <li class="link"> 3. <a href="Descarga/FormatoConfidencialidadOPRE2020.pdf" target="_blank">Formato de Confidencialidad AF-2020.</a></li>
-                                <li class="link"> 4. <a href="javascript: fn_VerVideo();" target="_blank">Nuevo Marco Normativo del Sistema Nacional de Presupuesto Público D.L. 1440</a></li>
-                                <li class="link"> 5. <a href="Descarga/SIPRE_Logistica.pdf" target="_blank">SIPRE - Lógistica</a></li>
                             </ul>
                         </div>
                     </div>

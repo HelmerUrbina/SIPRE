@@ -7,7 +7,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
     var autorizacion = '${autorizacion}';
-    var periodo = '${objBnTareaEspecifica.periodo}';
+    var periodo = $("#cbo_Periodo").val();
     var codigo = null;
     var mode = null;
     var msg = "";
@@ -53,7 +53,7 @@
             columnsresize: true,
             showfilterrow: true,
             showtoolbar: true,
-            editable: false,            
+            editable: false,
             rendertoolbar: function (toolbar) {
                 // ADICIONAMOS BOTONES A LA BARRA DE ESTADOS
                 var container = $("<div style='overflow: hidden; position: relative; margin: 1px;'></div>");
@@ -190,12 +190,12 @@
                         $('#cbo_Tarea').on('select', function (event) {
                             var tarea = $('#cbo_Tarea').val();
                             fn_CargarTareaEspecifica(tarea);
-                        });                        
-                        $('#div_Opciones').jqxTree({width: '580px', height: '400px', hasThreeStates: true, checkboxes: true});
+                        });
+                        $('#div_Opciones').jqxTree({width: 590, height: 395, hasThreeStates: true, checkboxes: true});
                         $('#div_Opciones').css('visibility', 'visible');
                         $('#btn_Cancelar').jqxButton({width: '65px', height: 25});
                         $('#btn_Guardar').jqxButton({width: '65px', height: 25});
-                        $('#btn_Guardar').on('click', function () { 
+                        $('#btn_Guardar').on('click', function () {
                             fn_GrabarDatos();
                         });
                     }
@@ -212,8 +212,9 @@
         });
         //FUNCION PARA ACTUALIZAR DATOS DE LA GRILLA
         function fn_Refrescar() {
-            $("#div_VentanaPrincipal").remove();
             $("#div_ContextMenu").remove();
+            $("#div_VentanaPrincipal").remove();
+            $("#div_GrillaPrincipal").remove();
             var $contenidoAjax = $('#div_Detalle').html('<img src="../Imagenes/Fondos/cargando.gif">');
             $.ajax({
                 type: "GET",
@@ -322,30 +323,29 @@
     });
 </script>
 <div id="div_GrillaPrincipal"></div>
-<div id="cbo_Ajax" style='display: none;'></div>
 <div id="div_VentanaPrincipal" style="display: none" >
     <div>
         <span style="float: left">Especifica Gasto por Tarea Presupuestal : </span>
     </div>
     <div style="overflow: hidden">
-        <form id="frm_ItemEspecifica" name="frm_ItemEspecifica" method="POST"  onsubmit="return false;">        
+        <form id="frm_ItemEspecifica" name="frm_ItemEspecifica" method="POST"  onsubmit="return false;">
             <table width="100%" border="0" cellspacing="0" cellpadding="0"> 
                 <tr>
                     <td class="inputlabel">Tarea : </td>
                     <td>
                         <select id="cbo_Tarea" name="cbo_Tarea">
-                            <option value="0">Seleccione</option>                                    
+                            <option value="0">Seleccione</option>
                         </select>
                     </td> 
-                </tr>               
+                </tr>
                 <tr>
-                    <td colspan="2" style="align-items: center"> <div id='div_Opciones'></div></td>                    
+                    <td colspan="2" style="align-items: center"> <div id='div_Opciones'></div></td>
                 </tr> 
                 <tr>
                     <td class="Summit" colspan="2">
                         <div>
                             <input type="button" id="btn_Guardar"  value="Guardar" style="margin-right: 20px"/>
-                            <input type="button" id="btn_Cancelar" value="Cancelar" style="margin-right: 20px"/>                            
+                            <input type="button" id="btn_Cancelar" value="Cancelar" style="margin-right: 20px"/>
                         </div>
                     </td>
                 </tr>
@@ -353,7 +353,6 @@
         </form>
     </div>
 </div>
-<div id="cbo_Ajax" style='display: none;' ></div>
 <div id='div_ContextMenu' style='display: none;'>
     <ul>
         <li>Eliminar</li>

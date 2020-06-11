@@ -160,6 +160,7 @@
                         formData.append("folios", folios);
                         formData.append("correo", correo);
                         formData.append("archivo", archivo);
+                        var $contenidoAjax = $('#div_VentanaPrincipal').html('<img src="Imagenes/Fondos/cargando.gif">');
                         $.ajax({
                             type: "POST",
                             url: "RegistrarMesaPartes",
@@ -169,6 +170,7 @@
                             contentType: false,
                             processData: false,
                             success: function (data) {
+                                $contenidoAjax.html("");
                                 msg = data;
                                 if (msg === "GUARDO") {
                                     $.confirm({
