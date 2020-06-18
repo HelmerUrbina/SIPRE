@@ -166,8 +166,6 @@ public class RegistrarMesaPartesServlet extends HttpServlet {
     }
 
     private String extractPrintImage(String filePath, JasperPrint print) {
-        System.out.println("prepara iagem");
-        System.out.println(filePath);
         File file = new File(filePath);
         OutputStream ouputStream = null;
         try {

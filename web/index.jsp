@@ -16,7 +16,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
         <meta http-equiv="Expires" content="0"/>
         <meta http-equiv="Last-Modified" content="0"/>
-        <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate"/>
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
         <meta http-equiv="Pragma" content="no-cache"/>
         <meta http-equiv="refresh" content="300; url=index.jsp">
         <title>.:: SIPRE - Sistema Integrado Presupuestal del Ejercito ::.</title>
@@ -57,8 +57,8 @@
                 $("#btn_Ingresar").jqxButton({theme: theme, template: "success", width: '150'});
                 $("#btn_MesaPartes").jqxButton({theme: theme, template: "info", width: '150'});
                 $("#btn_MesaPartes").on('click', function () {
-                    window.location = "MesaPartes.jsp";
-                   /* $.alert({
+                    //window.location = "MesaPartes.jsp";
+                    $.alert({
                         theme: 'material',
                         title: 'Mensaje!',
                         content: "En construcción",
@@ -66,7 +66,7 @@
                         closeAnimation: 'zoom',
                         type: 'orange',
                         typeAnimated: true
-                    });*/
+                    });
                 });
                 $("#btn_Ingresar").on('click', function () {
                     $('#frm_Login').jqxValidator('validate');
@@ -298,7 +298,7 @@
                                 <li class="link"> 6. <a href="Descarga/GlosariodeTerminosFinancieros-MEF.pdf" target="_blank">Glosario de Términos Financieros - MEF</a></li>
                                 <li class="link"> 7. <a href="Descarga/DirectivaEjecucion_0003-2018-OPRE.pdf" target="_blank">Directiva General para la Ejecución del Proceso Presupuestario.</a></li>
                                 <li class="link"> 8. <a href="Descarga/DirectivaOGRE2016.pdf" target="_blank">Directiva N° 001-2016/OGRE.</a></li>
-                                <li class="link"> 9. <a href="Descarga/LineamientoEvaluacion2019.pdf" target="_blank">Lineamientos para la Evaluación AF-2019.</a></li>
+                                <li class="link"> 9. <a href="Descarga/LineamientoComplentariosEvaluacion2020.pdf" target="_blank"><span class="inputlabelred">Lineamientos para la Evaluación AF-2020.</span></a></li>
                             </ul>
                         </div>
                     </div>
@@ -323,14 +323,14 @@
                             <table >
                                 <tr>
                                     <td><label for="usuario">Usuario </label></td>
-                                    <td><input type="text" name="txt_Usuario" id="txt_Usuario" /></td>
+                                    <td><input type="text" name="txt_Usuario" id="txt_Usuario" autocomplete="off"/></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td><label for="password">Password </label></td>
-                                    <td><input type="password" name="txt_Password" id="txt_Password"/></td>
+                                    <td><input type="password" name="txt_Password" id="txt_Password" autocomplete="off"/></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">&nbsp;</td>
@@ -346,7 +346,7 @@
                                 </tr>
                                 <tr>
                                     <td>&nbsp;</td>
-                                    <td><input type="text" name="txt_Verificacion" id="txt_Verificacion" /></td>
+                                    <td><input type="text" name="txt_Verificacion" id="txt_Verificacion" autocomplete="off"/></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">&nbsp;</td>
@@ -377,11 +377,11 @@
                             <ul>
                                 <li class="link"> 1. <a href="Descarga/Directiva001-2014PlaneamientoEstrategico-CEPLAN.pdf" target="_blank">Directiva General del Proceso de Planeamiento Estratégico - CEPLAN.</a></li>
                                 <li class="link"> 2. <a href="Descarga/VinculacióndelPlaneamientoconelPresupuesto-CEPLAN.pdf" target="_blank">Vinculación del Planeamiento con el Presupuesto - CEPLAN.</a></li>
-                                <li class="link"> 3. <a href="Descarga/FormatoProgramacionMultianualGastos2021.xlsx" target="_blank"><span class="inputlabelred">Formato para el Sustento del Anteproyecto del PPTO AF-2021.</span></a></li>
+                                <li class="link"> 3. <a href="Descarga/FormatoProgramacionMultianualGastos2021.xlsx" target="_blank">Formato para el Sustento del Anteproyecto del PPTO AF-2021.</a></li>
                                 <li class="link"> 4. <a href="Descarga/DirectivaProgramacionMultianualFormulacionPPtal.pdf" target="_blank">Directiva de Programación Multianual y Formulación Presupuestaria.</a></li>
-                                <li class="link"> 5. <a href="Descarga/Anexo1-DefinicionesProgramacionMultianual.pdf" target="_blank"><span class="inputlabelred">Definiciones - Programación Multianual.</span></a></li>
-                                <li class="link"> 6. <a href="Descarga/EquivalenciaClasificadoresGastoPMFP2021-2023.pdf" target="_blank"><span class="inputlabelred">Equivalencia de los Clasificadores de Gasto para la P.M. 2021-2023.</span></a></li>
-                                <li class="link"> 7. <a href="Descarga/Directiva001-2020MEFProgramacionMultianual.pdf" target="_blank"><span class="inputlabelred">Directiva de Programación Multianual Presupuestaria y Formulación Presupuestaria.</span></a></li>
+                                <li class="link"> 5. <a href="Descarga/Anexo1-DefinicionesProgramacionMultianual.pdf" target="_blank">Definiciones - Programación Multianual.</a></li>
+                                <li class="link"> 6. <a href="Descarga/Anexo2-EquivalenciaClasificadoresGasto2021-2023.pdf" target="_blank"><span class="inputlabelred">Equivalencia de los Clasificadores de Gasto para la P.M. 2021-2023.</span></a></li>
+                                <li class="link"> 7. <a href="Descarga/Directiva001-2020MEFProgramacionMultianual.pdf" target="_blank">Directiva de Programación Multianual Presupuestaria y Formulación Presupuestaria.</a></li>
                             </ul>
                         </div>
                     </div>
@@ -389,11 +389,10 @@
                         <div style="text-align: center">EJECUCIÓN PRESUPUESTAL</div>
                         <div>
                             <ul>
-                                <li class="link"> 1. <a href="Descarga/FaxMultiple2020-0029-OPRE.pdf" target="_blank">Fax Mult. N° 0029 - Sobre Ejecución Presupuestal y Financiera de los Recursos Destinados al EP, en aplicación al estado de Emergencia en aras de mitigar la proliferación del COVID-19.</a></li>
-                                <li class="link"> 2. <a href="Descarga/FaxMultiple2020-0031-OPRE.pdf" target="_blank">Fax Mult. N° 0031 - Sobre Continuidad de Procedimientos de Selección.</a></li>
-                                <li class="link"> 3. <a href="Descarga/FaxMultiple2020-0038-OPRE.pdf" target="_blank">Fax Mult. N° 0038 - Actividades Operativas para la formulación del POIM AF 2021-2023.</a></li>
-                                <li class="link"> 4. <a href="Descarga/FaxMultiple2020-0039-OPRE.pdf" target="_blank">Fax Mult. N° 0039 - Remisión de CNV para la Fase de Programación Multianual AF 2021-2023.</a></li>
-                                <li class="link"> 5. <a href="Descarga/FaxMultiple2020-0048-OPRE.pdf" target="_blank"><span class="inputlabelred">Fax Mult. N° 0048 - Sustentación de Ampliación de la PCA.</span></a></li>
+                                <li class="link"> 1. <a href="Descarga/FaxMultiple2020-0039-OPRE.pdf" target="_blank">Fax Mult. N° 0039 - Remisión de CNV para la Fase de Programación Multianual AF 2021-2023.</a></li>
+                                <li class="link"> 2. <a href="Descarga/FaxMultiple2020-0048-OPRE.pdf" target="_blank">Fax Mult. N° 0048 - Sustentación de Ampliación de la PCA.</a></li>
+                                <li class="link"> 3. <a href="Descarga/FaxMultiple2020-0052-OPRE.pdf" target="_blank"><span class="inputlabelred">Fax Mult. N° 0052 - Evaluación Presupuestal al 1er Semestre AF-2020 “Lineamientos Complementarios para la Evaluación del Presupuesto Institucional del al UE 003: Ejercito Peruano AF-2020”.</span></a></li>
+                                <li class="link"> 4. <a href="Descarga/FaxMultiple2020-0053-OPRE.pdf" target="_blank"><span class="inputlabelred">Fax Mult. N° 0053 - Evaluación Presupuestal al 1er Semestre AF-2020 “Lineamientos Complementarios para la Evaluación del Presupuesto Institucional del al UE 003: Ejercito Peruano AF-2020”.</span></a></li>
                             </ul>
                         </div>
                     </div>

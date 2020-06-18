@@ -1,5 +1,6 @@
 package Utiles;
 
+import com.sun.mail.smtp.SMTPTransport;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
@@ -22,10 +23,10 @@ public class JavaMail {
     private String imagen = "";
 
     public JavaMail() {
+
     }
 
     public JavaMail(String correo, String archivo) {
-        System.out.println(correo + " " + archivo);
         imagen = archivo;
         TO = correo;
         BODY = String.join(
@@ -42,22 +43,52 @@ public class JavaMail {
         );
     }
 
-    public String SendMail() throws IOException {
+    public String SendMail() throws IOException, MessagingException {
         Properties properties = System.getProperties();
         //cargamos el archivo de configuracion
-        properties.load(new JavaMail().getClass().getResourceAsStream("gmail.properties"));
+        properties.load(new JavaMail().getClass().getResourceAsStream("chasqui.properties"));
+        //properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.port", "25");
+        properties.put("mail.port", "25");
+        properties.put("mail.smtp.ssl.enable", "true");
+        properties.put("mail.smtp.ssl.trust", "chasqui.ejercito.mil.pe");
+        //properties.put("mail.smtp.socketFactory.port", "25");
+        //properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        //properties.put("mail.smtp.socketFactory.fallback", "false");
+        properties.put("mail.smtp.starttls.enable", "false");
+        properties.put("mail.smtp.starttls.required", "true");
+        
+        //properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        //properties.put("mail.smtp.socketFactory.port", "25");
+        //properties.put("mail.smtp.socketFactory.fallback", "false");
+        //
+        //properties.put("mail.smtp.ehlo", "false");
+        //
+        //properties.put("mail.smtp.auth.login.disable", "true");
+        // properties.put("mail.smtp.auth.ntlm.domain", "ep/kcanoh");
+
+//ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2010_SP1); // your server version/
+        //
+        //properties.put("mail.debug.auth", "true");
+        //properties.put("mail.smtp.auth.mechanisms", "NTLM");
+        //properties.put("mail.smtp.auth.ntlm.domain", "ep.mil.pe");
+        //
+        //
+        //properties.put("mail.smtp.ssl.checkserveridentity", "false");
         Session session = Session.getInstance(properties,
                 new javax.mail.Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(properties.getProperty("mail.user"), properties.getProperty("mail.password"));
+                return new PasswordAuthentication(properties.getProperty("mail.smtp.user"), properties.getProperty("mail.smtp.password"));
             }
         });
         try {
+            //session.setDebug(true);
             MimeMessage msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress(properties.getProperty("mail.user"), properties.getProperty("mail.from")));
+            msg.setFrom(new InternetAddress(properties.getProperty("mail.smtp.user"), properties.getProperty("mail.smtp.from")));
             msg.setRecipient(Message.RecipientType.TO, new InternetAddress(TO));
-            msg.setSubject(properties.getProperty("mail.subject"));
+            msg.setSubject(properties.getProperty("mail.smtp.subject"));
             // Handle attachment 1
             MimeBodyPart messageBodyPart1 = new MimeBodyPart();
             messageBodyPart1.attachFile(imagen);
@@ -75,13 +106,17 @@ public class JavaMail {
             multipart.addBodyPart(imageBodypart);
             multipart.addBodyPart(messageBodyPart1);
             msg.setContent(multipart);
-            Transport transport = session.getTransport();
-            transport.connect(properties.getProperty("mail.smtp.host"), properties.getProperty("mail.user"), properties.getProperty("mail.password"));
+            SMTPTransport transport = (SMTPTransport) session.getTransport("smtp");
+            //Transport transport = session.getTransport();
+            System.out.println("Preparando envio");
+            transport.connect(properties.getProperty("mail.smtp.host"), properties.getProperty("mail.smtp.user"), properties.getProperty("mail.smtp.password"));
+            //transport.connect();
             transport.sendMessage(msg, msg.getAllRecipients());
             System.out.println("Correo enviado");
             return "VCorreo Enviado con Exito";
         } catch (MessagingException | UnsupportedEncodingException e) {
             System.out.println(e.getMessage());
+
             return "F" + e.getMessage();
         }
     }

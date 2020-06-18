@@ -6,12 +6,17 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
     var autorizacion = '${autorizacion}';
-    //if(autorizacion==='false'){
-    //window.location = "../Error/PaginaMantenimiento.jsp";
-    //}
     var periodo = $("#cbo_Periodo").val();
     var presupuesto = $("#cbo_Presupuesto").val();
     var unidadOperativa = $("#cbo_UnidadOperativa").val();
+    if (autorizacion === 'false') {
+        if (unidadOperativa !== '0870') {
+            if (unidadOperativa !== '0775') {
+                window.location = "../Error/PaginaMantenimiento.jsp";
+            }
+        }
+    }
+
     var codigo = null;
     var mode = null;
     var tipo = null;
@@ -240,17 +245,17 @@
                     $("#div_GrillaPrincipal").jqxGrid('exportdata', 'xls', 'ProgramacionPresupuestal');
                 });
                 ButtonReporte.click(function (event) {
-                    $.alert({
-                        theme: 'material',
-                        title: 'AVISO DEL SISTEMA',
-                        content: 'La impresión se encuentra deshabilitada, coordine con el Dpto de Programación.',
-                        animation: 'zoom',
-                        closeAnimation: 'zoom',
-                        type: 'red',
-                        typeAnimated: true
-                    });
-                    //var url = '../Reportes?reporte=PROG0005&periodo=' + periodo + '&unidadOperativa=' + unidadOperativa + '&presupuesto=' + presupuesto;
-                    //window.open(url, '_blank');
+                    /* $.alert({
+                     theme: 'material',
+                     title: 'AVISO DEL SISTEMA',
+                     content: 'La impresión se encuentra deshabilitada, coordine con el Dpto de Programación.',
+                     animation: 'zoom',
+                     closeAnimation: 'zoom',
+                     type: 'red',
+                     typeAnimated: true
+                     });*/
+                    var url = '../Reportes?reporte=PROG0005&periodo=' + periodo + '&unidadOperativa=' + unidadOperativa + '&presupuesto=' + presupuesto;
+                    window.open(url, '_blank');
                 });
             },
             initRowDetails: initRowDetails,

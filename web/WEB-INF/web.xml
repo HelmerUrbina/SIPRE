@@ -6,9 +6,19 @@
             15
         </session-timeout>
     </session-config>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
     <resource-ref>
         <description>Pool de Conexiones DataBase</description>
         <res-ref-name>OPREDB</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+    </resource-ref>
+    <resource-ref>
+        <description>jdbc:mysql://D165-006:3306/biostar2_ac?zeroDateTimeBehavior=convertToNull</description>
+        <res-ref-name>BIOSTAR</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
         <res-sharing-scope>Shareable</res-sharing-scope>
@@ -33,9 +43,6 @@
         <servlet-name>SimpleCaptcha</servlet-name>
         <url-pattern>/ImgCaptcha</url-pattern>
     </servlet-mapping>
-    <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
-    </welcome-file-list>
     <error-page>
         <exception-type>java.lang.NullPointerException</exception-type>
         <location>/FinSession.jsp</location>
@@ -48,11 +55,4 @@
         <error-code>403</error-code>
         <location>/ErrorPagina</location>
     </error-page>
-    <resource-ref>
-        <description>jdbc:mysql://D165-006:3306/biostar2_ac?zeroDateTimeBehavior=convertToNull</description>
-        <res-ref-name>BIOSTAR</res-ref-name>
-        <res-type>javax.sql.DataSource</res-type>
-        <res-auth>Container</res-auth>
-        <res-sharing-scope>Shareable</res-sharing-scope>
-    </resource-ref>
 </web-app>

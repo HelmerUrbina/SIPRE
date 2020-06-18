@@ -8,11 +8,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta http-equiv="Expires" content="0">
-        <meta http-equiv="Last-Modified" content="0">
-        <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
-        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+        <meta http-equiv="Expires" content="0"/>
+        <meta http-equiv="Last-Modified" content="0"/>
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+        <meta http-equiv="Pragma" content="no-cache"/>
+        <meta http-equiv="refresh" content="300; url=index.jsp">
+        <title>.:: SIPRE - Sistema Integrado Presupuestal del Ejercito ::.</title>
         <link type="text/css" rel="stylesheet" href="css/styles/jqx.base.css">
         <link type="text/css" rel="stylesheet" href="css/scaf.css">
         <link type="text/css" rel="stylesheet" href="css/jquery-confirm.css">
@@ -36,7 +38,6 @@
         <script type="text/javascript" src="javascript/jqwidgets/globalization/globalize.js"></script>
         <script type="text/javascript" src="javascript/jqwidgets/globalization/globalize.culture.es-PE.js"></script>
         <script type="text/javascript" src="javascript/jqwidgets/jqxdata.js"></script>
-        <title>.:: SIPRE - Registro de Mesa de Partes ::.</title>
         <script type="text/javascript">
             var tipo = "E";
             var institucion = '';
@@ -236,7 +237,7 @@
                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                             <td class="inputlabel">Instituci&oacute;n : </td>
-                            <td><input type="text" id="txt_Institucion" name="txt_Institucion" style="text-transform: uppercase;"/></td>
+                            <td><input type="text" id="txt_Institucion" name="txt_Institucion" style="text-transform: uppercase;" autocomplete="off"/></td>
                         </tr>
                         <tr>
                             <td class="inputlabel">Prioridad : </td>
