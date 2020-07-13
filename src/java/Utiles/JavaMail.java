@@ -46,36 +46,7 @@ public class JavaMail {
     public String SendMail() throws IOException, MessagingException {
         Properties properties = System.getProperties();
         //cargamos el archivo de configuracion
-        properties.load(new JavaMail().getClass().getResourceAsStream("chasqui.properties"));
-        //properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.port", "25");
-        properties.put("mail.port", "25");
-        properties.put("mail.smtp.ssl.enable", "true");
-        properties.put("mail.smtp.ssl.trust", "chasqui.ejercito.mil.pe");
-        //properties.put("mail.smtp.socketFactory.port", "25");
-        //properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        //properties.put("mail.smtp.socketFactory.fallback", "false");
-        properties.put("mail.smtp.starttls.enable", "false");
-        properties.put("mail.smtp.starttls.required", "true");
-        
-        //properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        //properties.put("mail.smtp.socketFactory.port", "25");
-        //properties.put("mail.smtp.socketFactory.fallback", "false");
-        //
-        //properties.put("mail.smtp.ehlo", "false");
-        //
-        //properties.put("mail.smtp.auth.login.disable", "true");
-        // properties.put("mail.smtp.auth.ntlm.domain", "ep/kcanoh");
-
-//ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2010_SP1); // your server version/
-        //
-        //properties.put("mail.debug.auth", "true");
-        //properties.put("mail.smtp.auth.mechanisms", "NTLM");
-        //properties.put("mail.smtp.auth.ntlm.domain", "ep.mil.pe");
-        //
-        //
-        //properties.put("mail.smtp.ssl.checkserveridentity", "false");
+        properties.load(new JavaMail().getClass().getResourceAsStream("correo.properties"));
         Session session = Session.getInstance(properties,
                 new javax.mail.Authenticator() {
             @Override
@@ -110,7 +81,6 @@ public class JavaMail {
             //Transport transport = session.getTransport();
             System.out.println("Preparando envio");
             transport.connect(properties.getProperty("mail.smtp.host"), properties.getProperty("mail.smtp.user"), properties.getProperty("mail.smtp.password"));
-            //transport.connect();
             transport.sendMessage(msg, msg.getAllRecipients());
             System.out.println("Correo enviado");
             return "VCorreo Enviado con Exito";

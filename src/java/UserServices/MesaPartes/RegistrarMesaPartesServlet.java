@@ -121,7 +121,7 @@ public class RegistrarMesaPartesServlet extends HttpServlet {
             // EN CASO DE HABER PROBLEMAS DESPACHAMOS UNA VENTANA DE ERROR, MOSTRANDO EL ERROR OCURRIDO.
             objBnMsgerr = new BeanMsgerr();
             objBnMsgerr.setUsuario("0000");
-            objBnMsgerr.setTabla("SIPE_DOCUMENTO");
+            objBnMsgerr.setTabla("OPREFA_MESA_PARTES");
             objBnMsgerr.setTipo(objBnMesaParte.getMode());
             objDsMsgerr = new MsgerrDAOImpl(objConnection);
             objBnMsgerr = objDsMsgerr.getMsgerr(objBnMsgerr);

@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="192"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -15,7 +15,7 @@
 		<defaultValueExpression><![CDATA["0860"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["2018"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["2020"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[".."]]></defaultValueExpression>
@@ -44,7 +44,7 @@ NMD.VCADENA_GASTO_CODIGO||' '||UTIL.FUN_NOMBRE_CADGAS(NMD.VCADENA_GASTO_CODIGO) 
 UPPER(NMD.VNOTA_MODIFICATORIA_JUSTIFICA) JUSTIFICACION,
 SUM(case NMD.CNOTA_MODIFICATORIA_TIPO WHEN 'C' THEN NMD.NNOTA_MODIFICATORIA_IMPORTE ELSE 0.00 END) CREDITO,
 SUM(case NMD.CNOTA_MODIFICATORIA_TIPO WHEN 'A' THEN NMD.NNOTA_MODIFICATORIA_IMPORTE ELSE 0.00 END) ANULACION,
-SUM(NNOTA_MODIFICATORIA_PIA) AS PIM,
+SUM(NNOTA_MODIFICATORIA_PIA) AS PIM, SUM(CASE CNOTA_MODIFICATORIA_PCA WHEN 'N' THEN 1 ELSE 0 END) PCA,
 NMD.CMETA_OPERATIVA_CODIGO AS COD_SMP,
 CSECUENCIA_FUNCIONAL_CODIGO SECFUN,
 CDEPENDENCIA_CODIGO AS CODDEP,
@@ -85,6 +85,7 @@ SMP,CADENA_GASTO]]>
 	<field name="CREDITO" class="java.math.BigDecimal"/>
 	<field name="ANULACION" class="java.math.BigDecimal"/>
 	<field name="PIM" class="java.math.BigDecimal"/>
+	<field name="PCA" class="java.math.BigDecimal"/>
 	<field name="COD_SMP" class="java.lang.String"/>
 	<field name="SECFUN" class="java.lang.String"/>
 	<field name="CODDEP" class="java.lang.String"/>
@@ -164,6 +165,9 @@ SMP,CADENA_GASTO]]>
 	</variable>
 	<variable name="SUMA_UNI_NUEVO_PIM" class="java.math.BigDecimal" resetType="Group" resetGroup="UNIDAD" calculation="Sum">
 		<variableExpression><![CDATA[new BigDecimal(  ($F{PIM}.doubleValue()) +($F{CREDITO}.doubleValue()) -($F{ANULACION}.doubleValue()))]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_PCA" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{PCA}]]></variableExpression>
 	</variable>
 	<group name="PERIODO">
 		<groupExpression><![CDATA[$F{PERIODO}]]></groupExpression>
@@ -1058,6 +1062,14 @@ SMP,CADENA_GASTO]]>
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band splitType="Stretch"/>
+		<band height="25" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="10" width="786" height="15" isPrintWhenDetailOverflows="true" uuid="aef86136-ce12-4cb6-82b7-038e50d94d32"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $V{TOTAL_PCA}.intValue()>0 ? "LA NOTA MODIFICATORIA NO CUENTA CON PCA DISPONIBLE, UNA VEZ APROBADA SIRVASE REALIZAR LA PRIORIZACION DE PCA RESPECTIVA." : " " )]]></textFieldExpression>
+			</textField>
+		</band>
 	</summary>
 </jasperReport>

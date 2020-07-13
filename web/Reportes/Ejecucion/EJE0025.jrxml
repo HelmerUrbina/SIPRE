@@ -9,19 +9,19 @@
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["2017"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["2020"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["0410"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["0387"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PRESUPUESTO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["6"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="USUARIO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["622624800"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["43305891"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT C.CPERIODO_CODIGO AS PERIODO, C.CCONSOLIDADO_NOTA AS CONSOLIDADO,
