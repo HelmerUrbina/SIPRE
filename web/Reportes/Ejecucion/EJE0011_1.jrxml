@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="2.357947691000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="64"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -21,7 +21,7 @@
 		<defaultValueExpression><![CDATA["0000012A"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="USUARIO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["43987155"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -43,7 +43,7 @@ SECFUN,util_new.fun_desmet(TC.codper,TC.coppto,secfun) desmet,
 comeop, util_new.fun_nomeop(comeop)nomeop,
 cocaga, util_new.fun_nombre_cadena_gasto(cocaga) nocaga,
 SUM(DC.import) IMPORT, SUM(DC.impdol) IMPDOL,
-case ESTCCP when 'AN' then 'ANULADA' ELSE '' END ESTADO,
+(SELECT CASE WHEN TRIM(DIPPTO)='S' THEN (case ESTCCP when 'AN' then 'ANULADA' ELSE '' END) ELSE 'COPIA' END FROM TABUSU WHERE  CODUSU=$P{USUARIO} AND ESTREG='AC')  ESTADO,
 CASE WHEN UTIL_NEW.FUN_MEMORAMDUN_COMPROMISO(TC.CODPER,TC.COPPTO,TC.NROCOB) IS NULL THEN ' ' ELSE 'MEMORANDUM : '||UTIL_NEW.FUN_MEMORAMDUN_COMPROMISO(TC.CODPER,TC.COPPTO,TC.NROCOB) END AS MEMORANDUN,
 (select tabprs.codprs from tabprs,tapsre where tapsre.codper=tabprs.codper and tapsre.codprs=tabprs.codprs and tapsre.capsre='1' and tapsre.codrpt='046' and tabprs.codper = TC.CODPER) as firma1,
 (select tabprs.apeprs from tabprs,tapsre where tapsre.codper=tabprs.codper and tapsre.codprs=tabprs.codprs and tapsre.capsre='1' and tapsre.codrpt='046' and tabprs.codper = TC.CODPER) as firma1a,

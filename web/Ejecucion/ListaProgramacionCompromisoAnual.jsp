@@ -1,5 +1,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
+    var autorizacion = '${autorizacion}';
+    if (!autorizacion)
+        window.location = "../Login/Principal.jsp";
     var periodo = $("#cbo_Periodo").val();
     var presupuesto = $("#cbo_Presupuesto").val();
     var unidadOperativa = $("#cbo_UnidadOperativa").val();
@@ -48,6 +51,27 @@
             id: 'codigo'
         };
         var dataAdapter = new $.jqx.dataAdapter(sourceCab);
+        //PARA LA GRILLA DETALLE
+        var sourceDetalle = {
+            datafields: [
+                {name: "codigo", type: "string"},
+                {name: "usuario", type: "string"},
+                {name: "fecha", type: "string"},
+                {name: "anulacion", type: "number"},
+                {name: "credito", type: "number"},
+                {name: "variacion", type: "number"}
+            ],
+            pager: function (pagenum, pagesize, oldpagenum) {
+                // callback called when a page or page size is changed.
+            },
+            addrow: function (rowid, rowdata, position, commit) {
+                commit(true);
+            },
+            updaterow: function (rowid, rowdata, commit) {
+                commit(true);
+            }
+        };
+        var dataDetalle = new $.jqx.dataAdapter(sourceDetalle);
         //PARA CARGAR LOS ELEMENTOS DE LA GRILLA DETALLE 
         var sourceDet = {
             datatype: "array",
@@ -63,7 +87,8 @@
                         {name: "pca", type: "number"},
                         {name: "disponible", type: "number"},
                         {name: "anulacion", type: "number"},
-                        {name: "credito", type: "number"}
+                        {name: "credito", type: "number"},
+                        {name: "pcaNueva", type: "number"}
                     ],
             updaterow: function (rowid, rowdata, commit) {
                 //condición ? expr1 : expr2  undefined
@@ -74,16 +99,16 @@
                 var credito = (isNaN(rowdata['credito'])) ? parseFloat(0) : parseFloat(rowdata['credito']);
                 var msg = "";
                 if (parseFloat(anulacion) !== 0 && parseFloat(credito) !== 0)
-                    msg = "Solo debe ingresar la Anulación o Credito. Revise!!";
+                    msg = "Solo debe ingresar la Anulación o Credito. Revise!!.<br>";
                 if (parseFloat(anulacion) > Math.abs(parseFloat(disponible)) || parseFloat(credito) > Math.abs(parseFloat(disponible)))
-                    msg = "Monto ingresado supera el Monto Disponible. Revise!!";
+                    msg = "Monto ingresado supera el Monto Disponible. Revise!!.<br>";
                 if (parseFloat(anulacion) !== 0) {
                     if (parseFloat(disponible) > 0)
-                        msg += "Monto no permitido!!";
+                        msg += "Su saldo es : " + parseFloat(disponible);
                 }
                 if (parseFloat(credito) !== 0) {
-                    if (parseFloat(credito) > (parseFloat(pim) - parseFloat(pca)))
-                        msg += "Monto no permitido!!.";
+                    if (parseFloat(credito) > parseFloat(parseFloat(pim) - parseFloat(pca)).toFixed(2))
+                        msg += "Su saldo es : " + parseFloat(parseFloat(pim) - parseFloat(pca)).toFixed(2);
                 }
                 if (msg !== "") {
                     $.alert({
@@ -97,19 +122,21 @@
                     });
                     commit(false);
                 } else {
+                    // rowdata['pcaNueva']= ;
+                    $("#div_GrillaRegistro").jqxGrid('setcellvaluebyid', rowid, "pcaNueva", parseFloat(pca + credito - anulacion));
                     commit(true);
                 }
             }
         };
         var dataVariacion = new $.jqx.dataAdapter(sourceDet);
         var cellclass = function (row, datafield, value, rowdata) {
-            if (datafield === "pia" || datafield === "pca") {
+            if (datafield === "pia" || datafield === "pca" || datafield === "variacion") {
                 return "RowBold";
             }
-            if (datafield === "pim") {
+            if (datafield === "pim" || datafield === "credito") {
                 return "RowBlue";
             }
-            if (datafield === "saldoPCA") {
+            if (datafield === "saldoPCA" || datafield === "anulacion") {
                 return "RowRed";
             }
             if (datafield === "anual") {
@@ -118,10 +145,10 @@
             if (datafield === "compromiso") {
                 return "RowDarkBlue";
             }
-            if (datafield === "mensual") {
+            if (datafield === "mensual" || datafield === "disponible") {
                 return "RowPurple";
             }
-            if (datafield === "saldoAnual" || datafield === "saldoCompromiso" || datafield === "saldoMensual") {
+            if (datafield === "saldoAnual" || datafield === "saldoCompromiso" || datafield === "saldoMensual" || datafield === "pcaNueva") {
                 return "RowBrown";
             }
         };
@@ -160,7 +187,7 @@
                 reporteButton.jqxButton({width: 30, height: 22});
                 reporteButton.jqxTooltip({position: 'bottom', content: "Reportes"});
                 ButtonDetalle.click(function (event) {
-                    fn_CargarVariacionPCA();
+                    fn_RefrescarDetalle();
                     $('#div_VentanaPrincipal').jqxWindow({isModal: true, modalOpacity: 0.9});
                     $('#div_VentanaPrincipal').jqxWindow('open');
                 });
@@ -192,17 +219,79 @@
                 {text: 'ACTIVIDAD', dataField: 'actividad', filtertype: 'checkedlist', width: '20%', align: 'center', cellclassname: cellclass}
             ]
         });
-        //Seleccionar un Registro de la Cabecera
-        $("#div_GrillaPrincipal").on('rowselect', function (event) {
+        $("#div_GrillaDetalle").jqxGrid({
+            width: '100%',
+            height: '100%',
+            source: dataDetalle,
+            autoheight: false,
+            autorowheight: false,
+            altrows: true,
+            sortable: true,
+            pageable: true,
+            columnsresize: true,
+            editable: false,
+            showtoolbar: true,
+            rendertoolbar: function (toolbar) {
+                // appends buttons to the status bar.
+                var container = $("<div style='overflow: hidden; position: relative; margin: 1px;'></div>");
+                var addButtonDet = $("<div style='float: left; margin-left: 5px;'><img style='position: relative; margin-top: 2px;' src='../Imagenes/Botones/nuevo42.gif' width=18 height=18 /><span style='margin-left: 4px; position: relative; top: -3px;'></span></div>");
+                var reportButtonDet = $("<div style='float: left; margin-left: 5px;'><img style='position: relative; margin-top: 2px;' src='../Imagenes/Botones/printer42.gif' width=18 height=18/><span style='margin-left: 4px; position: relative; top: -3px;'></span></div>");
+                var refreshButtonDet = $("<div style='float: left; margin-left: 5px;'><img style='position: relative; margin-top: 2px;' src='../Imagenes/Botones/refresh42.gif' width=18 height=18/><span style='margin-left: 4px; position: relative; top: -3px;'></span></div>");
+                container.append(addButtonDet);
+                container.append(reportButtonDet);
+                container.append(refreshButtonDet);
+                toolbar.append(container);
+                addButtonDet.jqxButton({width: 30, height: 22});
+                addButtonDet.jqxTooltip({position: 'bottom', content: "Nuevo Registro"});
+                reportButtonDet.jqxButton({width: 30, height: 22});
+                reportButtonDet.jqxTooltip({position: 'bottom', content: "Reporte"});
+                refreshButtonDet.jqxButton({width: 30, height: 22});
+                refreshButtonDet.jqxTooltip({position: 'bottom', content: "Actualizar Datos"});
+                // add new row.
+                addButtonDet.click(function (event) {
+                    fn_CargarVariacionPCA();
+                    $('#div_VentanaDetalle').jqxWindow({isModal: true, modalOpacity: 0.9});
+                    $('#div_VentanaDetalle').jqxWindow('open');
+                });
+                // report selected row. 
+                reportButtonDet.click(function (event) {
+                    if (codigo !== null) {
+                        var url = '../Reportes?reporte=EJE0046&periodo=' + periodo + '&presupuesto=' + presupuesto + '&unidadOperativa=' + unidadOperativa + '&codigo=' + codigo;
+                        window.open(url, '_blank');
+                    } else {
+                        $.alert({
+                            theme: 'material',
+                            title: 'AVISO DEL SISTEMA',
+                            content: 'Debe Seleccionar un Registro!!',
+                            animation: 'zoom',
+                            closeAnimation: 'zoom',
+                            type: 'red',
+                            typeAnimated: true
+                        });
+                    }
+                });
+                refreshButtonDet.click(function (event) {
+                    fn_RefrescarDetalle();
+                });
+            },
+            columns: [
+                {text: 'N°', datafield: 'codigo', width: "6%", align: 'center', cellsAlign: 'center'},
+                {text: 'USUARIO', datafield: 'usuario', width: "31%", align: 'center', cellsAlign: 'center'},
+                {text: 'FECHA', datafield: 'fecha', width: "12%", align: 'center', cellsAlign: 'center'},
+                {text: 'ANULACIÓN (-)', datafield: 'anulacion', width: "17%", align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass},
+                {text: 'CRÉDITO (+)', datafield: 'credito', width: "17%", align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass},
+                {text: 'VARIACIÓN', datafield: 'variacion', width: "17%", align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass}
+            ]
+        });
+        $("#div_GrillaDetalle").on('rowselect', function (event) {
             var args = event.args;
-            var row = $("#div_GrillaPrincipal").jqxGrid('getrowdata', args.rowindex);
+            var row = $("#div_GrillaDetalle").jqxGrid('getrowdata', args.rowindex);
             codigo = row['codigo'];
-            tarea = row['tarea'];
         });
         //EVENTOS GRILLA DETALLE
         $("#div_GrillaRegistro").jqxGrid({
             width: '100%',
-            height: 455,
+            height: 430,
             source: dataVariacion,
             pageable: true,
             columnsresize: true,
@@ -217,9 +306,9 @@
             sortable: true,
             filterable: true,
             columns: [
-                {text: 'DEPENDENCIA', datafield: 'dependencia', editable: false, width: '8%', align: 'center'},
-                {text: 'TAREA', datafield: 'tareaPresupuestal', editable: false, width: '14%', align: 'center'},
-                {text: 'CADENA GASTO', datafield: 'cadenaGasto', editable: false, width: '18%', align: 'center', aggregates: [{'<b>Totales : </b>':
+                {text: 'DEPENDENCIA', datafield: 'dependencia', editable: false, width: '7%', align: 'center'},
+                {text: 'TAREA', datafield: 'tareaPresupuestal', editable: false, width: '9%', align: 'center'},
+                {text: 'CADENA GASTO', datafield: 'cadenaGasto', editable: false, width: '12%', align: 'center', aggregates: [{'<b>Totales : </b>':
                                     function () {
                                         return  "";
                                     }}]},
@@ -246,6 +335,7 @@
                     createeditor: function (row, cellvalue, editor) {
                         editor.jqxNumberInput({decimalDigits: 2, digits: 15});
                     }},
+                {text: 'NUEVA PCA', dataField: 'pcaNueva', editable: false, width: '12%', align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass, aggregates: ['sum']},
                 {text: 'SEC. FUNC.', datafield: 'secuenciaFuncional', editable: false, width: '35%', align: 'center'},
                 {text: 'RESOLUCIÓN', datafield: 'resolucion', editable: false, width: '15%', align: 'center'}
             ]
@@ -259,19 +349,56 @@
                 //INICIA LOS VALORES DE LA VENTANA
                 var posicionX, posicionY;
                 var ancho = 950;
-                var alto = 550;
+                var alto = 500;
                 posicionX = ($(window).width() / 2) - (ancho / 2);
                 posicionY = ($(window).height() / 2) - (alto / 2);
                 $('#div_VentanaPrincipal').jqxWindow({
                     position: {x: posicionX, y: posicionY},
                     width: ancho, height: alto, resizable: false,
+                    initContent: function () {
+                    }
+                });
+                $('#div_VentanaPrincipal').on('close', function (event) {
+                    fn_Refrescar();
+                });
+                ancho = 950;
+                alto = 550;
+                posicionX = ($(window).width() / 2) - (ancho / 2);
+                posicionY = ($(window).height() / 2) - (alto / 2);
+                $('#div_VentanaDetalle').jqxWindow({
+                    position: {x: posicionX, y: posicionY},
+                    width: ancho, height: alto, resizable: false,
                     cancelButton: $('#btn_Cancelar'),
                     initContent: function () {
+                        $("#cbo_TipoCambio").jqxDropDownList({animationType: 'fade', width: 300, height: 20});
+                        $('#cbo_TipoCambio').on('change', function () {
+                            var rows = $('#div_GrillaRegistro').jqxGrid('getrows');
+                            var column = "";
+                            if ($('#cbo_TipoCambio').val() === '2') {
+                                column = "anulacion";
+                            }
+                            if ($('#cbo_TipoCambio').val() === '3') {
+                                column = "credito";
+                            }
+                            for (var i = 0; i < rows.length; i++) {
+                                $("#div_GrillaRegistro").jqxGrid('setcellvalue', i, column, "0");
+                            }
+                        });
                         $("#txt_DocumentoReferencia").jqxInput({placeHolder: "Ingrese Documento de Referencia", width: 650, height: 20, minLength: 1});
                         $('#btn_Cancelar').jqxButton({width: '65px', height: 25});
                         $('#btn_Guardar').jqxButton({width: '65px', height: 25});
                         $('#btn_Guardar').on('click', function () {
-                            fn_GrabarDatos();
+                            $('#frm_ProgramacionCompromisoAnual').jqxValidator('validate');
+                        });
+                        $('#frm_ProgramacionCompromisoAnual').jqxValidator({
+                            rules: [
+                                {input: '#txt_DocumentoReferencia', message: 'Ingrese el Documento!', action: 'keyup, blur', rule: 'required'}
+                            ]
+                        });
+                        $('#frm_ProgramacionCompromisoAnual').jqxValidator({
+                            onSuccess: function () {
+                                fn_GrabarDatos();
+                            }
                         });
                     }
                 });
@@ -352,19 +479,50 @@
         function fn_Refrescar() {
             $("#div_GrillaPrincipal").remove();
             $("#div_VentanaPrincipal").remove();
+            $("#div_VentanaDetalle").remove();
             $("#div_Reporte").remove();
             var $contenidoAjax = $('#div_Detalle').html('<img src="../Imagenes/Fondos/cargando.gif">');
             $.ajax({
-                type: "POST",
-                url: "../CalendarioGastos",
+                type: "GET",
+                url: "../ProgramacionCompromisoAnual",
                 data: {mode: "G", periodo: periodo, presupuesto: presupuesto, unidadOperativa: unidadOperativa},
                 success: function (data) {
                     $contenidoAjax.html(data);
                 }
             });
         }
+        //FUNCION PARA REFRESCAR EL DETALLE
+        function fn_RefrescarDetalle() {
+            $('#div_GrillaDetalle').jqxGrid('clear');
+            $.ajax({
+                type: "GET",
+                url: "../ProgramacionCompromisoAnual",
+                data: {mode: 'B', periodo: periodo, presupuesto: presupuesto, unidadOperativa: unidadOperativa},
+                success: function (data) {
+                    data = data.replace("[", "");
+                    var fila = data.split("[");
+                    var rows = new Array();
+                    for (i = 1; i < fila.length; i++) {
+                        var columna = fila[i];
+                        var datos = columna.split("+++");
+                        while (datos[4].indexOf(']') > 0) {
+                            datos[4] = datos[4].replace("]", "");
+                        }
+                        while (datos[4].indexOf(',') > 0) {
+                            datos[4] = datos[4].replace(",", "");
+                        }
+                        var row = {codigo: datos[0], usuario: datos[1], fecha: datos[2], anulacion: parseFloat(datos[3]), credito: parseFloat(datos[4]), variacion: parseFloat(datos[4] - datos[3])};
+                        rows.push(row);
+                    }
+                    if (rows.length > 0)
+                        $("#div_GrillaDetalle").jqxGrid('addrow', null, rows);
+                }
+            });
+        }
         //FUNCION PARA CARGAR VENTANA PARA EDITAR REGISTRO
         function fn_CargarVariacionPCA() {
+            $("#cbo_TipoCambio").jqxDropDownList('setContent', 'Seleccione');
+            $("#txt_DocumentoReferencia").val("");
             $('#div_GrillaRegistro').jqxGrid('clear');
             $.ajax({
                 type: "GET",
@@ -383,8 +541,10 @@
                         while (datos[8].indexOf(',') > 0) {
                             datos[8] = datos[8].replace(",", "");
                         }
-                        var row = {codigo: datos[0], dependencia: datos[1], resolucion: datos[2], secuenciaFuncional: datos[3], tareaPresupuestal: datos[4],
-                            cadenaGasto: datos[5], pim: parseFloat(datos[6]), pca: parseFloat(datos[7]), disponible: parseFloat(datos[8])};
+                        var row = {codigo: datos[0], dependencia: datos[1], resolucion: datos[2],
+                            secuenciaFuncional: datos[3], tareaPresupuestal: datos[4], cadenaGasto: datos[5],
+                            pim: parseFloat(datos[6]), pca: parseFloat(datos[7]), anulacion: parseFloat("0"),
+                            credito: parseFloat("0"), disponible: parseFloat(datos[8]), pcaNueva: parseFloat(datos[7])};
                         rows.push(row);
                     }
                     if (rows.length > 0)
@@ -395,26 +555,42 @@
         //FUNCION PARA GRABAR LOS DATOS DE LA VENTANA PRINCIPAL
         function fn_GrabarDatos() {
             var msg = "";
+            var tipoCambio = $("#cbo_TipoCambio").val();
+            var documento = $("#txt_DocumentoReferencia").val();
+            var anulacion = 0;
+            var credito = 0;
             var lista = new Array();
             var result;
             var rows = $('#div_GrillaRegistro').jqxGrid('getrows');
             for (var i = 0; i < rows.length; i++) {
                 var row = rows[i];
-                if (row.modifica === 'Y') {
-                    result = row.uid + "---" + fn_extraerDatos(row.dependencia, ':') + "---" + fn_extraerDatos(row.cadenaGasto, ':') +
-                            "---" + parseFloat(row.enero) + "---" + parseFloat(row.febrero) + "---" + parseFloat(row.marzo) + "---" + parseFloat(row.abril) +
-                            "---" + parseFloat(row.mayo) + "---" + parseFloat(row.junio) + "---" + parseFloat(row.julio) + "---" + parseFloat(row.agosto) +
-                            "---" + parseFloat(row.setiembre) + "---" + parseFloat(row.octubre) + "---" + parseFloat(row.noviembre) + "---" + parseFloat(row.diciembre) + "---" + parseFloat(row.importe);
+                result = row.uid + "---" + row.codigo + "---" + parseFloat(row.credito) + "---" + parseFloat(row.anulacion);
+                anulacion += parseFloat(row.anulacion);
+                credito += parseFloat(row.credito);
+                if (parseFloat(row.anulacion + row.credito) > 0)
                     lista.push(result);
-                }
             }
+            if (tipoCambio === '0')
+                msg += "Seleccion de Tipo de Variación de PCA.<br>";
             if (lista.length === 0)
-                msg += "No se ha realizado ninguna modificación <br>";
+                msg += "Ingrese el Detalle de la Variación de PCA.<br>";
+            if (parseFloat(anulacion + credito) === 0)
+                msg += "No se ha realizado ninguna Variación de PCA.<br>";
+            if (tipoCambio === '1')
+                if (parseFloat(anulacion) !== parseFloat(credito))
+                    msg += "Los Totales de la Anulación y Crédito deben ser iguales.<br>";
+            if (tipoCambio === '2')
+                if (parseFloat(anulacion) > 0)
+                    msg += "Solo debe ingresar montos de Crédito.<br>";
+            if (tipoCambio === '3')
+                if (parseFloat(credito) > 0)
+                    msg += "Solo debe ingresar montos de Anulación.<br>";
             if (msg === "") {
                 $.ajax({
                     type: "POST",
-                    url: "../IduCalendarioGastos",
-                    data: {mode: mode, periodo: periodo, presupuesto: presupuesto, unidadOperativa: unidadOperativa, codigo: codigo, lista: JSON.stringify(lista)},
+                    url: "../IduProgramacionCompromisoAnual",
+                    data: {mode: mode, periodo: periodo, presupuesto: presupuesto, unidadOperativa: unidadOperativa,
+                        codigo: codigo, tipoCambio:tipoCambio, documento: documento, lista: JSON.stringify(lista)},
                     success: function (data) {
                         msg = data;
                         if (msg === "GUARDO") {
@@ -428,8 +604,8 @@
                                     cerrarAction: {
                                         text: 'Cerrar',
                                         action: function () {
-                                            $('#div_VentanaPrincipal').jqxWindow('close');
-                                            fn_Refrescar();
+                                            $('#div_VentanaDetalle').jqxWindow('close');
+                                            fn_RefrescarDetalle();
                                         }
                                     }
                                 }
@@ -460,32 +636,34 @@
             }
         }
     });
-    //FUNCION PARA VALIDAR EL TOTAL DE CREDITO Y NO GENERE SALDO NEGATIVO
-    function fn_TotalMensualizacion() {
-        var total = $("#div_Enero").val() + $("#div_Febrero").val() + $("#div_Marzo").val() + $("#div_Abril").val() + $("#div_Mayo").val() + $("#div_Junio").val() +
-                $("#div_Julio").val() + $("#div_Agosto").val() + $("#div_Setiembre").val() + $("#div_Octubre").val() + $("#div_Noviembre").val() + $("#div_Diciembre").val();
-        $("#div_Total").val(parseFloat(total));
-        if (parseFloat(total) > parseFloat($("#div_Importe").val())) {
-            $.alert({
-                theme: 'material',
-                title: 'AVISO DEL SISTEMA',
-                content: 'Saldo Inferior. Revise!!',
-                animation: 'zoom',
-                closeAnimation: 'zoom',
-                type: 'orange',
-                typeAnimated: true
-            });
-        }
-    }
 </script>
 <div id="div_GrillaPrincipal"></div>
 <div id="div_VentanaPrincipal" style="display: none">
     <div>
+        <span style="float: left">LISTADO DE VARIACIONES DE PCA</span>
+    </div>
+    <div style="overflow: hidden">
+        <div id="div_GrillaDetalle"></div>
+    </div>
+</div>
+<div id="div_VentanaDetalle" style="display: none">
+    <div>
         <span style="float: left">PROGRAMACIÓN DE COMPROMISO ANUAL</span>
     </div>
     <div style="overflow: hidden">
-        <form id="frm_CalendarioGastos" name="frm_CalendarioGastos" method="post" >
+        <form id="frm_ProgramacionCompromisoAnual" name="frm_ProgramacionCompromisoAnual" method="post" >
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td class="inputlabel">Tipo : </td>
+                    <td >
+                        <select id="cbo_TipoCambio" name="cbo_TipoCambio">
+                            <option value="0" selected="selected">Seleccione</option>
+                            <option value="03">Créditos y Anulaciones de PCA</option>
+                            <option value="04">Créditos Suplementario de PCA</option>
+                            <option value="05">Transferencia de PCA</option>
+                        </select>
+                    </td>
+                </tr>
                 <tr>
                     <td class="inputlabel">Documento : </td>
                     <td><input type="text" id="txt_DocumentoReferencia" name="txt_DocumentoReferencia" style="text-transform: uppercase;"/></td> 

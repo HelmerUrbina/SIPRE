@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.9965000000000006"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="336"/>
+	<property name="ireport.y" value="288"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -15,7 +15,7 @@
 		<defaultValueExpression><![CDATA["6"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="USUARIO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["811961900"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["43987155"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["620001A"]]></defaultValueExpression>
@@ -28,9 +28,7 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT 
-COMCAB.CODPER, 
-UTIL_NEW.FUN_DEPPTO(COMCAB.COPPTO) AS DEPPTO,
-COMCAB.NROCOB,
+COMCAB.CODPER, UTIL_NEW.FUN_DEPPTO(COMCAB.COPPTO) AS DEPPTO, COMCAB.NROCOB,
 COMCAB.COUUOO||'-'||UTIL.FUN_ABUUOO(COMCAB.COUUOO) CARGO,
 CASE WHEN COMCAB.TIPCER = 'CE' THEN '' ELSE 'ANEXO MADRE N°: ' || COMCAB.NROANE END ANEXO_MADRE,
 UTIL_NEW.FUN_CERTIFICADO_SIAF(COMCAB.CODPER, COMCAB.COPPTO, COMCAB.COUUOO, CASE WHEN TIPCER='CE' THEN COMCAB.NROCOB ELSE COMCAB.NROANE END) CERTIFICADO,
@@ -41,7 +39,7 @@ COMCAB.CODTIP, UTIL_NEW.FUN_DESTIP(COMCAB.CODTIP, COMCAB.COPPTO) AS DESTIP,
 COMCAB.COSTIP, UTIL_NEW.FUN_DSCSTIP(COMCAB.COSTIP, COMCAB.COPPTO, COMCAB.CODTIP) AS DSCSTIP, 
 comdet.numsol, 
 CASE comcab.codtip when 4 then 'O.P. - ' || comcab.numopi else ' ' end NUMOPI ,
-case comcab.estcob when 'AN' then 'ANULADA' ELSE '' END ESTADO,
+(SELECT CASE WHEN TRIM(DIPPTO)='Y' THEN (case comcab.estcob when 'AN' then 'ANULADA' ELSE '' END) ELSE 'COPIA' END FROM TABUSU WHERE  CODUSU=$P{USUARIO} AND ESTREG='AC') AS ESTADO,
 to_char(comcab.fecpro,'DD')||' de '||(select nommes from tabmes where mesper=to_char(comcab.fecpro,'MM'))||' del '|| to_char(comcab.fecpro,'yyyy') AS fecpro, 
 COMCAB.DETANU, 
 comcab.desglo, comcab.numofi, comcab.provie, 

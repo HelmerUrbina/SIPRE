@@ -57,16 +57,7 @@
                 $("#btn_Ingresar").jqxButton({theme: theme, template: "success", width: '150'});
                 $("#btn_MesaPartes").jqxButton({theme: theme, template: "info", width: '150'});
                 $("#btn_MesaPartes").on('click', function () {
-                    //window.location = "MesaPartes.jsp";
-                    $.alert({
-                        theme: 'material',
-                        title: 'Mensaje!',
-                        content: "En construcción",
-                        animation: 'zoom',
-                        closeAnimation: 'zoom',
-                        type: 'orange',
-                        typeAnimated: true
-                    });
+                    window.location = "MesaPartes.jsp";
                 });
                 $("#btn_Ingresar").on('click', function () {
                     $('#frm_Login').jqxValidator('validate');
@@ -298,7 +289,8 @@
                                 <li class="link"> 6. <a href="Descarga/GlosariodeTerminosFinancieros-MEF.pdf" target="_blank">Glosario de Términos Financieros - MEF</a></li>
                                 <li class="link"> 7. <a href="Descarga/DirectivaEjecucion_0003-2018-OPRE.pdf" target="_blank">Directiva General para la Ejecución del Proceso Presupuestario.</a></li>
                                 <li class="link"> 8. <a href="Descarga/DirectivaOGRE2016.pdf" target="_blank">Directiva N° 001-2016/OGRE.</a></li>
-                                <li class="link"> 9. <a href="Descarga/LineamientoComplentariosEvaluacion2020.pdf" target="_blank"><span class="inputlabelred">Lineamientos para la Evaluación AF-2020.</span></a></li>
+                                <li class="link"> 9. <a href="Descarga/LineamientoComplentariosEvaluacion2020.pdf" target="_blank">Lineamientos para la Evaluación AF-2020.</a></li>
+                                    <%--<li class="link"> 9. <a href="Descarga/LineamientoComplentariosEvaluacion2020.pdf" target="_blank"><span class="inputlabelred">Lineamientos para la Evaluación AF-2020.</span></a></li>--%>
                             </ul>
                         </div>
                     </div>
@@ -380,7 +372,7 @@
                                 <li class="link"> 3. <a href="Descarga/FormatoProgramacionMultianualGastos2021.xlsx" target="_blank">Formato para el Sustento del Anteproyecto del PPTO AF-2021.</a></li>
                                 <li class="link"> 4. <a href="Descarga/DirectivaProgramacionMultianualFormulacionPPtal.pdf" target="_blank">Directiva de Programación Multianual y Formulación Presupuestaria.</a></li>
                                 <li class="link"> 5. <a href="Descarga/Anexo1-DefinicionesProgramacionMultianual.pdf" target="_blank">Definiciones - Programación Multianual.</a></li>
-                                <li class="link"> 6. <a href="Descarga/Anexo2-EquivalenciaClasificadoresGasto2021-2023.pdf" target="_blank"><span class="inputlabelred">Equivalencia de los Clasificadores de Gasto para la P.M. 2021-2023.</span></a></li>
+                                <li class="link"> 6. <a href="Descarga/Anexo2-EquivalenciaClasificadoresGasto2021-2023.pdf" target="_blank">Equivalencia de los Clasificadores de Gasto para la P.M. 2021-2023.</a></li>
                                 <li class="link"> 7. <a href="Descarga/Directiva001-2020MEFProgramacionMultianual.pdf" target="_blank">Directiva de Programación Multianual Presupuestaria y Formulación Presupuestaria.</a></li>
                             </ul>
                         </div>
@@ -389,10 +381,10 @@
                         <div style="text-align: center">EJECUCIÓN PRESUPUESTAL</div>
                         <div>
                             <ul>
-                                <li class="link"> 1. <a href="Descarga/FaxMultiple2020-0039-OPRE.pdf" target="_blank">Fax Mult. N° 0039 - Remisión de CNV para la Fase de Programación Multianual AF 2021-2023.</a></li>
-                                <li class="link"> 2. <a href="Descarga/FaxMultiple2020-0048-OPRE.pdf" target="_blank">Fax Mult. N° 0048 - Sustentación de Ampliación de la PCA.</a></li>
-                                <li class="link"> 3. <a href="Descarga/FaxMultiple2020-0052-OPRE.pdf" target="_blank"><span class="inputlabelred">Fax Mult. N° 0052 - Evaluación Presupuestal al 1er Semestre AF-2020 “Lineamientos Complementarios para la Evaluación del Presupuesto Institucional del al UE 003: Ejercito Peruano AF-2020”.</span></a></li>
-                                <li class="link"> 4. <a href="Descarga/FaxMultiple2020-0053-OPRE.pdf" target="_blank"><span class="inputlabelred">Fax Mult. N° 0053 - Evaluación Presupuestal al 1er Semestre AF-2020 “Lineamientos Complementarios para la Evaluación del Presupuesto Institucional del al UE 003: Ejercito Peruano AF-2020”.</span></a></li>
+                                
+                                <li class="link"> 1. <a href="Descarga/FaxMultiple2020-0059-OPRE.pdf" target="_blank"><span class="inputlabelred">Fax Mult. N° 0059 - Prioridad para el Pago de Servicios Básicos de las UUOO del EP.</span></a></li>
+                                <li class="link"> a)<a href="Descarga/NuevoFormatoSSBB2020.xlsx" target="_blank"><span class="inputlabelred">Formato de Sustento de SSBB - 2020.</span></a></li>
+                                    <%--<li class="link"> 4. <a href="Descarga/FaxMultiple2020-0053-OPRE.pdf" target="_blank"><span class="inputlabelred">Fax Mult. N° 0053 - Evaluación Presupuestal al 1er Semestre AF-2020 “Lineamientos Complementarios para la Evaluación del Presupuesto Institucional del al UE 003: Ejercito Peruano AF-2020”.</span></a></li>--%>
                             </ul>
                         </div>
                     </div>

@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.9487171000000019"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="863"/>
+	<property name="ireport.y" value="220"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -12,20 +12,20 @@
 		<defaultValueExpression><![CDATA["2020"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PRESUPUESTO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["9"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["920008A"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["120008A"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="USUARIO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["43305891"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT  TACESO.NROCOB,UTIL_NEW.FUN_TIPO_CERTIFICADO(TACESO.CODPER,TACESO.COPPTO,TACESO.NROCOB) TIPO,
 CASE UTIL_NEW.FUN_TIPO_CERTIFICADO(TACESO.CODPER,TACESO.COPPTO,TACESO.NROCOB)WHEN 'CE' THEN 'CERTIFICADO'
 WHEN 'RE' THEN 'REBAJA' WHEN 'AM' THEN 'AMPLIACION' END TIPO1,
 CASE WHEN TACESO.NCSIAF IS NULL THEN ' ' ELSE 'REGISTRO SIAF: '||TACESO.NCSIAF END SIAF,
-case when taceso.estccp = 'AN' then 'ANULADO' ELSE ' ' END ESTADO,
+(SELECT CASE WHEN TRIM(DIPPTO)='S' THEN (case when taceso.estccp = 'AN' then 'ANULADO' ELSE ' ' END) ELSE 'COPIA' END FROM TABUSU WHERE  CODUSU=$P{USUARIO} AND ESTREG='AC')  ESTADO,
 CASE WHEN TACESO.NCSIAF IS NULL THEN 'FALTA REGISTRO SIAF' ELSE '' END AS ESTADO_SIAF,
 taceso.nusoce,
 taceso.numsol,

@@ -4,27 +4,27 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.6105100000000012"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="199"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["2018"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["2020"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PRESUPUESTO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["6"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="USUARIO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["42769619"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["43305891"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["621360"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["1205523"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CODIGO2" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["621360"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["1205523"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="UNIDAD_OPERATIVA" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["0820"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["0845"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT comdet.numsol,
@@ -42,7 +42,7 @@ CASE WHEN COMCAB.NROANU IS NULL THEN '' ELSE 'ANEXO MENSUAL N°: '||COMCAB.NROAN
 tacafu.secfun, TACAFU.DEFINA,
 COMCAB.COUUOO ||':'||UTIL.FUN_ABUUOO(COMCAB.COUUOO) CARGO,
 CASE comcab.COSTIP when 55 then 'D.P. - ' || comcab.numopi else ' ' end NUMOPI ,
-case comcab.estcob when 'AN' then 'ANULADO' ELSE '' END ESTADO, tappto.coppto, tappto.deppto, tappto.abppto, comcab.nrocob,
+(SELECT CASE WHEN TRIM(DIPPTO)='S' THEN (case comcab.estcob when 'AN' then 'ANULADO' ELSE '' END) ELSE 'COPIA' END FROM TABUSU WHERE  CODUSU=$P{USUARIO} AND ESTREG='AC') ESTADO, tappto.coppto, tappto.deppto, tappto.abppto, comcab.nrocob,
 comcab.codper, to_char(comcab.fecpro,'DD') ||' de '|| (select nommes from tabmes  where mesper = to_char(comcab.fecpro,'MM')) ||' del '|| to_char(comcab.fecpro,'yyyy') AS fecpro, tipcal.codtip,
 UPPER(tipcal.destip), stical.costip, UPPER(stical.dscstip), comcab.desglo,
 comcab.numofi, comcab.provie, tauuoo.couuoo, tauuoo.nouuoo, comdet.cocaga,
@@ -603,7 +603,7 @@ ORDER BY comcab.nrocob,
 					<reportElement key="line-12" positionType="Float" x="353" y="0" width="89" height="1" uuid="c6b2646d-b550-4d5b-8e84-c2d199e0aeec"/>
 				</line>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField-47" positionType="Float" x="0" y="17" width="574" height="47" uuid="205098e1-9993-43f3-bc0c-8b2cb30bcc73"/>
+					<reportElement key="textField-47" positionType="Float" x="0" y="17" width="574" height="101" uuid="205098e1-9993-43f3-bc0c-8b2cb30bcc73"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>

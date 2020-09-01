@@ -9,6 +9,7 @@ import BusinessServices.Beans.BeanMsgerr;
 import BusinessServices.Beans.BeanPCA;
 import DataService.Despachadores.MsgerrDAO;
 import DataService.Despachadores.PCADAO;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -102,10 +103,56 @@ public class PCADAOImpl implements PCADAO {
     }
 
     @Override
+    public ArrayList getListaPCAUnidadOperativa(BeanPCA objBeanPCA, String usuario) {
+        ArrayList<String> Arreglo = new ArrayList<>();
+        ArrayList<String> Filas = new ArrayList<>();
+        sql = "SELECT NPCA_AUTORIZACION AS PCA_AUTORIZACION, UTIL_NEW.FUN_DESC_USUARIO(VUSUARIO_CODIGO) AS USUARIO, "
+                + "TO_CHAR(DUSUARIO_FECHA,'DD/MM/YYYY') AS FECHA, "
+                + "SUM(CASE WHEN NPCA_IMPORTE<0 THEN ABS(NPCA_IMPORTE) ELSE 0 END) AS ANULACION, "
+                + "SUM(CASE WHEN NPCA_IMPORTE>0 THEN ABS(NPCA_IMPORTE) ELSE 0 END) AS CREDITO "
+                + "FROM SIPRE_PCA WHERE "
+                + "CPERIODO_CODIGO=? AND "
+                + "NPRESUPUESTO_CODIGO=? AND "
+                + "CUNIDAD_OPERATIVA_CODIGO=? AND "
+                + "NPCA_AUTORIZACION IS NOT NULL "
+                + "GROUP BY NPCA_AUTORIZACION, VUSUARIO_CODIGO, TO_CHAR(DUSUARIO_FECHA,'DD/MM/YYYY') "
+                + "ORDER BY NPCA_AUTORIZACION";
+        try {
+            objPreparedStatement = objConnection.prepareStatement(sql);
+            objPreparedStatement.setString(1, objBeanPCA.getPeriodo());
+            objPreparedStatement.setInt(2, objBeanPCA.getPresupuesto());
+            objPreparedStatement.setString(3, objBeanPCA.getUnidadOperativa());
+            objResultSet = objPreparedStatement.executeQuery();
+            while (objResultSet.next()) {
+                Filas.clear();
+                String arreglo = objResultSet.getString("PCA_AUTORIZACION") + "+++"
+                        + objResultSet.getString("USUARIO") + "+++"
+                        + objResultSet.getString("FECHA") + "+++"
+                        + objResultSet.getString("ANULACION") + "+++"
+                        + objResultSet.getString("CREDITO");
+                Filas.add(arreglo);
+                Arreglo.add("" + Filas);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener getListaPCAUnidadOperativa(BeanPCA) : " + e.getMessage());
+        } finally {
+            try {
+                if (objResultSet != null) {
+                    objResultSet.close();
+                    objPreparedStatement.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return Arreglo;
+    }
+
+    @Override
     public ArrayList getListaPCAVAriacion(BeanPCA objBeanPCA, String usuario) {
         ArrayList<String> Arreglo = new ArrayList<>();
         ArrayList<String> Filas = new ArrayList<>();
-        sql = "SELECT NRESOLUCION_CODIGO||'-'||CDEPENDENCIA_CODIGO||'-'||CSECUENCIA_FUNCIONAL_CODIGO||'-'||CTAREA_CODIGO||'-'||CADENA_GASTO AS CODIGO, "
+        sql = "SELECT NRESOLUCION_CODIGO||'---'||CDEPENDENCIA_CODIGO||'---'||CSECUENCIA_FUNCIONAL_CODIGO||'---'||CTAREA_CODIGO||'---'||CADENA_GASTO AS CODIGO, "
                 + "UTIL_NEW.FUN_ABRDEP(CUNIDAD_OPERATIVA_CODIGO, CDEPENDENCIA_CODIGO) AS DEPENDENCIA, "
                 + "UTIL.FUN_DESCRIPCION_RESOLUCION(CPERIODO_CODIGO, NRESOLUCION_CODIGO) AS RESOLUCION, "
                 + "CSECUENCIA_FUNCIONAL_CODIGO||':'||UTIL_NEW.FUN_DESMET(CPERIODO_CODIGO, NPRESUPUESTO_CODIGO, CSECUENCIA_FUNCIONAL_CODIGO) SECUENCIA_FUNCIONAL, "
@@ -118,9 +165,9 @@ public class PCADAOImpl implements PCADAO {
                 + "CUNIDAD_OPERATIVA_CODIGO=? "
                 + "GROUP BY CPERIODO_CODIGO, NPRESUPUESTO_CODIGO, CUNIDAD_OPERATIVA_CODIGO, CDEPENDENCIA_CODIGO, "
                 + "CSECUENCIA_FUNCIONAL_CODIGO,  CTAREA_CODIGO, CADENA_GASTO, NRESOLUCION_CODIGO "
-                + "HAVING SUM(PCA)-(SUM(CERTIFICADO)+SUM(SOLICITUD)+SUM(NOTA))!=0 "
+                + "HAVING SUM(PCA)-(SUM(CERTIFICADO)+SUM(SOLICITUD)+SUM(NOTA))>0 "
                 + "UNION ALL "
-                + "SELECT NRESOLUCION_CODIGO||'-'||CDEPENDENCIA_CODIGO||'-'||CSECUENCIA_FUNCIONAL_CODIGO||'-'||CTAREA_CODIGO||'-'||CADENA_GASTO AS CODIGO, "
+                + "SELECT NRESOLUCION_CODIGO||'---'||CDEPENDENCIA_CODIGO||'---'||CSECUENCIA_FUNCIONAL_CODIGO||'---'||CTAREA_CODIGO||'---'||CADENA_GASTO AS CODIGO, "
                 + "UTIL_NEW.FUN_ABRDEP(CUNIDAD_OPERATIVA_CODIGO, CDEPENDENCIA_CODIGO) AS DEPENDENCIA, "
                 + "UTIL.FUN_DESCRIPCION_RESOLUCION(CPERIODO_CODIGO, NRESOLUCION_CODIGO) AS RESOLUCION, "
                 + "CSECUENCIA_FUNCIONAL_CODIGO||':'||UTIL_NEW.FUN_DESMET(CPERIODO_CODIGO, NPRESUPUESTO_CODIGO, CSECUENCIA_FUNCIONAL_CODIGO) SECUENCIA_FUNCIONAL,"
@@ -133,7 +180,8 @@ public class PCADAOImpl implements PCADAO {
                 + "CUNIDAD_OPERATIVA_CODIGO=? "
                 + "GROUP BY CPERIODO_CODIGO, NPRESUPUESTO_CODIGO, CUNIDAD_OPERATIVA_CODIGO, CDEPENDENCIA_CODIGO, "
                 + "CSECUENCIA_FUNCIONAL_CODIGO, CTAREA_CODIGO, CADENA_GASTO, NRESOLUCION_CODIGO "
-                + "HAVING SUM(PCA)-(SUM(PIM))<0";
+                + "HAVING SUM(PCA)-(SUM(PIM))<0 "
+                + "ORDER BY 1";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, objBeanPCA.getPeriodo());
@@ -173,46 +221,20 @@ public class PCADAOImpl implements PCADAO {
     }
 
     @Override
-    public BeanPCA getPCAMensualizar(BeanPCA objBeanPCA, String usuario) {
-        sql = "SELECT UTIL_NEW.FUN_DESC_TIPO_PROCESO(CTIPO_PROCESO_CODIGO)||'-'||VPAAC_NUMERO_PROCESO AS PROCESO, "
-                + "NPAAC_VALOR_REFERENCIAL, "
-                + "NPAAC_ENERO, NPAAC_FEBRERO, NPAAC_MARZO, NPAAC_ABRIL, NPAAC_MAYO, NPAAC_JUNIO, NPAAC_JULIO, "
-                + "NPAAC_AGOSTO, NPAAC_SETIEMBRE, NPAAC_OCTUBRE, NPAAC_NOVIEMBRE, NPAAC_DICIEMBRE "
-                + "FROM SIPE_PAAC WHERE "
-                + "CPERIODO_CODIGO=? AND "
-                + "CUNIDAD_OPERATIVA_CODIGO=? AND "
-                + "NPAAC_CODIGO=?";
-        /*try {
+    public Integer getAutorizacionPCA(BeanPCA objBeanPCA, String usuario) {
+        Integer autorizacion = 0;
+        sql = "SELECT NVL(MAX(NPCA_AUTORIZACION)+1,1) AS PCA_AUTORIZACION "
+                + "FROM SIPRE_PCA WHERE "
+                + "CPERIODO_CODIGO=? ";
+        try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, objBeanPCA.getPeriodo());
-            objPreparedStatement.setString(2, objBeanPCA.getUnidadOperativa());
-            objPreparedStatement.setInt(3, objBeanPCA.getCodigo());
             objResultSet = objPreparedStatement.executeQuery();
             if (objResultSet.next()) {
-                objBeanPCA.setTipo(objResultSet.getString("PROCESO"));
-                objBeanPCA.setValorReferencial(objResultSet.getDouble("NPAAC_VALOR_REFERENCIAL"));
-                objBeanPCA.setEnero(objResultSet.getDouble("NPAAC_ENERO"));
-                objBeanPCA.setFebrero(objResultSet.getDouble("NPAAC_FEBRERO"));
-                objBeanPCA.setMarzo(objResultSet.getDouble("NPAAC_MARZO"));
-                objBeanPCA.setAbril(objResultSet.getDouble("NPAAC_ABRIL"));
-                objBeanPCA.setMayo(objResultSet.getDouble("NPAAC_MAYO"));
-                objBeanPCA.setJunio(objResultSet.getDouble("NPAAC_JUNIO"));
-                objBeanPCA.setJulio(objResultSet.getDouble("NPAAC_JULIO"));
-                objBeanPCA.setAgosto(objResultSet.getDouble("NPAAC_AGOSTO"));
-                objBeanPCA.setSetiembre(objResultSet.getDouble("NPAAC_SETIEMBRE"));
-                objBeanPCA.setOctubre(objResultSet.getDouble("NPAAC_OCTUBRE"));
-                objBeanPCA.setNoviembre(objResultSet.getDouble("NPAAC_NOVIEMBRE"));
-                objBeanPCA.setDiciembre(objResultSet.getDouble("NPAAC_DICIEMBRE"));
+                autorizacion = objResultSet.getInt("PCA_AUTORIZACION");
             }
         } catch (SQLException e) {
-            System.out.println("Error al obtener getPAACMensualizar(objBeanPAAC) : " + e.toString());
-            objDsMsgerr = new MsgerrDAOImpl(objConnection);
-            objBnMsgerr = new BeanMsgerr();
-            objBnMsgerr.setUsuario(usuario);
-            objBnMsgerr.setTabla("SIPE_PAAC");
-            objBnMsgerr.setTipo(objBeanPAAC.getMode().toUpperCase());
-            objBnMsgerr.setDescripcion(e.toString());
-            s = objDsMsgerr.iduMsgerr(objBnMsgerr);
+            System.out.println("Error al obtener getAutorizacionPCA(objBeanPAAC) : " + e.getMessage());
         } finally {
             try {
                 if (objResultSet != null) {
@@ -220,58 +242,48 @@ public class PCADAOImpl implements PCADAO {
                     objResultSet.close();
                 }
             } catch (SQLException e) {
-                System.out.println(e.toString());
+                System.out.println(e.getMessage());
             }
-        }*/
-        return objBeanPCA;
+        }
+        return autorizacion;
     }
 
     @Override
-    public int iduPCA(BeanPCA objBeanEvento, String usuario) {
+    public int iduPCA(BeanPCA objBeanPCA, String usuario) {
         /*
          * EJECUTAMOS EL PROCEDIMIENTO ALMACENADO PARA LOS PROVEEDORES, EN EL
          * CUAL PODEMOS INSERTAR, MODIFICAR O ELIMINAR UN REGISTRO DE LA TABLA
          * USUARIO, EN CASO DE OBTENER ALGUN ERROR ACTIVARA LA OPCION DE
          * EXCEPCIONES EN LA CUAL SE REGISTRARA EL ERROR EL MOTIVO DEL ERROR.
          */
- /* sql = "{CALL  SP_IDU_PAAC(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        sql = "{CALL  SP_IDU_PCA(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         try (CallableStatement cs = objConnection.prepareCall(sql)) {
-            cs.setString(1, objBeanEvento.getPeriodo());
-            cs.setString(2, objBeanEvento.getUnidadOperativa());
-            cs.setInt(3, objBeanEvento.getCodigo());
-            cs.setString(4, objBeanEvento.getTipo());
-            cs.setString(5, objBeanEvento.getNumero());
-            cs.setString(6, objBeanEvento.getObjeto());
-            cs.setDate(7, objBeanEvento.getFecha());
-            cs.setString(8, objBeanEvento.getCertificado());
-            cs.setDouble(9, objBeanEvento.getValorReferencial());
-            cs.setDouble(10, objBeanEvento.getEnero());
-            cs.setDouble(11, objBeanEvento.getFebrero());
-            cs.setDouble(12, objBeanEvento.getMarzo());
-            cs.setDouble(13, objBeanEvento.getAbril());
-            cs.setDouble(14, objBeanEvento.getMayo());
-            cs.setDouble(15, objBeanEvento.getJunio());
-            cs.setDouble(16, objBeanEvento.getJulio());
-            cs.setDouble(17, objBeanEvento.getAgosto());
-            cs.setDouble(18, objBeanEvento.getSetiembre());
-            cs.setDouble(19, objBeanEvento.getOctubre());
-            cs.setDouble(20, objBeanEvento.getNoviembre());
-            cs.setDouble(21, objBeanEvento.getDiciembre());
-            cs.setString(22, objBeanEvento.getCompra());
-            cs.setString(23, usuario);
-            cs.setString(24, objBeanEvento.getMode());
+            cs.setString(1, objBeanPCA.getPeriodo());
+            cs.setInt(2, objBeanPCA.getPresupuesto());
+            cs.setString(3, objBeanPCA.getUnidadOperativa());
+            cs.setInt(4, objBeanPCA.getCodigo());
+            cs.setString(5, objBeanPCA.getCategoriaPresupuestal());
+            cs.setString(6, objBeanPCA.getTipo());
+            cs.setString(7, objBeanPCA.getResolucion());
+            cs.setString(8, objBeanPCA.getDependencia());
+            cs.setString(9, objBeanPCA.getSecuenciaFuncional());
+            cs.setString(10, objBeanPCA.getTareaPresupuestal());
+            cs.setString(11, objBeanPCA.getCadenaGasto());
+            cs.setDouble(12, objBeanPCA.getPCA());
+            cs.setString(13, usuario);
+            cs.setString(14, objBeanPCA.getMode());
             s = cs.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error al ejecutar iduPAAC : " + e.toString());
             objDsMsgerr = new MsgerrDAOImpl(objConnection);
             objBnMsgerr = new BeanMsgerr();
             objBnMsgerr.setUsuario(usuario);
-            objBnMsgerr.setTabla("SIPE_PAAC");
-            objBnMsgerr.setTipo(objBeanEvento.getMode().toUpperCase());
+            objBnMsgerr.setTabla("SIPRE_PCA");
+            objBnMsgerr.setTipo(objBeanPCA.getMode().toUpperCase());
             objBnMsgerr.setDescripcion(e.toString());
             s = objDsMsgerr.iduMsgerr(objBnMsgerr);
             return 0;
-        }*/
+        }
         return s;
     }
 }

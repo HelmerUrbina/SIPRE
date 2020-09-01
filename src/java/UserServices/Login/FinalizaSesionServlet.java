@@ -43,7 +43,7 @@ public class FinalizaSesionServlet extends HttpServlet {
         context = config.getServletContext();
         session = request.getSession();
         objConnection = (Connection) context.getAttribute("objConnection");
-        BeanUsuario objUsuario = (BeanUsuario) session.getAttribute("objUsuario" + session.getId());        
+        BeanUsuario objUsuario = (BeanUsuario) session.getAttribute("objUsuario" + session.getId());
         if (objUsuario != null) {
             session.removeAttribute("ID");
             session.removeAttribute("objUsuario" + session.getId());
@@ -59,7 +59,6 @@ public class FinalizaSesionServlet extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-
     /**
      * Handles the HTTP <code>GET</code> method.
      *

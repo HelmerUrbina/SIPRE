@@ -44,7 +44,6 @@ public class ErrorPaginaServlet extends HttpServlet {
         if (statusCode == 404) {
             response.sendRedirect("Error/PaginaMantenimiento.jsp");
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

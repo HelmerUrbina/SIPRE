@@ -61,12 +61,14 @@ public class ReportesServlet extends HttpServlet {
             throws ServletException, IOException, JRException {
         config = this.getServletConfig();
         context = config.getServletContext();
-        session = request.getSession();
+        session = request.getSession(true);
         //VERIFICAMOS QUE LA SESSION SEA VALIDA        
         BeanUsuario objUsuario = (BeanUsuario) session.getAttribute("objUsuario" + session.getId());
         if (objUsuario == null) {
-            dispatcher = request.getRequestDispatcher("/FinSession.jsp");
-            dispatcher.forward(request, response);
+            /*dispatcher = request.getRequestDispatcher("/FinSession.jsp");
+            dispatcher.forward(request, response);*/
+            objUsuario = new BeanUsuario();
+            objUsuario.setUsuario("000");
         }
         objConnection = (Connection) context.getAttribute("objConnection");
         reporte = new BeanReporte();
@@ -296,6 +298,9 @@ public class ReportesServlet extends HttpServlet {
             case "EJE0045":
                 nombre = "Ejecucion/EJE0045.jasper";
                 break;
+            case "EJE0046":
+                nombre = "Ejecucion/EJE0046.jasper";
+                break;
             //REPORTES DE LOGISTICA
             case "LOG0001":
                 nombre = "Logistica/LOG0001.jasper";
@@ -318,6 +323,15 @@ public class ReportesServlet extends HttpServlet {
                 break;
             case "MPA0002":
                 nombre = "MesaParte/MPA0002.jasper";
+                break;
+            case "MPA0003":
+                nombre = "MesaParte/MPA0003.jasper";
+                break;
+            case "MPA0004":
+                nombre = "MesaParte/MPA0004.jasper";
+                break;
+            case "MPA0005":
+                nombre = "MesaParte/MPA0005.jasper";
                 break;
             //REPORTES SIAF
             case "SIAF0001":
@@ -394,7 +408,6 @@ public class ReportesServlet extends HttpServlet {
             exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, response.getOutputStream());
             exporter.exportReport();
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

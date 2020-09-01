@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MPA0005" pageWidth="595" pageHeight="842" columnWidth="455" leftMargin="70" rightMargin="70" topMargin="70" bottomMargin="70" uuid="d822663f-58ee-42fe-a1ec-5dfcbf650307">
+	<property name="ireport.zoom" value="1.1000000000000016"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="305"/>
+	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["01625"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Desarrollo\\SIPRE\\web\\Reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2019"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TIPO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["E"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT CDOCUMENTO_NUMERO||' - '||CPERIODO_CODIGO AS NUMERO, 
+INST.VINSTITUCION_DESCRIPCION AS INSTITUCION,
+PK_MESA_PARTES.FUN_NOMBRE_TIPO_DOCUMENTO(NTIPO_DOCUMENTO_CODIGO) AS TIPO_DOCUMENTO,
+CDOCUMENTO_NRO_DOCUMENTO AS NRO_DOCUMENTO,
+UPPER(VDOCUMENTO_ASUNTO) ASUNTO, UPPER(VDOCUMENTO_OBSERVACION) OBSERVACION,
+UPPER(VPOST_FIRMA) AS POST_FIRMA,
+TO_CHAR(DOCU.DDOCUMENTO_FECHA_DOCUMENTO,'DD/MM/YYYY') AS FECHA_DOCUMENTO,
+TO_CHAR(DOCU.DUSUARIO_FECCRE,'DD/MM/YYYY HH24:MM:SS PM') AS RECEPCION,
+NCANTIDAD_LEGAJOS AS LEGAJOS,
+NCANTIDAD_FOLIOS AS FOLIOS,
+DOCU.VDOCUMENTO_DIGITAL AS DIGITAL
+FROM SIPE_DOCUMENTO DOCU INNER JOIN SIPE_INSTITUCION INST ON(
+DOCU.CORGANISMO_CODIGO=INST.CORGANISMO_CODIGO AND 
+DOCU.CINSTITUCION_CODIGO=INST.CINSTITUCION_CODIGO)
+WHERE
+CPERIODO_CODIGO=$P{PERIODO} AND
+CDOCUMENTO_TIPO=$P{TIPO} AND
+CDOCUMENTO_NUMERO=$P{CODIGO}]]>
+	</queryString>
+	<field name="NUMERO" class="java.lang.String"/>
+	<field name="INSTITUCION" class="java.lang.String"/>
+	<field name="TIPO_DOCUMENTO" class="java.lang.String"/>
+	<field name="NRO_DOCUMENTO" class="java.lang.String"/>
+	<field name="ASUNTO" class="java.lang.String"/>
+	<field name="OBSERVACION" class="java.lang.String"/>
+	<field name="POST_FIRMA" class="java.lang.String"/>
+	<field name="FECHA_DOCUMENTO" class="java.lang.String"/>
+	<field name="RECEPCION" class="java.lang.String"/>
+	<field name="LEGAJOS" class="java.math.BigDecimal"/>
+	<field name="FOLIOS" class="java.math.BigDecimal"/>
+	<field name="DIGITAL" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="40" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement positionType="Float" x="0" y="0" width="453" height="40" uuid="ad1e8d74-aef1-449a-879c-1f863a73ebab"/>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"\\Imagenes\\EstadoMayorEjercito.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="111" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="13" width="455" height="40" uuid="cb5c0137-f0df-4423-9261-e90b9e5e6637"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14" isBold="true" pdfFontName="Times-Bold"/>
+				</textElement>
+				<text><![CDATA[OFICINA DE PRESUPUESTO DEL EJERCITO
+MESA DE PARTES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="69" width="455" height="32" uuid="a74ab25d-fd73-4d0d-a927-358ce9be4b97"/>
+				<textElement>
+					<font isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Mediante el presente se deja constancia que su documento ha sido registrado en la Mesa de Partes Digital de la Oficina de Presupuesto del Ejercito y registrado en el Sistema de Trámite Documentario.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="291" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="120" y="30" width="335" height="15" isPrintWhenDetailOverflows="true" uuid="1a0250e1-7e71-45cc-a9b5-c6d47df440c1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INSTITUCION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="30" width="100" height="15" uuid="643ef220-ee68-4cf9-8fba-902e2b1422a0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[INSTITUCIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="100" y="30" width="20" height="15" uuid="4872b676-8fb0-459a-bd5a-b2632c4566f0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="120" y="50" width="335" height="15" isPrintWhenDetailOverflows="true" uuid="4c1046c0-8bff-407e-b65c-ae1ebf7087ca"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TIPO_DOCUMENTO}+" N° "+$F{NRO_DOCUMENTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="100" y="50" width="20" height="15" uuid="3972a1d2-c2c0-4d00-a7d7-8c66cfceb7af"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="50" width="100" height="15" uuid="b3cbde33-e7c1-4de0-aae5-6a8641d16237"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[DOCUMENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="70" width="100" height="15" uuid="981aad33-26d2-428a-8d6e-ae0b5fcacbfa"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[FEC. DOCUMENTO]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="120" y="70" width="335" height="15" isPrintWhenDetailOverflows="true" uuid="fa51f357-7403-45da-959f-b38ce8a7ca1e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA_DOCUMENTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="100" y="70" width="20" height="15" uuid="1a3f97d6-eff2-4f91-bd47-b16f9e31e224"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="90" width="100" height="15" uuid="d23f09c5-ffbf-4eda-8ace-3639578cb77e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[ASUNTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="100" y="90" width="20" height="15" uuid="e86e267d-fd07-4eae-b53b-6cf9597c0107"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="120" y="90" width="335" height="15" isPrintWhenDetailOverflows="true" uuid="4ed2511f-b350-4b26-b1fe-4e29e8576af7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ASUNTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="100" y="110" width="20" height="15" uuid="614ba8a1-8258-41d6-ace0-8abe73efecfa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="110" width="100" height="15" uuid="4337b15b-4229-4256-bc73-ae0098fb107a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[POST FIRMA]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="120" y="110" width="335" height="15" isPrintWhenDetailOverflows="true" uuid="acdf414d-9931-4957-9eb9-db7074330cd6"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POST_FIRMA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="130" width="100" height="15" uuid="e5e81fe8-77ad-4cb7-9c63-22b31e8a5461"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[FEC. RECEPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="100" y="130" width="20" height="15" uuid="8c83441f-a150-4260-9484-d87d880d4c1e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="120" y="130" width="335" height="15" isPrintWhenDetailOverflows="true" forecolor="#000099" uuid="88e1538f-f054-4ed9-b642-842f832ad246"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RECEPCION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="150" width="100" height="15" uuid="319ab989-2d22-4dfa-ba9f-65fe7e94dbb9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[LEGAJOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="100" y="150" width="20" height="15" uuid="b76ecfca-c98e-4490-bff2-6929c55227cd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="120" y="150" width="335" height="15" isPrintWhenDetailOverflows="true" uuid="48c61c53-3877-4eda-99d0-3961a97159cf"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LEGAJOS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="170" width="100" height="15" uuid="237c3fc1-ddbc-42f8-b0c4-9fa2b6c4d2b6"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[FOLIOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="100" y="170" width="20" height="15" uuid="5bed758d-3bbe-4061-960f-f04a8ca4df7f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="120" y="170" width="335" height="15" isPrintWhenDetailOverflows="true" uuid="748a47d4-eeb9-43d9-9f17-ad8a08484238"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FOLIOS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="100" y="190" width="20" height="15" uuid="59d81402-e0c0-4629-8371-a56d911fa116"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="120" y="190" width="335" height="15" isPrintWhenDetailOverflows="true" uuid="5cbc2bdc-8ca8-4fb5-a91b-8e7e5bbdc35f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DIGITAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="190" width="100" height="15" uuid="9d1c8b27-58ec-47f7-a5cc-21012f51dd1e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[ADJUNTO]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="120" y="10" width="335" height="15" isPrintWhenDetailOverflows="true" uuid="a53a56c8-9bc4-4540-9719-c84465efdcf9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NUMERO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="100" y="10" width="20" height="15" uuid="cd356d1f-c6b6-4d8e-9d67-e25089a2b69f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="10" width="100" height="15" uuid="3f8d3039-63fe-4a67-88d7-6c0b186296bf"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[CORRELATIVO]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement positionType="Float" x="110" y="224" width="268" height="50" uuid="c484352a-b8bd-453f-83cd-2e000240c4aa"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Codabar" drawText="false" checksumRequired="true">
+					<jr:codeExpression><![CDATA[$F{NUMERO}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField>
+				<reportElement positionType="Float" x="110" y="274" width="268" height="15" uuid="3574d051-109a-47f4-bdfa-11be4ddf5fc5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="12" isBold="false" pdfFontName="Courier"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CODIGO}+"-"+$P{PERIODO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

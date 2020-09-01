@@ -33,6 +33,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,9 +42,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import net.sf.jasperreports.engine.DefaultJasperReportsContext;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
+import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
 
 /**
  *
@@ -73,7 +78,7 @@ public class RegistrarMesaPartesServlet extends HttpServlet {
      * @throws java.text.ParseException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ParseException {
+            throws ServletException, IOException, ParseException, JRException {
         config = this.getServletConfig();
         context = config.getServletContext();
         response.setContentType("text/html;charset=UTF-8");
@@ -108,8 +113,6 @@ public class RegistrarMesaPartesServlet extends HttpServlet {
         objBnMesaParte.setUsuarioResponsable(request.getParameter("usuario"));
         objBnMesaParte.setReferencia(request.getParameter("referencia"));
         objBnMesaParte.setCorreo(request.getParameter("correo"));
-        objDsMesaParte = new MesaParteDAOImpl(objConnection);
-        objBnMesaParte.setNumero(objDsMesaParte.iduMesaParte(objBnMesaParte, "0000"));
         Collection<Part> parts = request.getParts();
         for (Part part : parts) {
             if (null != Utiles.getFileName(part)) {
@@ -117,6 +120,8 @@ public class RegistrarMesaPartesServlet extends HttpServlet {
                 part.write(objBnMesaParte.getPeriodo() + "-" + objBnMesaParte.getTipo() + "-" + objBnMesaParte.getNumero() + "-" + objBnMesaParte.getArchivo());
             }
         }
+        objDsMesaParte = new MesaParteDAOImpl(objConnection);
+        objBnMesaParte.setNumero(objDsMesaParte.iduMesaParte(objBnMesaParte, "0000"));
         if (objBnMesaParte.getNumero().equals("0")) {
             // EN CASO DE HABER PROBLEMAS DESPACHAMOS UNA VENTANA DE ERROR, MOSTRANDO EL ERROR OCURRIDO.
             objBnMsgerr = new BeanMsgerr();
@@ -146,13 +151,14 @@ public class RegistrarMesaPartesServlet extends HttpServlet {
         }
         // EN CASO DE NO HABER PROBLEMAS RETORNAMOS UNA NUEVA CONSULTA CON TODOS LOS DATOS.
         if (result == null) {
-            try (PrintWriter out = response.getWriter()) {
-                System.out.println("Enviar correo");
+            try (PrintWriter out = response.getWriter()) { 
+                /*System.out.println("Enviar correo");
                 JavaMail mail = new JavaMail(objBnMesaParte.getCorreo(), imagen);
                 String aaaa = mail.SendMail();
-                System.out.println(aaaa);
-                out.print("GUARDO");
+                System.out.println(aaaa);*/
+                out.print("GUARDO-" + objBnMesaParte.getPeriodo() + "-" + objBnMesaParte.getNumero());
             } catch (Exception e) {
+                System.out.println(e.getMessage());
                 try (PrintWriter out2 = response.getWriter()) {
                     out2.print(e.getMessage());
                 }
@@ -195,7 +201,7 @@ public class RegistrarMesaPartesServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (ParseException ex) {
+        } catch (ParseException | JRException ex) {
             Logger.getLogger(RegistrarMesaPartesServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -213,7 +219,7 @@ public class RegistrarMesaPartesServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (ParseException ex) {
+        } catch (ParseException | JRException ex) {
             Logger.getLogger(RegistrarMesaPartesServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

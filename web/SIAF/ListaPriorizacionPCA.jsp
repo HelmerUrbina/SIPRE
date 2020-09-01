@@ -554,7 +554,7 @@
                     fn_Refrescar();
                 });
                 //INICIA LOS VALORES DE LA VENTANA DETALLE
-                ancho = 800;
+                ancho = 950;
                 alto = 500;
                 posicionX = ($(window).width() / 2) - (ancho / 2);
                 posicionY = ($(window).height() / 2) - (alto / 2);

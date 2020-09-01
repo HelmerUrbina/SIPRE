@@ -56,14 +56,12 @@ public class CombosAjaxServlet extends HttpServlet {
         }
         objConnection = (Connection) context.getAttribute("objConnection");
         objDsCombos = new CombosDAOImpl(objConnection);
-
         String mode = request.getParameter("mode");
         String periodo = request.getParameter("periodo");
         String unidadOperativa = request.getParameter("unidadOperativa");
         String codigo = request.getParameter("codigo");
         Integer presupuesto = Utiles.Utiles.checkNum(request.getParameter("presupuesto"));
         Integer resolucion = Utiles.Utiles.checkNum(request.getParameter("resolucion"));
-
         if (request.getAttribute("objCombosAjax") != null) {
             request.removeAttribute("objCombosAjax");
         }

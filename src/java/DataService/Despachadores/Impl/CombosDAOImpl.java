@@ -1569,22 +1569,30 @@ public class CombosDAOImpl implements CombosDAO {
                     + "GROUP BY COUOAB "
                     + "ORDER BY CODIGO";
         } else {
-            if (unidadOperativa.equals("0003") || unidadOperativa.equals("6999") || unidadOperativa.equals("0820") || unidadOperativa.equals("0790") || unidadOperativa.equals("0750") || unidadOperativa.equals("0794")
-                    || unidadOperativa.equals("0702") || unidadOperativa.equals("0770") || unidadOperativa.equals("0772") || unidadOperativa.equals("0732") || unidadOperativa.equals("0730") || unidadOperativa.equals("0752")
-                    || unidadOperativa.equals("0720") || unidadOperativa.equals("0734") || unidadOperativa.equals("0728") || unidadOperativa.equals("0810") || unidadOperativa.equals("0824") || unidadOperativa.equals("0787")
-                    || unidadOperativa.equals("0750") || unidadOperativa.equals("0846") || unidadOperativa.equals("0822") || unidadOperativa.equals("0754") || unidadOperativa.equals("0756") || unidadOperativa.equals("0775")
-                    || unidadOperativa.equals("0832") || unidadOperativa.equals("0865") || unidadOperativa.equals("0872") || unidadOperativa.equals("0868") || unidadOperativa.equals("0738") || unidadOperativa.equals("0870")
-                    || unidadOperativa.equals("0797") || unidadOperativa.equals("0858") || unidadOperativa.equals("6998") || unidadOperativa.equals("0785") || unidadOperativa.equals("0777") || unidadOperativa.equals("0833")) {
+            if (presupuesto == 9) {
                 sql = "SELECT COUUOO AS CODIGO, COUUOO||':'||ABUUOO AS DESCRIPCION "
                         + "FROM TAUUOO WHERE "
                         + "ESTREG='AC' "
                         + "ORDER BY COUUOO";
             } else {
-                sql = "SELECT COUUOO AS CODIGO, COUUOO||':'||ABUUOO AS DESCRIPCION "
-                        + "FROM TAUUOO WHERE "
-                        + "TIUUOO <> 'P' AND "
-                        + "ESTREG='AC' AND "
-                        + "COUUOO IN ('" + unidadOperativa + "','4001','1000','4288','4363') ORDER BY COUUOO";
+                if (unidadOperativa.equals("0003") || unidadOperativa.equals("6999") || unidadOperativa.equals("0820") || unidadOperativa.equals("0790") || unidadOperativa.equals("0750") || unidadOperativa.equals("0794")
+                        || unidadOperativa.equals("0702") || unidadOperativa.equals("0770") || unidadOperativa.equals("0772") || unidadOperativa.equals("0732") || unidadOperativa.equals("0730") || unidadOperativa.equals("0752")
+                        || unidadOperativa.equals("0720") || unidadOperativa.equals("0734") || unidadOperativa.equals("0728") || unidadOperativa.equals("0810") || unidadOperativa.equals("0824") || unidadOperativa.equals("0787")
+                        || unidadOperativa.equals("0750") || unidadOperativa.equals("0846") || unidadOperativa.equals("0822") || unidadOperativa.equals("0754") || unidadOperativa.equals("0756") || unidadOperativa.equals("0775")
+                        || unidadOperativa.equals("0832") || unidadOperativa.equals("0865") || unidadOperativa.equals("0872") || unidadOperativa.equals("0868") || unidadOperativa.equals("0738") || unidadOperativa.equals("0870")
+                        || unidadOperativa.equals("0797") || unidadOperativa.equals("0858") || unidadOperativa.equals("6998") || unidadOperativa.equals("0785") || unidadOperativa.equals("0777") || unidadOperativa.equals("0833")) {
+                    sql = "SELECT COUUOO AS CODIGO, COUUOO||':'||ABUUOO AS DESCRIPCION "
+                            + "FROM TAUUOO WHERE "
+                            + "ESTREG='AC' "
+                            + "ORDER BY COUUOO";
+
+                } else {
+                    sql = "SELECT COUUOO AS CODIGO, COUUOO||':'||ABUUOO AS DESCRIPCION "
+                            + "FROM TAUUOO WHERE "
+                            + "TIUUOO <> 'P' AND "
+                            + "ESTREG='AC' AND "
+                            + "COUUOO IN ('" + unidadOperativa + "','4001','1000','4288','4363') ORDER BY COUUOO";
+                }
             }
         }
         try {

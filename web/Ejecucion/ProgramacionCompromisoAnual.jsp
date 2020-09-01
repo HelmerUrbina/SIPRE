@@ -8,6 +8,27 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
     var unidad = '${unidad}';
+    if (!'${autorizacion}') {
+        $.confirm({
+            theme: 'material',
+            title: 'AVISO DEL SISTEMA',
+            content: "USUARIO NO AUTORIZADO PARA ESTE TIPO DE OPERACIÓN",
+            animation: 'zoom',
+            closeAnimation: 'zoom',
+            type: 'red',
+            typeAnimated: true,
+            buttons: {
+                aceptar: {
+                    text: 'Aceptar',
+                    btnClass: 'btn-primary',
+                    keys: ['enter', 'shift'],
+                    action: function () {
+                        location.reload();
+                    }
+                }
+            }
+        });
+    }
     $(document).ready(function () {
         var theme = getTheme();
         $("#div_Titulo").jqxExpander({theme: theme, width: '100%'});
@@ -50,11 +71,9 @@
             var periodo = $("#cbo_Periodo").val();
             var presupuesto = $("#cbo_Presupuesto").val();
             var unidadOperativa = $("#cbo_UnidadOperativa").val();
-            $("#div_ContextMenu").remove();
-            $("#div_Mensualizar").remove();
             $("#div_GrillaPrincipal").remove();
             $("#div_VentanaPrincipal").remove();
-            $("#div_VentanaPCA").remove();
+            $("#div_VentanaDetalle").remove();
             $("#div_Reporte").remove();
             var $contenidoAjax = $('#div_Detalle').html('<img src="../Imagenes/Fondos/cargando.gif">');
             $.ajax({

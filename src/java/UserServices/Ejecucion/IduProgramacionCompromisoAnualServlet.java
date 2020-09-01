@@ -5,10 +5,14 @@
  */
 package UserServices.Ejecucion;
 
+import BusinessServices.Beans.BeanMsgerr;
 import BusinessServices.Beans.BeanPCA;
 import BusinessServices.Beans.BeanUsuario;
+import DataService.Despachadores.Impl.MsgerrDAOImpl;
 import DataService.Despachadores.Impl.PCADAOImpl;
+import DataService.Despachadores.MsgerrDAO;
 import DataService.Despachadores.PCADAO;
+import Utiles.Utiles;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -26,8 +30,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author H-URBINA-M
  */
-@WebServlet(name = "ProgramacionCompromisoAnualServlet", urlPatterns = {"/ProgramacionCompromisoAnual"})
-public class ProgramacionCompromisoAnualServlet extends HttpServlet {
+@WebServlet(name = "IduProgramacionCompromisoAnualServlet", urlPatterns = {"/IduProgramacionCompromisoAnual"})
+public class IduProgramacionCompromisoAnualServlet extends HttpServlet {
 
     private ServletConfig config = null;
     private ServletContext context = null;
@@ -36,6 +40,8 @@ public class ProgramacionCompromisoAnualServlet extends HttpServlet {
     private BeanPCA objBnPCA;
     private Connection objConnection;
     private PCADAO objDsPCA;
+    private BeanMsgerr objBnMsgerr = null;
+    private MsgerrDAO objDsMsgerr;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -50,55 +56,61 @@ public class ProgramacionCompromisoAnualServlet extends HttpServlet {
             throws ServletException, IOException {
         config = this.getServletConfig();
         context = config.getServletContext();
-        session = request.getSession();
+        session = request.getSession(true);
         String result = null;
         // VERIFICAMOS LA SESSION DE LA SOLICITUD DE CREDITO
         BeanUsuario objUsuario = (BeanUsuario) session.getAttribute("objUsuario" + session.getId());
         if (objUsuario == null) {
-            dispatcher = request.getRequestDispatcher("FinSession.jsp");
+            dispatcher = request.getRequestDispatcher("../FinSession.jsp");
             dispatcher.forward(request, response);
         }
         objConnection = (Connection) context.getAttribute("objConnection");
         objBnPCA = new BeanPCA();
         objBnPCA.setMode(request.getParameter("mode"));
         objBnPCA.setPeriodo(request.getParameter("periodo"));
-        objBnPCA.setPresupuesto(Utiles.Utiles.checkNum(request.getParameter("presupuesto")));
+        objBnPCA.setPresupuesto(Utiles.checkNum(request.getParameter("presupuesto")));
         objBnPCA.setUnidadOperativa(request.getParameter("unidadOperativa"));
-        objBnPCA.setCodigo(Utiles.Utiles.checkNum(request.getParameter("codigo")));
-        // objBnPCA.setCodigo(request.getParameter("codigo"));
+        objBnPCA.setTipo(request.getParameter("tipoCambio"));
+        objBnPCA.setCategoriaPresupuestal(request.getParameter("documento"));
         objDsPCA = new PCADAOImpl(objConnection);
-        // DE ACUERO AL MODO, OBTENEMOS LOS DATOS NECESARIOS. 
-        if (objBnPCA.getMode().equals("G")) {
-            if (request.getAttribute("objPCA") != null) {
-                request.removeAttribute("objPCA");
+        // EJECUTAMOS EL PROCEDIMIENTO SEGUN EL MODO QUE SE ESTA TRABAJANDO
+        String lista[][] = Utiles.generaLista(request.getParameter("lista"), 8);
+        int k = 0;
+        objBnPCA.setCodigo(objDsPCA.getAutorizacionPCA(objBnPCA, objUsuario.getUsuario()));
+        for (String[] item : lista) {
+            objBnPCA.setMode("I");
+            objBnPCA.setResolucion(item[1].trim());
+            objBnPCA.setDependencia(item[2].trim());
+            objBnPCA.setSecuenciaFuncional(item[3].trim());
+            objBnPCA.setTareaPresupuestal(item[4].trim());
+            objBnPCA.setCadenaGasto(item[5].trim());
+            objBnPCA.setPCA(Utiles.checkDouble(item[6]));
+            if (Utiles.checkDouble(item[7]) > 0) {
+                objBnPCA.setPCA(Utiles.checkDouble(item[7]) * (-1));
             }
-            request.setAttribute("objPCA", objDsPCA.getListaPCA(objBnPCA, objUsuario.getUsuario()));
+            k = objDsPCA.iduPCA(objBnPCA, objUsuario.getUsuario());
         }
-        if (objBnPCA.getMode().equals("B")) {
-            result = "" + objDsPCA.getListaPCAUnidadOperativa(objBnPCA, objUsuario.getUsuario());
+        // EN CASO DE HABER PROBLEMAS DESPACHAMOS UNA VENTANA DE ERROR, MOSTRANDO EL ERROR OCURRIDO.
+        if (k == 0) {
+            objBnMsgerr = new BeanMsgerr();
+            objBnMsgerr.setUsuario(objUsuario.getUsuario());
+            objBnMsgerr.setTabla("SIPRE_PCA");
+            objBnMsgerr.setTipo(objBnPCA.getMode());
+            objDsMsgerr = new MsgerrDAOImpl(objConnection);
+            objBnMsgerr = objDsMsgerr.getMsgerr(objBnMsgerr);
+            result = objBnMsgerr.getDescripcion();
         }
-        if (objBnPCA.getMode().equals("V")) {
-            result = "" + objDsPCA.getListaPCAVAriacion(objBnPCA, objUsuario.getUsuario());
-        }
-        //SE ENVIA DE ACUERDO AL MODO SELECCIONADO
-        switch (objBnPCA.getMode()) {
-            case "programacionCompromisoAnual":
-                dispatcher = request.getRequestDispatcher("Ejecucion/ProgramacionCompromisoAnual.jsp");
-                break;
-            case "G":
-                dispatcher = request.getRequestDispatcher("Ejecucion/ListaProgramacionCompromisoAnual.jsp");
-                break;
-            default:
-                dispatcher = request.getRequestDispatcher("error.jsp");
-                break;
-        }
-        if (result != null) {
-            response.setContentType("text/html;charset=UTF-8");
+        // EN CASO DE NO HABER PROBLEMAS RETORNAMOS UNA NUEVA CONSULTA CON TODOS LOS DATOS.
+        response.setContentType("text/html;charset=UTF-8");
+        if (result == null) {
+            try (PrintWriter out = response.getWriter()) {
+                out.print("GUARDO");
+            }
+        } else {
+            //PROCEDEMOS A ELIMINAR TODO;
             try (PrintWriter out = response.getWriter()) {
                 out.print(result);
             }
-        } else {
-            dispatcher.forward(request, response);
         }
     }
 

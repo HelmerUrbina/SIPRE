@@ -46,7 +46,7 @@ public class RegistroPersonalDAOImpl implements RegistroPersonalDAO {
                 + "VDIRECCION_PERSONAL AS DIRECCION,"
                 + "VNUMERO_TELEFONO AS TELEFONO,"
                 + "DFECNAC_PERSONAL AS FECHA_NACIMIENTO,"
-                + "UTIL_NEW.FUN_DPTO_CAJAS(CAREA_LABORAL) AS AREA,"
+                + "UTIL_NEW.FUN_NOMBRE_AREA_LABORAL(CAREA_LABORAL) AS AREA,"
                 + "VCARGO_PERSONAL AS CARGO,"
                 + "CASE CESTADO_PERSONAL WHEN 'AC' THEN 'ACTIVO' ELSE 'BAJA' END AS ESTADO,"
                 + "UTIL_NEW.FUN_NOMBRE_GRADO(CCODIGO_GRADO)  AS GRADO,"

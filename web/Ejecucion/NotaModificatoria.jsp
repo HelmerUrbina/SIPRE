@@ -82,7 +82,7 @@
     <div class="jqx-hideborder">REGISTRO DE NOTAS MODIFICATORIAS</div>
     <div>
         <div id="div_Cabecera">
-            <table class="navy">                
+            <table class="navy">
                 <tbody>
                     <tr>
                         <td>Periodo : </td>

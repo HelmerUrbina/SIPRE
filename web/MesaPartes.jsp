@@ -173,10 +173,10 @@
                             success: function (data) {
                                 $contenidoAjax.html("");
                                 msg = data;
-                                if (msg === "GUARDO") {
+                                if (msg.substring(0,6) === "GUARDO") {
                                     $.confirm({
                                         title: 'AVISO DEL SISTEMA',
-                                        content: 'Se ha remito la confirmación al correo electronico',
+                                        content: 'Se ha guardado satisfactoriamente',
                                         type: 'green',
                                         typeAnimated: true,
                                         autoClose: 'cerrarAction|1000',
@@ -184,11 +184,14 @@
                                             cerrarAction: {
                                                 text: 'Cerrar',
                                                 action: function () {
+                                                    var url = 'Reportes?reporte=MPA0005&periodo=' + msg.substring(7,11) + '&tipo=' + tipo + '&codigo=' + msg.substring(12);
+                                                    window.open(url, '_blank');
                                                     window.location = "index.jsp";
                                                 }
                                             }
                                         }
                                     });
+                                    
                                 } else {
                                     $.alert({
                                         theme: 'material',
