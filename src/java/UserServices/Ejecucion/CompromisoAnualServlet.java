@@ -95,7 +95,9 @@ public class CompromisoAnualServlet extends HttpServlet {
                     + objBnCompromisoAnual.getImporte() + "+++"
                     + objBnCompromisoAnual.getTipoMoneda() + "+++"
                     + objBnCompromisoAnual.getTipoCambio() + "+++"
-                    + objBnCompromisoAnual.getMonedaExtranjera();
+                    + objBnCompromisoAnual.getMonedaExtranjera() + "+++"
+                    + objBnCompromisoAnual.getTipo() + "+++"
+                    + objBnCompromisoAnual.getSectorista();
         }
         if (objBnCompromisoAnual.getMode().equals("B")) {
             result = "" + objDsCompromisoAnual.getListaCompromisoAnualDetalle(objBnCompromisoAnual, objUsuario.getUsuario());
@@ -168,5 +170,4 @@ public class CompromisoAnualServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

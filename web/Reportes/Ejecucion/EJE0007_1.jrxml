@@ -12,10 +12,10 @@
 		<defaultValueExpression><![CDATA["2020"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PRESUPUESTO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["3"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["120008A"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["3200080A"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="USUARIO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["43305891"]]></defaultValueExpression>

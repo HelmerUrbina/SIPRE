@@ -6,9 +6,13 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
+    var autorizacion = '${autorizacion}';
     var periodo = $("#cbo_Periodo").val();
     var presupuesto = $("#cbo_Presupuesto").val();
     var unidadOperativa = $("#cbo_UnidadOperativa").val();
+    if (autorizacion === 'false') {
+        window.location = "../Error/PaginaMantenimiento.jsp";
+    }
     var codigo = null;
     var lista = new Array();
     <c:forEach var="c" items="${objEvento}">
@@ -165,7 +169,7 @@
 <div id="div_GrillaTotales"></div>
 <div id='div_ContextMenu'>
     <ul>        
-        <li>Crear Eventos</li>        
+        <li>Crear Eventos</li>
     </ul>
 </div>
 

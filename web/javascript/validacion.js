@@ -2,7 +2,14 @@
 function scrollb() {
     window.status = "Sistema Integrado Presupuestal del Ejercito - SIPRE";
 }
-///FUNCION PARA VALIDAR UN CAMPO
+//FUNCION PARA VALIDAR LA AUTORIZACION DEL USUSARIO
+function fn_validaAutorizacion(autorizacion) {
+    if (!autorizacion) {
+        alert("USUARIO NO AUTORIZADO PARA ESTE TIPO DE OPERACIÓN");
+        location.reload();
+    }
+}
+//FUNCION PARA VALIDAR UN CAMPO
 function fn_validaCampo(campo, msg) {
     if (campo === null || campo === "" || $.trim(campo).length === 0) {
         return msg + "<br>";

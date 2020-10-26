@@ -56,8 +56,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -90,8 +90,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -132,8 +132,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -167,8 +167,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -202,8 +202,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -241,8 +241,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -276,8 +276,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -311,8 +311,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -345,8 +345,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -382,8 +382,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -418,8 +418,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -452,8 +452,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -487,8 +487,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -553,8 +553,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -606,8 +606,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -643,8 +643,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -688,8 +688,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -726,8 +726,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -739,9 +739,9 @@ public class CombosDAOImpl implements CombosDAO {
     @Override
     public List getParentesco() {
         lista = new LinkedList<>();
-        sql = "SELECT CCODIGO_PARENTESCO AS CODIGO,"
-                + "VDESCRIPCION_PARENTESCO AS DESCRIPCION "
-                + "FROM SIPE_PARENTESCO "
+        sql = "SELECT CPARENTESCO_CODIGO AS CODIGO, VPARENTESCO_DESCRIPCION AS DESCRIPCION "
+                + "FROM SIPRE_PARENTESCO WHERE "
+                + "CESTADO_CODIGO='AC' "
                 + "ORDER BY CODIGO ";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
@@ -867,8 +867,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -906,8 +906,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -940,8 +940,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -982,8 +982,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -1038,8 +1038,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -1080,8 +1080,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -1153,8 +1153,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -1233,8 +1233,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -1318,8 +1318,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -1407,8 +1407,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -1499,8 +1499,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -1542,8 +1542,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -1585,7 +1585,6 @@ public class CombosDAOImpl implements CombosDAO {
                             + "FROM TAUUOO WHERE "
                             + "ESTREG='AC' "
                             + "ORDER BY COUUOO";
-
                 } else {
                     sql = "SELECT COUUOO AS CODIGO, COUUOO||':'||ABUUOO AS DESCRIPCION "
                             + "FROM TAUUOO WHERE "
@@ -1609,8 +1608,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -1672,8 +1671,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -1740,8 +1739,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -1812,8 +1811,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -1888,8 +1887,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -1967,8 +1966,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -2012,8 +2011,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -2070,8 +2069,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -2132,8 +2131,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -2197,8 +2196,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -2266,8 +2265,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -2338,8 +2337,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -2413,8 +2412,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -4404,7 +4403,6 @@ public class CombosDAOImpl implements CombosDAO {
     @Override
     public List getCadenaGastoHorasVuelo() {
         lista = new LinkedList<>();
-
         sql = "SELECT COTITR||'.'||COGEGA||'.'||COGEG1||'.'||COGEG2||'.'||COESG1||'.'||COESG2 AS CODIGO, "
                 + " COTITR||'.'||COGEGA||'.'||COGEG1||'.'||COGEG2||'.'||COESG1||'.'||COESG2||':'||NOCAGA AS DESCRIPCION "
                 + " FROM CADGAS WHERE "
@@ -4551,7 +4549,6 @@ public class CombosDAOImpl implements CombosDAO {
                 + "DIPPTO='S' AND "
                 + "COARLB='" + area + "' "
                 + "ORDER BY DESCRIPCION ";
-
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objResultSet = objPreparedStatement.executeQuery();
@@ -4682,7 +4679,6 @@ public class CombosDAOImpl implements CombosDAO {
                 + "CDOCUMENTO_TIPO='E' AND "
                 + add
                 + "ORDER BY DESCRIPCION";
-
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, periodo);
@@ -4715,7 +4711,6 @@ public class CombosDAOImpl implements CombosDAO {
                 + "WHERE COUUOO='0003' AND DIPPTO='S' AND ESTREG='AC' "
                 + "AND CODUSU=? "
                 + "ORDER BY USUARIO ";
-
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, usuario);
@@ -4761,7 +4756,6 @@ public class CombosDAOImpl implements CombosDAO {
                 + "D.CDOCUMENTO_TIPO='E' AND "
                 + add
                 + "ORDER BY DESCRIPCION";
-
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, periodo);
@@ -4799,7 +4793,6 @@ public class CombosDAOImpl implements CombosDAO {
                 + "COARLB='" + area + "' AND "
                 + "CODUSU NOT IN (?)"
                 + "ORDER BY DESCRIPCION ";
-
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, codusu);
@@ -4928,8 +4921,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -4965,8 +4958,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -5000,8 +4993,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -5035,8 +5028,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -5072,8 +5065,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -5123,8 +5116,8 @@ public class CombosDAOImpl implements CombosDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());

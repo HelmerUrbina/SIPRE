@@ -43,7 +43,7 @@ public class VerificacionDocumentosServlet extends HttpServlet {
         BeanUsuario objUsuario = (BeanUsuario) session.getAttribute("objUsuario" + session.getId());
         //VERIFICAMOS LA SESSION DEL USUARIO
         if (objUsuario == null) {
-            dispatcher = request.getRequestDispatcher("/FinSession.jsp");
+            dispatcher = request.getRequestDispatcher("FinSession.jsp");
             dispatcher.forward(request, response);
         }
         objConnection = (Connection) context.getAttribute("objConnection");
@@ -102,5 +102,4 @@ public class VerificacionDocumentosServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

@@ -20,6 +20,7 @@
         <meta http-equiv="Pragma" content="no-cache"/>
         <meta http-equiv="refresh" content="300; url=index.jsp">
         <title>.:: SIPRE - Sistema Integrado Presupuestal del Ejercito ::.</title>
+        <link rel="shortcut icon" href="Imagenes/Logos/favicon.ico" type="image/x-icon">
         <link type="text/css" rel="stylesheet" href="css/styles/jqx.base.css">
         <link type="text/css" rel="stylesheet" href="css/login.css">
         <link type="text/css" rel="stylesheet" href="css/scaf.css">

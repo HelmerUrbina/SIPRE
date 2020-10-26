@@ -157,7 +157,6 @@
             editable: false,
             showstatusbar: false,
             showtoolbar: true,
-            pagesize: 50,
             rendertoolbar: function (toolbar) {
                 // ADICIONAMOS BOTONES A LA BARRA DE ESTADOS
                 var container = $("<div style='overflow: hidden; position: relative; margin: 1px;'></div>");
@@ -224,7 +223,6 @@
                             }
                         }
                     });
-
                 });
             },
             initRowDetails: initRowDetails,

@@ -62,7 +62,7 @@ public class ReportesServlet extends HttpServlet {
         config = this.getServletConfig();
         context = config.getServletContext();
         session = request.getSession(true);
-        //VERIFICAMOS QUE LA SESSION SEA VALIDA        
+        //VERIFICAMOS QUE LA SESSION SEA VALIDA
         BeanUsuario objUsuario = (BeanUsuario) session.getAttribute("objUsuario" + session.getId());
         if (objUsuario == null) {
             /*dispatcher = request.getRequestDispatcher("/FinSession.jsp");

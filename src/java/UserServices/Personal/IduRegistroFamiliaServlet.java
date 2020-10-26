@@ -6,12 +6,11 @@
 package UserServices.Personal;
 
 import BusinessServices.Beans.BeanMsgerr;
-import BusinessServices.Beans.BeanRegistroPersonal;
+import BusinessServices.Beans.BeanPersonal;
 import BusinessServices.Beans.BeanUsuario;
 import DataService.Despachadores.Impl.MsgerrDAOImpl;
-import DataService.Despachadores.Impl.RegistroPersonalDAOImpl;
+import DataService.Despachadores.Impl.PersonalDAOImpl;
 import DataService.Despachadores.MsgerrDAO;
-import DataService.Despachadores.RegistroPersonalDAO;
 import Utiles.Utiles;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,6 +24,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import DataService.Despachadores.PersonalDAO;
 
 /**
  *
@@ -37,9 +37,9 @@ public class IduRegistroFamiliaServlet extends HttpServlet {
     private ServletContext context = null;
     private HttpSession session = null;
     private RequestDispatcher dispatcher = null;
-    private BeanRegistroPersonal objBnRegistroFamilia;
+    private BeanPersonal objBnRegistroFamilia;
     private Connection objConnection;
-    private RegistroPersonalDAO objDsRegistroFamilia;
+    private PersonalDAO objDsRegistroFamilia;
     private BeanMsgerr objBnMsgerr = null;
     private MsgerrDAO objDsMsgerr;
 
@@ -56,29 +56,29 @@ public class IduRegistroFamiliaServlet extends HttpServlet {
         }
         objConnection = (Connection) context.getAttribute("objConnection");
         String result = null;
-        objBnRegistroFamilia = new BeanRegistroPersonal();
-        objBnRegistroFamilia.setDni(request.getParameter("dni"));
-        objBnRegistroFamilia.setDocumentoFamiliar("");
+        objBnRegistroFamilia = new BeanPersonal();
+        objBnRegistroFamilia.setDocumento(request.getParameter("dni"));
+        //objBnRegistroFamilia.setDocumentoFamiliar("");
         objBnRegistroFamilia.setTelefono("");
-        objBnRegistroFamilia.setTelefonoFamiliar("");
+        // objBnRegistroFamilia.setTelefonoFamiliar("");
         objBnRegistroFamilia.setParentesco("");
-        objBnRegistroFamilia.setNombreFamiliar("");
-        objBnRegistroFamilia.setApellidoFamiliar("");
+        //  objBnRegistroFamilia.setNombreFamiliar("");
+        //  objBnRegistroFamilia.setApellidoFamiliar("");
         // EJECUTAMOS EL PROCEDIMIENTO SEGUN EL MODO QUE SE ESTA TRABAJANDO
-        objDsRegistroFamilia = new RegistroPersonalDAOImpl(objConnection);
+        objDsRegistroFamilia = new PersonalDAOImpl(objConnection);
         objBnRegistroFamilia.setMode("D");
-        int k = objDsRegistroFamilia.iduRegistroFamiliar(objBnRegistroFamilia, objUsuario.getUsuario());
+        int k = objDsRegistroFamilia.iduFamilia(objBnRegistroFamilia, objUsuario.getUsuario());
 
         String lista[][] = Utiles.generaLista(request.getParameter("lista"), 6);
         for (String[] item : lista) {
             objBnRegistroFamilia.setMode("I");
-            objBnRegistroFamilia.setDocumentoFamiliar(item[0].trim());
-            objBnRegistroFamilia.setTelefonoFamiliar(item[1]);
+            //      objBnRegistroFamilia.setDocumentoFamiliar(item[0].trim());
+            //      objBnRegistroFamilia.setTelefonoFamiliar(item[1]);
             objBnRegistroFamilia.setTelefono(item[2]);
             objBnRegistroFamilia.setParentesco(item[3].trim());
-            objBnRegistroFamilia.setNombreFamiliar(item[4]);
-            objBnRegistroFamilia.setApellidoFamiliar(item[5]);
-            k = objDsRegistroFamilia.iduRegistroFamiliar(objBnRegistroFamilia, objUsuario.getUsuario());
+            //       objBnRegistroFamilia.setNombreFamiliar(item[4]);
+            //       objBnRegistroFamilia.setApellidoFamiliar(item[5]);
+            k = objDsRegistroFamilia.iduFamilia(objBnRegistroFamilia, objUsuario.getUsuario());
         }
         if (k == 0) {
             // EN CASO DE HABER PROBLEMAS DESPACHAMOS UNA VENTANA DE ERROR, MOSTRANDO EL ERROR OCURRIDO.
@@ -139,5 +139,4 @@ public class IduRegistroFamiliaServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

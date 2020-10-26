@@ -65,7 +65,7 @@ public class EjecucionEstadoServlet extends HttpServlet {
         objBnEjecucionEstado.setMode(request.getParameter("mode"));
         objBnEjecucionEstado.setPeriodo(request.getParameter("periodo"));
         objBnEjecucionEstado.setPresupuesto(Utiles.Utiles.checkNum(request.getParameter("presupuesto")));
-        objBnEjecucionEstado.setOpcion(request.getParameter("opcion"));        
+        objBnEjecucionEstado.setOpcion(request.getParameter("opcion"));
         objDsEjecucionEstado = new EjecucionEstadoDAOImpl(objConnection);
         // DE ACUERO AL MODO, OBTENEMOS LOS DATOS NECESARIOS.        
         if (objBnEjecucionEstado.getMode().equals("G")) {

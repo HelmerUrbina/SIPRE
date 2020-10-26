@@ -57,15 +57,18 @@ public class PCADAOImpl implements PCADAO {
                 + "FROM V_PIM_PCA WHERE "
                 + "CPERIODO_CODIGO=? AND "
                 + "NPRESUPUESTO_CODIGO=? AND "
-                + "CUNIDAD_OPERATIVA_CODIGO=? "
+                + "CUNIDAD_OPERATIVA_CODIGO=? AND "
+                + "TRIM(CGENERICA_GASTO_CODIGO)=? "
                 + "GROUP BY CPERIODO_CODIGO, NPRESUPUESTO_CODIGO, CUNIDAD_OPERATIVA_CODIGO, CDEPENDENCIA_CODIGO, CSECUENCIA_FUNCIONAL_CODIGO, "
                 + "CTAREA_CODIGO, CADENA_GASTO, NRESOLUCION_CODIGO "
-                + "ORDER BY NRESOLUCION_CODIGO, CDEPENDENCIA_CODIGO, CSECUENCIA_FUNCIONAL_CODIGO, CTAREA_CODIGO, CADENA_GASTO";
+                + "HAVING (SUM(PIM)+SUM(PCA))>0 "
+                + "ORDER BY NRESOLUCION_CODIGO, CDEPENDENCIA_CODIGO, CSECUENCIA_FUNCIONAL_CODIGO, CTAREA_CODIGO, CADENA_GASTO ";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, objBeanPCA.getPeriodo());
             objPreparedStatement.setInt(2, objBeanPCA.getPresupuesto());
             objPreparedStatement.setString(3, objBeanPCA.getUnidadOperativa());
+            objPreparedStatement.setString(4, objBeanPCA.getGenericaGasto());
             objResultSet = objPreparedStatement.executeQuery();
             while (objResultSet.next()) {
                 objBnPCA = new BeanPCA();
@@ -92,8 +95,8 @@ public class PCADAOImpl implements PCADAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -114,6 +117,7 @@ public class PCADAOImpl implements PCADAO {
                 + "CPERIODO_CODIGO=? AND "
                 + "NPRESUPUESTO_CODIGO=? AND "
                 + "CUNIDAD_OPERATIVA_CODIGO=? AND "
+                + "SUBSTR(VCADENA_GASTO_CODIGO,3,1)=? AND "
                 + "NPCA_AUTORIZACION IS NOT NULL "
                 + "GROUP BY NPCA_AUTORIZACION, VUSUARIO_CODIGO, TO_CHAR(DUSUARIO_FECHA,'DD/MM/YYYY') "
                 + "ORDER BY NPCA_AUTORIZACION";
@@ -122,6 +126,7 @@ public class PCADAOImpl implements PCADAO {
             objPreparedStatement.setString(1, objBeanPCA.getPeriodo());
             objPreparedStatement.setInt(2, objBeanPCA.getPresupuesto());
             objPreparedStatement.setString(3, objBeanPCA.getUnidadOperativa());
+            objPreparedStatement.setString(4, objBeanPCA.getGenericaGasto());
             objResultSet = objPreparedStatement.executeQuery();
             while (objResultSet.next()) {
                 Filas.clear();
@@ -152,9 +157,10 @@ public class PCADAOImpl implements PCADAO {
     public ArrayList getListaPCAVAriacion(BeanPCA objBeanPCA, String usuario) {
         ArrayList<String> Arreglo = new ArrayList<>();
         ArrayList<String> Filas = new ArrayList<>();
-        sql = "SELECT NRESOLUCION_CODIGO||'---'||CDEPENDENCIA_CODIGO||'---'||CSECUENCIA_FUNCIONAL_CODIGO||'---'||CTAREA_CODIGO||'---'||CADENA_GASTO AS CODIGO, "
+        sql = "SELECT NRESOLUCION_CODIGO||'---'||CDEPENDENCIA_CODIGO||'---'||TRIM(NTIPO_CALENDARIO_CODIGO)||'---'||CSECUENCIA_FUNCIONAL_CODIGO||'---'||CTAREA_CODIGO||'---'||CADENA_GASTO AS CODIGO, "
                 + "UTIL_NEW.FUN_ABRDEP(CUNIDAD_OPERATIVA_CODIGO, CDEPENDENCIA_CODIGO) AS DEPENDENCIA, "
                 + "UTIL.FUN_DESCRIPCION_RESOLUCION(CPERIODO_CODIGO, NRESOLUCION_CODIGO) AS RESOLUCION, "
+                + "TRIM(NTIPO_CALENDARIO_CODIGO)||':'||UTIL_NEW.FUN_DESTIP(TRIM(NTIPO_CALENDARIO_CODIGO), NPRESUPUESTO_CODIGO) AS TIPO_CALENDARIO, "
                 + "CSECUENCIA_FUNCIONAL_CODIGO||':'||UTIL_NEW.FUN_DESMET(CPERIODO_CODIGO, NPRESUPUESTO_CODIGO, CSECUENCIA_FUNCIONAL_CODIGO) SECUENCIA_FUNCIONAL, "
                 + "CTAREA_CODIGO||':'||UTIL_NEW.FUN_NOMEOP(CTAREA_CODIGO) TAREA, "
                 + "CADENA_GASTO||':'||UTIL.FUN_NOMBRE_CADGAS(CADENA_GASTO) CADENA_GASTO, "
@@ -162,14 +168,16 @@ public class PCADAOImpl implements PCADAO {
                 + "FROM V_PIM_PCA WHERE "
                 + "CPERIODO_CODIGO=? AND "
                 + "NPRESUPUESTO_CODIGO=? AND "
-                + "CUNIDAD_OPERATIVA_CODIGO=? "
-                + "GROUP BY CPERIODO_CODIGO, NPRESUPUESTO_CODIGO, CUNIDAD_OPERATIVA_CODIGO, CDEPENDENCIA_CODIGO, "
+                + "CUNIDAD_OPERATIVA_CODIGO=? AND "
+                + "TRIM(CGENERICA_GASTO_CODIGO)=? "
+                + "GROUP BY CPERIODO_CODIGO, NPRESUPUESTO_CODIGO, CUNIDAD_OPERATIVA_CODIGO, CDEPENDENCIA_CODIGO, NTIPO_CALENDARIO_CODIGO, "
                 + "CSECUENCIA_FUNCIONAL_CODIGO,  CTAREA_CODIGO, CADENA_GASTO, NRESOLUCION_CODIGO "
                 + "HAVING SUM(PCA)-(SUM(CERTIFICADO)+SUM(SOLICITUD)+SUM(NOTA))>0 "
                 + "UNION ALL "
-                + "SELECT NRESOLUCION_CODIGO||'---'||CDEPENDENCIA_CODIGO||'---'||CSECUENCIA_FUNCIONAL_CODIGO||'---'||CTAREA_CODIGO||'---'||CADENA_GASTO AS CODIGO, "
+                + "SELECT NRESOLUCION_CODIGO||'---'||CDEPENDENCIA_CODIGO||'---'||TRIM(NTIPO_CALENDARIO_CODIGO)||'---'||CSECUENCIA_FUNCIONAL_CODIGO||'---'||CTAREA_CODIGO||'---'||CADENA_GASTO AS CODIGO, "
                 + "UTIL_NEW.FUN_ABRDEP(CUNIDAD_OPERATIVA_CODIGO, CDEPENDENCIA_CODIGO) AS DEPENDENCIA, "
                 + "UTIL.FUN_DESCRIPCION_RESOLUCION(CPERIODO_CODIGO, NRESOLUCION_CODIGO) AS RESOLUCION, "
+                + "TRIM(NTIPO_CALENDARIO_CODIGO)||':'||UTIL_NEW.FUN_DESTIP(TRIM(NTIPO_CALENDARIO_CODIGO), NPRESUPUESTO_CODIGO) AS TIPO_CALENDARIO, "
                 + "CSECUENCIA_FUNCIONAL_CODIGO||':'||UTIL_NEW.FUN_DESMET(CPERIODO_CODIGO, NPRESUPUESTO_CODIGO, CSECUENCIA_FUNCIONAL_CODIGO) SECUENCIA_FUNCIONAL,"
                 + "CTAREA_CODIGO||':'||UTIL_NEW.FUN_NOMEOP(CTAREA_CODIGO) TAREA, "
                 + "CADENA_GASTO||':'||UTIL.FUN_NOMBRE_CADGAS(CADENA_GASTO) CADENA_GASTO, "
@@ -177,25 +185,30 @@ public class PCADAOImpl implements PCADAO {
                 + "FROM V_PIM_PCA WHERE "
                 + "CPERIODO_CODIGO=? AND "
                 + "NPRESUPUESTO_CODIGO=? AND "
-                + "CUNIDAD_OPERATIVA_CODIGO=? "
-                + "GROUP BY CPERIODO_CODIGO, NPRESUPUESTO_CODIGO, CUNIDAD_OPERATIVA_CODIGO, CDEPENDENCIA_CODIGO, "
+                + "CUNIDAD_OPERATIVA_CODIGO=? AND "
+                + "TRIM(CGENERICA_GASTO_CODIGO)=?"
+                + "GROUP BY CPERIODO_CODIGO, NPRESUPUESTO_CODIGO, CUNIDAD_OPERATIVA_CODIGO, CDEPENDENCIA_CODIGO, NTIPO_CALENDARIO_CODIGO, "
                 + "CSECUENCIA_FUNCIONAL_CODIGO, CTAREA_CODIGO, CADENA_GASTO, NRESOLUCION_CODIGO "
                 + "HAVING SUM(PCA)-(SUM(PIM))<0 "
                 + "ORDER BY 1";
+        
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, objBeanPCA.getPeriodo());
             objPreparedStatement.setInt(2, objBeanPCA.getPresupuesto());
             objPreparedStatement.setString(3, objBeanPCA.getUnidadOperativa());
-            objPreparedStatement.setString(4, objBeanPCA.getPeriodo());
-            objPreparedStatement.setInt(5, objBeanPCA.getPresupuesto());
-            objPreparedStatement.setString(6, objBeanPCA.getUnidadOperativa());
+            objPreparedStatement.setString(4, objBeanPCA.getGenericaGasto());
+            objPreparedStatement.setString(5, objBeanPCA.getPeriodo());
+            objPreparedStatement.setInt(6, objBeanPCA.getPresupuesto());
+            objPreparedStatement.setString(7, objBeanPCA.getUnidadOperativa());
+            objPreparedStatement.setString(8, objBeanPCA.getGenericaGasto());
             objResultSet = objPreparedStatement.executeQuery();
             while (objResultSet.next()) {
                 Filas.clear();
                 String arreglo = objResultSet.getString("CODIGO") + "+++"
                         + objResultSet.getString("DEPENDENCIA") + "+++"
                         + objResultSet.getString("RESOLUCION") + "+++"
+                        + objResultSet.getString("TIPO_CALENDARIO") + "+++"
                         + objResultSet.getString("SECUENCIA_FUNCIONAL") + "+++"
                         + objResultSet.getString("TAREA") + "+++"
                         + objResultSet.getString("CADENA_GASTO") + "+++"
@@ -238,8 +251,8 @@ public class PCADAOImpl implements PCADAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -256,7 +269,7 @@ public class PCADAOImpl implements PCADAO {
          * USUARIO, EN CASO DE OBTENER ALGUN ERROR ACTIVARA LA OPCION DE
          * EXCEPCIONES EN LA CUAL SE REGISTRARA EL ERROR EL MOTIVO DEL ERROR.
          */
-        sql = "{CALL  SP_IDU_PCA(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        sql = "{CALL  SP_IDU_PCA(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         try (CallableStatement cs = objConnection.prepareCall(sql)) {
             cs.setString(1, objBeanPCA.getPeriodo());
             cs.setInt(2, objBeanPCA.getPresupuesto());
@@ -266,12 +279,13 @@ public class PCADAOImpl implements PCADAO {
             cs.setString(6, objBeanPCA.getTipo());
             cs.setString(7, objBeanPCA.getResolucion());
             cs.setString(8, objBeanPCA.getDependencia());
-            cs.setString(9, objBeanPCA.getSecuenciaFuncional());
-            cs.setString(10, objBeanPCA.getTareaPresupuestal());
-            cs.setString(11, objBeanPCA.getCadenaGasto());
-            cs.setDouble(12, objBeanPCA.getPCA());
-            cs.setString(13, usuario);
-            cs.setString(14, objBeanPCA.getMode());
+            cs.setString(9, objBeanPCA.getTipoCalendario());
+            cs.setString(10, objBeanPCA.getSecuenciaFuncional());
+            cs.setString(11, objBeanPCA.getTareaPresupuestal());
+            cs.setString(12, objBeanPCA.getCadenaGasto());
+            cs.setDouble(13, objBeanPCA.getPCA());
+            cs.setString(14, usuario);
+            cs.setString(15, objBeanPCA.getMode());
             s = cs.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error al ejecutar iduPAAC : " + e.toString());

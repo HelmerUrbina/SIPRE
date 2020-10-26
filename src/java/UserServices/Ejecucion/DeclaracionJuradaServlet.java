@@ -74,7 +74,7 @@ public class DeclaracionJuradaServlet extends HttpServlet {
         objBnDeclaracionJurada.setDeclaracionJurada(request.getParameter("codigo"));
         objBnDeclaracionJurada.setCompromisoAnual(request.getParameter("compromisoAnual"));
         objDsDeclaracionJurada = new DeclaracionJuradaDAOImpl(objConnection);
-        // DE ACUERO AL MODO, OBTENEMOS LOS DATOS NECESARIOS.        
+        // DE ACUERO AL MODO, OBTENEMOS LOS DATOS NECESARIOS.
         if (objBnDeclaracionJurada.getMode().equals("G")) {
             objDeclaracionJurada = objDsDeclaracionJurada.getListaDeclaracionJurada(objBnDeclaracionJurada, objUsuario.getUsuario());
             objDeclaracionJuradaDetalle = objDsDeclaracionJurada.getListaDeclaracionJuradaDetalle(objBnDeclaracionJurada, objUsuario.getUsuario());

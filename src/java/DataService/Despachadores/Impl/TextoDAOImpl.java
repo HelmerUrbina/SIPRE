@@ -234,10 +234,11 @@ public class TextoDAOImpl implements TextoDAO {
     @Override
     public List getInstitucion(String busqueda) {
         lista = new LinkedList<>();
-        sql = "SELECT VINSTITUCION_ABREVIATURA AS DESCRIPCION, CINSTITUCION_CODIGO AS CODIGO "
+        sql = "SELECT CINSTITUCION_CODIGO AS CODIGO, VINSTITUCION_ABREVIATURA||'-'||VINSTITUCION_DESCRIPCION AS DESCRIPCION "
                 + "FROM SIPE_INSTITUCION WHERE "
                 + "CORGANISMO_CODIGO = '01' AND "
-                + "UPPER(VINSTITUCION_ABREVIATURA) LIKE '%" + busqueda.toUpperCase() + "%' "
+                + "UPPER(VINSTITUCION_ABREVIATURA) LIKE '%" + busqueda.toUpperCase() + "%' OR "
+                + "UPPER(VINSTITUCION_DESCRIPCION) LIKE '%" + busqueda.toUpperCase() + "%' "
                 + "ORDER BY DESCRIPCION ";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
@@ -261,7 +262,7 @@ public class TextoDAOImpl implements TextoDAO {
             }
         }
         return lista;
-        
+
     }
 
     //EJECUCION PRESUPUESTAL

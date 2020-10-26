@@ -18,10 +18,10 @@
 		<defaultValueExpression><![CDATA["43987155"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["121635A"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["124841A"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CODIGO2" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["121635A"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["124841A"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT 

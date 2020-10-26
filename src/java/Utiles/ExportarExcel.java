@@ -25,7 +25,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
- * @author heurbinam
+ * @author H-URBINA-M
  */
 public class ExportarExcel {
 
@@ -42,12 +42,12 @@ public class ExportarExcel {
         CellStyle style = workbook.createCellStyle();
         // Indicamos que tendra un fondo azul aqua con patron solido del color indicado
         style.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
-        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+      //  style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         Font cellFont = workbook.createFont();
-        cellFont.setBold(true);
+       // cellFont.setBold(true);
         style.setFont(cellFont);
-        style.setAlignment(HorizontalAlignment.CENTER);
-        style.setVerticalAlignment(VerticalAlignment.CENTER);
+      //  style.setAlignment(HorizontalAlignment.CENTER);
+      //  style.setVerticalAlignment(VerticalAlignment.CENTER);
 
         String[] titulos = {"Periodo", "Fuente Financiamiento", "UU/OO", "Categoria Presupuestal","Producto", "Actividad", "Sec. Funcional", "Finalidad","Tarea", "Cadena Gasto",
             "P.I.A.", "P.I.M.", "Certificado", "Saldo Certificado", "Compromiso", "Saldo Compromiso", "Ejecutado", "Saldo Ejecutado", "Generica de Gasto", "Sub Generica de Gasto", "Sub Generica Detalle"};
@@ -64,7 +64,7 @@ public class ExportarExcel {
         }
         CellStyle style2 = workbook.createCellStyle();
         style2.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
-        style2.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+       // style2.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         for (int i = 0; i < objConsulta.size(); i++) {
             BeanPIMInforme ejecucion = (BeanPIMInforme) objConsulta.get(i);
             // Creamos una celda en esa fila, en la posicion indicada por el contador del ciclo
@@ -106,7 +106,7 @@ public class ExportarExcel {
             // flujo de datos
             workbook.write(salida);
             // Cerramos el libro para concluir operaciones
-            workbook.close();            
+     //       workbook.close();
         } catch (FileNotFoundException ex) {
             System.out.println(ex.getMessage());
         } catch (IOException ex) {

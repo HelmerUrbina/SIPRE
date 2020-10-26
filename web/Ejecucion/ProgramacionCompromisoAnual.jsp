@@ -7,34 +7,15 @@
 <!DOCTYPE html>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
+    fn_validaAutorizacion('${autorizacion}');
     var unidad = '${unidad}';
-    if (!'${autorizacion}') {
-        $.confirm({
-            theme: 'material',
-            title: 'AVISO DEL SISTEMA',
-            content: "USUARIO NO AUTORIZADO PARA ESTE TIPO DE OPERACIÓN",
-            animation: 'zoom',
-            closeAnimation: 'zoom',
-            type: 'red',
-            typeAnimated: true,
-            buttons: {
-                aceptar: {
-                    text: 'Aceptar',
-                    btnClass: 'btn-primary',
-                    keys: ['enter', 'shift'],
-                    action: function () {
-                        location.reload();
-                    }
-                }
-            }
-        });
-    }
     $(document).ready(function () {
         var theme = getTheme();
         $("#div_Titulo").jqxExpander({theme: theme, width: '100%'});
         $("#cbo_Periodo").jqxComboBox({theme: theme, autoOpen: true, promptText: "Seleccione", width: 100, dropDownWidth: 150, height: 20});
         $("#cbo_Presupuesto").jqxComboBox({theme: theme, autoOpen: true, promptText: "Seleccione", width: 300, dropDownWidth: 350, height: 20});
         $("#cbo_UnidadOperativa").jqxComboBox({theme: theme, autoOpen: true, promptText: "Seleccione", width: 200, dropDownWidth: 250, height: 20});
+        $("#cbo_Generica").jqxComboBox({theme: theme, autoOpen: true, promptText: "Seleccione", width: 250, dropDownWidth: 350, height: 20});
         var fecha = new Date();
         $("#cbo_Periodo").jqxComboBox('selectItem', fecha.getFullYear());
         $('#cbo_Periodo').on('change', function () {
@@ -50,14 +31,14 @@
             if (unidad === '0003') {
                 $("#cbo_UnidadOperativa").jqxComboBox('clear');
                 fn_cargarComboxCabecera("#cbo_UnidadOperativa", {mode: 'unidadOperativa', periodo: $("#cbo_Periodo").val(), presupuesto: $("#cbo_Presupuesto").val()});
-            } else {
-                fn_CargarBusqueda();
             }
         });
         $('#cbo_UnidadOperativa').on('change', function () {
+            fn_cargarComboxCabecera("#cbo_Generica", {mode: 'genericaUnidad', periodo: $("#cbo_Periodo").val(), presupuesto: $("#cbo_Presupuesto").val(), unidadOperativa: $("#cbo_UnidadOperativa").val()});
+        });
+        $('#cbo_Generica').on('change', function () {
             fn_CargarBusqueda();
         });
-        fn_CargarBusqueda();
     });
     function fn_CargarBusqueda() {
         var msg = "";
@@ -67,10 +48,13 @@
             msg = fn_validaCombos('#cbo_Presupuesto', "Seleccione la Fuente de Financiamiento.");
         if (msg === "")
             msg = fn_validaCombos('#cbo_UnidadOperativa', "Seleccione la Unidad Operativa.");
+        if (msg === "")
+            msg = fn_validaCombos('#cbo_Generica', "Seleccione la Generica de Gasto.");
         if (msg === "") {
             var periodo = $("#cbo_Periodo").val();
             var presupuesto = $("#cbo_Presupuesto").val();
             var unidadOperativa = $("#cbo_UnidadOperativa").val();
+            var genericaGasto = $("#cbo_Generica").val();
             $("#div_GrillaPrincipal").remove();
             $("#div_VentanaPrincipal").remove();
             $("#div_VentanaDetalle").remove();
@@ -79,7 +63,7 @@
             $.ajax({
                 type: "GET",
                 url: "../ProgramacionCompromisoAnual",
-                data: {mode: "G", periodo: periodo, presupuesto: presupuesto, unidadOperativa: unidadOperativa},
+                data: {mode: "G", periodo: periodo, presupuesto: presupuesto, unidadOperativa: unidadOperativa, genericaGasto: genericaGasto},
                 success: function (data) {
                     $contenidoAjax.html(data);
                 }
@@ -128,6 +112,11 @@
                                 </c:forEach>
                             </select>
                         </td>
+                        <td>Genérica de Gasto</td>
+                        <td>
+                            <select id="cbo_Generica" name="cbo_Generica">
+                            </select>
+                        <td>
                         <td><a href="javascript: fn_CargarBusqueda();" ><img src="../Imagenes/Botones/refresh42.gif" alt="Buscar Datos" name="imgrefresh" width="30" height="28" border="0" id="imgrefresh"></a></td>
                         <td><a href="../Login/Principal.jsp" target="_parent"><img src="../Imagenes/Botones/exit42.gif" alt="Salir de pantalla" name="imgexit" width="30" height="28"  border="0" id="imgexit" /></a></td>
                     </tr>

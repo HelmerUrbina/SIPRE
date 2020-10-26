@@ -17,6 +17,7 @@
         <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate"/>
         <meta http-equiv="Pragma" content="no-cache"/>
         <title>.:: <%=Usuario.getSistema() + " - " + Usuario.getApellido() + ", " + Usuario.getNombre()%>::.</title>
+        <link rel="shortcut icon" href="../Imagenes/Logos/favicon.ico" type="image/x-icon">
     </head>
     <frameset rows="*" frameborder="no" border="0" framespacing="0" >
         <frame src="MainPrincipal.jsp" name="fra_Principal" id="fra_Principal" title="Principal" />

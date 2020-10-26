@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author hH-TECCSI-V
+ * @author H-TECCSI-V
  */
 public interface MesaParteDAO {
 

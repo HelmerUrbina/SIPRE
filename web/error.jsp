@@ -8,8 +8,8 @@
     <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate"/>
     <meta http-equiv="Pragma" content="no-cache"/>
     <title>.:: SIPRE - Sistema Integrado Presupuestal del Ejercito ::.</title>
+    <link rel="shortcut icon" href="../Imagenes/Logos/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <% response.sendRedirect("../");%>
 </body>
-</html>

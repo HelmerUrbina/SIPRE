@@ -61,7 +61,7 @@ public class IduProgramacionCompromisoAnualServlet extends HttpServlet {
         // VERIFICAMOS LA SESSION DE LA SOLICITUD DE CREDITO
         BeanUsuario objUsuario = (BeanUsuario) session.getAttribute("objUsuario" + session.getId());
         if (objUsuario == null) {
-            dispatcher = request.getRequestDispatcher("../FinSession.jsp");
+            dispatcher = request.getRequestDispatcher("FinSession.jsp");
             dispatcher.forward(request, response);
         }
         objConnection = (Connection) context.getAttribute("objConnection");
@@ -74,19 +74,20 @@ public class IduProgramacionCompromisoAnualServlet extends HttpServlet {
         objBnPCA.setCategoriaPresupuestal(request.getParameter("documento"));
         objDsPCA = new PCADAOImpl(objConnection);
         // EJECUTAMOS EL PROCEDIMIENTO SEGUN EL MODO QUE SE ESTA TRABAJANDO
-        String lista[][] = Utiles.generaLista(request.getParameter("lista"), 8);
+        String lista[][] = Utiles.generaLista(request.getParameter("lista"), 9);
         int k = 0;
         objBnPCA.setCodigo(objDsPCA.getAutorizacionPCA(objBnPCA, objUsuario.getUsuario()));
         for (String[] item : lista) {
             objBnPCA.setMode("I");
             objBnPCA.setResolucion(item[1].trim());
             objBnPCA.setDependencia(item[2].trim());
-            objBnPCA.setSecuenciaFuncional(item[3].trim());
-            objBnPCA.setTareaPresupuestal(item[4].trim());
-            objBnPCA.setCadenaGasto(item[5].trim());
-            objBnPCA.setPCA(Utiles.checkDouble(item[6]));
-            if (Utiles.checkDouble(item[7]) > 0) {
-                objBnPCA.setPCA(Utiles.checkDouble(item[7]) * (-1));
+            objBnPCA.setTipoCalendario(item[3].trim());
+            objBnPCA.setSecuenciaFuncional(item[4].trim());
+            objBnPCA.setTareaPresupuestal(item[5].trim());
+            objBnPCA.setCadenaGasto(item[6].trim());
+            objBnPCA.setPCA(Utiles.checkDouble(item[7]));
+            if (Utiles.checkDouble(item[8]) > 0) {
+                objBnPCA.setPCA(Utiles.checkDouble(item[8]) * (-1));
             }
             k = objDsPCA.iduPCA(objBnPCA, objUsuario.getUsuario());
         }

@@ -9,10 +9,10 @@
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["8"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["306"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="UNIDAD_OPERATIVA" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["0860"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["0003"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["2020"]]></defaultValueExpression>

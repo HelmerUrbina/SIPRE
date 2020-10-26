@@ -256,7 +256,7 @@ public class MesaParteDAOImpl implements MesaParteDAO {
                 result = objResultSet.getString("DOCUMENTO");
             }
         } catch (SQLException e) {
-            System.out.println("Error al obtener getDocumentosPendientes(objBnMesaParte) : " + e.getMessage());
+            System.out.println("Error al obtener getDocumentosPendientes(" + usuario + ") : " + e.getMessage());
         } finally {
             try {
                 if (objResultSet != null) {
@@ -316,13 +316,6 @@ public class MesaParteDAOImpl implements MesaParteDAO {
             }
         } catch (SQLException e) {
             System.out.println("Error al obtener getConsultaDocumentoRespuesta(objBeanMesaParte) : " + e.getMessage());
-            objDsMsgerr = new MsgerrDAOImpl(objConnection);
-            objBnMsgerr = new BeanMsgerr();
-            objBnMsgerr.setUsuario(usuario);
-            objBnMsgerr.setTabla("SIPE_DOCUMENTO");
-            objBnMsgerr.setTipo(objBeanMesaParte.getMode().toUpperCase());
-            objBnMsgerr.setDescripcion(e.getMessage());
-            s = objDsMsgerr.iduMsgerr(objBnMsgerr);
         } finally {
             try {
                 if (objResultSet != null) {

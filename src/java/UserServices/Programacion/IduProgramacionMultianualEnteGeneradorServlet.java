@@ -73,11 +73,9 @@ public class IduProgramacionMultianualEnteGeneradorServlet extends HttpServlet {
         objBnProgramacionMultianualEnteGenerador.setCodigo(Utiles.checkNum(request.getParameter("codigo")));
         objBnProgramacionMultianualEnteGenerador.setCadenaIngreso(request.getParameter("cadenaIngreso"));
         objBnProgramacionMultianualEnteGenerador.setDescripcion(request.getParameter("descripcion"));
-
         objBnProgramacionMultianualEnteGenerador.setEnero(Utiles.checkDouble(request.getParameter("enero")));
         objBnProgramacionMultianualEnteGenerador.setFebrero(Utiles.checkDouble(request.getParameter("febrero")));
         objBnProgramacionMultianualEnteGenerador.setMarzo(Utiles.checkDouble(request.getParameter("marzo")));
-
         objBnProgramacionMultianualEnteGenerador.setCostoEnero(Utiles.checkDouble(request.getParameter("costoEnero")));
         objBnProgramacionMultianualEnteGenerador.setCostoFebrero(Utiles.checkDouble(request.getParameter("costoFebrero")));
         objBnProgramacionMultianualEnteGenerador.setCostoMarzo(Utiles.checkDouble(request.getParameter("costoMarzo")));
@@ -147,5 +145,4 @@ public class IduProgramacionMultianualEnteGeneradorServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

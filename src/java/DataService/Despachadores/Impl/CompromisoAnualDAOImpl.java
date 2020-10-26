@@ -307,7 +307,7 @@ public class CompromisoAnualDAOImpl implements CompromisoAnualDAO {
 
     @Override
     public BeanEjecucionPresupuestal getCompromisoAnual(BeanEjecucionPresupuestal objBeanEjecucionPresupuestal, String usuario) {
-        sql = "SELECT NROCER, NUMOFI, FECCCP, DOCREF, DESOCE, MOCRPR, TIPCAM, IMPDOL, CODMON "
+        sql = "SELECT NROCER, NUMOFI, FECCCP, DOCREF, DESOCE, MOCRPR, TIPCAM, IMPDOL, CODMON, TIPSOL, NUSOCP "
                 + "FROM TASOCP_CA WHERE "
                 + "CODPER=? AND "
                 + "COUUOO=? AND "
@@ -330,6 +330,8 @@ public class CompromisoAnualDAOImpl implements CompromisoAnualDAO {
                 objBeanEjecucionPresupuestal.setTipoMoneda(objResultSet.getString("CODMON"));
                 objBeanEjecucionPresupuestal.setTipoCambio(objResultSet.getDouble("TIPCAM"));
                 objBeanEjecucionPresupuestal.setMonedaExtranjera(objResultSet.getDouble("IMPDOL"));
+                objBeanEjecucionPresupuestal.setTipo(objResultSet.getString("TIPSOL"));
+                objBeanEjecucionPresupuestal.setSectorista(objResultSet.getString("NUSOCP"));
             }
         } catch (SQLException e) {
             System.out.println("Error al obtener getCompromisoAnual(BeanEjecucionPresupuestal) : " + e.getMessage());

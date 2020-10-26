@@ -64,8 +64,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -98,8 +98,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.toString());
@@ -136,8 +136,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -172,8 +172,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -200,11 +200,11 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
-                System.out.println(e.toString());
+                System.out.println(e.getMessage());
             }
         }
         return Arreglo;
@@ -241,8 +241,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -280,8 +280,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -316,8 +316,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             cs.setString(10, objBeanUsuario.getEstado());
             cs.setString(11, usuario);
             cs.setString(12, objBeanUsuario.getMode());
-            objResultSet = cs.executeQuery();
-            s++;
+            s = cs.executeUpdate();
+            cs.close();
         } catch (SQLException e) {
             System.out.println("Error al ejecutar iduUsuario : " + e.getMessage());
             objDsMsgerr = new MsgerrDAOImpl(objConnection);
@@ -328,14 +328,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             objBnMsgerr.setDescripcion(e.getMessage());
             s = objDsMsgerr.iduMsgerr(objBnMsgerr);
             return 0;
-        } finally {
-            try {
-                if (objResultSet != null) {
-                    objResultSet.close();
-                }
-            } catch (SQLException e) {
-                System.out.println("Error al ejecutar iduUsuario : " + e.toString());
-            }
         }
         return s;
     }
@@ -354,8 +346,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             cs.setString(2, objBeanUsuario.getModulo());
             cs.setString(3, objBeanUsuario.getMenu());
             cs.setString(4, objBeanUsuario.getMode());
-            objResultSet = cs.executeQuery();
-            s++;
+            s = cs.executeUpdate();
+            cs.close();
         } catch (SQLException e) {
             System.out.println("Error al ejecutar iduOpciones : " + e.getMessage());
             objDsMsgerr = new MsgerrDAOImpl(objConnection);
@@ -366,14 +358,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             objBnMsgerr.setDescripcion(e.getMessage());
             s = objDsMsgerr.iduMsgerr(objBnMsgerr);
             return 0;
-        } finally {
-            try {
-                if (objResultSet != null) {
-                    objResultSet.close();
-                }
-            } catch (SQLException e) {
-                System.out.println("Error al ejecutar iduOpciones : " + e.toString());
-            }
         }
         return s;
     }

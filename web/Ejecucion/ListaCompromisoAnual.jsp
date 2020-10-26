@@ -214,7 +214,6 @@
             showtoolbar: true,
             showaggregates: true,
             statusbarheight: 20,
-            pagesize: 100,
             rendertoolbar: function (toolbar) {
                 // appends buttons to the status bar.
                 var container = $("<div style='overflow: hidden; position: relative; margin: 1px;'></div>");
@@ -266,7 +265,7 @@
                 {text: 'TIPO', dataField: 'tipo', filtertype: 'checkedlist', width: '10%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
                 {text: 'SOL. CERT.', dataField: 'solicitud', width: '7%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
                 {text: 'N° S.C.A.', dataField: 'nroCompromiso', width: '6%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
-                {text: 'SECTORISTA', dataField: 'sectorista', filtertype: 'checkedlist', width: '20%', align: 'center', cellsAlign: 'center', cellclassname: cellclass}                
+                {text: 'SECTORISTA', dataField: 'sectorista', filtertype: 'checkedlist', width: '20%', align: 'center', cellsAlign: 'center', cellclassname: cellclass}
             ]
         });
         // DEFINIMOS EL MENU CONTEXTUAL 
@@ -708,6 +707,8 @@
                 // add new row.
                 addButtonDet.click(function (event) {
                     modeDetalle = 'I';
+                    if (tipoCompromiso !== 'CE')
+                        codigo=$("#txt_solicitudCompromiso").val();
                     var solicitudCredito = $("#cbo_SolicitudCredito").val();
                     if (solicitudCredito !== '0') {
                         $("#cbo_Proveedor").jqxComboBox('clear');
@@ -871,7 +872,7 @@
                 data: {mode: mode, periodo: periodo, presupuesto: presupuesto, unidadOperativa: unidadOperativa, codigo: codigo},
                 success: function (data) {
                     var dato = data.split("+++");
-                    if (dato.length === 9) {
+                    if (dato.length === 11) {
                         $("#cbo_SolicitudCredito").jqxDropDownList('selectItem', dato[0]);
                         var d = new Date(dato[1]);
                         d.setDate(d.getDate() + 1);
@@ -879,6 +880,9 @@
                         $('#txt_DocumentoReferencia').val(dato[2]);
                         $('#txt_Detalle').val(dato[3]);
                         $('#txt_Observacion').val(dato[4]);
+                        tipoCompromiso = dato[9];
+                        if (tipoCompromiso !== 'CE')
+                            $('#txt_solicitudCompromiso').val(dato[10]);
                         $('#div_GrillaRegistro').jqxGrid('clear');
                         $("#cbo_SolicitudCredito").jqxDropDownList({disabled: true});
                         $.ajax({
@@ -952,7 +956,7 @@
             posicionX = ($(window).width() / 2) - (ancho / 2);
             posicionY = ($(window).height() / 2) - (alto / 2);
             $('#div_VentanaPrincipal').jqxWindow({
-                position: {x: posicionX, y: posicionY+40},
+                position: {x: posicionX, y: posicionY + 40},
                 width: ancho, height: alto, resizable: false,
                 cancelButton: $('#btn_Cancelar'),
                 initContent: function () {
@@ -1155,7 +1159,7 @@
                                 if (tipoCertificado !== 'COMPROMISO')
                                     msg += "Seleccione la S.C.A. Tipo COMPROMISO.<br>";
                                 break;
-                            case "EJE0010":                               
+                            case "EJE0010":
                                 if (codigo !== null && tipoCertificado !== 'COMPROMISO')
                                     msg += "Seleccione la S.C.P. Tipo COMPROMISO.<br>";
                                 break;
@@ -1401,7 +1405,6 @@
         } else {
             return "Seleccione la Cadena de Gasto";
         }
-
     }
     //FUNCION PARA VALIDAR QUE NO SE REPITAN LOS REGISTROS DEL DETALLE
     function fn_validaDetalle(proveedor, resolucion, dependencia, secuencia, tarea, cadenaGasto) {

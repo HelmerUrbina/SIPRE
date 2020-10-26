@@ -64,6 +64,7 @@ public class ProgramacionCompromisoAnualServlet extends HttpServlet {
         objBnPCA.setPeriodo(request.getParameter("periodo"));
         objBnPCA.setPresupuesto(Utiles.Utiles.checkNum(request.getParameter("presupuesto")));
         objBnPCA.setUnidadOperativa(request.getParameter("unidadOperativa"));
+        objBnPCA.setGenericaGasto(request.getParameter("genericaGasto"));
         objBnPCA.setCodigo(Utiles.Utiles.checkNum(request.getParameter("codigo")));
         // objBnPCA.setCodigo(request.getParameter("codigo"));
         objDsPCA = new PCADAOImpl(objConnection);
@@ -140,5 +141,4 @@ public class ProgramacionCompromisoAnualServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

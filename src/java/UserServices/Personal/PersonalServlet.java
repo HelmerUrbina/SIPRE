@@ -5,16 +5,14 @@
  */
 package UserServices.Personal;
 
-import BusinessServices.Beans.BeanRegistroPersonal;
+import BusinessServices.Beans.BeanPersonal;
 import BusinessServices.Beans.BeanUsuario;
 import DataService.Despachadores.CombosDAO;
 import DataService.Despachadores.Impl.CombosDAOImpl;
-import DataService.Despachadores.Impl.RegistroPersonalDAOImpl;
-import DataService.Despachadores.RegistroPersonalDAO;
+import DataService.Despachadores.Impl.PersonalDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -24,10 +22,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import DataService.Despachadores.PersonalDAO;
+import java.io.InputStream;
+import java.io.OutputStream;
+import org.apache.commons.io.IOUtils;
 
 /**
  *
- * @author hateccsiv
+ * @author H-TECCSI-V
  */
 @WebServlet(name = "PersonalServlet", urlPatterns = {"/Personal"})
 public class PersonalServlet extends HttpServlet {
@@ -36,12 +38,9 @@ public class PersonalServlet extends HttpServlet {
     private ServletContext context = null;
     private HttpSession session = null;
     private RequestDispatcher dispatcher = null;
-    private List objPersonal;
-    private List objPersonalFamiliar;
-    private BeanRegistroPersonal objBnRegistroPersonal;
+    private BeanPersonal objBnPersonal;
     private Connection objConnection;
-    private RegistroPersonalDAO ObjDsRegistroPersonal;
-    private String filePath;
+    private PersonalDAO objDsRegistroPersonal;
     private CombosDAO objDsCombo;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -51,23 +50,18 @@ public class PersonalServlet extends HttpServlet {
         session = request.getSession();
         BeanUsuario objUsuario = (BeanUsuario) session.getAttribute("objUsuario" + session.getId());
         if (objUsuario == null) {
-            dispatcher = request.getRequestDispatcher("/FinSession.jsp");
+            dispatcher = request.getRequestDispatcher("FinSession.jsp");
             dispatcher.forward(request, response);
         }
         objConnection = (Connection) context.getAttribute("objConnection");
         String result = null;
-        objBnRegistroPersonal = new BeanRegistroPersonal();
-        objBnRegistroPersonal.setMode(request.getParameter("mode"));
-        objBnRegistroPersonal.setDni(request.getParameter("dni"));
-
-        ObjDsRegistroPersonal = new RegistroPersonalDAOImpl(objConnection);
-        objDsCombo = new CombosDAOImpl(objConnection);
+        objBnPersonal = new BeanPersonal();
+        objBnPersonal.setMode(request.getParameter("mode"));
+        objBnPersonal.setPersonal(Utiles.Utiles.checkNum(request.getParameter("personal")));
+        objDsRegistroPersonal = new PersonalDAOImpl(objConnection);
         // DE ACUERO AL MODO, OBTENEMOS LOS DATOS NECESARIOS.  
-        if (objBnRegistroPersonal.getMode().equals("G")) {
-            filePath = "";
-            objBnRegistroPersonal.setRutaFile(filePath);
-            objPersonal = ObjDsRegistroPersonal.getListaPersonal(objBnRegistroPersonal, objUsuario.getUsuario());
-            objPersonalFamiliar = ObjDsRegistroPersonal.getListaPersonalFamilia(objBnRegistroPersonal, objUsuario.getUsuario());
+        if (objBnPersonal.getMode().equals("G")) {
+            objDsCombo = new CombosDAOImpl(objConnection);
             if (request.getAttribute("objParentesco") != null) {
                 request.removeAttribute("objParentesco");
             }
@@ -77,55 +71,66 @@ public class PersonalServlet extends HttpServlet {
             if (request.getAttribute("objGrado") != null) {
                 request.removeAttribute("objGrado");
             }
+            if (request.getAttribute("objPersonal") != null) {
+                request.removeAttribute("objPersonal");
+            }
+            if (request.getAttribute("objFamilia") != null) {
+                request.removeAttribute("objFamilia");
+            }
             request.setAttribute("objParentesco", objDsCombo.getParentesco());
             request.setAttribute("objArea", objDsCombo.getAreaLaboral());
             request.setAttribute("objGrado", objDsCombo.getGrado());
+            request.setAttribute("objPersonal", objDsRegistroPersonal.getListaPersonal(objUsuario.getUsuario()));
+            request.setAttribute("objFamilia", objDsRegistroPersonal.getListaPersonalFamilia(objUsuario.getUsuario()));
         }
-        if (objBnRegistroPersonal.getMode().equals("U")) {
-            objBnRegistroPersonal = ObjDsRegistroPersonal.getPersonal(objBnRegistroPersonal, objUsuario.getUsuario());
-            result = objBnRegistroPersonal.getNombresPersonal() + "+++"
-                    + objBnRegistroPersonal.getApellidosPersonal() + "+++"
-                    + objBnRegistroPersonal.getDireccion() + "+++"
-                    + objBnRegistroPersonal.getTelefono() + "+++"
-                    + objBnRegistroPersonal.getFechaNacimiento() + "+++"
-                    + objBnRegistroPersonal.getAreaLaboral() + "+++"
-                    + objBnRegistroPersonal.getCargo() + "+++"
-                    + objBnRegistroPersonal.getGrado();
+        if (objBnPersonal.getMode().equals("U")) {
+            objBnPersonal = objDsRegistroPersonal.getPersonal(objBnPersonal, objUsuario.getUsuario());
+            result = objBnPersonal.getTipoDocumento() + "+++"
+                    + objBnPersonal.getDocumento() + "+++"
+                    + objBnPersonal.getPaterno() + "+++"
+                    + objBnPersonal.getMaterno() + "+++"
+                    + objBnPersonal.getNombres() + "+++"
+                    + objBnPersonal.getFechaNacimiento() + "+++"
+                    + objBnPersonal.getSexo() + "+++"
+                    + objBnPersonal.getTelefono() + "+++"
+                    + objBnPersonal.getDireccion() + "+++"
+                    + objBnPersonal.getCorreo() + "+++"
+                    + objBnPersonal.getGrado() + "+++"
+                    + objBnPersonal.getCIP() + "+++"
+                    + objBnPersonal.getAreaLaboral() + "+++"
+                    + objBnPersonal.getCargo();
         }
-        if (objBnRegistroPersonal.getMode().equals("F")) {
-            result = "" + ObjDsRegistroPersonal.getDatosFamiliares(objBnRegistroPersonal, objUsuario.getUsuario());
-            objDsCombo = new CombosDAOImpl(objConnection);
-            if (request.getAttribute("objParentesco") != null) {
-                request.removeAttribute("objParentesco");
-            }
-            request.setAttribute("objParentesco", objDsCombo.getParentesco());
+        if (objBnPersonal.getMode().equals("F")) {
+            result = "" + objDsRegistroPersonal.getDatosFamiliares(objBnPersonal, objUsuario.getUsuario());
         }
-
-        if (request.getAttribute("objBnRegistroPersonal") != null) {
-            request.removeAttribute("objBnRegistroPersonal");
-        }
-        if (request.getAttribute("objPersonal") != null) {
-            request.removeAttribute("objPersonal");
-        }
-        if (request.getAttribute("objPersonalFamiliar") != null) {
-            request.removeAttribute("objPersonalFamiliar");
-        }
-        request.setAttribute("objBnRegistroPersonal", objBnRegistroPersonal);
-        request.setAttribute("objPersonal", objPersonal);
-        request.setAttribute("objPersonalFamiliar", objPersonalFamiliar);
         //SE ENVIA DE ACUERDO AL MODO SELECCIONADO
         switch (request.getParameter("mode")) {
             case "personal":
-                dispatcher = request.getRequestDispatcher("Personal/RegistroPersonal.jsp");
+                dispatcher = request.getRequestDispatcher("Personal/Personal.jsp");
                 break;
             case "G":
-                dispatcher = request.getRequestDispatcher("Personal/ListaRegistroPersonal.jsp");
+                dispatcher = request.getRequestDispatcher("Personal/ListaPersonal.jsp");
                 break;
             default:
-                dispatcher = request.getRequestDispatcher("error.jsp");
+                dispatcher = request.getRequestDispatcher("FinSession.jsp");
                 break;
         }
-        if (result != null) {
+        if (objBnPersonal.getMode().equals("imagen")) {
+            byte[] imgData = objDsRegistroPersonal.getImagen(objBnPersonal.getPersonal());
+            if (imgData == null) {
+                try {
+                    InputStream stream = context.getResourceAsStream("/Imagenes/Fondos/usuario.jpg");
+                    imgData = IOUtils.toByteArray(stream);
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+            response.setContentType("image/*");
+            try (OutputStream o = response.getOutputStream()) {
+                o.write(imgData);
+                o.flush();
+            }
+        } else if (result != null) {
             response.setContentType("text/html;charset=UTF-8");
             try (PrintWriter out = response.getWriter()) {
                 out.print(result);
@@ -173,5 +178,4 @@ public class PersonalServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

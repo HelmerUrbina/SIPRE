@@ -18,7 +18,7 @@ public interface PCADAO {
     public List getListaPCA(BeanPCA objBeanPCA, String usuario);
 
     public ArrayList getListaPCAUnidadOperativa(BeanPCA objBeanPCA, String usuario);
-    
+
     public ArrayList getListaPCAVAriacion(BeanPCA objBeanPCA, String usuario);
 
     public Integer getAutorizacionPCA(BeanPCA objBeanPCA, String usuario);

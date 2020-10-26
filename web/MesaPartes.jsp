@@ -13,11 +13,11 @@
         <meta http-equiv="Last-Modified" content="0"/>
         <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
         <meta http-equiv="Pragma" content="no-cache"/>
-        <meta http-equiv="refresh" content="300; url=index.jsp">
         <title>.:: SIPRE - Sistema Integrado Presupuestal del Ejercito ::.</title>
-        <link type="text/css" rel="stylesheet" href="css/styles/jqx.base.css">
-        <link type="text/css" rel="stylesheet" href="css/scaf.css">
-        <link type="text/css" rel="stylesheet" href="css/jquery-confirm.css">
+        <link rel="shortcut icon" href="Imagenes/Logos/favicon.ico" type="image/x-icon">
+        <link type="text/css" rel="stylesheet" href="css/styles/jqx.base.css"/>
+        <link type="text/css" rel="stylesheet" href="css/scaf.css"/>
+        <link type="text/css" rel="stylesheet" href="css/jquery-confirm.css"/>
         <script type="text/javascript" src="javascript/validacion.js"></script>
         <script type="text/javascript" src="javascript/jquery.js"></script>
         <script type="text/javascript" src="javascript/jquery-confirm.js"></script>
@@ -247,8 +247,6 @@
                             <td>
                                 <select id="cbo_Prioridad" name="cbo_Prioridad">
                                     <option value="01" selected="true">TRAMITE NORMAL</option>
-                                    <option value="02">URGENTE</option>
-                                    <option value="03">MUY URGENTE</option>
                                     <option value="04">TRAMITE PERSONAL</option>
                                 </select>
                             </td>

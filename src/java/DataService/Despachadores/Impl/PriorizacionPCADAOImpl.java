@@ -71,8 +71,8 @@ public class PriorizacionPCADAOImpl implements PriorizacionPCADAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -123,8 +123,8 @@ public class PriorizacionPCADAOImpl implements PriorizacionPCADAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -168,8 +168,8 @@ public class PriorizacionPCADAOImpl implements PriorizacionPCADAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -212,18 +212,11 @@ public class PriorizacionPCADAOImpl implements PriorizacionPCADAO {
             }
         } catch (SQLException e) {
             System.out.println("Error al obtener getPriorizacionPCADetalle(BeanCertificadoCreditoPresupuestal) : " + e.getMessage());
-            objDsMsgerr = new MsgerrDAOImpl(objConnection);
-            objBnMsgerr = new BeanMsgerr();
-            objBnMsgerr.setUsuario(usuario);
-            objBnMsgerr.setTabla("V_PRIORIZACION_SIPE");
-            objBnMsgerr.setTipo(objBeanPriorizacion.getMode().toUpperCase());
-            objBnMsgerr.setDescripcion(e.getMessage());
-            s = objDsMsgerr.iduMsgerr(objBnMsgerr);
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -250,8 +243,8 @@ public class PriorizacionPCADAOImpl implements PriorizacionPCADAO {
         } finally {
             try {
                 if (objResultSet != null) {
-                    objPreparedStatement.close();
                     objResultSet.close();
+                    objPreparedStatement.close();
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());

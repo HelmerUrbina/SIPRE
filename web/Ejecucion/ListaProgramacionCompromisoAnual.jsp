@@ -1,11 +1,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
-    var autorizacion = '${autorizacion}';
-    if (!autorizacion)
-        window.location = "../Login/Principal.jsp";
     var periodo = $("#cbo_Periodo").val();
     var presupuesto = $("#cbo_Presupuesto").val();
     var unidadOperativa = $("#cbo_UnidadOperativa").val();
+    var genericaGasto = $("#cbo_Generica").val();
     var codigo = null;
     var evento = null;
     var mode = null;
@@ -80,6 +78,7 @@
                         {name: "codigo", type: "string"},
                         {name: "resolucion", type: "string"},
                         {name: "dependencia", type: "string"},
+                        {name: "tipoCalendario", type: "string"},
                         {name: "secuenciaFuncional", type: "string"},
                         {name: "tareaPresupuestal", type: "string"},
                         {name: "cadenaGasto", type: "string"},
@@ -337,6 +336,7 @@
                     }},
                 {text: 'NUEVA PCA', dataField: 'pcaNueva', editable: false, width: '12%', align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass, aggregates: ['sum']},
                 {text: 'SEC. FUNC.', datafield: 'secuenciaFuncional', editable: false, width: '35%', align: 'center'},
+                {text: 'CALENDARIO', datafield: 'tipoCalendario', editable: false, width: '35%', align: 'center'},
                 {text: 'RESOLUCIÓN', datafield: 'resolucion', editable: false, width: '15%', align: 'center'}
             ]
         });
@@ -485,7 +485,7 @@
             $.ajax({
                 type: "GET",
                 url: "../ProgramacionCompromisoAnual",
-                data: {mode: "G", periodo: periodo, presupuesto: presupuesto, unidadOperativa: unidadOperativa},
+                data: {mode: "G", periodo: periodo, presupuesto: presupuesto, unidadOperativa: unidadOperativa, genericaGasto: genericaGasto},
                 success: function (data) {
                     $contenidoAjax.html(data);
                 }
@@ -497,7 +497,7 @@
             $.ajax({
                 type: "GET",
                 url: "../ProgramacionCompromisoAnual",
-                data: {mode: 'B', periodo: periodo, presupuesto: presupuesto, unidadOperativa: unidadOperativa},
+                data: {mode: 'B', periodo: periodo, presupuesto: presupuesto, unidadOperativa: unidadOperativa, genericaGasto: genericaGasto},
                 success: function (data) {
                     data = data.replace("[", "");
                     var fila = data.split("[");
@@ -527,7 +527,7 @@
             $.ajax({
                 type: "GET",
                 url: "../ProgramacionCompromisoAnual",
-                data: {mode: 'V', periodo: periodo, presupuesto: presupuesto, unidadOperativa: unidadOperativa},
+                data: {mode: 'V', periodo: periodo, presupuesto: presupuesto, unidadOperativa: unidadOperativa, genericaGasto: genericaGasto},
                 success: function (data) {
                     data = data.replace("[", "");
                     var fila = data.split("[");
@@ -535,16 +535,16 @@
                     for (i = 1; i < fila.length; i++) {
                         var columna = fila[i];
                         var datos = columna.split("+++");
-                        while (datos[8].indexOf(']') > 0) {
-                            datos[8] = datos[8].replace("]", "");
+                        while (datos[9].indexOf(']') > 0) {
+                            datos[9] = datos[9].replace("]", "");
                         }
-                        while (datos[8].indexOf(',') > 0) {
-                            datos[8] = datos[8].replace(",", "");
+                        while (datos[9].indexOf(',') > 0) {
+                            datos[9] = datos[9].replace(",", "");
                         }
-                        var row = {codigo: datos[0], dependencia: datos[1], resolucion: datos[2],
-                            secuenciaFuncional: datos[3], tareaPresupuestal: datos[4], cadenaGasto: datos[5],
-                            pim: parseFloat(datos[6]), pca: parseFloat(datos[7]), anulacion: parseFloat("0"),
-                            credito: parseFloat("0"), disponible: parseFloat(datos[8]), pcaNueva: parseFloat(datos[7])};
+                        var row = {codigo: datos[0], dependencia: datos[1], resolucion: datos[2], tipoCalendario: datos[3],
+                            secuenciaFuncional: datos[4], tareaPresupuestal: datos[5], cadenaGasto: datos[6],
+                            pim: parseFloat(datos[7]), pca: parseFloat(datos[8]), anulacion: parseFloat("0"),
+                            credito: parseFloat("0"), disponible: parseFloat(datos[9]), pcaNueva: parseFloat(datos[8])};
                         rows.push(row);
                     }
                     if (rows.length > 0)
@@ -590,7 +590,7 @@
                     type: "POST",
                     url: "../IduProgramacionCompromisoAnual",
                     data: {mode: mode, periodo: periodo, presupuesto: presupuesto, unidadOperativa: unidadOperativa,
-                        codigo: codigo, tipoCambio:tipoCambio, documento: documento, lista: JSON.stringify(lista)},
+                        codigo: codigo, tipoCambio: tipoCambio, documento: documento, lista: JSON.stringify(lista)},
                     success: function (data) {
                         msg = data;
                         if (msg === "GUARDO") {

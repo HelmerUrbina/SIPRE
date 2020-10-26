@@ -19,6 +19,7 @@ public class BeanPCA implements Serializable {
     private String Dependencia;
     private String Unidad;
     private String Tipo;
+    private String TipoCalendario;
     private String SecuenciaFuncional;
     private String CategoriaPresupuestal;
     private String Producto;
@@ -83,6 +84,14 @@ public class BeanPCA implements Serializable {
 
     public void setTipo(String Tipo) {
         this.Tipo = Tipo;
+    }
+
+    public String getTipoCalendario() {
+        return TipoCalendario;
+    }
+
+    public void setTipoCalendario(String TipoCalendario) {
+        this.TipoCalendario = TipoCalendario;
     }
 
     public String getSecuenciaFuncional() {
