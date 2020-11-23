@@ -128,7 +128,7 @@ public class ArchivosSIAFDAOImpl implements ArchivosSIAFDAO {
             objBnMsgerr.setUsuario(usuario);
             objBnMsgerr.setTabla("ARCHIVOS_SIAF");
             objBnMsgerr.setTipo(objBeanArchivo.getMode().toUpperCase());
-            objBnMsgerr.setDescripcion(e.toString());
+            objBnMsgerr.setDescripcion(e.getMessage());
             s = objDsMsgerr.iduMsgerr(objBnMsgerr);
             return 0;
         }

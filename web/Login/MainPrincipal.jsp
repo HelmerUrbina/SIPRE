@@ -5,7 +5,7 @@
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8" session="true" %>
 <!DOCTYPE html>
-<%@include file="../WEB-INF/jspf/browser.jspf" %>
+<%@include file="../WEB-INF/jspf/session.jspf" %>
 <html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -13,6 +13,8 @@
         <meta http-equiv="Last-Modified" content="0"/>
         <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate"/>
         <meta http-equiv="Pragma" content="no-cache"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1 minimum-scale=1" />
         <link type="text/css" rel="stylesheet" href="../css/main.css">
         <link type="text/css" rel="stylesheet" href="../css/styles/jqx.base.css">
         <link type="text/css" rel="stylesheet" href="../css/grid.css">
@@ -69,6 +71,8 @@
         <script type="text/javascript" src="../javascript/jqwidgets/globalization/globalize.js"></script>
         <script type="text/javascript" src="../javascript/jqwidgets/globalization/globalize.culture.es-PE.js"></script>
         <script type="text/javascript" src="../javascript/pdfobject.js" ></script>
+        <script type="text/javascript" src="../javascript/jqwidgets/jqxdraw.js"></script>
+        <script type="text/javascript" src="../javascript/jqwidgets/jqxchart.core.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
                 var theme = getTheme();

@@ -222,7 +222,7 @@
                     fn_Refrescar();
                 });
                 ButtonExit.click(function (event) {
-                    location.reload();
+                    fn_MenuPrincipal();
                 });
             },
             initRowDetails: initRowDetails,

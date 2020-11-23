@@ -51,7 +51,7 @@
             columnsresize: true,
             showfilterrow: true,
             showtoolbar: true,
-            editable: false,            
+            editable: false,
             rendertoolbar: function (toolbar) {
                 // ADICIONAMOS BOTONES A LA BARRA DE ESTADOS
                 var container = $("<div style='overflow: hidden; position: relative; margin: 1px;'></div>");
@@ -91,7 +91,7 @@
                 });
                 //ASIGNAMOS LAS FUNCIONES PARA EL BOTON SALIR
                 ButtonSalir.click(function (event) {
-                    window.location.reload();
+                    fn_MenuPrincipal();
                 });
             },
             columns: [
@@ -281,7 +281,7 @@
                 <tr>
                     <td class="inputlabel">Nombre : </td>
                     <td><input type="text" id="txt_Nombre" name="txt_Nombre" style='text-transform:uppercase;'/></td> 
-                </tr>                
+                </tr>
                 <tr>
                     <td class="inputlabel">Abreviatura : </td>
                     <td><input type="text" id="txt_Abreviatura" name="txt_Abreviatura" style='text-transform:uppercase;'/></td>

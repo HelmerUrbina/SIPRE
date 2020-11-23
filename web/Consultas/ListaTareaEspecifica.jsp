@@ -212,9 +212,9 @@
         });
         //FUNCION PARA ACTUALIZAR DATOS DE LA GRILLA
         function fn_Refrescar() {
-            $("#div_ContextMenu").remove();
-            $("#div_VentanaPrincipal").remove();
             $("#div_GrillaPrincipal").remove();
+            $("#div_VentanaPrincipal").remove();
+            $("#div_ContextMenu").remove();
             var $contenidoAjax = $('#div_Detalle').html('<img src="../Imagenes/Fondos/cargando.gif">');
             $.ajax({
                 type: "GET",

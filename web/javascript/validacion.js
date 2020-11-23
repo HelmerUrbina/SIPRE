@@ -9,6 +9,10 @@ function fn_validaAutorizacion(autorizacion) {
         location.reload();
     }
 }
+//FUNCION PARA REGRESAR AL MENU PRINCIPAL
+function fn_MenuPrincipal() {
+    location.reload();
+}
 //FUNCION PARA VALIDAR UN CAMPO
 function fn_validaCampo(campo, msg) {
     if (campo === null || campo === "" || $.trim(campo).length === 0) {

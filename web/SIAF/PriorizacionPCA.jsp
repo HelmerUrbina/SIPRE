@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
+    fn_validaAutorizacion('${autorizacion}');
     $(document).ready(function () {
         var theme = getTheme();
         $("#div_Titulo").jqxExpander({theme: theme, width: '100%'});
@@ -109,12 +110,12 @@
                         <td>Generica de Gasto : </td>
                         <td>
                             <select id="cbo_GenericaGasto" name="cbo_GenericaGasto">
-                                <option value="0">Seleccione</option>                                
+                                <option value="0">Seleccione</option>
                             </select>
                         </td>
-                        <td><a href="javascript: fn_CargarBusqueda();" ><img src="../Imagenes/Botones/refresh42.gif" alt="Buscar Datos" name="imgrefresh" width="30" height="28" border="0" id="imgrefresh"></a></td>
-                        <td><a href="../Login/Principal.jsp" target="_parent"><img src="../Imagenes/Botones/exit42.gif" alt="Salir de pantalla" name="imgexit" width="30" height="28"  border="0" id="imgexit" /></a></td>
-                    </tr>                    
+                        <td><a href="javascript: fn_CargarBusqueda();"><img src="../Imagenes/Botones/refresh42.gif" alt="Buscar Datos" name="imgrefresh" width="30" height="28" border="0" id="imgrefresh"></a></td>
+                        <td><a href="javascript: fn_MenuPrincipal();"><img src="../Imagenes/Botones/exit42.gif" alt="Salir de pantalla" name="imgexit" width="30" height="28"  border="0" id="imgexit" /></a></td>
+                    </tr> 
                 </tbody>
             </table>
         </div>

@@ -58,20 +58,20 @@
     <div class="jqx-hideborder">DEMANDAS ADICIONALES</div>
     <div>
         <div id="div_Cabecera">
-            <table class="navy">                
+            <table class="navy">
                 <tbody>
                     <tr>
                         <td>Periodo : </td>
                         <td>
                             <select id="cbo_Periodo" name="cbo_Periodo"> 
                                 <c:forEach var="a" items="${objPeriodo}">
-                                    <option value="${a.codigo}">${a.codigo}</option>                                    
+                                    <option value="${a.codigo}">${a.codigo}</option>
                                 </c:forEach>
                             </select>
                         </td>
                         <td>Fte. Financ. : </td>
                         <td>
-                            <select id="cbo_Presupuesto" name="cbo_Presupuesto">                                
+                            <select id="cbo_Presupuesto" name="cbo_Presupuesto">
                                 <option value="1">1: RECURSOS ORDINARIOS</option>
                             </select>
                         </td>
@@ -82,9 +82,9 @@
                                     <option value="${c.codigo}">${c.descripcion}</option>
                                 </c:forEach>
                             </select>
-                        </td>                        
-                        <td><a href="javascript: fn_CargarBusqueda();" ><img src="../Imagenes/Botones/refresh42.gif" alt="Buscar Datos" name="imgrefresh" width="30" height="28" border="0" id="imgrefresh"></a></td>
-                        <td><a href="../Login/Principal.jsp" target="_parent"><img src="../Imagenes/Botones/exit42.gif" alt="Salir de pantalla" name="imgexit" width="30" height="28"  border="0" id="imgexit" /></a></td>
+                        </td>
+                        <td><a href="javascript: fn_CargarBusqueda();"><img src="../Imagenes/Botones/refresh42.gif" alt="Buscar Datos" name="imgrefresh" width="30" height="28" border="0" id="imgrefresh"></a></td>
+                        <td><a href="javascript: fn_MenuPrincipal();"><img src="../Imagenes/Botones/exit42.gif" alt="Salir de pantalla" name="imgexit" width="30" height="28"  border="0" id="imgexit" /></a></td>
                     </tr>
                 </tbody>
             </table>

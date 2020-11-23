@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>       
+    <head>
         <link href="../css/scaf.css" rel="stylesheet" type="text/css">
     </head>
     <body oncontextmenu='return false'>

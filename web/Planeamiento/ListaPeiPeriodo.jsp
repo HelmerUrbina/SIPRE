@@ -95,7 +95,7 @@
                 });
                 //ASIGNAMOS LAS FUNCIONES PARA EL BOTON SALIR
                 ButtonSalir.click(function (event) {
-                    window.location.reload();
+                    fn_MenuPrincipal();
                 });
             },
             columns: [
@@ -275,7 +275,6 @@
         }
         //FUNCION PARA GRABAR LOS DATOS DE LA VENTANA PRINCIPAL
         function fn_GrabarDatos() {
-
             var nombre = $("#txt_Nombre").val();
             var abreviatura = $("#txt_Abreviatura").val();
             $.ajax({

@@ -90,7 +90,7 @@ public class VerificaUsuarioServlet extends HttpServlet {
                     request.getSession().setAttribute("objUnidadesOperativas", daoCombo.getUnidadesOperativas(periodo, objUsuario.getPresupuesto(), objUsuario.getUnidadOperativa(), objUsuario.getUsuario()));
                     request.getSession().setAttribute("objMes", daoCombo.getMes());
                     request.getSession().setAttribute("objTipoMoneda", daoCombo.getTipoMonedas());
-                    result = "Login/Principal.jsp";
+                    result = "VerificaSession";
                     SimpleDateFormat formatoFechaHora = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                     System.out.println("SISTEMA INTEGRADO DE PRESUPUESTO DEL EJERCITO");
                     System.out.println("------- --------- -- ----------- --- --------");

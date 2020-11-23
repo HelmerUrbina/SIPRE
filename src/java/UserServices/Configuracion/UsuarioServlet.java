@@ -28,7 +28,7 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "UsuarioServlet", urlPatterns = {"/Usuario"})
 public class UsuarioServlet extends HttpServlet {
-    
+
     private ServletConfig config = null;
     private ServletContext context = null;
     private HttpSession session = null;
@@ -113,7 +113,6 @@ public class UsuarioServlet extends HttpServlet {
         } else {
             dispatcher.forward(request, response);
         }
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

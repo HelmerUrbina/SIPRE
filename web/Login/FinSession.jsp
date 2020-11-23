@@ -7,8 +7,8 @@
 <!DOCTYPE html>
 <head>
     <title>Finaliza Session - SIPRE</title>
-    <link rel="shortcut icon" href="../Imagenes/Logos/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="../css/scaf.css" type="text/css"/>
+    <link rel="shortcut icon" href="Imagenes/Logos/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/scaf.css" type="text/css"/>
     <style type="text/css">
         .Estilo2 {
             color: #336666;
@@ -29,12 +29,12 @@
         <tr>
             <td width="100%" height="100%" rowspan="2"><p align="center" class="Estilo2">LA SESION HA FINALIZADO. </span>
                 <p align="center" class="Estilo2">
-                <p align="center" class="Estilo4"><a href="../FinalizaSesion" target="_parent">INICIAR SESION</a>
+                <p align="center" class="Estilo4"><a href="FinalizaSesion" target="_parent">INICIAR SESION</a>
             </td>
             <td width="20%"></td>
         </tr>
         <tr>
-            <td width="307"><div align="center"><img src="../Imagenes/Logos/acceso.gif" width="250" height="204"></div></td>
+            <td width="307"><div align="center"><img src="Imagenes/Logos/acceso.gif" width="250" height="204"></div></td>
         </tr>
     </table>
 </body>

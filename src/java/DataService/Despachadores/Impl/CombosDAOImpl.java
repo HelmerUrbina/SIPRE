@@ -176,7 +176,7 @@ public class CombosDAOImpl implements CombosDAO {
         }
         return lista;
     }
-
+    
     @Override
     public List getGenericaGasto() {
         lista = new LinkedList<>();

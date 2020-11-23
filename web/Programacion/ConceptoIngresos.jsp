@@ -10,25 +10,23 @@
         var theme = getTheme();
         $("#div_Titulo").jqxExpander({theme: theme, width: '100%'});
         $("#cbo_Periodo").jqxComboBox({theme: theme, autoOpen: true, promptText: "Seleccione", width: 100, dropDownWidth: 150, height: 20});
-        $("#cbo_Concepto").jqxComboBox({theme: theme, autoOpen: true, promptText: "Seleccione", width: 400, dropDownWidth: 350, height: 20});        
+        $("#cbo_Concepto").jqxComboBox({theme: theme, autoOpen: true, promptText: "Seleccione", width: 400, dropDownWidth: 350, height: 20});
         $('#cbo_Periodo').on('change', function () {
             fn_CargarBusqueda();
         });
         $('#cbo_Concepto').on('change', function () {
             fn_CargarBusqueda();
-        });        
+        });
+        fn_CargarBusqueda();
     });
-    
-    
     function fn_CargarBusqueda() {
         var msg = "";
-        
-        if (msg === "") {    
+        if (msg === "") {
             var periodo = $("#cbo_Periodo").val();
-            var codConcepto=$("#cbo_Concepto").val();                        
+            var codConcepto=$("#cbo_Concepto").val();
             $("#div_VentanaPrincipal").remove();
             $("#div_ContextMenu").remove();
-            $("#div_GrillaPrincipal").remove();            
+            $("#div_GrillaPrincipal").remove();
             var $contenidoAjax = $('#div_Detalle').html('<img src="../Imagenes/Fondos/cargando.gif">');
             $.ajax({
                 type: "GET",
@@ -48,7 +46,7 @@
     <div class="jqx-hideborder">CONCEPTO REMUNERACIONES</div>
     <div>
         <div id="div_Cabecera">
-            <table class="navy">                
+            <table class="navy">
                 <tbody>
                     <tr> 
                         <td>Periodo : </td>
@@ -67,7 +65,6 @@
                                 </c:forEach>
                             </select>
                         </td>
-                                            
                     </tr>
                 </tbody>
             </table>
@@ -75,6 +72,3 @@
         <div id="div_Detalle" class="maincen"></div>
     </div>
 </div>
-<script type="text/javascript">
-    fn_CargarBusqueda();
-</script>

@@ -16,13 +16,13 @@
         $("#cbo_Programa").jqxComboBox({theme: theme, autoOpen: true, promptText: "Seleccione", width: 300, dropDownWidth: 350, height: 20});
         var fecha = new Date();
         $("#cbo_Periodo").jqxComboBox('selectItem', fecha.getFullYear());
-        $('#cbo_Periodo').on('change', function () {            
+        $('#cbo_Periodo').on('change', function () {
             fn_cargarComboxCabecera("#cbo_UnidadOperativa", {mode: 'unidadOperativa', periodo: $("#cbo_Periodo").val(), presupuesto: $("#cbo_Presupuesto").val()});
         });
         $('#cbo_Presupuesto').on('change', function () {
             fn_cargarComboxCabecera("#cbo_UnidadOperativa", {mode: 'unidadOperativa', periodo: $("#cbo_Periodo").val(), presupuesto: $("#cbo_Presupuesto").val()});
         });
-        $('#cbo_UnidadOperativa').on('change', function () {            
+        $('#cbo_UnidadOperativa').on('change', function () {
             fn_CargarBusqueda();
         });
         $('#cbo_Programa').on('open', function () {
@@ -89,9 +89,9 @@
                                 </c:forEach>
                             </select>
                         </td>
-                        <td><a href="javascript: fn_CargarBusqueda();" ><img src="../Imagenes/Botones/refresh42.gif" alt="Buscar Datos" name="imgrefresh" width="30" height="28" border="0" id="imgrefresh"></a></td>
-                        <td><a href="../Login/Principal.jsp" target="_parent"><img src="../Imagenes/Botones/exit42.gif" alt="Salir de pantalla" name="imgexit" width="30" height="28"  border="0" id="imgexit" /></a></td>
-                    </tr>                    
+                        <td><a href="javascript: fn_CargarBusqueda();"><img src="../Imagenes/Botones/refresh42.gif" alt="Buscar Datos" name="imgrefresh" width="30" height="28" border="0" id="imgrefresh"></a></td>
+                        <td><a href="javascript: fn_MenuPrincipal();"><img src="../Imagenes/Botones/exit42.gif" alt="Salir de pantalla" name="imgexit" width="30" height="28"  border="0" id="imgexit" /></a></td>
+                    </tr>
                     <tr>
                         <td>Programa</td>
                         <td>

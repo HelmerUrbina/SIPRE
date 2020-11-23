@@ -3,32 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UserServices.Ejecucion;
+package UserServices.Login;
 
-import BusinessServices.Beans.BeanUsuario;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import org.apache.poi.hssf.record.PageBreakRecord;
 
 /**
  *
  * @author H-URBINA-M
  */
-@WebServlet(name = "EjecucionPresupuestalServlet", urlPatterns = {"/EjecucionPresupuestal"})
-public class EjecucionPresupuestalServlet extends HttpServlet {
+@WebServlet(name = "VerificaSessionServlet", urlPatterns = {"/VerificaSession"})
+public class VerificaSessionServlet extends HttpServlet {
 
-    private HttpSession session = null;
-    private ServletConfig config = null;
-    private ServletContext context = null;
-    private RequestDispatcher dispatcher = null;
+    private RequestDispatcher dispatcher;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,41 +33,14 @@ public class EjecucionPresupuestalServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        config = this.getServletConfig();
-        context = config.getServletContext();
-        session = request.getSession(false);
-        System.out.println("SESION true:" + request.getSession(false));
-        System.out.println(session + " " + session.getAttribute("ID").toString());
+        String session = (String) request.getSession().getAttribute("ID");
         if (session == null) {
-            System.out.println("ingreso");
-            dispatcher = request.getRequestDispatcher("VerificaSession");
-            System.out.println("paso 1");
+            dispatcher = request.getRequestDispatcher("/Login/FinSession.jsp");
+            dispatcher.include(request, response);
+        } else {
+            dispatcher = request.getRequestDispatcher("/Login/Principal.jsp");
             dispatcher.forward(request, response);
-            System.out.println("paso 2");
-            return;
         }
-        //else {
-
-        BeanUsuario objUsuario = (BeanUsuario) session.getAttribute("objUsuario" + session.getId());
-        System.out.println(objUsuario);
-
-        //VERIFICAMOS LA SESSION DEL USUARIO
-        /* if (objUsuario == null) {
-            dispatcher = request.getRequestDispatcher("FinSession.jsp");
-            dispatcher.forward(request, response);
-        }*/
-        //SE ENVIA DE ACUERDO AL MODO SELECCIONADO
-        switch (request.getParameter("mode")) {
-            case "ejePresupuestal":
-                dispatcher = request.getRequestDispatcher("Ejecucion/EjecucionPresupuestal.jsp");
-                break;
-            default:
-                dispatcher = request.getRequestDispatcher("error.jsp");
-                break;
-        }
-        System.out.println(dispatcher);
-        // }
-        dispatcher.include(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

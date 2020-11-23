@@ -4,7 +4,6 @@
     Author     : H-URBINA-M
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -29,7 +28,7 @@
 </script>
 <div style="border: none;" id='div_Titulo'>
     <div class="jqx-hideborder">LISTADOS DE REGISTRO DE PEI - PERIODO</div>
-    <div>        
+    <div> 
         <div id="div_Detalle" class="maincen"></div>
     </div>
 </div>

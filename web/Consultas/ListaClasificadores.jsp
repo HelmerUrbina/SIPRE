@@ -59,7 +59,7 @@
             columnsresize: true,
             showfilterrow: true,
             showtoolbar: true,
-            editable: false,            
+            editable: false,
             rendertoolbar: function (toolbar) {
                 // ADICIONAMOS BOTONES A LA BARRA DE ESTADOS
                 var container = $("<div style='overflow: hidden; position: relative; margin: 1px;'></div>");
@@ -86,7 +86,7 @@
                 });
                 //ASIGNAMOS LAS FUNCIONES PARA EL BOTON SALIR
                 ButtonSalir.click(function (event) {
-                    window.location = "../Login/Principal.jsp";
+                    fn_MenuPrincipal();
                 });
             },
             columns: [
@@ -208,12 +208,12 @@
     <div>
         <span style="float: left">Datos del Clasificador Presupuestal : </span>
     </div>
-    <div style="overflow: hidden">        
+    <div style="overflow: hidden">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">  
             <tr>
                 <td class="inputlabel">Cadena : </td>
                 <td><input type="text" id="txt_Cadena" name="txt_Cadena"/></td>
-            </tr>                        
+            </tr>
             <tr>
                 <td class="inputlabel">Tipo Transaccion : </td>
                 <td><input type="text" id="txt_TipoTransaccion" name="txt_TipoTransaccion" style='text-transform:uppercase;'/></td>
@@ -240,25 +240,24 @@
             </tr>
             <tr>
                 <td class="inputlabel">Descripcion : </td>
-                <td><textarea id="txt_Descripcion" name="txt_Descripcion" style="text-transform: uppercase;"/></textarea></td>                
+                <td><textarea id="txt_Descripcion" name="txt_Descripcion" style="text-transform: uppercase;"/></textarea></td>
             </tr>
             <tr>
                 <td class="inputlabel">Tipo : </td>
-                <td><input type="text" id="txt_Tipo" name="txt_Tipo" style='text-transform:uppercase;'/></td>                    
-            </tr>                
-
+                <td><input type="text" id="txt_Tipo" name="txt_Tipo" style='text-transform:uppercase;'/></td>
+            </tr>
             <tr>
                 <td class="Summit" colspan="4">
-                    <div>                            
-                        <input type="button" id="btn_Cerrar" value="Cerrar" style="margin-right: 20px"/>                            
+                    <div>
+                        <input type="button" id="btn_Cerrar" value="Cerrar" style="margin-right: 20px"/>
                     </div>
                 </td>
             </tr>
-        </table>          
+        </table>
     </div>
 </div>
 <div id='div_ContextMenu' style='display: none;'>
     <ul>
-        <li>Ver</li>                  
+        <li>Ver</li>
     </ul>
 </div>

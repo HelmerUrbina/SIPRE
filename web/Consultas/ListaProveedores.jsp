@@ -60,7 +60,7 @@
             columnsresize: true,
             showfilterrow: true,
             showtoolbar: true,
-            editable: false,            
+            editable: false,
             rendertoolbar: function (toolbar) {
                 // ADICIONAMOS BOTONES A LA BARRA DE ESTADOS
                 var container = $("<div style='overflow: hidden; position: relative; margin: 1px;'></div>");
@@ -105,7 +105,7 @@
                 });
                 //ASIGNAMOS LAS FUNCIONES PARA EL BOTON SALIR
                 ButtonSalir.click(function (event) {
-                    window.location = "../Login/Principal.jsp";
+                    fn_MenuPrincipal();
                 });
             },
             columns: [
@@ -302,7 +302,6 @@
             });
         }
     });
-
 </script>
 <div id="div_GrillaPrincipal"></div>
 <div id="div_VentanaPrincipal" style="display: none">
@@ -311,7 +310,7 @@
     </div>
     <div style="overflow: hidden">
         <form id="frm_Proveedor" name="frm_Proveedor" method="post" >
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">                
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td class="inputlabel">Tipo : </td>
                     <td>
@@ -319,7 +318,7 @@
                             <option value="J">JURIDICO</option>
                             <option value="N">NATURAL</option> 
                         </select>
-                    </td>                    
+                    </td>
                 </tr>
                 <tr>
                     <td class="inputlabel">R.U.C. : </td>
@@ -328,7 +327,7 @@
                 <tr>
                     <td class="inputlabel">Raz&oacute;n Social : </td>
                     <td><input type="text" id="txt_RazonSocial" name="txt_RazonSocial" style='text-transform:uppercase;'/></td> 
-                </tr>                
+                </tr>
                 <tr>
                     <td class="inputlabel">Representante : </td>
                     <td><input type="text" id="txt_Representante" name="txt_Representante" style='text-transform:uppercase;'/></td>
@@ -352,7 +351,7 @@
                             <option value="AC">ACTIVO</option>
                             <option value="IN">INACTIVO</option>
                         </select>
-                    </td>                    
+                    </td>
                 </tr>
                 <tr>
                     <td class="Summit" colspan="4">
@@ -368,7 +367,6 @@
 </div>
 <div id='div_ContextMenu' style='display: none;'>
     <ul>
-        <li>Editar</li>          
+        <li>Editar</li>
     </ul>
 </div>
-<div id="cbo_Ajax" style='display: none;'></div>

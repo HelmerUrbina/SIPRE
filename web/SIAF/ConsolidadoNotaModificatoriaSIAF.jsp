@@ -7,12 +7,12 @@
 <!DOCTYPE html>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
-    var autorizacion = '${autorizacion}';
+    fn_validaAutorizacion('${autorizacion}');
     $(document).ready(function () {
         var theme = getTheme();
         $("#div_Titulo").jqxExpander({theme: theme, width: '100%'});
         $("#cbo_Periodo").jqxComboBox({theme: theme, autoOpen: true, promptText: "Seleccione", width: 100, dropDownWidth: 150, height: 20});
-        $("#div_NumeroConsolidado").jqxMaskedInput({width: 100, height: 20, mask: '0000'});        
+        $("#div_NumeroConsolidado").jqxMaskedInput({width: 100, height: 20, mask: '0000'});
         var fecha = new Date();
         $("#cbo_Periodo").jqxComboBox('selectItem', fecha.getFullYear());
         $('#cbo_Periodo').on('change', function () {
@@ -24,8 +24,6 @@
         var msg = "";
         if (msg === "")
             msg = fn_validaCombos('#cbo_Periodo', "Seleccione el Periodo.");
-        if (autorizacion !== 'true')
-            msg = 'Usuario no Autorizado para ver este Tipo de Información.';
         if (msg === "") {
             var periodo = $("#cbo_Periodo").val();
             var codigo = $("#div_NumeroConsolidado").val();
@@ -57,7 +55,7 @@
     <div class="jqx-hideborder">CARGAR ARCHIVOS - SIAF</div>
     <div>
         <div id="div_Cabecera">
-            <table class="navy">                
+            <table class="navy">
                 <tbody>
                     <tr>
                         <td>Periodo : </td>
@@ -71,9 +69,9 @@
                         <td>Consolidado : </td>
                         <td>
                             <div id="div_NumeroConsolidado"></div>
-                        </td>                                               
-                        <td><a href="javascript: fn_CargarBusqueda();" ><img src="../Imagenes/Botones/refresh42.gif" alt="Buscar Datos" name="imgrefresh" width="30" height="28" border="0" id="imgrefresh"></a></td>
-                        <td><a href="../Login/Principal.jsp" target="_parent"><img src="../Imagenes/Botones/exit42.gif" alt="Salir de pantalla" name="imgexit" width="30" height="28"  border="0" id="imgexit" /></a></td>
+                        </td>
+                        <td><a href="javascript: fn_CargarBusqueda();"><img src="../Imagenes/Botones/refresh42.gif" alt="Buscar Datos" name="imgrefresh" width="30" height="28" border="0" id="imgrefresh"></a></td>
+                        <td><a href="javascript: fn_MenuPrincipal();"><img src="../Imagenes/Botones/exit42.gif" alt="Salir de pantalla" name="imgexit" width="30" height="28"  border="0" id="imgexit" /></a></td>
                     </tr>
                 </tbody>
             </table>

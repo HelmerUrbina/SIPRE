@@ -85,7 +85,7 @@
                 });
                 //ASIGNAMOS LAS FUNCIONES PARA EL BOTON SALIR
                 ButtonSalir.click(function (event) {
-                    window.location = "../Login/Principal.jsp";
+                    fn_MenuPrincipal();
                 });
             },
             columns: [

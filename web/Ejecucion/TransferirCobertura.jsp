@@ -60,7 +60,6 @@
             var presupuesto = $("#cbo_Presupuesto").val();
             var coberturaInicial = $("#txt_CobInicial").val();
             var coberturaFinal = $("#txt_CobFinal").val();
-
             $("#div_GrillaPrincipal").remove();
             var $contenidoAjax = $('#div_Detalle').html('<img src="../Imagenes/Fondos/cargando.gif">');
             $.ajax({
@@ -80,7 +79,7 @@
     <div class="jqx-hideborder">TRANSFERIR COBERTURAS</div>
     <div>
         <div id="div_Cabecera">
-            <table class="navy">                
+            <table class="navy">
                 <tbody>
                     <tr>
                         <td>Periodo : </td>
@@ -90,7 +89,7 @@
                                     <option value="${a.codigo}">${a.codigo}</option>
                                 </c:forEach>
                             </select>
-                        </td>                 
+                        </td>
                         <td>Fte. Financ. : </td>
                         <td>
                             <select id="cbo_Presupuesto" name="cbo_Presupuesto">
@@ -98,9 +97,9 @@
                                     <option value="${c.codigo}">${c.descripcion}</option>
                                 </c:forEach>
                             </select>
-                        </td>                   
-                        <td><a href="javascript: fn_CargarBusqueda();" ><img src="../Imagenes/Botones/refresh42.gif" alt="Buscar Datos" name="imgrefresh" width="30" height="28" border="0" id="imgrefresh"></a></td>
-                        <td><a href="../Login/Principal.jsp" target="_parent"><img src="../Imagenes/Botones/exit42.gif" alt="Salir de pantalla" name="imgexit" width="30" height="28"  border="0" id="imgexit" /></a></td>
+                        </td>
+                        <td><a href="javascript: fn_CargarBusqueda();"><img src="../Imagenes/Botones/refresh42.gif" alt="Buscar Datos" name="imgrefresh" width="30" height="28" border="0" id="imgrefresh"></a></td>
+                        <td><a href="javascript: fn_MenuPrincipal();"><img src="../Imagenes/Botones/exit42.gif" alt="Salir de pantalla" name="imgexit" width="30" height="28"  border="0" id="imgexit" /></a></td>
                     </tr>
                     <tr>
                         <td>Cobertura Inicial: </td>

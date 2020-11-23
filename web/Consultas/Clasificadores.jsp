@@ -27,7 +27,7 @@
 </script>
 <div style="border: none;" id='div_Titulo'>
     <div class="jqx-hideborder">LISTADOS DE CLASIFICADORES PRESUPUESTALES</div>
-    <div>        
+    <div>
         <div id="div_Detalle" class="maincen"></div>
     </div>
 </div>

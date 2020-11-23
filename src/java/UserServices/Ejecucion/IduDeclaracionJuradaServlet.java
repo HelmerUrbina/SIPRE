@@ -65,15 +65,15 @@ public class IduDeclaracionJuradaServlet extends HttpServlet {
             throws ServletException, IOException, ParseException {
         config = this.getServletConfig();
         context = config.getServletContext();
-        session = request.getSession(true);
+        session = request.getSession(false);
+        if (session == null) {
+            dispatcher = request.getRequestDispatcher("FinSession.jsp");
+            dispatcher.forward(request, response);
+        }
         String result = null;
         String resulDetalle = null;
         // VERIFICAMOS LA SESSION DE LA SOLICITUD DE CREDITO
         BeanUsuario objUsuario = (BeanUsuario) session.getAttribute("objUsuario" + session.getId());
-        if (objUsuario == null) {
-            dispatcher = request.getRequestDispatcher("FinSession.jsp");
-            dispatcher.forward(request, response);
-        }
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         sdf.setLenient(false); //No Complaciente en Fecha
         java.util.Date fecha_util = sdf.parse(Utiles.checkFecha(request.getParameter("fecha")));

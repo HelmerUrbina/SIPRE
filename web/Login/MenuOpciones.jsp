@@ -11,7 +11,6 @@
         $('#div_Tree').jqxTree({theme: theme, height: '100%', width: '100%'});
         $('#div_Tree').css('visibility', 'visible');
         $('#div_Tree').jqxTree('collapseAll');
-        //fn_verDocumento();
         if ('${autorizacion}' === 'true') {
             fn_mensaje();
         }
@@ -52,7 +51,7 @@
                     }
                 }
             });
-        }, 100000);
+        }, 200000);
     }
 </script>
 <div style="visibility: hidden; border: none;" id='div_Tree'>

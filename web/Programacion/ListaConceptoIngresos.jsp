@@ -11,18 +11,16 @@
     }
 </style>
 <script type="text/javascript">
-
     var codGrado = '${objBnIngresosPorGrado.codGrado}';
     var periodo = $("#cbo_Periodo").val();
-    var codConcepto=$("#cbo_Concepto").val();    
+    var codConcepto = $("#cbo_Concepto").val();
     var mode = null;
     var msg = "";
     var lista = new Array();
     <c:forEach var="d" items="${objIngresosPorGrado}">
-    var result = {codigo:'${d.desConcepto}', codGrado: '${d.codGrado}',periodoRee: '${d.periodoRee}' ,
-        abvGrado:'${d.abvGrado}',desGrado: '${d.desGrado}',desPeriodo: '${d.desPeriodo}',ingresoGrado:"${d.ingresoGrado}",
-    nivel:'${d.nivelGrado}'};
-
+    var result = {codigo: '${d.desConcepto}', codGrado: '${d.codGrado}', periodoRee: '${d.periodoRee}',
+        abvGrado: '${d.abvGrado}', desGrado: '${d.desGrado}', desPeriodo: '${d.desPeriodo}', ingresoGrado: "${d.ingresoGrado}",
+        nivel: '${d.nivelGrado}'};
     lista.push(result);
     </c:forEach>
     $(document).ready(function () {
@@ -32,13 +30,13 @@
             localdata: lista,
             datatype: "array",
             updaterow: function (rowid, rowdata, commit) {
-                    // synchronize with the server - send update command
-                    // call commit with parameter true if the synchronization with the server is successful 
-                    // and with parameter false if the synchronization failder.
-                    var rowindex = $("#div_GrillaPrincipal").jqxGrid('getrowboundindexbyid', rowid);
-                    editedRows.push({index: rowindex, data: rowdata});
-                    commit(true);
-                },
+                // synchronize with the server - send update command
+                // call commit with parameter true if the synchronization with the server is successful 
+                // and with parameter false if the synchronization failder.
+                var rowindex = $("#div_GrillaPrincipal").jqxGrid('getrowboundindexbyid', rowid);
+                editedRows.push({index: rowindex, data: rowdata});
+                commit(true);
+            },
             datafields:
                     [
                         {name: 'codigo', type: "string"},
@@ -65,7 +63,6 @@
                     return "editedRow";
                 }
             }
-
         };
         //DEFINIMOS LOS CAMPOS Y DATOS DE LA GRILLA
         $("#div_GrillaPrincipal").jqxGrid({
@@ -127,30 +124,28 @@
                         return "<div style='margin:4px; text-align: center;'>" + (value + 1) + "</div>";
                     }
                 },
-                {text: 'DESCRIPCIÓN', dataField: 'desGrado',editable:false, width: '20%', align: 'center', cellsAlign: 'left', cellclassname: cellclass},
-                {text: 'ABREVIATURA', dataField: 'abvGrado',editable:false,width: '10%', align: 'center', cellsAlign: 'left', cellclassname: cellclass},
-                {text: 'PERIODO REE', dataField: 'desPeriodo',editable:false,width: '10%', align: 'center', cellsAlign: 'left', cellclassname: cellclass},
-                {text: 'IMPORTE',dataField:'ingresoGrado', width: '20%', align: 'right', cellsAlign: 'right', cellsFormat: 'f2',columntype: 'numberinput',cellclassname: cellclass,aggregates: ['sum'],
-                      validation: function (cell, value) {
-                          if (value < 0 ) {
-                              return { result: false, message: "Importe Invalido, Revise!!.." };
-                          }
-                          return true;
-                      },
-                      createeditor: function (row, cellvalue, editor) {
-                          editor.jqxNumberInput({decimalDigits: 2, digits: 9 });
-                      }                      
+                {text: 'DESCRIPCIÓN', dataField: 'desGrado', editable: false, width: '20%', align: 'center', cellsAlign: 'left', cellclassname: cellclass},
+                {text: 'ABREVIATURA', dataField: 'abvGrado', editable: false, width: '10%', align: 'center', cellsAlign: 'left', cellclassname: cellclass},
+                {text: 'PERIODO REE', dataField: 'desPeriodo', editable: false, width: '10%', align: 'center', cellsAlign: 'left', cellclassname: cellclass},
+                {text: 'IMPORTE', dataField: 'ingresoGrado', width: '20%', align: 'right', cellsAlign: 'right', cellsFormat: 'f2', columntype: 'numberinput', cellclassname: cellclass, aggregates: ['sum'],
+                    validation: function (cell, value) {
+                        if (value < 0) {
+                            return {result: false, message: "Importe Invalido, Revise!!.."};
+                        }
+                        return true;
+                    },
+                    createeditor: function (row, cellvalue, editor) {
+                        editor.jqxNumberInput({decimalDigits: 2, digits: 9});
+                    }
                 }
-                
             ]
         });
-       
         /*
-        // DEFINIMOS EL MENU CONTEXTUAL
-        var contextMenu = $("#div_ContextMenu").jqxMenu({width: 200, height: 57, autoOpenPopup: false, mode: 'popup'});
-        $("#div_GrillaPrincipal").on('contextmenu', function () {
-            return false;
-        });*/
+         // DEFINIMOS EL MENU CONTEXTUAL
+         var contextMenu = $("#div_ContextMenu").jqxMenu({width: 200, height: 57, autoOpenPopup: false, mode: 'popup'});
+         $("#div_GrillaPrincipal").on('contextmenu', function () {
+         return false;
+         });*/
         // HABILITAMOS LA OPCION DE CLICK DEL MENU CONTEXTUAL.
         $("#div_GrillaPrincipal").on('rowclick', function (event) {
             if (event.args.rightclick) {
@@ -205,7 +200,7 @@
             }
         });
         //SELECCIONAMOS UN REGISTRO DE LA GRILLA
-       $("#div_GrillaPrincipal").on('rowselect', function (event) {
+        $("#div_GrillaPrincipal").on('rowselect', function (event) {
             var args = event.args;
             var row = $("#div_GrillaPrincipal").jqxGrid('getrowdata', args.rowindex);
             codGrado = row['codGrado'];
@@ -214,13 +209,11 @@
         var customButtonsDemo = (function () {
             function _createElements() {
                 //INICIA LOS VALORES DE LA VENTANA
-
                 $('#div_VentanaPrincipal').jqxWindow({
                     position: {x: 400, y: 200},
                     width: 600, height: 155, resizable: false,
                     cancelButton: $('#btn_Cancelar'),
                     initContent: function () {
-
                         $("#txt_desConcepto").jqxInput({placeHolder: 'INGRESE NOMBRE DEL CONCEPTO', width: 400, height: 20});
                         $('#btn_Cancelar').jqxButton({width: '65px', height: 25});
                         $('#btn_Guardar').jqxButton({width: '65px', height: 25});
@@ -256,31 +249,30 @@
             $.ajax({
                 type: "GET",
                 url: "../ConceptoIngresos",
-                data: {mode: 'G',periodo:periodo,codConcepto:codConcepto},
+                data: {mode: 'G', periodo: periodo, codConcepto: codConcepto},
                 success: function (data) {
                     $contenidoAjax.html(data);
                 }
             });
         }
-       
         //FUNCION PARA GRABAR LOS DATOS DE LA VENTANA PRINCIPAL
         function fn_GrabarDatos() {
             var msg = "";
             var lista = new Array();
             var result;
-            var rows=$('#div_GrillaPrincipal').jqxGrid('getrows');
-            for(var i=0;i<rows.length;i++){
-                var row=rows[i];
-                result=row.codGrado+"---"+row.ingresoGrado+"---"+row.periodoRee+"---"+row.nivel;
+            var rows = $('#div_GrillaPrincipal').jqxGrid('getrows');
+            for (var i = 0; i < rows.length; i++) {
+                var row = rows[i];
+                result = row.codGrado + "---" + row.ingresoGrado + "---" + row.periodoRee + "---" + row.nivel;
                 //if(parseFloat(row.ingresoGrado)>0){
-                    lista.push(result);                    
+                lista.push(result);
                 //}
             }
             $.ajax({
                 type: "POST",
                 url: "../IduIngresosPorGrado",
                 data: {mode: mode, periodo: periodo, codConcepto: codConcepto,
-                lista:JSON.stringify(lista)},
+                    lista: JSON.stringify(lista)},
                 success: function (data) {
                     msg = data;
                     if (msg === "GUARDO") {
@@ -314,24 +306,20 @@
                 }
             });
         }
-    }
-    );
-
-
+    });
 </script>
 <div id="div_GrillaPrincipal"></div>
 <div id="div_VentanaPrincipal" style="display: none">
     <div>
         <span style="float: left">CONCEPTO REMUNERACIONES</span>
     </div>
-    <div style="overflow: hidden">        
+    <div style="overflow: hidden">
         <form id="frm_ConceptoIngresos" name="frm_ConceptoIngresos" method="post" >
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td class="inputlabel">Descripción : </td>
                     <td><input type="text" id="txt_desConcepto" name="txt_desConcepto" style="text-transform: uppercase;"/></td>
                 </tr>
-
                 <tr>
                     <td class="Summit" colspan="2">
                         <div>
@@ -344,5 +332,3 @@
         </form>
     </div>
 </div>
-<div id="cbo_Ajax" style='display: none;'></div>
-

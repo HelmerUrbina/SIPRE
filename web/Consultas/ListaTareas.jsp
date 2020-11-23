@@ -112,7 +112,7 @@
                 });
                 //ASIGNAMOS LAS FUNCIONES PARA EL BOTON SALIR
                 ButtonSalir.click(function (event) {
-                    window.location.reload();
+                    fn_MenuPrincipal();
                 });
             },
             columns: [
@@ -392,7 +392,6 @@
                     <td class="inputlabel">Descripcion : </td>
                     <td><textarea id="txt_Descripcion" name="txt_Descripcion" style="text-transform: uppercase;"/></textarea></td>
                 </tr>
-
                 <tr>
                     <td class="inputlabel">UU. MM. : </td>
                     <td>
@@ -411,7 +410,7 @@
                             <option value="HS">HABILIT. ENTRE SI</option> 
                         </select>
                     </td>
-                </tr>                
+                </tr>
                 <tr>
                     <td class="Summit" colspan="4">
                         <div>

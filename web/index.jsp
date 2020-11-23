@@ -132,14 +132,21 @@
                     initContent: function () {
                     }
                 });
-                ancho = 400;
-                alto = 400;
+                ancho = 900;
+                alto = 800;
                 posicionX = ($(window).width() / 2) - (ancho / 2);
                 posicionY = ($(window).height() / 2) - (alto / 2);
-                $('#window').jqxWindow({
-                    position: {x: posicionX, y: posicionY},
-                    width: ancho, height: alto, resizable: false,
+                $('#div_Documento').jqxWindow({
+                    position: {x: 200, y: 20},
+                    resizable: true,
+                    draggable: true,
+                    showCollapseButton: true,
+                    width: ancho,
+                    height: alto,
+                    minWidth: ancho - 200,
+                    minHeight: alto - 200,
                     initContent: function () {
+                        $('#div_Documento').jqxWindow('focus');
                     }
                 });
             });
@@ -152,8 +159,7 @@
                     url: "VerificaUsuario",
                     data: {accion: "LOGIN", usuario: usuario, password: password, verificacion: verificacion},
                     success: function (data) {
-                        var result = data.substr(0, 5);
-                        if (result === "Login") {
+                        if (data === "VerificaSession") {
                             window.location = data;
                             /* var caracteristicas = "width=" + $(window).width() + ", height=" + $(window).height() + ", directories=no, location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no";
                              $("#txt_Usuario").val("");
@@ -256,7 +262,9 @@
                         view: "FitH"
                     }
                 };
-                var myPDF = PDFObject.embed("Descarga/FaxMultiple2019-0097-OPRE.pdf", "#div_ViewerPDF");
+                var myPDF = PDFObject.embed("Descarga/FaxMultiple2020-0074-OPRE.pdf", "#div_ViewerPDF");
+                $('#div_Documento').jqxWindow({isModal: false, modalOpacity: 0.7});
+                ('#div_Documento').jqxWindow('open');
             }
             function fn_Aviso() {
                 $.alert({
@@ -382,9 +390,7 @@
                         <div style="text-align: center">EJECUCIÓN PRESUPUESTAL</div>
                         <div>
                             <ul>
-                                
-                                <li class="link"> 1. <a href="Descarga/FaxMultiple2020-0059-OPRE.pdf" target="_blank"><span class="inputlabelred">Fax Mult. N° 0059 - Prioridad para el Pago de Servicios Básicos de las UUOO del EP.</span></a></li>
-                                <li class="link"> a)<a href="Descarga/NuevoFormatoSSBB2020.xlsx" target="_blank"><span class="inputlabelred">Formato de Sustento de SSBB - 2020.</span></a></li>
+                                <li class="link"> 1. <a href="Descarga/FaxMultiple2020-0074-OPRE.pdf" target="_blank"><span class="inputlabelred">Fax Mult. N° 0074 - Plazo para el registro de Modificaciones Presupuestarias en el Presupuesto Institucional en el marco del cierre del Ejercicio Presupuestario 2020.</span></a></li>
                                     <%--<li class="link"> 4. <a href="Descarga/FaxMultiple2020-0053-OPRE.pdf" target="_blank"><span class="inputlabelred">Fax Mult. N° 0053 - Evaluación Presupuestal al 1er Semestre AF-2020 “Lineamientos Complementarios para la Evaluación del Presupuesto Institucional del al UE 003: Ejercito Peruano AF-2020”.</span></a></li>--%>
                             </ul>
                         </div>
@@ -463,17 +469,19 @@
                 </div>
             </div>
         </div>
-        <div id="window" style="display: none" >
+        <div id="div_Documento"style="display: none">
             <div>
                 Fax Multiple 0097-OPRE
             </div>
             <div>
                 <div id="div_ViewerPDF" style="width: 100%; height: 100%"> </div> 
             </div>
-        </div> 
+
+        </div>
     </body>
 </html>
 <script type="text/javascript">
     //fn_Aviso();
     //fn_verDocumento();
+    window.open("Descarga/FaxMultiple2020-0074-OPRE.pdf", "Fax Multiple 0097-OPRE", "width=800, height=550, top=100, left=300");
 </script>

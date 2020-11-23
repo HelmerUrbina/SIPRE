@@ -105,7 +105,7 @@
                 });
                 //ASIGNAMOS LAS FUNCIONES PARA EL BOTON SALIR
                 ButtonSalir.click(function (event) {
-                    window.location.reload();
+                     fn_MenuPrincipal();
                 });
             },
             columns: [
