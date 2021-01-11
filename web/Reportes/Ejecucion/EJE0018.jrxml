@@ -15,10 +15,10 @@
 		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
 	</parameter>
 	<parameter name="UNIDAD_OPERATIVA" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["0754"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["0003"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="USUARIO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["44469132"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["325487900"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="GENERICA" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>

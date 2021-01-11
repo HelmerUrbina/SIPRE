@@ -69,6 +69,7 @@
             $("#div_GrillaPrincipal").remove();
             $("#div_VentanaPrincipal").remove();
             $("#div_VentanaDetalle").remove();
+            $("#div_VentanaCerrar").remove();
             $("#div_Reporte").remove();
             $("#div_ContextMenu").remove();
             $("#div_GrillaRegistro").remove();

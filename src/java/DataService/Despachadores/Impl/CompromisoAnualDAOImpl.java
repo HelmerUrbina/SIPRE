@@ -45,7 +45,7 @@ public class CompromisoAnualDAOImpl implements CompromisoAnualDAO {
                 + "NROCER_CA, NUMCOR AS COBERTURA, UTIL_NEW.FUN_CERTIFICADO_SIAF(CODPER, COPPTO, COUUOO, NROCOB) CERTIFICADO, "
                 + "REPLACE(REGEXP_REPLACE(UPPER(DESOCE),'[^A-Za-z0-9ÁÉÍÓÚáéíóú ]', ''),'\n"
                 + "', ' ') AS DESOCE, REPLACE(REGEXP_REPLACE(UPPER(DOCREF),'[^A-Za-z0-9ÁÉÍÓÚáéíóú ]', ''),'\n"
-                + "', ' ') AS DOCREF, DUSUARIO_CERRADO FECHA, CASE TIPSOL WHEN 'RE' THEN (-1)*MOCRPR ELSE MOCRPR END AS IMPORTE, TIPCAM, CASE TIPSOL WHEN 'RE' THEN (-1)*IMPDOL ELSE IMPDOL END AS EXTRANJERA,  "
+                + "', ' ') AS DOCREF, TO_CHAR(DUSUARIO_CERRADO,'DD/MM/YYYY HH24:MM') FECHA, CASE TIPSOL WHEN 'RE' THEN (-1)*MOCRPR ELSE MOCRPR END AS IMPORTE, TIPCAM, CASE TIPSOL WHEN 'RE' THEN (-1)*IMPDOL ELSE IMPDOL END AS EXTRANJERA,  "
                 + "CASE ESTCCP WHEN 'PE' THEN 'PENDIENTE' WHEN 'CE' THEN 'CERRADO' WHEN 'AT' THEN 'ATENDIDO' WHEN 'AN' THEN 'ANULADO' WHEN 'RE' THEN 'RECHAZADO' ELSE '' END AS ESTADO, "
                 + "CASE TIPSOL WHEN 'CE' THEN 'COMPROMISO' WHEN 'AM' THEN 'AMPLIACION' WHEN 'RE' THEN 'REBAJA' ELSE '' END AS TIP_SOL, "
                 + "NUSOCP, NROCER, "
@@ -72,7 +72,7 @@ public class CompromisoAnualDAOImpl implements CompromisoAnualDAO {
                 objBnCompromisoAnual.setCertificado(objResultSet.getString("CERTIFICADO"));
                 objBnCompromisoAnual.setDetalle(objResultSet.getString("DESOCE"));
                 objBnCompromisoAnual.setDocumentoReferencia(objResultSet.getString("DOCREF"));
-                objBnCompromisoAnual.setFecha(objResultSet.getDate("FECHA"));
+                objBnCompromisoAnual.setMes(objResultSet.getString("FECHA"));
                 objBnCompromisoAnual.setImporte(objResultSet.getDouble("IMPORTE"));
                 objBnCompromisoAnual.setTipoCambio(objResultSet.getDouble("TIPCAM"));
                 objBnCompromisoAnual.setMonedaExtranjera(objResultSet.getDouble("EXTRANJERA"));

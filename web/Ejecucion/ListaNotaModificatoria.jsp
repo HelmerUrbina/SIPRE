@@ -1472,8 +1472,8 @@
         }
         if (cantidad === 0)
             result = "Ingrese el Detalle de la Nota Modificatoria.<br>";
-        if (totalResolucion > 0)
-            result = "La Nota Modificatoria solo debe contener una Resolucion, Revise.<br>";
+        //if (totalResolucion > 0)
+          //  result = "La Nota Modificatoria solo debe contener una Resolucion, Revise.<br>";
         if (totalFuente > 0)
             result = "La Nota Modificatoria solo debe contener una Fuente de Financiamiento, Revise.<br>";
         switch ($("#cbo_TipoNotaModificatoria").val()) {

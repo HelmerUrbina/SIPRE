@@ -2,35 +2,36 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EJE0012" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="546" leftMargin="21" rightMargin="28" topMargin="14" bottomMargin="14" uuid="044326bd-282d-4433-ae32-6e99fd543e84">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="1.771561000000002"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="2.3579476910000032"/>
+	<property name="ireport.x" value="602"/>
+	<property name="ireport.y" value="235"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["2019"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["2020"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PRESUPUESTO" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[9]]></defaultValueExpression>
 	</parameter>
 	<parameter name="USUARIO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["31193"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["0000004"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["0000020"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CODIGO2" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["0000004"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["0000020"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Tomcat 6.0\\webapps\\SistemaOpre\\reportes\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="UNIDAD_OPERATIVA" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["0833"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["0734"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT DEPECO.NUMSOL, UTIL.FUN_NONMES(TAPECO.MESPER) MES,
+		<![CDATA[SELECT 
+DEPECO.NUMSOL, UTIL.FUN_NONMES(TAPECO.MESPER) MES,
         DEPECO.secfun,tapeco.COUUOO ||':'||UTIL.FUN_ABUUOO(tapeco.COUUOO) CARGO, 
         CASE tapeco.codtip when 4 then 'O.P. - ' || tapeco.numopi else ' ' end NUMOPI ,
        case tapeco.estcob when 'AN' then 'ANULADA' ELSE '' END ESTADO, 
@@ -47,6 +48,7 @@ Util_NEW.FUN_DSCSTIP(TAPECO.COSTIP, TAPECO.COPPTO, TAPECO.CODTIP)stipo, tapeco.d
        CASE WHEN tapeco.NUMPED IS NULL THEN '' ELSE 'PED. Nº: ' || tapeco.NUMPED END NUMPED,
        tapeco.totcob, tapeco.tipcam, tapeco.totdol, depeco.comeop,util_new.fun_nomeop(depeco.comeop)nomeop, depeco.cocaga,
        util_new.fun_nombre_cadena_gasto(depeco.cocaga)nocaga, SUM(depeco.import) IMPORT, SUM(depeco.impdol) IMPDOL,
+ CASE WHEN tapeco.tipcam > 0 THEN UTIL_NEW.FUN_DES_MONEDA(TAPECO.CODMON) ELSE 'DOLARES' END AS TIPO_MONEDA,
        CASE WHEN tapeco.tipcam > 0 THEN 'T.C. ' || TRIM(TO_CHAR(tapeco.tipcam,'9,999.999')) ELSE '' END CAMBIO,
        CASE tapeco.COPPTO WHEN 6 THEN 'IMPORTE UE.   '|| TRIM(TO_CHAR(tapeco.IMPUE,'9,999,999,999.99')) ELSE ' ' END IMPUE,
 CASE WHEN $P{USUARIO} IN ('10714635','43305891','44469132') THEN 'Sección Telemática - OPRE' ELSE 
@@ -67,7 +69,7 @@ group by
         DEPECO.NUMSOL,TAPECO.MESPER,DEPECO.secfun,tapeco.COUUOO, tapeco.codtip, tapeco.numopi,
        tapeco.estcob, TAPECO.coppto, tapeco.numped,depeco.secfun, tapeco.codper,tapeco.fecpro,TAPECO.CODTIP,
        TAPECO.CODTIP,TAPECO.costip, tapeco.desglo,DEPECO.COUUOO,
-       tapeco.numofi, tapeco.provie, tapeco.NUMPED ,
+       tapeco.numofi, tapeco.provie, tapeco.NUMPED , TAPECO.CODMON,
        tapeco.totcob, tapeco.tipcam, tapeco.totdol, depeco.cocaga,depeco.comeop,
        tapeco.IMPUE
 ORDER BY 
@@ -103,6 +105,7 @@ DEPECO.COCAGA]]>
 	<field name="NOCAGA" class="java.lang.String"/>
 	<field name="IMPORT" class="java.math.BigDecimal"/>
 	<field name="IMPDOL" class="java.math.BigDecimal"/>
+	<field name="TIPO_MONEDA" class="java.lang.String"/>
 	<field name="CAMBIO" class="java.lang.String"/>
 	<field name="IMPUE" class="java.lang.String"/>
 	<field name="USU_IMPRESION" class="java.lang.String"/>
@@ -223,7 +226,7 @@ DEPECO.COCAGA]]>
 					<textFieldExpression><![CDATA[$F{PROVIE}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-6" positionType="FixRelativeToBottom" x="0" y="170" width="371" height="13" uuid="d3fcab9b-c81c-4f8d-89fd-687f36fd831c"/>
+					<reportElement key="staticText-6" positionType="FixRelativeToBottom" x="0" y="170" width="352" height="13" uuid="d3fcab9b-c81c-4f8d-89fd-687f36fd831c"/>
 					<box leftPadding="5">
 						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -236,7 +239,7 @@ DEPECO.COCAGA]]>
 					<text><![CDATA[UNIDAD DE OPERACION]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-7" positionType="FixRelativeToBottom" x="371" y="170" width="98" height="13" uuid="baf32211-4e6a-4a86-8cd1-1e7d34a7afc8"/>
+					<reportElement key="staticText-7" x="350" y="170" width="98" height="13" uuid="baf32211-4e6a-4a86-8cd1-1e7d34a7afc8"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -246,20 +249,7 @@ DEPECO.COCAGA]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 					</textElement>
-					<text><![CDATA[IMP. SOLES]]></text>
-				</staticText>
-				<staticText>
-					<reportElement key="staticText-8" positionType="FixRelativeToBottom" x="469" y="170" width="78" height="13" uuid="2ae8a8f5-566e-4886-b20e-94d77a94729d"/>
-					<box>
-						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
-					</textElement>
-					<text><![CDATA[IMP. DOLARES]]></text>
+					<text><![CDATA[SOLES]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
 					<reportElement key="textField-45" x="490" y="135" width="55" height="10" uuid="1546522f-70e1-477f-b4fb-f006b6ae3092"/>
@@ -404,6 +394,17 @@ DEPECO.COCAGA]]>
 					</textElement>
 					<text><![CDATA[CUARTEL GENERAL DEL EJÉRCITO - SIPRE]]></text>
 				</staticText>
+				<textField>
+					<reportElement x="446" y="170" width="100" height="13" uuid="91ca2d71-6daa-42ed-9992-42252e23ee8b"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TIPO_MONEDA}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>

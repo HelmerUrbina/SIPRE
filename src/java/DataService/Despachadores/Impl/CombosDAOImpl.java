@@ -1586,11 +1586,18 @@ public class CombosDAOImpl implements CombosDAO {
                             + "ESTREG='AC' "
                             + "ORDER BY COUUOO";
                 } else {
-                    sql = "SELECT COUUOO AS CODIGO, COUUOO||':'||ABUUOO AS DESCRIPCION "
+                  /*  sql = "SELECT COUUOO AS CODIGO, COUUOO||':'||ABUUOO AS DESCRIPCION "
                             + "FROM TAUUOO WHERE "
                             + "TIUUOO <> 'P' AND "
                             + "ESTREG='AC' AND "
                             + "COUUOO IN ('" + unidadOperativa + "','4001','1000','4288','4363') ORDER BY COUUOO";
+                            */
+                    
+                    sql = "SELECT COUUOO AS CODIGO, COUUOO||':'||ABUUOO AS DESCRIPCION "
+                            + "FROM TAUUOO WHERE "
+                            + "ESTREG='AC' "
+                            + "ORDER BY COUUOO";
+                    
                 }
             }
         }

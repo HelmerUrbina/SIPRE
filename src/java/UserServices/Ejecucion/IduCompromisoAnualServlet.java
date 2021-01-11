@@ -50,6 +50,7 @@ public class IduCompromisoAnualServlet extends HttpServlet {
     private CompromisoAnualDAO objDsCompromisoAnual;
     private BeanMsgerr objBnMsgerr = null;
     private MsgerrDAO objDsMsgerr;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

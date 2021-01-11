@@ -44,7 +44,7 @@ public class DeclaracionJuradaDAOImpl implements DeclaracionJuradaDAO {
         sql = "SELECT NUMPED AS PEDIDO, NROCER AS COMPROMISO, REPLACE(REGEXP_REPLACE(UPPER(NUMOFI),'[^A-Za-z0-9ÁÉÍÓÚáéíóú ]', ''),'\n"
                 + "', ' ') AS OFICIO, REPLACE(REGEXP_REPLACE(UPPER(DESGLO),'[^A-Za-z0-9ÁÉÍÓÚáéíóú ]', ''),'\n"
                 + "', ' ') AS DETALLE, "
-                + "NROCOB AS COBERTURA, CODTIP||'-'||COSTIP AS TIPO_CALENDARIO, DUSUARIO_CERRADO AS FECHA, "
+                + "NROCOB AS COBERTURA, CODTIP||'-'||COSTIP AS TIPO_CALENDARIO, TO_CHAR(DUSUARIO_CERRADO,'DD/MM/YYYY HH24:MM') AS FECHA, "
                 + "TOTCOB AS IMPORTE, TOTDOL AS IMPDOL, TIPCAM,  "
                 + "CASE ESTENV WHEN 'CO' THEN 'ATENDIDO' ELSE CASE ESTCOB WHEN 'PE' THEN 'PENDIENTE' WHEN 'CE' THEN 'CERRADO'  WHEN 'AN' THEN 'ANULADO' ELSE ' ' END END AS ESTADO, NUMOPI, "
                 + "CASE WHEN VFIRMA_JEFE IS NOT NULL THEN 'SI' ELSE 'NO' END FIRMA_JEFE, "
@@ -73,7 +73,7 @@ public class DeclaracionJuradaDAOImpl implements DeclaracionJuradaDAO {
                 objBnDeclaracionJurada.setDetalle(objResultSet.getString("DETALLE"));
                 objBnDeclaracionJurada.setCobertura(objResultSet.getString("COBERTURA"));
                 objBnDeclaracionJurada.setTipoCalendario(objResultSet.getString("TIPO_CALENDARIO"));
-                objBnDeclaracionJurada.setFecha(objResultSet.getDate("FECHA"));
+                objBnDeclaracionJurada.setMes(objResultSet.getString("FECHA"));
                 objBnDeclaracionJurada.setImporte(objResultSet.getDouble("IMPORTE"));
                 objBnDeclaracionJurada.setTipoCambio(objResultSet.getDouble("TIPCAM"));
                 objBnDeclaracionJurada.setMonedaExtranjera(objResultSet.getDouble("IMPDOL"));

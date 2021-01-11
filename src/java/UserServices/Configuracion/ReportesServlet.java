@@ -301,6 +301,9 @@ public class ReportesServlet extends HttpServlet {
             case "EJE0046":
                 nombre = "Ejecucion/EJE0046.jasper";
                 break;
+            case "EJE0047":
+                nombre = "Ejecucion/EJE0047.jasper";
+                break;
             //REPORTES DE LOGISTICA
             case "LOG0001":
                 nombre = "Logistica/LOG0001.jasper";

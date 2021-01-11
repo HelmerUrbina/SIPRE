@@ -28,7 +28,7 @@
     var lista = new Array();
     <c:forEach var="c" items="${objCertificado}">
     var result = {solicitud: '${c.solicitudCredito}', certificado: '${c.certificado}', cobertura: '${c.cobertura}',
-        detalle: "${c.detalle}", documentoReferencia: "${c.documentoReferencia}", fecha: '${c.fecha}', paac: '${c.procesoSeleccion}',
+        detalle: "${c.detalle}", documentoReferencia: "${c.documentoReferencia}", fecha: '${c.mes}', paac: '${c.procesoSeleccion}',
         importe: '${c.importe}', tipoCambio: '${c.tipoCambio}', monedaExtranjera: '${c.monedaExtranjera}', estado: '${c.estado}',
         tipo: '${c.tipo}', tipoCalendario: '${c.tipoCalendario}', subTipoCalendario: '${c.subTipoCalendario}', nroSolicitud: '${c.cadenaGasto}',
         opinion: '${c.dependencia}', firmaJefe: '${c.firmaJefe}', firmaSubJefe: '${c.firmaSubJefe}', fechaAprobacion: '${c.unidad}',
@@ -268,7 +268,7 @@
                 {text: 'I.D.P.', dataField: 'opinion', width: '4%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
                 {text: 'PRIORIZA.', dataField: 'priorizacion', filtertype: 'checkedlist', width: '5%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
                 {text: 'FECHA APROB', dataField: 'fechaAprobacion', columntype: 'datetimeinput', filtertype: 'date', width: '7%', align: 'center', cellsAlign: 'center', cellsFormat: 'd', cellclassname: cellclass},
-                {text: 'SECTORISTA', dataField: 'sectorista', filtertype: 'checkedlist', width: '15%', align: 'center', cellsAlign: 'center', cellclassname: cellclass}                
+                {text: 'SECTORISTA', dataField: 'sectorista', filtertype: 'checkedlist', width: '15%', align: 'center', cellsAlign: 'center', cellclassname: cellclass}
             ]
         });
         // DEFINIMOS EL MENU CONTEXTUAL
@@ -364,35 +364,8 @@
                         }
                     });
                 } else if ($.trim($(opcion).text()) === "Cerrar") {
-                    $.confirm({
-                        title: 'CERRAR SOLICITUD DE CREDITO PRESUPUESTAL',
-                        type: 'blue',
-                        content: '' +
-                                '<form method="post"  name="frm_SolicitudCerrar" id="frm_SolicitudCerrar" action="../IduSolicitudCredito" enctype="multipart/form-data">' +
-                                '<label>Anexos : </label>' +
-                                '<input type="file" name="fichero" id="fichero" style="text-transform: uppercase;" class="name form-control"/>' +
-                                '</form>',
-                        buttons: {
-                            formSubmit: {
-                                text: 'Enviar',
-                                btnClass: 'btn-blue',
-                                action: function () {
-                                    fn_GuardarCerrar();
-                                }
-                            },
-                            cancel: function () {
-                            }
-                        },
-                        onContentReady: function () {
-                            // bind to events
-                            var jc = this;
-                            this.$content.find('form').on('submit', function (e) {
-                                // if the user submits the form by pressing enter in the field.
-                                e.preventDefault();
-                                jc.$$formSubmit.trigger('click'); // reference the button and click it
-                            });
-                        }
-                    });
+                    $('#div_VentanaCerrar').jqxWindow({isModal: true});
+                    $('#div_VentanaCerrar').jqxWindow('open');
                 } else if ($.trim($(opcion).text()) === "Ver Anexos") {
                     if (archivo !== '') {
                         document.location.target = "_blank";
@@ -950,6 +923,7 @@
         $("#div_GrillaPrincipal").remove();
         $("#div_VentanaPrincipal").remove();
         $("#div_VentanaDetalle").remove();
+        $("#div_VentanaCerrar").remove();
         $("#div_ContextMenu").remove();
         $("#div_Reporte").remove();
         var $contenidoAjax = $('#div_Detalle').html('<img src="../Imagenes/Fondos/cargando.gif">');
@@ -1123,6 +1097,25 @@
                     });
                 }
             });
+            ancho = 500;
+            alto = 100;
+            posicionX = ($(window).width() / 2) - (ancho / 2);
+            posicionY = ($(window).height() / 2) - (alto / 2);
+            //ventana cerrar CERTIFICADO PRESUPUESTAL
+            $('#div_VentanaCerrar').jqxWindow({
+                position: {x: posicionX, y: posicionY},
+                width: ancho, height: alto, resizable: false,
+                cancelButton: $('#btn_CancelarCerrar'),
+                initContent: function () {
+                    $("#txt_Fichero").jqxInput({placeHolder: "Seleccione el Documento", width: 400, height: 20, minLength: 1});
+                    $('#btn_CancelarCerrar').jqxButton({width: '65px', height: 25});
+                    $('#btn_GuardarCerrar').jqxButton({width: '65px', height: 25});
+                    $('#btn_GuardarCerrar').on('click', function (event) {
+                        fn_GuardarCerrar();
+                    });
+                }
+            });
+            /**/
             ancho = 400;
             alto = 220;
             posicionX = ($(window).width() / 2) - (ancho / 2);
@@ -1414,66 +1407,65 @@
         });
     }
     function fn_GuardarCerrar() {
-        var fichero = $("#fichero").val();
-        // if (fichero !== '') {
-        if (fichero === '')
-            fichero = "SIN ARCHIVO";
-        var formData = new FormData(document.getElementById("frm_SolicitudCerrar"));
-        formData.append("mode", "C");
-        formData.append("periodo", periodo);
-        formData.append("unidadOperativa", unidadOperativa);
-        formData.append("presupuesto", presupuesto);
-        formData.append("nroCertificado", codigo);
-        $.ajax({
-            type: "POST",
-            url: "../IduCertificadoPresupuestal",
-            data: formData,
-            dataType: "html",
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                msg = data;
-                if (msg === "GUARDO") {
-                    $.confirm({
-                        title: 'AVISO DEL SISTEMA',
-                        content: 'Datos procesados correctamente',
-                        type: 'green',
-                        typeAnimated: true,
-                        autoClose: 'cerrarAction|1000',
-                        buttons: {
-                            cerrarAction: {
-                                text: 'Cerrar',
-                                action: function () {
-                                    fn_Refrescar();
+        var fichero = $("#txt_Fichero").val();
+        if (fichero !== '') {
+            var formData = new FormData(document.getElementById("frm_SolicitudCerrar"));
+            formData.append("mode", "C");
+            formData.append("periodo", periodo);
+            formData.append("unidadOperativa", unidadOperativa);
+            formData.append("presupuesto", presupuesto);
+            formData.append("nroCertificado", codigo);
+            $.ajax({
+                type: "POST",
+                url: "../IduCertificadoPresupuestal",
+                data: formData,
+                dataType: "html",
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    msg = data;
+                    if (msg === "GUARDO") {
+                        $('#div_VentanaCerrar').jqxWindow('close');
+                        $.confirm({
+                            title: 'AVISO DEL SISTEMA',
+                            content: 'Datos procesados correctamente',
+                            type: 'green',
+                            typeAnimated: true,
+                            autoClose: 'cerrarAction|1000',
+                            buttons: {
+                                cerrarAction: {
+                                    text: 'Cerrar',
+                                    action: function () {
+                                        fn_Refrescar();
+                                    }
                                 }
                             }
-                        }
-                    });
-                } else {
-                    $.alert({
-                        theme: 'material',
-                        title: 'AVISO DEL SISTEMA',
-                        content: msg,
-                        animation: 'zoom',
-                        closeAnimation: 'zoom',
-                        type: 'red',
-                        typeAnimated: true
-                    });
+                        });
+                    } else {
+                        $.alert({
+                            theme: 'material',
+                            title: 'AVISO DEL SISTEMA',
+                            content: msg,
+                            animation: 'zoom',
+                            closeAnimation: 'zoom',
+                            type: 'red',
+                            typeAnimated: true
+                        });
+                    }
                 }
-            }
-        });
-        /*  } else {
-         $.alert({
-         theme: 'material',
-         title: 'AVISO DEL SISTEMA',
-         content: "Debe seleccionar el archivo con la documentacion sustentatoria\n PROCESO CANCELADO!!!.",
-         animation: 'zoom',
-         closeAnimation: 'zoom',
-         type: 'red',
-         typeAnimated: true
-         });
-         }*/
+            });
+        } else {
+            $.alert({
+                theme: 'material',
+                title: 'AVISO DEL SISTEMA',
+                content: "Debe seleccionar el archivo con la documentacion sustentatoria\n PROCESO CANCELADO!!!.",
+                animation: 'zoom',
+                closeAnimation: 'zoom',
+                type: 'red',
+                typeAnimated: true
+            });
+        }
     }
     function fn_validaSaldo() {
         var cadena = $("#cbo_CadenaGasto").val();
@@ -1700,6 +1692,31 @@
                     </table>
                 </div>
             </div>
+        </form>
+    </div>
+</div>
+<div id="div_VentanaCerrar" style="display: none">
+    <div>
+        <span style="float: left">CERRAR SOLICITUD DE CERTIFICADO DE CREDITO PRESUPUESTAL</span>
+    </div>
+    <div style="overflow: hidden">
+        <form id="frm_SolicitudCerrar" name="frm_SolicitudCerrar" enctype="multipart/form-data" action="javascript:fn_GuardarCerrar();" method="post">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td class="inputlabel">Anexos : </td>
+                    <td>
+                        <input type="file" id="txt_Fichero" name="txt_Fichero" style="text-transform: uppercase;"/>
+                    </td> 
+                </tr>
+                <tr>
+                    <td class="Summit" colspan="2">
+                        <div>
+                            <input type="button" id="btn_GuardarCerrar"  value="Guardar" style="margin-right: 20px"/>
+                            <input type="button" id="btn_CancelarCerrar" value="Cancelar" style="margin-right: 20px"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </form>
     </div>
 </div>

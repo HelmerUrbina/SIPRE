@@ -2,9 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Report_COBERTURAS_RANGO1" pageWidth="612" pageHeight="782" whenNoDataType="AllSectionsNoDetail" columnWidth="574" leftMargin="23" rightMargin="15" topMargin="22" bottomMargin="22" uuid="6924503d-60f9-4b7a-bcd6-87cfef896b39">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="1.6105100000000012"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="3.7974983358324153"/>
+	<property name="ireport.x" value="1347"/>
+	<property name="ireport.y" value="715"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -12,19 +12,19 @@
 		<defaultValueExpression><![CDATA["2020"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PRESUPUESTO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["9"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="USUARIO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["43305891"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["1205523"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["920252"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CODIGO2" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["1205523"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["920252"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="UNIDAD_OPERATIVA" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["0845"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["0734"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT comdet.numsol,
@@ -49,6 +49,7 @@ comcab.numofi, comcab.provie, tauuoo.couuoo, tauuoo.nouuoo, comdet.cocaga,
 CASE WHEN COMCAB.NUMPED IS NULL THEN '' ELSE 'D.J. Nº: ' || COMCAB.NUMPED END NUMPED,
 comcab.totcob, comcab.tipcam, comcab.totdol, comdet.codfun,
 comdet.codprg, comdet.cosprg, comdet.copres, comdet.codact, comdet.codcom,
+CASE WHEN comcab.tipcam > 0 THEN UTIL_NEW.FUN_DES_MONEDA(COMCAB.CODMON) ELSE 'DOLARES' END AS TIPO_MONEDA,
 comdet.codmet, tacafu.desmet||'-'||TACAFU.NOMUBI||'-'||NOMDIS AS DESMET,
 tameop.comeop,
 UTIL.FUN_DESCRIPCION_RESOLUCION(COMCAB.CODPER, COMDET.NCODIGO_RESOLUCION) AS RESOLUCION,
@@ -119,7 +120,7 @@ comdet.numsol,COMDET.COUUOO, COMCAB.USUANU, COMCAB.FECANU,
        comdet.codmet, tacafu.desmet, tameop.comeop,
        tameop.nomeop, comdet.codcat, comdet.codgen, comdet.codmda,
        comdet.coesga, cadgas.nocaga, COMCAB.IMPUE, COMCAB.IMVVHH, comcab.codusu,comdet.comeop, TACAFU.NOMUBI,NOMDIS,
-COMCAB.NROANU
+COMCAB.NROANU, COMCAB.CODMON
 ORDER BY comcab.nrocob,
        tauuoo.couuoo, tacafu.secfun, comdet.numsol, comdet.comeop, comdet.COCAGA]]>
 	</queryString>
@@ -164,6 +165,7 @@ ORDER BY comcab.nrocob,
 	<field name="COPRES" class="java.lang.String"/>
 	<field name="CODACT" class="java.lang.String"/>
 	<field name="CODCOM" class="java.lang.String"/>
+	<field name="TIPO_MONEDA" class="java.lang.String"/>
 	<field name="CODMET" class="java.lang.String"/>
 	<field name="DESMET" class="java.lang.String"/>
 	<field name="COMEOP" class="java.lang.String"/>
@@ -372,7 +374,7 @@ ORDER BY comcab.nrocob,
 					<text><![CDATA[Página :]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-6" positionType="FixRelativeToBottom" x="8" y="164" width="362" height="18" isPrintWhenDetailOverflows="true" uuid="6c3b4f98-f869-4345-bb04-4905ace90b60"/>
+					<reportElement key="staticText-6" positionType="FixRelativeToBottom" x="8" y="164" width="356" height="18" isPrintWhenDetailOverflows="true" uuid="6c3b4f98-f869-4345-bb04-4905ace90b60"/>
 					<box leftPadding="7">
 						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -385,7 +387,7 @@ ORDER BY comcab.nrocob,
 					<text><![CDATA[UNIDAD DE OPERACIÓN]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-7" positionType="FixRelativeToBottom" x="370" y="164" width="94" height="18" isPrintWhenDetailOverflows="true" uuid="6a7043c3-d594-4ee8-849f-b1289cf8bec8"/>
+					<reportElement key="staticText-7" positionType="FixRelativeToBottom" x="364" y="164" width="100" height="18" isPrintWhenDetailOverflows="true" uuid="6a7043c3-d594-4ee8-849f-b1289cf8bec8"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -395,20 +397,7 @@ ORDER BY comcab.nrocob,
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
 					</textElement>
-					<text><![CDATA[IMP. SOLES]]></text>
-				</staticText>
-				<staticText>
-					<reportElement key="staticText-8" positionType="FixRelativeToBottom" x="464" y="164" width="89" height="18" isPrintWhenDetailOverflows="true" uuid="6ed41b7b-06c7-4414-a664-56e5063fde5a"/>
-					<box>
-						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
-					</textElement>
-					<text><![CDATA[IMP. DOLARES]]></text>
+					<text><![CDATA[SOLES]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
 					<reportElement key="textField-45" positionType="Float" x="492" y="150" width="77" height="13" isPrintWhenDetailOverflows="true" uuid="0153468b-4e71-4698-9c0a-c017b45a845c"/>
@@ -553,12 +542,23 @@ ORDER BY comcab.nrocob,
 					</textElement>
 					<textFieldExpression><![CDATA["Usu. Imp. : "+$F{USU_IMPRESION}]]></textFieldExpression>
 				</textField>
+				<textField>
+					<reportElement x="464" y="164" width="106" height="18" uuid="25a32822-7a9d-4d40-b4d3-c3949f822cc5"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TIPO_MONEDA}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
 			<band height="118" splitType="Stretch">
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-28" positionType="Float" x="203" y="0" width="145" height="17" uuid="e8e7cf3a-51bb-4099-8618-d472532a0354"/>
+					<reportElement key="textField-28" positionType="Float" x="218" y="0" width="145" height="17" uuid="e8e7cf3a-51bb-4099-8618-d472532a0354"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -571,7 +571,7 @@ ORDER BY comcab.nrocob,
 					<textFieldExpression><![CDATA["TOTAL : "]]></textFieldExpression>
 				</textField>
 				<textField pattern="##,###,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField" positionType="Float" x="354" y="0" width="85" height="17" uuid="b8d2d001-8296-4ad9-8ac5-8c20dc9ae1fe"/>
+					<reportElement key="textField" positionType="Float" x="369" y="0" width="85" height="17" uuid="b8d2d001-8296-4ad9-8ac5-8c20dc9ae1fe"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -584,7 +584,7 @@ ORDER BY comcab.nrocob,
 					<textFieldExpression><![CDATA[$V{SUM_IMPORT_3}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="##,###,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField" positionType="Float" x="457" y="0" width="86" height="17" uuid="cec27845-bc10-40aa-8362-bc88a120541d"/>
+					<reportElement key="textField" positionType="Float" x="472" y="0" width="86" height="17" uuid="cec27845-bc10-40aa-8362-bc88a120541d"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -597,10 +597,10 @@ ORDER BY comcab.nrocob,
 					<textFieldExpression><![CDATA[$V{SUM_IMPDOL_3}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-11" positionType="Float" x="455" y="0" width="89" height="1" uuid="42c9e5b0-18ea-4d5a-9b16-3bef4f2a4633"/>
+					<reportElement key="line-11" positionType="Float" x="470" y="0" width="89" height="1" uuid="42c9e5b0-18ea-4d5a-9b16-3bef4f2a4633"/>
 				</line>
 				<line>
-					<reportElement key="line-12" positionType="Float" x="353" y="0" width="89" height="1" uuid="c6b2646d-b550-4d5b-8e84-c2d199e0aeec"/>
+					<reportElement key="line-12" positionType="Float" x="368" y="0" width="89" height="1" uuid="c6b2646d-b550-4d5b-8e84-c2d199e0aeec"/>
 				</line>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement key="textField-47" positionType="Float" x="0" y="17" width="574" height="101" uuid="205098e1-9993-43f3-bc0c-8b2cb30bcc73"/>
@@ -776,7 +776,7 @@ ORDER BY comcab.nrocob,
 		<groupFooter>
 			<band height="15" splitType="Stretch">
 				<textField isStretchWithOverflow="true" pattern="##,###,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField" positionType="Float" x="352" y="2" width="87" height="13" uuid="8772e4c1-9019-4282-bd0e-5244ea908cd6"/>
+					<reportElement key="textField" positionType="Float" x="367" y="2" width="87" height="13" uuid="8772e4c1-9019-4282-bd0e-5244ea908cd6"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -789,7 +789,7 @@ ORDER BY comcab.nrocob,
 					<textFieldExpression><![CDATA[$V{SUM_IMPORT_2}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-11" positionType="Float" x="260" y="1" width="89" height="13" uuid="7147d292-fe76-4424-82e8-4f5aa7a46eed"/>
+					<reportElement key="staticText-11" positionType="Float" x="275" y="1" width="89" height="13" uuid="7147d292-fe76-4424-82e8-4f5aa7a46eed"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -802,7 +802,7 @@ ORDER BY comcab.nrocob,
 					<text><![CDATA[SubTotal U/O :]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" pattern="##,###,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField" positionType="Float" x="458" y="2" width="85" height="11" uuid="2eb061c8-4385-4f83-8b82-536a051b02f8"/>
+					<reportElement key="textField" positionType="Float" x="473" y="2" width="85" height="11" uuid="2eb061c8-4385-4f83-8b82-536a051b02f8"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -815,10 +815,10 @@ ORDER BY comcab.nrocob,
 					<textFieldExpression><![CDATA[$V{SUM_IMPDOL_2}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-9" positionType="Float" x="455" y="0" width="89" height="1" uuid="1d8726d5-af52-4517-99be-433961cbe532"/>
+					<reportElement key="line-9" positionType="Float" x="470" y="0" width="89" height="1" uuid="1d8726d5-af52-4517-99be-433961cbe532"/>
 				</line>
 				<line>
-					<reportElement key="line-10" positionType="Float" x="353" y="0" width="89" height="1" uuid="6f1ab604-d833-41b7-b88d-a657682b8099"/>
+					<reportElement key="line-10" positionType="Float" x="368" y="0" width="89" height="1" uuid="6f1ab604-d833-41b7-b88d-a657682b8099"/>
 				</line>
 			</band>
 		</groupFooter>
@@ -841,7 +841,7 @@ ORDER BY comcab.nrocob,
 					<textFieldExpression><![CDATA[$F{SECFUN}+" : "+$F{DESMET}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Auto" isBlankWhenNull="true">
-					<reportElement key="textField-49" positionType="Float" mode="Transparent" x="14" y="10" width="487" height="10" uuid="48ff39aa-c1c2-4e1a-a4f9-fdfe61cbcd81"/>
+					<reportElement key="textField-49" positionType="Float" mode="Transparent" x="14" y="10" width="539" height="10" uuid="48ff39aa-c1c2-4e1a-a4f9-fdfe61cbcd81"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -864,7 +864,7 @@ ORDER BY comcab.nrocob,
 		<groupHeader>
 			<band height="10" splitType="Stretch">
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField" positionType="Float" x="19" y="0" width="528" height="10" uuid="c115edaf-1415-4768-a752-b9b181f85ebe"/>
+					<reportElement key="textField" positionType="Float" x="19" y="0" width="535" height="10" uuid="c115edaf-1415-4768-a752-b9b181f85ebe"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -881,7 +881,7 @@ ORDER BY comcab.nrocob,
 		<groupFooter>
 			<band height="16" splitType="Stretch">
 				<textField pattern="##,###,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField" positionType="Float" x="353" y="2" width="86" height="12" uuid="cafbfae0-adef-4b22-8d87-d9e268af10e0"/>
+					<reportElement key="textField" positionType="Float" x="368" y="2" width="86" height="12" uuid="cafbfae0-adef-4b22-8d87-d9e268af10e0"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -894,7 +894,7 @@ ORDER BY comcab.nrocob,
 					<textFieldExpression><![CDATA[$V{SUM_IMPORT_1}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="##,###,##0.00" isBlankWhenNull="true">
-					<reportElement key="textField" positionType="Float" x="458" y="2" width="85" height="12" uuid="6397c984-3e86-4cef-ae93-388382199048"/>
+					<reportElement key="textField" positionType="Float" x="473" y="2" width="85" height="12" uuid="6397c984-3e86-4cef-ae93-388382199048"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -907,13 +907,13 @@ ORDER BY comcab.nrocob,
 					<textFieldExpression><![CDATA[$V{SUM_IMPDOL_1}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-7" positionType="Float" x="353" y="0" width="89" height="1" uuid="c6debb8c-0086-4d12-8f63-35af823f441f"/>
+					<reportElement key="line-7" positionType="Float" x="368" y="0" width="89" height="1" uuid="c6debb8c-0086-4d12-8f63-35af823f441f"/>
 				</line>
 				<line>
-					<reportElement key="line-8" positionType="Float" x="455" y="0" width="89" height="1" uuid="1ebbc27f-f40f-47ec-abaa-3f800f35cc13"/>
+					<reportElement key="line-8" positionType="Float" x="470" y="0" width="89" height="1" uuid="1ebbc27f-f40f-47ec-abaa-3f800f35cc13"/>
 				</line>
 				<staticText>
-					<reportElement key="staticText-10" positionType="Float" x="262" y="1" width="87" height="13" uuid="27fd70f5-6870-4dd4-9ec0-44acfba16e1d"/>
+					<reportElement key="staticText-10" positionType="Float" x="277" y="1" width="87" height="13" uuid="27fd70f5-6870-4dd4-9ec0-44acfba16e1d"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -956,7 +956,7 @@ ORDER BY comcab.nrocob,
 				<textFieldExpression><![CDATA[$F{COCAGA}+ " "+$F{NOCAGA}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="##,###,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField" positionType="Float" x="354" y="0" width="85" height="10" uuid="cf0a906b-f1bb-4cae-8e66-be5a61b2e5f8"/>
+				<reportElement key="textField" positionType="Float" x="367" y="0" width="85" height="10" uuid="cf0a906b-f1bb-4cae-8e66-be5a61b2e5f8"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -969,7 +969,7 @@ ORDER BY comcab.nrocob,
 				<textFieldExpression><![CDATA[$F{IMPORT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="##,###,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField" positionType="Float" x="458" y="0" width="85" height="10" uuid="75b3a2bc-8f0d-4f64-85e2-54f6d6609407"/>
+				<reportElement key="textField" positionType="Float" x="472" y="0" width="85" height="10" uuid="75b3a2bc-8f0d-4f64-85e2-54f6d6609407"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>

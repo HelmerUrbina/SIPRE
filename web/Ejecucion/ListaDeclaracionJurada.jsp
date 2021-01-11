@@ -28,7 +28,7 @@
     var lista = new Array();
     <c:forEach var="c" items="${objDeclaracionJurada}">
     var result = {declaracionJurada: '${c.declaracionJurada}', compromisoAnual: '${c.compromisoAnual}', cobertura: '${c.cobertura}',
-        detalle: '${c.detalle}', documentoReferencia: '${c.documentoReferencia}', fecha: '${c.fecha}', importe: '${c.importe}',
+        detalle: '${c.detalle}', documentoReferencia: '${c.documentoReferencia}', fecha: '${c.mes}', importe: '${c.importe}',
         tipoCambio: '${c.tipoCambio}', monedaExtranjera: '${c.monedaExtranjera}', estado: '${c.estado}', opinion: '${c.tipo}',
         firmaJefe: '${c.firmaJefe}', firmaSubJefe: '${c.firmaSubJefe}', sectorista: '${c.sectorista}', archivo: '${c.archivo}'};
     lista.push(result);
@@ -102,7 +102,7 @@
                         {name: "compromisoAnual", type: "string"},
                         {name: "detalle", type: "string"},
                         {name: "documentoReferencia", type: "string"},
-                        {name: "fecha", type: "string", format: 'dd/MM/yyyy'},
+                        {name: "fecha", type: "string", format: 'yyyy-MM-ddTHH:mm:ss:ffzzz'},
                         {name: "importe", type: "number"},
                         {name: "tipoCambio", type: "number"},
                         {name: "monedaExtranjera", type: "number"},
@@ -296,22 +296,22 @@
             initRowDetails: initRowDetails,
             rowDetailsTemplate: {rowdetails: "<div id='grid' style='margin: 3px;'></div>", rowdetailsheight: 350, rowdetailshidden: true},
             columns: [
-                {text: 'PEDIDO', dataField: 'declaracionJurada', width: '7%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
-                {text: 'COMPR. ANUAL', dataField: 'compromisoAnual', width: '8%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
-                {text: 'COBERTURA', dataField: 'cobertura', width: '7%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
+                {text: 'PEDIDO', dataField: 'declaracionJurada', width: '6%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
+                {text: 'COMPR. ANUAL', dataField: 'compromisoAnual', width: '7%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
+                {text: 'COBERTURA', dataField: 'cobertura', width: '6%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
                 {text: 'DETALLE', dataField: 'detalle', width: '30%', align: 'center', cellclassname: cellclass},
                 {text: 'DOCU. REFERENCIA', dataField: 'documentoReferencia', width: '20%', align: 'center', cellclassname: cellclass, aggregates: [{'<b>Totales : </b>':
                                     function () {
                                         return "";
                                     }}]},
-                {text: 'FECHA', dataField: 'fecha', columntype: 'datetimeinput', filtertype: 'date', width: '8%', align: 'center', cellsAlign: 'center', cellsFormat: 'd', cellclassname: cellclass},
-                {text: 'IMPORTE', dataField: 'importe', width: '10%', align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass, aggregates: ['sum']},
+                {text: 'FECHA', dataField: 'fecha', filtertype: 'date', width: '7%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
+                {text: 'IMPORTE', dataField: 'importe', width: '9%', align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass, aggregates: ['sum']},
                 {text: 'T/CAMBIO', dataField: 'tipoCambio', width: '4%', align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass},
                 {text: 'EXTRANJERA', dataField: 'monedaExtranjera', width: '7%', align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass, aggregates: ['sum']},
                 {text: 'ESTADO', dataField: 'estado', filtertype: 'checkedlist', width: '8%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
-                {text: 'I.D.P.', dataField: 'opinion', filtertype: 'checkedlist', width: '10%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
+                {text: 'I.D.P.', dataField: 'opinion', filtertype: 'checkedlist', width: '5%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
                 {text: 'SECTORISTA', dataField: 'sectorista', filtertype: 'checkedlist', width: '20%', align: 'center', cellsAlign: 'center', cellclassname: cellclass}
-                
+
             ]
         });
         // DEFINIMOS EL MENU CONTEXTUAL 
@@ -409,35 +409,8 @@
                         }
                     });
                 } else if ($.trim($(opcion).text()) === "Cerrar") {
-                    $.confirm({
-                        title: 'CERRAR DECLARACIÓN JURADA',
-                        type: 'blue',
-                        content: '' +
-                                '<form method="post"  name="frm_DeclaracionJuradaCerrar" id="frm_DeclaracionJuradaCerrar" action="../IduDeclaracionJurada" enctype="multipart/form-data">' +
-                                '<label>Anexos : </label>' +
-                                '<input type="file" name="fichero" id="fichero" style="text-transform: uppercase;" class="name form-control" multiple/>' +
-                                '</form>',
-                        buttons: {
-                            formSubmit: {
-                                text: 'Enviar',
-                                btnClass: 'btn-blue',
-                                action: function () {
-                                    fn_GuardarCerrar();
-                                }
-                            },
-                            cancel: function () {
-                            }
-                        },
-                        onContentReady: function () {
-                            // bind to events
-                            var jc = this;
-                            this.$content.find('form').on('submit', function (e) {
-                                // if the user submits the form by pressing enter in the field.
-                                e.preventDefault();
-                                jc.$$formSubmit.trigger('click'); // reference the button and click it
-                            });
-                        }
-                    });
+                    $('#div_VentanaCerrar').jqxWindow({isModal: true});
+                    $('#div_VentanaCerrar').jqxWindow('open');
                 } else if ($.trim($(opcion).text()) === "Ver Anexos") {
                     if (archivo !== '') {
                         document.location.target = "_blank";
@@ -1151,6 +1124,7 @@
         $("#div_GrillaPrincipal").remove();
         $("#div_VentanaPrincipal").remove();
         $("#div_VentanaDetalle").remove();
+        $("#div_VentanaCerrar").remove();
         $("#div_Reporte").remove();
         $("#div_ContextMenu").remove();
         $("#div_VentanaPedidoJadpe").remove();
@@ -1178,7 +1152,7 @@
             posicionX = ($(window).width() / 2) - (ancho / 2);
             posicionY = ($(window).height() / 2) - (alto / 2);
             $('#div_VentanaPrincipal').jqxWindow({
-                position: {x: posicionX, y: posicionY+50},
+                position: {x: posicionX, y: posicionY + 50},
                 width: ancho, height: alto, resizable: false,
                 cancelButton: $('#btn_Cancelar'),
                 initContent: function () {
@@ -1362,6 +1336,24 @@
                                 typeAnimated: true
                             });
                         }
+                    });
+                }
+            });
+            ancho = 500;
+            alto = 100;
+            posicionX = ($(window).width() / 2) - (ancho / 2);
+            posicionY = ($(window).height() / 2) - (alto / 2);
+            //ventana cerrar declaracion jurada
+            $('#div_VentanaCerrar').jqxWindow({
+                position: {x: posicionX, y: posicionY},
+                width: ancho, height: alto, resizable: false,
+                cancelButton: $('#btn_CancelarCerrar'),
+                initContent: function () {
+                    $("#txt_Fichero").jqxInput({placeHolder: "Seleccione el Documento", width: 400, height: 20, minLength: 1});
+                    $('#btn_CancelarCerrar').jqxButton({width: '65px', height: 25});
+                    $('#btn_GuardarCerrar').jqxButton({width: '65px', height: 25});
+                    $('#btn_GuardarCerrar').on('click', function (event) {
+                        fn_GuardarCerrar();
                     });
                 }
             });
@@ -1782,54 +1774,65 @@
         }
     }
     function fn_GuardarCerrar() {
-        var fichero = $("#fichero").val();
-        if (fichero === '')
-            fichero = "SIN ARCHIVO";
-        var formData = new FormData(document.getElementById("frm_DeclaracionJuradaCerrar"));
-        formData.append("mode", "C");
-        formData.append("periodo", periodo);
-        formData.append("unidadOperativa", unidadOperativa);
-        formData.append("presupuesto", presupuesto);
-        formData.append("declaracionJurada", codigo);
-        $.ajax({
-            type: "POST",
-            url: "../IduDeclaracionJurada",
-            data: formData,
-            dataType: "html",
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                msg = data;
-                if (msg === "GUARDO") {
-                    $.confirm({
-                        title: 'AVISO DEL SISTEMA',
-                        content: 'Datos procesados correctamente',
-                        type: 'green',
-                        typeAnimated: true,
-                        autoClose: 'cerrarAction|1000',
-                        buttons: {
-                            cerrarAction: {
-                                text: 'Cerrar',
-                                action: function () {
-                                    fn_Refrescar();
+        var fichero = $("#txt_Fichero").val();
+        if (fichero !== '') {
+            var formData = new FormData(document.getElementById("frm_DeclaracionJuradaCerrar"));
+            formData.append("mode", "C");
+            formData.append("periodo", periodo);
+            formData.append("unidadOperativa", unidadOperativa);
+            formData.append("presupuesto", presupuesto);
+            formData.append("declaracionJurada", codigo);
+            $.ajax({
+                type: "POST",
+                url: "../IduDeclaracionJurada",
+                data: formData,
+                dataType: "html",
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    msg = data;
+                    if (msg === "GUARDO") {
+                        $('#div_VentanaCerrar').jqxWindow('close');
+                        $.confirm({
+                            title: 'AVISO DEL SISTEMA',
+                            content: 'Datos procesados correctamente',
+                            type: 'green',
+                            typeAnimated: true,
+                            autoClose: 'cerrarAction|1000',
+                            buttons: {
+                                cerrarAction: {
+                                    text: 'Cerrar',
+                                    action: function () {
+                                        fn_Refrescar();
+                                    }
                                 }
                             }
-                        }
-                    });
-                } else {
-                    $.alert({
-                        theme: 'material',
-                        title: 'AVISO DEL SISTEMA',
-                        content: msg,
-                        animation: 'zoom',
-                        closeAnimation: 'zoom',
-                        type: 'red',
-                        typeAnimated: true
-                    });
+                        });
+                    } else {
+                        $.alert({
+                            theme: 'material',
+                            title: 'AVISO DEL SISTEMA',
+                            content: msg,
+                            animation: 'zoom',
+                            closeAnimation: 'zoom',
+                            type: 'red',
+                            typeAnimated: true
+                        });
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            $.alert({
+                theme: 'material',
+                title: 'AVISO DEL SISTEMA',
+                content: "Debe seleccionar el archivo con la documentacion sustentatoria\n PROCESO CANCELADO!!!.",
+                animation: 'zoom',
+                closeAnimation: 'zoom',
+                type: 'red',
+                typeAnimated: true
+            });
+        }
     }
     function fn_validaSaldo() {
         var cadena = $("#cbo_CadenaGasto").val();
@@ -2067,35 +2070,20 @@
         <span style="float: left">LISTADO DE REPORTES</span>
     </div>
     <div style="overflow: hidden">
-        <div id='div_EJE0012'>Solicitud de Requerimiento Mensual</div>        
-        <div id='div_EJE0014'>Anexo al Calendario de Pago</div>        
+        <div id='div_EJE0012'>Solicitud de Requerimiento Mensual</div>
+        <div id='div_EJE0014'>Anexo al Calendario de Pago</div>
         <div class="Summit">
             <input type="submit" id="btn_Imprimir" name="btn_Imprimir" value="Ver" style="margin-right: 20px"/>
             <input type="button" id="btn_CerrarImprimir" name="btn_CerrarImprimir" value="Cerrar" style="margin-right: 20px"/>
         </div>
     </div>
 </div>
-<div id='div_ContextMenu' style='display: none;'> 
-    <ul>
-        <li>Editar</li>
-        <li>Anular</li>
-        <li style="color: blue; font-weight: bold;">Cerrar</li>
-        <li>Ver Anexos</li>
-        <li type='separator'></li>
-        <li style="color: teal; font-weight: bold;">Relación Nominal</li>
-        <li type='separator'></li>
-        <li style="font-weight: bold;">Generar Cobertura</li>
-        <li style="font-weight: bold;">Transferir OEE</li>        
-        <li style="font-weight: bold;">Reversiones</li>
-        <li style="font-weight: bold; color: red;">Rechazar</li>
-    </ul>
-</div>
 <div style="display: none" id="div_VentanaPedidoJadpe">
     <div>
         <span style="float: left">GESTIÓN RELACIÓN NOMINAL JADPE</span>
     </div>
     <div style="overflow: hidden">
-        <div id="div_GrillaRelacionNominal"></div>    
+        <div id="div_GrillaRelacionNominal"></div>
     </div>
 </div>
 <div id="div_VentanaRegistroJadpe" style="display: none">
@@ -2143,4 +2131,44 @@
             <div id="div_GrillaRegistroJadpe"></div>
         </form>
     </div>
+</div>
+<div id="div_VentanaCerrar" style="display: none">
+    <div>
+        <span style="float: left">CERRAR DECLARACIÓN JURADA</span>
+    </div>
+    <div style="overflow: hidden">
+        <form id="frm_DeclaracionJuradaCerrar" name="frm_DeclaracionJuradaCerrar" enctype="multipart/form-data" action="javascript:fn_GuardarCerrar();" method="post">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td class="inputlabel">Anexos : </td>
+                    <td>
+                        <input type="file" id="txt_Fichero" name="txt_Fichero" style="text-transform: uppercase;"/>
+                    </td> 
+                </tr>
+                <tr>
+                    <td class="Summit" colspan="2">
+                        <div>
+                            <input type="button" id="btn_GuardarCerrar"  value="Guardar" style="margin-right: 20px"/>
+                            <input type="button" id="btn_CancelarCerrar" value="Cancelar" style="margin-right: 20px"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<div id='div_ContextMenu' style='display: none;'> 
+    <ul>
+        <li>Editar</li>
+        <li>Anular</li>
+        <li style="color: blue; font-weight: bold;">Cerrar</li>
+        <li>Ver Anexos</li>
+        <li type='separator'></li>
+        <li style="color: teal; font-weight: bold;">Relación Nominal</li>
+        <li type='separator'></li>
+        <li style="font-weight: bold;">Generar Cobertura</li>
+        <li style="font-weight: bold;">Transferir OEE</li>
+        <li style="font-weight: bold;">Reversiones</li>
+        <li style="font-weight: bold; color: red;">Rechazar</li>
+    </ul>
 </div>

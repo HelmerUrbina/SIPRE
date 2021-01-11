@@ -28,7 +28,8 @@
             {id: "EJE0037", label: "15. Listado de Compromisos Anuales"},
             {id: "EJE0040", label: "16. Avance Ejecución Presupuestal - VRAEM"},
             {id: "EJE0030", label: "17. Listado de Registros "},
-            {id: "EJE0045", label: "18. Avance de Ejecución Presupuestal - PIA -PIM "}
+            {id: "EJE0045", label: "18. Avance de Ejecución Presupuestal - PIA -PIM"},
+            {id: "EJE0047", label: "19. Avance Ejecución Presupuestal - VRAEM"}
         ];
         $('#div_Principal').jqxExpander({showArrow: false, toggleMode: 'none', width: ($(window).width() - 50), height: ($(window).height() - 110)});
         $('#div_Reporte').jqxTree({source: source});
@@ -88,6 +89,8 @@
             case "EJE0041":
                 break;
             case "EJE0045":
+                break;
+            case "EJE0047":
                 break;
             default:
                 msg = "Debe selecciona una opción";

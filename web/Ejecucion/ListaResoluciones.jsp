@@ -314,20 +314,20 @@
     </div>
     <div style="overflow: hidden">
         <form id="frm_Tarea" name="frm_Tarea" method="post" >
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">  
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td class="inputlabel">F.F : </td>
                     <td>
                         <select id="cbo_FuenteFinanciamiento" name="cbo_FuenteFinanciamiento">
-                            <option value="0">Seleccione</option>                                    
+                            <option value="0">Seleccione</option>
                         </select>
                     </td> 
                 </tr>
                 <tr>
                     <td class="inputlabel">Tipo : </td>
                     <td>
-                        <select id="cbo_TipoResolucion" name="cbo_TipoResolucion">                            
-                            <option value="0">Seleccione</option>                            
+                        <select id="cbo_TipoResolucion" name="cbo_TipoResolucion">
+                            <option value="0">Seleccione</option>
                             <c:forEach var="d" items="${objTipoResolucion}">   
                                 <option value="${d.codigo}">${d.descripcion}</option>
                             </c:forEach> 
@@ -337,7 +337,7 @@
                 <tr>
                     <td class="inputlabel">Fecha : </td>
                     <td><div id="txt_Fecha"></div></td>
-                </tr>                        
+                </tr>
                 <tr>
                     <td class="inputlabel">N° Resolucion : </td>
                     <td><div id="div_Resolucion" name="div_Resolucion"></div></td>
@@ -354,7 +354,7 @@
                     <td class="Summit" colspan="4">
                         <div>
                             <input type="button" id="btn_Guardar"  value="Guardar" style="margin-right: 20px"/>
-                            <input type="button" id="btn_Cancelar" value="Cancelar" style="margin-right: 20px"/>                            
+                            <input type="button" id="btn_Cancelar" value="Cancelar" style="margin-right: 20px"/>
                         </div>
                     </td>
                 </tr>
@@ -364,7 +364,7 @@
 </div>
 <div id='div_ContextMenu' style='display: none;'>
     <ul>
-        <li>Editar</li>          
+        <li>Editar</li>
         <li>Anular</li>
     </ul>
 </div>

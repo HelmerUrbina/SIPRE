@@ -73,9 +73,10 @@ public class IduResolucionJADPEServlet extends HttpServlet {
         objDsDerechoPersonal = new DerechoPersonalDAOImpl(objConnection);
         int k = 0;
         // EJECUTAMOS EL PROCEDIMIENTO SEGUN EL MODO QUE SE ESTA TRABAJANDO
-        if (objBnDerechoPersonal.getMode().equals("I")) {            
+        if (objBnDerechoPersonal.getMode().equals("I")) {
+            System.out.println(request.getParameter("lista")); 
             String arreglo[][] = Utiles.generaLista(request.getParameter("lista"), 5);
-            for (String[] item : arreglo) {                
+            for (String[] item : arreglo) {
                 objBnDerechoPersonal.setOficio(Utiles.checkNum(item[1].trim()));
                 objBnDerechoPersonal.setResolucion(Utiles.checkNum(item[2].trim()));
                 objBnDerechoPersonal.setCodigoSubTipo(item[3].trim());

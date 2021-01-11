@@ -26,7 +26,7 @@
     var lista = new Array();
     <c:forEach var="c" items="${objCompromisoAnual}">
     var result = {compromisoAnual: '${c.compromisoAnual}', cobertura: '${c.cobertura}', certificado: '${c.certificado}',
-        detalle: '${c.detalle}', documentoReferencia: '${c.documentoReferencia}', fecha: '${c.fecha}',
+        detalle: '${c.detalle}', documentoReferencia: '${c.documentoReferencia}', fecha: '${c.mes}',
         importe: '${c.importe}', tipoCambio: '${c.tipoCambio}', monedaExtranjera: '${c.monedaExtranjera}',
         estado: '${c.estado}', tipo: '${c.tipo}', solicitud: '${c.solicitudCredito}', nroCompromiso: '${c.subTipoCalendario}',
         firmaJefe: '${c.firmaJefe}', firmaSubJefe: '${c.firmaSubJefe}', sectorista: '${c.sectorista}', archivo: '${c.archivo}'};
@@ -251,18 +251,18 @@
             columns: [
                 {text: 'COMP. ANUAL', dataField: 'compromisoAnual', width: '7%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
                 {text: 'COBERTURA', dataField: 'cobertura', width: '7%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
-                {text: 'CERT. SIAF', dataField: 'certificado', width: '9%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
+                {text: 'CERT. SIAF', dataField: 'certificado', width: '8%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
                 {text: 'DETALLE', dataField: 'detalle', width: '20%', align: 'center', cellclassname: cellclass},
                 {text: 'DOCU. REFERENCIA', dataField: 'documentoReferencia', width: '15%', align: 'center', cellclassname: cellclass, aggregates: [{'<b>Totales : </b>':
                                     function () {
                                         return "";
                                     }}]},
-                {text: 'FECHA', dataField: 'fecha', columntype: 'datetimeinput', filtertype: 'date', width: '8%', align: 'center', cellsAlign: 'center', cellsFormat: 'd', cellclassname: cellclass},
+                {text: 'FECHA', dataField: 'fecha', filtertype: 'date', width: '7%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
                 {text: 'IMPORTE', dataField: 'importe', width: '10%', align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass, aggregates: ['sum']},
                 {text: 'T/CAMBIO', dataField: 'tipoCambio', width: '4%', align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass},
                 {text: 'EXTRANJERA', dataField: 'monedaExtranjera', width: '7%', align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass, aggregates: ['sum']},
-                {text: 'ESTADO', dataField: 'estado', filtertype: 'checkedlist', width: '8%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
-                {text: 'TIPO', dataField: 'tipo', filtertype: 'checkedlist', width: '10%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
+                {text: 'ESTADO', dataField: 'estado', filtertype: 'checkedlist', width: '7%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
+                {text: 'TIPO', dataField: 'tipo', filtertype: 'checkedlist', width: '9%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
                 {text: 'SOL. CERT.', dataField: 'solicitud', width: '7%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
                 {text: 'N° S.C.A.', dataField: 'nroCompromiso', width: '6%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
                 {text: 'SECTORISTA', dataField: 'sectorista', filtertype: 'checkedlist', width: '20%', align: 'center', cellsAlign: 'center', cellclassname: cellclass}
@@ -362,35 +362,8 @@
                         }
                     });
                 } else if ($.trim($(opcion).text()) === "Cerrar") {
-                    $.confirm({
-                        title: 'CERRAR COMPROMISO ANUAL',
-                        type: 'blue',
-                        content: '' +
-                                '<form method="post"  name="frm_CompromisoAnualCerrar" id="frm_CompromisoAnualCerrar" action="../IduCompromisoAnual" enctype="multipart/form-data">' +
-                                '<label>Anexos : </label>' +
-                                '<input type="file" name="fichero" id="fichero" style="text-transform: uppercase;" class="name form-control" multiple/>' +
-                                '</form>',
-                        buttons: {
-                            formSubmit: {
-                                text: 'Enviar',
-                                btnClass: 'btn-blue',
-                                action: function () {
-                                    fn_GuardarCerrar();
-                                }
-                            },
-                            cancel: function () {
-                            }
-                        },
-                        onContentReady: function () {
-                            // bind to events
-                            var jc = this;
-                            this.$content.find('form').on('submit', function (e) {
-                                // if the user submits the form by pressing enter in the field.
-                                e.preventDefault();
-                                jc.$$formSubmit.trigger('click'); // reference the button and click it
-                            });
-                        }
-                    });
+                    $('#div_VentanaCerrar').jqxWindow({isModal: true});
+                    $('#div_VentanaCerrar').jqxWindow('open');
                 } else if ($.trim($(opcion).text()) === "Ver Anexos") {
                     if (archivo !== '') {
                         document.location.target = "_blank";
@@ -600,7 +573,6 @@
                                             url: "../IduCompromisoAnual",
                                             data: {mode: 'R', periodo: periodo, presupuesto: presupuesto, unidadOperativa: unidadOperativa, nroCompromisoAnual: codigo},
                                             success: function (data) {
-                                                alert(data);
                                                 msg = data;
                                                 if (msg === "GUARDO") {
                                                     $.confirm({
@@ -708,7 +680,7 @@
                 addButtonDet.click(function (event) {
                     modeDetalle = 'I';
                     if (tipoCompromiso !== 'CE')
-                        codigo=$("#txt_solicitudCompromiso").val();
+                        codigo = $("#txt_solicitudCompromiso").val();
                     var solicitudCredito = $("#cbo_SolicitudCredito").val();
                     if (solicitudCredito !== '0') {
                         $("#cbo_Proveedor").jqxComboBox('clear');
@@ -932,6 +904,7 @@
         $("#div_RegistroDetalle").remove();
         $("#div_GrillaRegistro").remove();
         $("#div_GrillaPrincipal").remove();
+        $("#div_VentanaCerrar").remove();
         $("#div_VentanaPrincipal").remove();
         $("#div_VentanaDetalle").remove();
         $("#div_ContextMenu").remove();
@@ -1116,6 +1089,24 @@
                                 typeAnimated: true
                             });
                         }
+                    });
+                }
+            });
+            ancho = 500;
+            alto = 100;
+            posicionX = ($(window).width() / 2) - (ancho / 2);
+            posicionY = ($(window).height() / 2) - (alto / 2);
+            //Ventana Cerrar Compromiso Anual
+            $('#div_VentanaCerrar').jqxWindow({
+                position: {x: posicionX, y: posicionY},
+                width: ancho, height: alto, resizable: false,
+                cancelButton: $('#btn_CancelarCerrar'),
+                initContent: function () {
+                    $("#txt_Fichero").jqxInput({placeHolder: "Seleccione el Documento", width: 400, height: 20, minLength: 1});
+                    $('#btn_CancelarCerrar').jqxButton({width: '65px', height: 25});
+                    $('#btn_GuardarCerrar').jqxButton({width: '65px', height: 25});
+                    $('#btn_GuardarCerrar').on('click', function (event) {
+                        fn_GuardarCerrar();
                     });
                 }
             });
@@ -1315,66 +1306,65 @@
         }
     }
     function fn_GuardarCerrar() {
-        var fichero = $("#fichero").val();
-        // if (fichero !== '') {
-        if (fichero === '')
-            fichero = "SIN ARCHIVO";
-        var formData = new FormData(document.getElementById("frm_CompromisoAnualCerrar"));
-        formData.append("mode", "C");
-        formData.append("periodo", periodo);
-        formData.append("unidadOperativa", unidadOperativa);
-        formData.append("presupuesto", presupuesto);
-        formData.append("nroCompromisoAnual", codigo);
-        $.ajax({
-            type: "POST",
-            url: "../IduCompromisoAnual",
-            data: formData,
-            dataType: "html",
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                msg = data;
-                if (msg === "GUARDO") {
-                    $.confirm({
-                        title: 'AVISO DEL SISTEMA',
-                        content: 'Datos procesados correctamente',
-                        type: 'green',
-                        typeAnimated: true,
-                        autoClose: 'cerrarAction|1000',
-                        buttons: {
-                            cerrarAction: {
-                                text: 'Cerrar',
-                                action: function () {
-                                    fn_Refrescar();
+        var fichero = $("#txt_Fichero").val();
+        if (fichero !== '' ) {
+            var formData = new FormData(document.getElementById("frm_CompromisoAnualCerrar"));
+            formData.append("mode", "C");
+            formData.append("periodo", periodo);
+            formData.append("unidadOperativa", unidadOperativa);
+            formData.append("presupuesto", presupuesto);
+            formData.append("nroCompromisoAnual", codigo);
+            $.ajax({
+                type: "POST",
+                url: "../IduCompromisoAnual",
+                data: formData,
+                dataType: "html",
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    msg = data;
+                    if (msg === "GUARDO") {
+                        $('#div_VentanaCerrar').jqxWindow('close');
+                        $.confirm({
+                            title: 'AVISO DEL SISTEMA',
+                            content: 'Datos procesados correctamente',
+                            type: 'green',
+                            typeAnimated: true,
+                            autoClose: 'cerrarAction|1000',
+                            buttons: {
+                                cerrarAction: {
+                                    text: 'Cerrar',
+                                    action: function () {
+                                        fn_Refrescar();
+                                    }
                                 }
                             }
-                        }
-                    });
-                } else {
-                    $.alert({
-                        theme: 'material',
-                        title: 'AVISO DEL SISTEMA',
-                        content: msg,
-                        animation: 'zoom',
-                        closeAnimation: 'zoom',
-                        type: 'red',
-                        typeAnimated: true
-                    });
+                        });
+                    } else {
+                        $.alert({
+                            theme: 'material',
+                            title: 'AVISO DEL SISTEMA',
+                            content: msg,
+                            animation: 'zoom',
+                            closeAnimation: 'zoom',
+                            type: 'red',
+                            typeAnimated: true
+                        });
+                    }
                 }
-            }
-        });
-        /* } else {
-         $.alert({
-         theme: 'material',
-         title: 'AVISO DEL SISTEMA',
-         content: "Debe seleccionar el archivo con la documentacion sustentatoria\n PROCESO CANCELADO!!!.",
-         animation: 'zoom',
-         closeAnimation: 'zoom',
-         type: 'red',
-         typeAnimated: true
-         });
-         }*/
+            });
+        } else {
+            $.alert({
+                theme: 'material',
+                title: 'AVISO DEL SISTEMA',
+                content: "Debe seleccionar el archivo con la documentacion sustentatoria\n PROCESO CANCELADO!!!.",
+                animation: 'zoom',
+                closeAnimation: 'zoom',
+                type: 'red',
+                typeAnimated: true
+            });
+        }
     }
     function fn_validaSaldo() {
         var cadena = $("#cbo_CadenaGasto").val();
@@ -1593,6 +1583,31 @@
         </form>
     </div>
 </div>
+<div id="div_VentanaCerrar" style="display: none">
+    <div>
+        <span style="float: left">CERRAR COMPROMISO ANUAL</span>
+    </div>
+    <div style="overflow: hidden">
+        <form id="frm_CompromisoAnualCerrar" name="frm_CompromisoAnualCerrar" enctype="multipart/form-data" action="javascript:fn_GuardarCerrar();" method="post">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td class="inputlabel">Anexos : </td>
+                    <td>
+                        <input type="file" id="txt_Fichero" name="txt_Fichero" style="text-transform: uppercase;"/>
+                    </td> 
+                </tr>
+                <tr>
+                    <td class="Summit" colspan="2">
+                        <div>
+                            <input type="button" id="btn_GuardarCerrar"  value="Guardar" style="margin-right: 20px"/>
+                            <input type="button" id="btn_CancelarCerrar" value="Cancelar" style="margin-right: 20px"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
 <div style="display: none" id="div_Reporte">
     <div>
         <span style="float: left">LISTADO DE REPORTES</span>
@@ -1621,5 +1636,5 @@
         <li style="font-weight: bold;">Generar Compromiso</li>
         <li style="font-weight: bold;">Transferir OEE</li>
         <li style="font-weight: bold; color: red;">Rechazar</li>
-    </ul>    
+    </ul>
 </div>

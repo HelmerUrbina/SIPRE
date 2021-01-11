@@ -44,7 +44,7 @@ public class CertificadoPresupuestalDAOImpl implements CertificadoPresupuestalDA
         sql = "SELECT TIPSOL||'.'||NROCER AS ID,"
                 + "NROCER, REPLACE(REGEXP_REPLACE(UPPER(DOCREF),'[^A-Za-z0-9ÁÉÍÓÚáéíóú ]', ''),'\n"
                 + "', ' ') AS DOCREF, REPLACE(REGEXP_REPLACE(UPPER(DESOCE),'[^A-Za-z0-9ÁÉÍÓÚáéíóú ]', ''),'\n"
-                + "', ' ') AS DESOCE, DUSUARIO_CERRADO AS FECHA, "
+                + "', ' ') AS DESOCE, TO_CHAR(DUSUARIO_CERRADO,'DD/MM/YYYY HH24:MM') AS FECHA, "
                 + "CASE TIPSOL WHEN 'RE' THEN (-1)*MOCRPR ELSE MOCRPR END AS IMPORTE, TIPCAM, CASE TIPSOL WHEN 'RE' THEN (-1)*IMPDOL ELSE IMPDOL END AS EXTRANJERA, "
                 + "NROCOB||'-'||UTIL_NEW.FUN_MEMORAMDUN(CODPER, COPPTO, NROCOB) AS NROCOB, "
                 + "CASE ESTCCP WHEN 'PE' THEN 'PENDIENTE' WHEN 'CE' THEN 'CERRADO' WHEN 'AT' THEN 'ATENDIDO' WHEN 'AN' THEN 'ANULADA' ELSE ' ' END AS ESTADO, "
@@ -74,7 +74,7 @@ public class CertificadoPresupuestalDAOImpl implements CertificadoPresupuestalDA
                 objBnCertificado.setSolicitudCredito(objResultSet.getString("NROCER"));
                 objBnCertificado.setDocumentoReferencia(objResultSet.getString("DOCREF"));
                 objBnCertificado.setDetalle(objResultSet.getString("DESOCE"));
-                objBnCertificado.setFecha(objResultSet.getDate("FECHA"));
+                objBnCertificado.setMes(objResultSet.getString("FECHA"));
                 objBnCertificado.setImporte(objResultSet.getDouble("IMPORTE"));
                 objBnCertificado.setTipoCambio(objResultSet.getDouble("TIPCAM"));
                 objBnCertificado.setMonedaExtranjera(objResultSet.getDouble("EXTRANJERA"));

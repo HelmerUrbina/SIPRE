@@ -226,7 +226,7 @@
         }());
         $(document).ready(function () {
             customButtonsDemo.init();
-            fn_cargarComboAjax("#cbo_AreaLaboral", {mode: 'areaLaboral'});            
+            fn_cargarComboAjax("#cbo_AreaLaboral", {mode: 'areaLaboral'});
         });
         //FUNCION PARA ACTUALIZAR DATOS DE LA GRILLA
         function fn_Refrescar() {
@@ -433,7 +433,7 @@
     </div>
     <div style="overflow: hidden">
         <form id="frm_Usuario" name="frm_Usuario" method="post" >
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">                
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td class="inputlabel">UU/OO : </td>
                     <td>
@@ -443,7 +443,7 @@
                                 <option value="${c.codigo}">${c.descripcion}</option>
                             </c:forEach>
                         </select>
-                    </td>                    
+                    </td>
                 </tr>
                 <tr>
                     <td class="inputlabel">Apellidos : </td>
@@ -461,7 +461,7 @@
                     <td class="inputlabel">Area Lab. : </td>
                     <td>
                         <select id="cbo_AreaLaboral" name="cbo_AreaLaboral">
-                            <option value="0">Seleccione</option>                             
+                            <option value="0">Seleccione</option>
                         </select>
                     </td> 
                 </tr>
@@ -469,8 +469,8 @@
                     <td class="inputlabel">Estado : </td>
                     <td>
                         <select id="cbo_Estado" name="cbo_Estado">
-                            <option value="AC">ACTIVO</option> 
-                            <option value="IN">INACTIVO</option> 
+                            <option value="AC">ACTIVO</option>
+                            <option value="IN">INACTIVO</option>
                         </select>
                     </td> 
                 </tr>
@@ -478,8 +478,8 @@
                     <td class="inputlabel">OPRE : </td>
                     <td>
                         <select id="cbo_Opre" name="cbo_Opre">
-                            <option value="S">SI</option> 
-                            <option value="N">NO</option> 
+                            <option value="S">SI</option>
+                            <option value="N">NO</option>
                         </select>
                     </td> 
                 </tr>
@@ -487,8 +487,8 @@
                     <td class="inputlabel">ACTA : </td>
                     <td>
                         <select id="cbo_Acta" name="cbo_Acta">
-                            <option value="S">SI</option> 
-                            <option value="N">NO</option> 
+                            <option value="S">SI</option>
+                            <option value="N">NO</option>
                         </select>
                     </td> 
                 </tr>
@@ -496,7 +496,7 @@
                     <td class="Summit" colspan="4">
                         <div >
                             <input type="button" id="btn_Guardar"  value="Guardar" style="margin-right: 20px"/>
-                            <input type="button" id="btn_Cancelar" value="Cancelar" style="margin-right: 20px"/>                            
+                            <input type="button" id="btn_Cancelar" value="Cancelar" style="margin-right: 20px"/>
                         </div>
                     </td>
                 </tr>
@@ -504,11 +504,10 @@
         </form>
     </div>
 </div>
-<div id="cbo_Ajax" style='display: none;' ></div>
 <div id='div_ContextMenu' style='display: none;'>
     <ul>
         <li>Editar</li>
-        <li>Inactivar</li>   
+        <li>Inactivar</li>
         <li>Opciones</li>
     </ul>
 </div>
@@ -517,10 +516,10 @@
         <span style="float: left">SELECCIONE LAS OPCIONES DEL USUARIO</span>
     </div>
     <div style="overflow: hidden">
-        <div id='div_Opciones'></div>  
+        <div id='div_Opciones'></div>
         <div class="Summit">
             <input type="button" id="btn_GuardarOpciones"  value="Guardar" style="margin-right: 20px"/>
-            <input type="button" id="btn_CancelarOpciones" value="Cancelar" style="margin-right: 20px"/>                            
+            <input type="button" id="btn_CancelarOpciones" value="Cancelar" style="margin-right: 20px"/>
         </div>
     </div>
 </div>

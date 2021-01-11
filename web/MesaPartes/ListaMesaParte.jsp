@@ -1025,7 +1025,7 @@
                 </tr>
                 <tr>
                     <td class="inputlabel">Archivo : </td>
-                    <td><input type="file" name="txt_Archivo" id="txt_Archivo" style="text-transform: uppercase; width: 400px;height: 30px" class="name form-control" multiple/></td>
+                    <td><input type="file" name="txt_Archivo" id="txt_Archivo" style="text-transform: uppercase; width: 400px;height: 30px" class="name form-control"/></td>
                 </tr>
                 <tr>
                     <td class="Summit" colspan="4">

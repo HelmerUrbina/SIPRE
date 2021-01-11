@@ -65,7 +65,7 @@ public class ConsolidadoNotaModificatoriaSIAFServlet extends HttpServlet {
         objBnNotaModificatoria.setMode(request.getParameter("mode"));
         objBnNotaModificatoria.setPeriodo(request.getParameter("periodo"));
         objBnNotaModificatoria.setCodigo(request.getParameter("codigo"));
-        objDsConsolidado = new ConsolidadoNotaModificatoriaDAOImpl(objConnection);        
+        objDsConsolidado = new ConsolidadoNotaModificatoriaDAOImpl(objConnection);
         // DE ACUERO AL MODO, OBTENEMOS LOS DATOS NECESARIOS.        
         if (objBnNotaModificatoria.getMode().equals("G")) {
             objNotaModificatoria = objDsConsolidado.getListaConsolidadoNotaModificatoriaSIAF(objBnNotaModificatoria, objUsuario.getUsuario());

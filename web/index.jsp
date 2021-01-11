@@ -291,10 +291,10 @@
                         <div>
                             <ul>
                                 <li class="link"> 1. <a href="Descarga/DL1440-LeydelSistemaNacionaldePresupuestoPublico.pdf" target="_blank">DL 1440 - Ley del Sistema Nacional de Presupuesto Público</a></li>
-                                <li class="link"> 2. <a href="Descarga/DU014_2019.pdf" target="_blank">Decreto Urgencia N° 014-2019</a></li>
+                                <li class="link"> 2. <a href="Descarga/Ley31084-LeyPresupuesto2021.pdf" target="_blank">Ley de Presupuesto Sector Publico AF-2021</a></li>
                                 <li class="link"> 3. <a href="Descarga/Anexo4-FtesFinanciamiento2020.pdf" target="_blank">Fuentes de Financiamiento 2020 - MEF</a></li>
                                 <li class="link"> 4. <a href="Descarga/Anexo1-ClasificadoresIngreso2020.pdf" target="_blank">Clasificador de Ingresos 2020 - MEF</a></li>
-                                <li class="link"> 5. <a href="Descarga/Anexo2-ClasificadoresGasto2020.pdf" target="_blank">Clasificador de Gastos 2020 - MEF</a></li>
+                                <li class="link"> 5. <a href="Descarga/Anexo2-ClasificadoresGasto2021.pdf" target="_blank">Clasificador de Gastos 2021 - MEF</a></li>
                                 <li class="link"> 6. <a href="Descarga/GlosariodeTerminosFinancieros-MEF.pdf" target="_blank">Glosario de Términos Financieros - MEF</a></li>
                                 <li class="link"> 7. <a href="Descarga/DirectivaEjecucion_0003-2018-OPRE.pdf" target="_blank">Directiva General para la Ejecución del Proceso Presupuestario.</a></li>
                                 <li class="link"> 8. <a href="Descarga/DirectivaOGRE2016.pdf" target="_blank">Directiva N° 001-2016/OGRE.</a></li>
@@ -309,7 +309,7 @@
                             <ul>
                                 <li class="link"> 1. <a href="Descarga/SIPRE_ManualUsuario.pdf" target="_blank">SIPRE - Manual</a></li>
                                 <li class="link"> 2. <a href="Descarga/SIPRE_ProgramacionMultianual.pdf" target="_blank">SIPRE - Programación Multianual</a></li>
-                                <li class="link"> 3. <a href="Descarga/FormatoConfidencialidadOPRE2020.pdf" target="_blank">Formato de Confidencialidad AF-2020.</a></li>
+                                <li class="link"> 3. <a href="Descarga/FormatoConfidencialidadOPRE2021.pdf" target="_blank"><span class="inputlabelred">Formato de Confidencialidad AF-2021.</span></a></li>
                             </ul>
                         </div>
                     </div>
@@ -390,7 +390,6 @@
                         <div style="text-align: center">EJECUCIÓN PRESUPUESTAL</div>
                         <div>
                             <ul>
-                                <li class="link"> 1. <a href="Descarga/FaxMultiple2020-0074-OPRE.pdf" target="_blank"><span class="inputlabelred">Fax Mult. N° 0074 - Plazo para el registro de Modificaciones Presupuestarias en el Presupuesto Institucional en el marco del cierre del Ejercicio Presupuestario 2020.</span></a></li>
                                     <%--<li class="link"> 4. <a href="Descarga/FaxMultiple2020-0053-OPRE.pdf" target="_blank"><span class="inputlabelred">Fax Mult. N° 0053 - Evaluación Presupuestal al 1er Semestre AF-2020 “Lineamientos Complementarios para la Evaluación del Presupuesto Institucional del al UE 003: Ejercito Peruano AF-2020”.</span></a></li>--%>
                             </ul>
                         </div>
@@ -476,12 +475,11 @@
             <div>
                 <div id="div_ViewerPDF" style="width: 100%; height: 100%"> </div> 
             </div>
-
         </div>
     </body>
 </html>
 <script type="text/javascript">
     //fn_Aviso();
     //fn_verDocumento();
-    window.open("Descarga/FaxMultiple2020-0074-OPRE.pdf", "Fax Multiple 0097-OPRE", "width=800, height=550, top=100, left=300");
+   // window.open("Descarga/FaxMultiple2020-0084-OPRE.pdf", "Fax Multiple 0084-OPRE", "width=800, height=550, top=100, left=300");
 </script>
