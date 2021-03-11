@@ -2134,7 +2134,7 @@
 </div>
 <div id="div_VentanaCerrar" style="display: none">
     <div>
-        <span style="float: left">CERRAR DECLARACIÓN JURADA</span>
+        <span style="float: left">CERRAR DECLARACION JUARADA</span>
     </div>
     <div style="overflow: hidden">
         <form id="frm_DeclaracionJuradaCerrar" name="frm_DeclaracionJuradaCerrar" enctype="multipart/form-data" action="javascript:fn_GuardarCerrar();" method="post">
@@ -2159,10 +2159,10 @@
 </div>
 <div id='div_ContextMenu' style='display: none;'> 
     <ul>
-        <li>Editar</li>
-        <li>Anular</li>
+        <li style="font-weight: bold;">Editar</li>
+        <li style="font-weight: bold;">Anular</li>
         <li style="color: blue; font-weight: bold;">Cerrar</li>
-        <li>Ver Anexos</li>
+        <li style="font-weight: bold;">Ver Anexos</li>
         <li type='separator'></li>
         <li style="color: teal; font-weight: bold;">Relación Nominal</li>
         <li type='separator'></li>

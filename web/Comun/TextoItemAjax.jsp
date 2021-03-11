@@ -22,4 +22,4 @@
         $("#txt_ItemHojaTrabajo").jqxInput({height: 20, width: 400, minLength: 1, items: 25, dropDownWidth: 450, source: dataAdapter});
     });
 </script>
-<input type="text" id="txt_ItemHojaTrabajo" />
+<input type="text" id="txt_ItemHojaTrabajo" autocomplete="off"/>

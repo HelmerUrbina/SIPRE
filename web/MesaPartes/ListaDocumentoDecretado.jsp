@@ -15,7 +15,7 @@
     var msg = '';
     var tipo = 'E';
     var lista = new Array();
-    <c:forEach var="d" items="${objMesaParte}">
+    <c:forEach var="d" items="${objDocumentosDecretados}">
     var result = {numero: '${d.numero}', numeroDocumento: '${d.numeroDocumento}', asunto: '${d.asunto}',
         prioridad: '${d.prioridad}', subGrupo: '${d.subGrupo}', fecha: '${d.fecha}', estado: '${d.estado}', firma: '${d.hora}',
         legajo: '${d.legajo}', folio: '${d.folio}', usuarioResponsable: '${d.usuarioResponsable}', comentario: '${d.comentario}',
@@ -36,7 +36,6 @@
                         {name: "fechaR", type: "string"},
                         {name: "estadoDoc", type: "string"}
                     ],
-            pagesize: 10,
             addrow: function (rowid, rowdata, position, commit) {
                 commit(true);
             },
@@ -56,7 +55,7 @@
                         {name: 'asunto', type: "string"},
                         {name: 'prioridad', type: "string"},
                         {name: 'subGrupo', type: "string"},
-                        {name: 'fecha', type: "string" },
+                        {name: 'fecha', type: "string"},
                         {name: 'estado', type: "string"},
                         {name: 'firma', type: "string"},
                         {name: 'legajo', type: "number"},
@@ -102,7 +101,7 @@
             autoshowfiltericon: true,
             columnsresize: true,
             showfilterrow: true,
-            editable: false,            
+            editable: false,
             rendertoolbar: function (toolbar) {
                 var container = $("<div style='overflow: hidden; position: relative; margin: 1px;'></div>");
                 var ButtonExportar = $("<div style='float: left; margin-left: 5px;'><img style='position: relative; margin-top: 2px;' src='../Imagenes/Botones/pauf42.gif' width=18 height=18/><span style='margin-left: 4px; position: relative; top: -3px;'> </span></div>");
@@ -128,7 +127,7 @@
                 {text: 'INSTITUCIÓN', dataField: 'subGrupo', width: '9%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
                 {text: 'FEC. DOC', dataField: 'fecha', columntype: 'datetimeinput', filtertype: 'date', width: '7%', align: 'center', cellsAlign: 'center', cellsFormat: 'd', cellclassname: cellclass},
                 {text: 'ESTADO', dataField: 'estado', filtertype: 'list', width: '7%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
-                {text: 'FIRMA', dataField: 'firma', width: '9%', align: 'center', cellsAlign: 'left', cellclassname: cellclass},                
+                {text: 'FIRMA', dataField: 'firma', width: '9%', align: 'center', cellsAlign: 'left', cellclassname: cellclass},
                 {text: 'FOLIOS', dataField: 'folio', width: '4%', align: 'center', cellsAlign: 'center', cellsFormat: 'f', cellclassname: cellclass},
                 {text: 'REFERENCIA', dataField: 'referencia', width: '9%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
                 {text: 'COMENTARIO', dataField: 'comentario', width: '9%', align: 'center', cellsAlign: 'left', cellclassname: cellclass},
@@ -217,7 +216,6 @@
                         }
                     }
                 });
-
             } else if ($.trim($(opcion).text()) === "Sub Decreto") {
                 if (estado === 'RECIBIDO') {
                     mode = 'I';
@@ -267,11 +265,11 @@
                     initContent: function () {
                         $("#txt_Comentario").jqxInput({placeHolder: "Ingrese un Comentario", height: 80, width: 400, minLength: 1});
                         $("#cbo_Prioridad").jqxDropDownList({animationType: 'fade', width: 200, height: 20});
-                        $("#cbo_Area").jqxDropDownList({animationType: 'fade', width: 200, height: 20});
+                        $("#cbo_Area").jqxDropDownList({animationType: 'fade', dropDownWidth: 300, width: 200, height: 20});
                         $('#cbo_Area').on('change', function () {
                             fn_cargarComboAjax("#cbo_UsuarioRecepcion", {mode: 'usuarioSubDecreto', codigo: $("#cbo_Area").val()});
                         });
-                        $("#cbo_UsuarioRecepcion").jqxDropDownList({animationType: 'fade', width: 300, height: 20});
+                        $("#cbo_UsuarioRecepcion").jqxDropDownList({animationType: 'fade', width: 300, dropDownWidth: 400, height: 20});
                         $('#btn_Cancelar').jqxButton({width: '65px', height: 25});
                         $('#btn_Guardar').jqxButton({width: '65px', height: 25});
                         $('#btn_Guardar').on('click', function () {
@@ -313,7 +311,6 @@
                         $('#btn_CancelarDet').jqxButton({width: '65px', height: 25});
                     }
                 });
-
             }
             return {init: function () {
                     _createElements();
@@ -510,7 +507,7 @@
     <div>
         <span style="float: left">SUB DECRETAR DOCUMENTACIÓN</span>
     </div>
-    <div style="overflow: hidden">        
+    <div style="overflow: hidden">
         <form id="frm_SubDecreto" name="frm_SubDecreto" method="post">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
@@ -518,9 +515,9 @@
                     <td>
                         <select id="cbo_Prioridad" name="cbo_Prioridad">
                             <option value="0">Seleccione</option>
-                            <c:forEach var="d" items="${objPrioridad}">   
+                            <c:forEach var="d" items="${objPrioridad}">
                                 <option value="${d.codigo}">${d.descripcion}</option>
-                            </c:forEach>                              
+                            </c:forEach>
                         </select>
                     </td>
                 </tr>
@@ -529,31 +526,29 @@
                     <td>
                         <select id="cbo_Area" name="cbo_Area">
                             <option value="0">Seleccione</option>
-                            <c:forEach var="d" items="${objArea}">   
+                            <c:forEach var="d" items="${objArea}">
                                 <option value="${d.codigo}">${d.descripcion}</option>
-                            </c:forEach>                              
+                            </c:forEach>
                         </select>
                     </td>
                 </tr>
                 <tr>
                     <td class="inputlabel">Usuario : </td>
                     <td>
-                        <select id="cbo_UsuarioRecepcion" name="cbo_UsuarioRecepcion">                    
-                            <option value="0">Seleccione</option>                                                   
+                        <select id="cbo_UsuarioRecepcion" name="cbo_UsuarioRecepcion">
+                            <option value="0">Seleccione</option>
                         </select>
                     </td>
                 </tr>
                 <tr>
                     <td class="inputlabel">Comentario : </td>
-                    <td><textarea id="txt_Comentario" name="txt_Comentario" style="text-transform: uppercase;"></textarea>
-
-                    </td>                    
+                    <td><textarea id="txt_Comentario" name="txt_Comentario" style="text-transform: uppercase;"></textarea></td>
                 </tr>
                 <tr>
                     <td class="Summit" colspan="4">
                         <div>
                             <input type="button" id="btn_Guardar"  value="Guardar" style="margin-right: 20px"/>
-                            <input type="button" id="btn_Cancelar" value="Cancelar" style="margin-right: 20px"/>                            
+                            <input type="button" id="btn_Cancelar" value="Cancelar" style="margin-right: 20px"/>
                         </div>
                     </td>
                 </tr>
@@ -565,15 +560,16 @@
     <div>
         <span style="float: left">SEGUIMIENTO DE LA DOCUMENTACIÓN</span>
     </div>
-    <div style="overflow: hidden">              
+    <div style="overflow: hidden">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
                 <td class="inputlabel">Decretado Inicial : </td>
                 <td>
                     <select id="cbo_UsuarioEmisionDet" name="cbo_UsuarioEmisionDet">
-                        <option value="0">Seleccione</option>                                                
-                        <option value="115926700" selected>DE LA CRUZ ORBEGOZO OSCAR ARTURO</option> 
-                        <option value="118628000">ARANCIBIA GARCIA JHONNY JESUS</option>
+                        <option value="0">Seleccione</option>
+                        <c:forEach var="d" items="${objUsuarioJefatura}">
+                            <option value="${d.codigo}">${d.descripcion}</option>
+                        </c:forEach>
                     </select>
                 </td>
             </tr>
@@ -581,16 +577,16 @@
                 <td class="inputlabel">&zwj;</td>
             </tr>
             <tr>
-                <td colspan="4"><div id="div_GrillaDetalle"> </div></div></td>  
+                <td colspan="4"><div id="div_GrillaDetalle"> </div></td>
             </tr>
             <tr>
                 <td class="Summit" colspan="4">
-                    <div>                
-                        <input type="button" id="btn_CancelarDet" value="Salir" style="margin-right: 20px"/>                            
+                    <div>
+                        <input type="button" id="btn_CancelarDet" value="Salir" style="margin-right: 20px"/>
                     </div>
                 </td>
             </tr>
-        </table>        
+        </table>
     </div>
 </div>
 <div id='div_ContextMenu' style='display:none;'>
@@ -598,7 +594,7 @@
         <li style="font-weight: bold">Recibido</li>
         <li style="font-weight: bold">Ver Documento</li>
         <li type='separator'></li>
-        <li style="font-weight: bold; color: maroon">Sub Decreto</li>        
+        <li style="font-weight: bold; color: maroon">Sub Decreto</li>
         <li type='separator'></li>
         <li style="font-weight: bold; color: blue">Seguimiento Decreto</li>
     </ul>

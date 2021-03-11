@@ -57,7 +57,7 @@ public class NotaModificatoriaDAOImpl implements NotaModificatoriaDAO {
                 + "DNOTA_MODIFICATORIA_ENVIO AS FECHA_APRUEBA, "
                 + "NVL(UTIL_NEW.FUN_DESC_USUARIO(VUSUARIO_RECHAZO),'--') AS USU_RECHAZO, "
                 + "DUSUARIO_RECHAZO AS FECHA_RECHAZO, "
-                + "VRECHAZO_JUSTIFICA, "
+                + "VRECHAZO_JUSTIFICA, VNOTA_MODIFICATORIA_ARCHIVO, "
                 + "UTIL_NEW.FUN_NUMERO_SIAF(CPERIODO_CODIGO, CNOTA_CONSOLIDADO_CODIGO) AS NUM_SIAF,"
                 + "CNOTA_CONSOLIDADO_CODIGO AS NUM_CONSOLIDADO "
                 + "FROM SIPE_NOTA_MODIFICATORIA WHERE "
@@ -91,6 +91,7 @@ public class NotaModificatoriaDAOImpl implements NotaModificatoriaDAO {
                 objBnNotaModificatoria.setDependencia(objResultSet.getString("VRECHAZO_JUSTIFICA"));
                 objBnNotaModificatoria.setSIAF(objResultSet.getInt("NUM_SIAF"));
                 objBnNotaModificatoria.setConsolidado(objResultSet.getString("NUM_CONSOLIDADO"));
+                objBnNotaModificatoria.setArchivo(objResultSet.getString("VNOTA_MODIFICATORIA_ARCHIVO"));
                 lista.add(objBnNotaModificatoria);
             }
         } catch (SQLException e) {

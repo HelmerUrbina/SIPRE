@@ -23,7 +23,7 @@
     var result = {numero: '${d.numero}', numeroDocumento: '${d.numeroDocumento}', asunto: '${d.asunto}',
         subGrupo: '${d.subGrupo}', prioridad: '${d.prioridad}', fecha: '${d.fecha}', estado: '${d.estado}', firma: '${d.hora}',
         legajo: '${d.legajo}', folio: '${d.folio}', usuarioResponsable: '${d.usuarioResponsable}', referencia: "${d.referencia}",
-        codigoUsuario: '${d.area}', archivo: '${d.archivo}'};
+        codigoUsuario: '${d.area}', archivo: '${d.archivo}', correo: '${d.correo}'};
     lista.push(result);
     </c:forEach>
     var listaInstitucion = new Array();
@@ -60,7 +60,8 @@
                         {name: 'usuarioResponsable', type: "string"},
                         {name: 'referencia', type: "string"},
                         {name: 'codigoUsuario', type: "string"},
-                        {name: 'archivo', type: "string"}
+                        {name: 'archivo', type: "string"},
+                        {name: 'correo', type: "string"}
                     ],
             root: "MesaParte",
             record: "MesaParte",
@@ -142,11 +143,12 @@
                 {text: 'FOLIO', dataField: 'folio', width: '4%', align: 'center', cellsAlign: 'center', cellsFormat: 'f', cellclassname: cellclass},
                 {text: 'USUARIO RESP.', dataField: 'usuarioResponsable', filtertype: 'checkedlist', width: '9%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
                 {text: 'REFERENCIA', dataField: 'referencia', width: '9%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
-                {text: 'ARCHIVO', dataField: 'archivo', width: '9%', align: 'center', cellsAlign: 'center', cellclassname: cellclass}
+                {text: 'ARCHIVO', dataField: 'archivo', width: '15%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
+                {text: 'CORREO', dataField: 'correo', width: '20%', align: 'center', cellsAlign: 'center', cellclassname: cellclass}
             ]
         });
         // DEFINIMOS EL MENU CONTEXTUAL 
-        var contextMenu = $("#div_ContextMenu").jqxMenu({width: 200, height: 140, autoOpenPopup: false, mode: 'popup'});
+        var contextMenu = $("#div_ContextMenu").jqxMenu({width: 200, height: 110, autoOpenPopup: false, mode: 'popup'});
         $("#div_GrillaPrincipal").on('contextmenu', function () {
             return false;
         });
@@ -247,41 +249,6 @@
                         typeAnimated: true
                     });
                 }
-            } else if ($.trim($(opcion).text()) === "Imprimir Ticket") {
-                if (estado === "ANULADO") {
-                    $.alert({
-                        theme: 'material',
-                        title: 'AVISO DEL SISTEMA',
-                        content: 'Opción no permitida, documento anulado',
-                        animation: 'zoom',
-                        closeAnimation: 'zoom',
-                        type: 'orange',
-                        typeAnimated: true
-                    });
-                } else {
-                    $.confirm({
-                        theme: 'material',
-                        title: 'AVISO DEL SISTEMA',
-                        content: 'Desea imprimir el ticket ' + codigo + ' ?',
-                        animation: 'zoom',
-                        closeAnimation: 'zoom',
-                        type: 'orange',
-                        typeAnimated: true,
-                        buttons: {
-                            aceptar: {
-                                text: 'Aceptar',
-                                btnClass: 'btn-primary',
-                                keys: ['enter', 'shift'],
-                                action: function () {
-                                    mode = 'P';
-                                    fn_ImprimirTicket();
-                                }
-                            },
-                            cancelar: function () {
-                            }
-                        }
-                    });
-                }
             } else {
                 $.alert({
                     theme: 'material',
@@ -310,7 +277,7 @@
                 //INICIA LOS VALORES DE LA VENTANA
                 var posicionX, posicionY;
                 var ancho = 600;
-                var alto = 385;
+                var alto = 395;
                 posicionX = ($(window).width() / 2) - (ancho / 2);
                 posicionY = ($(window).height() / 2) - (alto / 2);
                 $('#div_VentanaPrincipal').jqxWindow({
@@ -321,12 +288,6 @@
                         $("#txt_Numero").jqxInput({width: 120, height: 20, disabled: true});
                         $("#txt_Institucion").jqxInput({width: 300, height: 20});
                         $("#txt_Institucion").jqxInput({height: 20, width: 400, minLength: 1, items: 15, source: dataAdapterInstitucion});
-                        /*$("#txt_Institucion").keypress(function () {
-                         var texto = $("#txt_Institucion").val();
-                         if (texto.length === 1) {
-                         fn_BuscaInstitucion(texto);
-                         }
-                         });*/
                         $('#txt_Institucion').on('select', function (event) {
                             if (event.args) {
                                 var item = event.args.item;
@@ -742,43 +703,6 @@
             var fecha = dia + '/' + mes + '/' + anio;
             $("#txt_FechaRecepcion").val(fecha);
         }
-        //FUNCION PARA IMPRIMIR TICKET DE LA LISTA
-        function fn_ImprimirTicket() {
-            $.ajax({
-                type: "POST",
-                url: "../ImprimirTicket",
-                data: {mode: 'P', periodo: periodo, tipo: tipo, numero: codigo},
-                success: function (data) {
-                    msg = data;
-                    if (msg === "OK") {
-                        $.confirm({
-                            title: 'AVISO DEL SISTEMA',
-                            content: 'Imprimiendo datos...',
-                            type: 'green',
-                            typeAnimated: true,
-                            autoClose: 'cerrarAction|1000',
-                            buttons: {
-                                cerrarAction: {
-                                    text: 'Cerrar',
-                                    action: function () {
-                                    }
-                                }
-                            }
-                        });
-                    } else {
-                        $.alert({
-                            theme: 'material',
-                            title: 'AVISO DEL SISTEMA',
-                            content: msg,
-                            animation: 'zoom',
-                            closeAnimation: 'zoom',
-                            type: 'red',
-                            typeAnimated: true
-                        });
-                    }
-                }
-            });
-        }
         //FUNCION PARA ACTUALIZAR DATOS DE LA GRILLA
         function fn_Refrescar() {
             $("#div_VentanaPrincipal").remove();
@@ -852,7 +776,7 @@
             });
             $('#div_VentanaPrincipal').jqxWindow({isModal: true});
             $('#div_VentanaPrincipal').jqxWindow('open');
-        }        
+        }
         //FUNCION PARA GRABAR LOS DATOS DE LA VENTANA PRINCIPAL
         function fn_GrabarDatos() {
             var numero = $("#txt_Numero").val();
@@ -1077,13 +1001,11 @@
 </div>
 <div id='div_ContextMenu' style='display:none;'>
     <ul>
-        <li style="font-weight: bold">Editar</li>
-        <li style="font-weight: bold">Anular</li> 
+        <li style="font-weight: bold;">Editar</li>
+        <li style="font-weight: bold;">Anular</li> 
         <li type='separator'></li>
-        <li style="font-weight: bold; color: maroon">Ver Documento</li>
+        <li style="font-weight: bold; color: maroon;">Ver Documento</li>
         <li type='separator'></li>
-        <li style="font-weight: bold; color: blue">Adjuntar Documento</li>
-        <li type='separator'></li>
-        <li style="font-weight: bold; color: green">Imprimir Ticket</li>
+        <li style="font-weight: bold; color: blue;">Adjuntar Documento</li>
     </ul>
 </div>

@@ -147,6 +147,7 @@ public class PriorizacionPCADAOImpl implements PriorizacionPCADAO {
                 + "GROUP BY CODPER, COPPTO, SOLICITUD, COUUOO, CODGEN, TIPO "
                 + "HAVING SUM(IMPORTE)!=0.0 "
                 + "ORDER BY COUUOO, SOLICITUD";
+        System.out.println(sql);
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, objBeanPriorizacion.getPeriodo());

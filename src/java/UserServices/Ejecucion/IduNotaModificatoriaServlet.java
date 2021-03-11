@@ -13,28 +13,33 @@ import DataService.Despachadores.Impl.NotaModificatoriaDAOImpl;
 import DataService.Despachadores.Impl.MsgerrDAOImpl;
 import DataService.Despachadores.MsgerrDAO;
 import Utiles.Utiles;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author H-URBINA-M
  */
 @WebServlet(name = "IduNotaModificatoriaServlet", urlPatterns = {"/IduNotaModificatoria"})
+@MultipartConfig(location = "D:/SIPRE/EJECUCION/NotaModificatoria")
 public class IduNotaModificatoriaServlet extends HttpServlet {
 
     private ServletConfig config = null;
@@ -46,6 +51,7 @@ public class IduNotaModificatoriaServlet extends HttpServlet {
     private NotaModificatoriaDAO objDsNotaModificatoria;
     private BeanMsgerr objBnMsgerr = null;
     private MsgerrDAO objDsMsgerr;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -108,6 +114,18 @@ public class IduNotaModificatoriaServlet extends HttpServlet {
                 }
                 break;
             case "C":
+                response.setContentType("text/html;charset=UTF-8");
+                Collection<Part> parts = request.getParts();
+                for (Part part : parts) {
+                    if (null != Utiles.getFileName(part)) {
+                        objBnNotaModificatoria.setJustificacion(Utiles.getFileName(part));
+                        File fichero = new File("D:/SIPRE/EJECUCION/NotaModificatoria/" + objBnNotaModificatoria.getPeriodo() + "-" + objBnNotaModificatoria.getUnidadOperativa() + "-" + objBnNotaModificatoria.getCodigo() + "-" + objBnNotaModificatoria.getJustificacion().toUpperCase());
+                        if (fichero.exists()) {
+                            fichero.delete();
+                        }
+                        part.write(objBnNotaModificatoria.getPeriodo() + "-" + objBnNotaModificatoria.getUnidadOperativa() + "-" + objBnNotaModificatoria.getCodigo() + "-" + objBnNotaModificatoria.getJustificacion().toUpperCase());
+                    }
+                }
                 k = objDsNotaModificatoria.iduNotaModificatoriaVerifica(objBnNotaModificatoria, objUsuario.getUsuario());
                 break;
             case "V":

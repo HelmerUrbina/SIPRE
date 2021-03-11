@@ -13,6 +13,9 @@
         $("#cbo_Usuario").jqxComboBox({theme: theme, disabled: true, width: 300, height: 20});
         var fecha = new Date();
         $("#cbo_Periodo").jqxComboBox('selectItem', fecha.getFullYear());
+        $('#cbo_Periodo').on('change', function () {
+            fn_CargarBusqueda();
+        });
         fn_CargarBusqueda();
     });
     function fn_CargarBusqueda() {

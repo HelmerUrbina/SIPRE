@@ -40,6 +40,7 @@ public class BeanNotaModificatoria implements Serializable {
     private String Variacion;
     private String Consolidado;
     private String TipoCalendario;
+    private String Archivo;
     private String Usuario;
     private String UsuarioCierre;
     private String UsuarioVerifica;
@@ -229,7 +230,6 @@ public class BeanNotaModificatoria implements Serializable {
     public void setActividad(String Actividad) {
         this.Actividad = Actividad;
     }
-    
 
     public String getImportancia() {
         return Importancia;
@@ -277,6 +277,14 @@ public class BeanNotaModificatoria implements Serializable {
 
     public void setTipoCalendario(String TipoCalendario) {
         this.TipoCalendario = TipoCalendario;
+    }
+
+    public String getArchivo() {
+        return Archivo;
+    }
+
+    public void setArchivo(String Archivo) {
+        this.Archivo = Archivo;
     }
 
     public String getUsuario() {
@@ -510,5 +518,5 @@ public class BeanNotaModificatoria implements Serializable {
     public void setFechaAprobacion(Date FechaAprobacion) {
         this.FechaAprobacion = FechaAprobacion;
     }
-    
+
 }

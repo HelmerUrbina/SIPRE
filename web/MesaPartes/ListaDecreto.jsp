@@ -6,11 +6,11 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
-    var periodo = '${objBnDecreto.periodo}';
-    var tipo = '${objBnDecreto.tipo}';
-    var mes = '${objBnDecreto.mes}';
-    var estadoDoc = '${objBnDecreto.estado}';
-    var codigo = '${objBnDecreto.numero}';
+    var periodo = $("#cbo_Periodo").val();
+    var tipo = "E";
+    var mes = $("#cbo_Mes").val();
+    var estadoDoc = $("#cbo_Estado").val();
+    var codigo = null;
     var archivo = null;
     var codigoUsuario = '';
     var codInstitucion = '';
@@ -39,7 +39,6 @@
                         {name: "fechaR", type: "string"},
                         {name: "estadoDoc", type: "string"}
                     ],
-            pagesize: 10,
             addrow: function (rowid, rowdata, position, commit) {
                 commit(true);
             },
@@ -103,7 +102,6 @@
             columnsresize: true,
             showfilterrow: true,
             editable: false,
-            pagesize: 100,
             rendertoolbar: function (toolbar) {
                 var container = $("<div style='overflow: hidden; position: relative; margin: 1px;'></div>");
                 var ButtonExportar = $("<div style='float: left; margin-left: 5px;'><img style='position: relative; margin-top: 2px;' src='../Imagenes/Botones/pauf42.gif' width=18 height=18/><span style='margin-left: 4px; position: relative; top: -3px;'> </span></div>");
@@ -294,7 +292,7 @@
                 });
                 //INICIALIZAMOS LOS VALORES DE LA VENTANA DE DETALLE
                 var ancho = 700;
-                var alto = 450;
+                var alto = 465;
                 posicionX = ($(window).width() / 2) - (ancho / 2);
                 posicionY = ($(window).height() / 2) - (alto / 2);
                 $('#div_VentanaDetalle').jqxWindow({
@@ -532,8 +530,9 @@
                     <td>
                         <select id="cbo_UsuarioEmision" name="cbo_UsuarioEmision">
                             <option value="0">Seleccione</option>
-                            <option value="115926700" selected>DE LA CRUZ ORBEGOZO OSCAR ARTURO</option> 
-                            <option value="116632800">GALVEZ SILVA VICTOR FERNANDO</option>
+                            <c:forEach var="d" items="${objUsuarioJefatura}">   
+                                <option value="${d.codigo}">${d.descripcion}</option>
+                            </c:forEach>
                         </select>
                     </td>
                 </tr>
@@ -595,8 +594,9 @@
                 <td>
                     <select id="cbo_UsuarioEmisionDet" name="cbo_UsuarioEmisionDet">
                         <option value="0">Seleccione</option>
-                        <option value="115926700" selected>DE LA CRUZ ORBEGOZO OSCAR ARTURO</option>
-                        <option value="116632800">GALVEZ SILVA VICTOR FERNANDO</option>
+                        <c:forEach var="f" items="${objUsuarioJefatura}">
+                            <option value="${f.codigo}">${f.descripcion}</option>
+                        </c:forEach>
                     </select>
                 </td>
             </tr>
@@ -619,9 +619,9 @@
 <div id="cbo_Ajax" style='display:none;'></div>
 <div id='div_ContextMenu' style='display:none;'>
     <ul>
-        <li>Decretar</li>
-        <li>Seguimiento Decreto</li>
+        <li style="font-weight: bold;">Decretar</li>
+        <li style="font-weight: bold; color: blue;">Seguimiento Decreto</li>
         <li type='separator'></li>
-        <li>Ver Documento</li>
+        <li style="font-weight: bold; color: maroon;">Ver Documento</li>
     </ul>
 </div>

@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiJARLocking="true" path="/SIPRE">
-  <Resource auth="Container" driverClassName="oracle.jdbc.OracleDriver" maxActive="20" maxIdle="10" maxWait="-1" name="OPREDB" password="OPRE2020OPRE" password2="ADMIN" type="javax.sql.DataSource" url="jdbc:oracle:thin:@10.64.28.3:1521:OPREDB" url2="jdbc:oracle:thin:@SERVER2012:1521:ORCL" username="OPREDB" username2="ADMIN"/>
-  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="BIOSTAR" password="root" type="javax.sql.DataSource" url="jdbc:mysql://10.64.28.7:3306/biostar2_ac?zeroDateTimeBehavior=convertToNull" username="root"/>
+  <Resource auth="Container" driverClassName="oracle.jdbc.OracleDriver" 
+            maxActive="20" maxIdle="10" maxWait="-1" name="OPREDB" 
+            password="OPRE2020OPRE" password2="ADMIN" type="javax.sql.DataSource" 
+            url="jdbc:oracle:thin:@10.64.28.3:1521:OPREDB" url2="jdbc:oracle:thin:@SERVER2012:1521:ORCL" username="OPREDB" username2="ADMIN"/>
+  <Resource auth="Container" 
+            driverClassName="com.mysql.jdbc.Driver" 
+            maxActive="20" maxIdle="10" maxWait="-1" name="BIOSTAR" 
+            password="root" type="javax.sql.DataSource" 
+            url="jdbc:mysql://10.64.28.7:3306/biostar2_ac?serverTimezone=UTC" 
+            username="root"/>
 </Context>

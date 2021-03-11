@@ -14,7 +14,6 @@ import DataService.Despachadores.MesaParteDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -36,7 +35,6 @@ public class DocumentosDecretadosServlet extends HttpServlet {
     private ServletContext context = null;
     private HttpSession session = null;
     private RequestDispatcher dispatcher = null;
-    private List objMesaParte;
     private BeanMesaParte objBnMesaParte;
     private Connection objConnection;
     private MesaParteDAO objDsMesaParte;
@@ -57,6 +55,7 @@ public class DocumentosDecretadosServlet extends HttpServlet {
         String result = null;
         objBnMesaParte = new BeanMesaParte();
         objBnMesaParte.setMode(request.getParameter("mode"));
+        objBnMesaParte.setPeriodo(request.getParameter("periodo"));
         objBnMesaParte.setUsuarioResponsable(objUsuario.getUsuario());
         objDsMesaParte = new MesaParteDAOImpl(objConnection);
         if (objBnMesaParte.getMode().equals("docDecretado")) {
@@ -67,7 +66,6 @@ public class DocumentosDecretadosServlet extends HttpServlet {
             request.setAttribute("objUsuarioOpre", objDsCombo.getUsuarioDocumento(objUsuario.getUsuario()));
         }
         if (objBnMesaParte.getMode().equals("G")) {
-            objMesaParte = objDsMesaParte.getConsultaDocumentoRespuesta(objBnMesaParte, objUsuario.getUsuario());
             objDsCombo = new CombosDAOImpl(objConnection);
             if (request.getAttribute("objPrioridad") != null) {
                 request.removeAttribute("objPrioridad");
@@ -77,15 +75,15 @@ public class DocumentosDecretadosServlet extends HttpServlet {
                 request.removeAttribute("objArea");
             }
             request.setAttribute("objArea", objDsCombo.getAreaMesaPartes());
+            if (request.getAttribute("objUsuarioJefatura") != null) {
+                request.removeAttribute("objUsuarioJefatura");
+            }
+            request.setAttribute("objUsuarioJefatura", objDsCombo.getUsuarioJefatura(objBnMesaParte.getPeriodo()));
+            if (request.getAttribute("objDocumentosDecretados") != null) {
+                request.removeAttribute("objDocumentosDecretados");
+            }
+            request.setAttribute("objDocumentosDecretados", objDsMesaParte.getConsultaDocumentoRespuesta(objBnMesaParte, objUsuario.getUsuario()));
         }
-        if (request.getAttribute("objMesaParte") != null) {
-            request.removeAttribute("objMesaParte");
-        }
-        if (request.getAttribute("objBnMesaParte") != null) {
-            request.removeAttribute("objBnMesaParte");
-        }
-        request.setAttribute("objMesaParte", objMesaParte);
-        request.setAttribute("objBnMesaParte", objBnMesaParte);
         //SE ENVIA DE ACUERDO AL MODO SELECCIONADO
         switch (request.getParameter("mode")) {
             case "docDecretado":

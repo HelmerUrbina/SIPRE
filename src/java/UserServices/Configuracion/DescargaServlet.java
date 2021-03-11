@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import javax.activation.MimetypesFileTypeMap;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +17,7 @@ public class DescargaServlet extends HttpServlet {
 
     private static final long serialVersionUID = 4440011247408877539L;
     private String filePath;
+    private RequestDispatcher dispatcher = null;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -57,6 +59,9 @@ public class DescargaServlet extends HttpServlet {
             case "DeclaracionJurada":
                 filePath = "D:/SIPRE/EJECUCION/DeclaracionJurada/" + periodo + "-" + unidadOperativa + "-" + presupuesto + "-" + codigo + "-" + documento;
                 break;
+            case "NotaModificatoria":
+                filePath = "D:/SIPRE/EJECUCION/NotaModificatoria/" + periodo + "-" + unidadOperativa + "-" + codigo + "-" + documento;
+                break;
             default:
                 filePath = "";
         }
@@ -74,7 +79,9 @@ public class DescargaServlet extends HttpServlet {
             }
             out.flush();
         } catch (IOException e) {
-            System.out.println("Error al leer Archivo" + e.getMessage());
+            System.out.println("Error al leer Archivo : " + e.getMessage());
+            dispatcher = request.getRequestDispatcher("Descarga/InvalidFile.jsp");
+            dispatcher.forward(request, response);
         }
     }
 

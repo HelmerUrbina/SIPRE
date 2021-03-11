@@ -2,23 +2,23 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Report_COBERTURA_COMPROMISO" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="557" leftMargin="23" rightMargin="15" topMargin="14" bottomMargin="28" uuid="b1ffd9fd-f9e8-42c8-84f0-3772feea08f7">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="2.1435888100000016"/>
-	<property name="ireport.x" value="532"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.610510000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="58"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["2020"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["2021"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PRESUPUESTO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["9"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="UNIDAD_OPERATIVA" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["0734"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["0702"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["0000027A"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["0000013A"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="USUARIO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["43987155"]]></defaultValueExpression>
@@ -395,7 +395,7 @@ ORDER BY NROCER,COUOAB,SECFUN,RESOLUCION,COMEOP,COCAGA]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{FIRMA3A}+", "+$F{FIRMA3B}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FIRMA3B}+" "+$F{FIRMA3A}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement key="textField-67" x="390" y="72" width="132" height="10" uuid="60d9da33-194e-44b0-9caf-5230cbb1cda2"/>
@@ -450,7 +450,7 @@ ORDER BY NROCER,COUOAB,SECFUN,RESOLUCION,COMEOP,COCAGA]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{FIRMA2A}+", "+$F{FIRMA2B}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FIRMA2B}+" "+$F{FIRMA2A}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement key="textField-72" x="210" y="72" width="132" height="10" uuid="5cc909bb-bbbd-4e8b-892a-76a87aaf3845"/>
@@ -505,7 +505,7 @@ ORDER BY NROCER,COUOAB,SECFUN,RESOLUCION,COMEOP,COCAGA]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{FIRMA1A}+", "+$F{FIRMA1B}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FIRMA1B}+" "+$F{FIRMA1A}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement key="textField-83" x="21" y="72" width="132" height="10" uuid="f7bcc3e7-deb2-40a3-a7aa-c3e57dd03a8c"/>

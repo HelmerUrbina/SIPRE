@@ -16,13 +16,14 @@
     var indiceDetalle = -1;
     var modeDetalle = null;
     var msg = null;
+    var archivo = '';
     var lista = new Array();
     <c:forEach var="c" items="${objNotaModificatoria}">
     var result = {codigo: '${c.codigo}', tipo: '${c.tipo}', credito: '${c.importeCredito}',
         anulacion: '${c.importeAnulacion}', justificacion: '${c.justificacion}', fecha: '${c.fecha}', estado: '${c.estado}',
         usuarioCierre: '${c.usuarioCierre}', fechaCierre: '${c.fechaCierre}', usuarioVerifica: '${c.usuarioVerifica}', fechaVerifica: '${c.fechaVerifica}',
         usuarioAprueba: '${c.usuarioAprobacion}', fechaAprueba: '${c.fechaAprobacion}', usuarioRechazo: '${c.usuarioRechazo}',
-        fechaRechazo: '${c.fechaRechazo}', justificaRechazo: '${c.dependencia}', SIAF: '${c.SIAF}', consolidado: '${c.consolidado}'};
+        fechaRechazo: '${c.fechaRechazo}', justificaRechazo: '${c.dependencia}', SIAF: '${c.SIAF}', consolidado: '${c.consolidado}', archivo: '${c.archivo}'};
     lista.push(result);
     </c:forEach>
     var listaDet = new Array();
@@ -106,7 +107,8 @@
                         {name: "fechaRechazo", type: "string"},
                         {name: "justificaRechazo", type: "string"},
                         {name: "SIAF", type: "string"},
-                        {name: "consolidado", type: "string"}
+                        {name: "consolidado", type: "string"},
+                        {name: "archivo", type: "string"}
                     ],
             root: "NotaModificatoria",
             record: "NotaModificatoria",
@@ -302,7 +304,7 @@
             ]
         });
         // DEFINIMOS EL MENU CONTEXTUAL 
-        var contextMenu = $("#div_ContextMenu").jqxMenu({width: 200, height: 185, autoOpenPopup: false, mode: 'popup'});
+        var contextMenu = $("#div_ContextMenu").jqxMenu({width: 200, height: 215, autoOpenPopup: false, mode: 'popup'});
         $("#div_GrillaPrincipal").on('contextmenu', function () {
             return false;
         });
@@ -362,28 +364,24 @@
                     mode = 'A';
                     fn_verInforme();
                 } else if ($.trim($(opcion).text()) === "Cerrar") {
-                    $.confirm({
-                        theme: 'material',
-                        title: 'AVISO DEL SISTEMA',
-                        content: '¿Desea Cerrar esta Nota Modificatoria?',
-                        animation: 'zoom',
-                        closeAnimation: 'zoom',
-                        type: 'red',
-                        typeAnimated: true,
-                        buttons: {
-                            aceptar: {
-                                text: 'Aceptar',
-                                btnClass: 'btn-primary',
-                                keys: ['enter', 'shift'],
-                                action: function () {
-                                    mode = 'C';
-                                    fn_GrabarDatosEstados('');
-                                }
-                            },
-                            cancelar: function () {
-                            }
-                        }
-                    });
+                    $('#txt_Fichero').val("");
+                    $('#div_VentanaCerrar').jqxWindow({isModal: true});
+                    $('#div_VentanaCerrar').jqxWindow('open');
+                } else if ($.trim($(opcion).text()) === "Ver Anexo") {
+                    if (archivo !== '') {
+                        document.location.target = "_blank";
+                        document.location.href = "../Descarga?opcion=NotaModificatoria&periodo=" + periodo + "&unidadOperativa=" + unidadOperativa + "&codigo=" + codigo + "&documento=" + archivo;
+                    } else {
+                        $.alert({
+                            theme: 'material',
+                            title: 'AVISO DEL SISTEMA',
+                            content: 'No existe Archivo a Vizualizar!!!',
+                            animation: 'zoom',
+                            closeAnimation: 'zoom',
+                            type: 'red',
+                            typeAnimated: true
+                        });
+                    }
                 } else if ($.trim($(opcion).text()) === "Rechazar") {
                     if (autorizacion === 'true') {
                         $.confirm({
@@ -484,6 +482,7 @@
             var row = $("#div_GrillaPrincipal").jqxGrid('getrowdata', args.rowindex);
             codigo = row['codigo'];
             estado = row['estado'];
+            archivo = row['archivo'];
         });
         $("#div_GrillaRegistro").jqxGrid({
             width: '100%',
@@ -814,14 +813,15 @@
     }
     //FUNCION PARA ACTUALIZAR LOS DATOS DE LA NOTA MODIFICATORIA
     function fn_Refrescar() {
-        $("#div_ContextMenu").remove();
-        $("#div_RegistroDetalle").remove();
         $("#div_GrillaPrincipal").remove();
         $("#div_VentanaPrincipal").remove();
-        $("#div_VentanaDetalle").remove();
+        $("#div_GrillaRegistro").remove();
         $("#div_VentanaMetaFisica").remove();
         $("#div_VentanaInforme").remove();
+        $("#div_VentanaCerrar").remove();
+        $("#div_VentanaDetalle").remove();
         $("#div_Reporte").remove();
+        $("#div_ContextMenu").remove();
         var $contenidoAjax = $('#div_Detalle').html('<img src="../Imagenes/Fondos/cargando.gif">');
         $.ajax({
             type: "POST",
@@ -1212,6 +1212,24 @@
                     });
                 }
             });
+            ancho = 500;
+            alto = 100;
+            posicionX = ($(window).width() / 2) - (ancho / 2);
+            posicionY = ($(window).height() / 2) - (alto / 2);
+            //ventana cerrar declaracion jurada
+            $('#div_VentanaCerrar').jqxWindow({
+                position: {x: posicionX, y: posicionY},
+                width: ancho, height: alto, resizable: false,
+                cancelButton: $('#btn_CancelarCerrar'),
+                initContent: function () {
+                    $("#txt_Fichero").jqxInput({placeHolder: "Seleccione el Documento", width: 400, height: 20, minLength: 1});
+                    $('#btn_CancelarCerrar').jqxButton({width: '65px', height: 25});
+                    $('#btn_GuardarCerrar').jqxButton({width: '65px', height: 25});
+                    $('#btn_GuardarCerrar').on('click', function (event) {
+                        fn_GuardarCerrar();
+                    });
+                }
+            });
         }
         return {
             init: function () {
@@ -1446,6 +1464,67 @@
             }
         });
     }
+    //FUNCION PARA GRABAR LOS ARCHIVOS  
+    function fn_GuardarCerrar() {
+        var fichero = $("#txt_Fichero").val();
+        if (fichero !== '') {
+            var formData = new FormData(document.getElementById("frm_NotaModificatoriaCerrar"));
+            formData.append("mode", "C");
+            formData.append("periodo", periodo);
+            formData.append("unidadOperativa", unidadOperativa);
+            formData.append("codigo", codigo);
+            $.ajax({
+                type: "POST",
+                url: "../IduNotaModificatoria",
+                data: formData,
+                dataType: "html",
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    msg = data;
+                    if (msg === "GUARDO") {
+                        $('#div_VentanaCerrar').jqxWindow('close');
+                        $.confirm({
+                            title: 'AVISO DEL SISTEMA',
+                            content: 'Datos procesados correctamente',
+                            type: 'green',
+                            typeAnimated: true,
+                            autoClose: 'cerrarAction|1000',
+                            buttons: {
+                                cerrarAction: {
+                                    text: 'Cerrar',
+                                    action: function () {
+                                        fn_Refrescar();
+                                    }
+                                }
+                            }
+                        });
+                    } else {
+                        $.alert({
+                            theme: 'material',
+                            title: 'AVISO DEL SISTEMA',
+                            content: msg,
+                            animation: 'zoom',
+                            closeAnimation: 'zoom',
+                            type: 'red',
+                            typeAnimated: true
+                        });
+                    }
+                }
+            });
+        } else {
+            $.alert({
+                theme: 'material',
+                title: 'AVISO DEL SISTEMA',
+                content: "Debe seleccionar el archivo con la documentacion sustentatoria\n PROCESO CANCELADO!!!.",
+                animation: 'zoom',
+                closeAnimation: 'zoom',
+                type: 'red',
+                typeAnimated: true
+            });
+        }
+    }
     //FUNCION PARA VALIDAR LOS DATOS DE LA NOTA MODIFICATORIA
     function fn_DetalleNotaModificatoria() {
         var totalAnulacion, totalCredito, cantidad, unidad, totalUnidad, resolucion, totalResolucion, totalFuente, fuente;
@@ -1473,7 +1552,7 @@
         if (cantidad === 0)
             result = "Ingrese el Detalle de la Nota Modificatoria.<br>";
         //if (totalResolucion > 0)
-          //  result = "La Nota Modificatoria solo debe contener una Resolucion, Revise.<br>";
+        //  result = "La Nota Modificatoria solo debe contener una Resolucion, Revise.<br>";
         if (totalFuente > 0)
             result = "La Nota Modificatoria solo debe contener una Fuente de Financiamiento, Revise.<br>";
         switch ($("#cbo_TipoNotaModificatoria").val()) {
@@ -1544,6 +1623,7 @@
     }
     //FUNCION PARA VALIDAR QUE NO SE REPITAN LOS REGISTROS DEL DETALLE
     function fn_validaDetalle(tipo, unidad, presupuesto, resolucion, tipoCalendario, dependencia, secuencia, tarea, cadenaGasto) {
+        var tipoNota = $("#cbo_TipoNotaModificatoria").val();
         var rows = $('#div_GrillaRegistro').jqxGrid('getrows');
         if (modeDetalle === 'I') {
             for (var i = 0; i < rows.length; i++) {
@@ -1551,7 +1631,10 @@
                 if (row.tipo.trim() === tipo.trim() && row.unidad.trim() === unidad.trim() && row.presupuesto.trim() === presupuesto.trim() && row.resolucion.trim() === resolucion.trim() &&
                         row.tipoCalendario.trim() === tipoCalendario.trim() && row.dependencia.trim() === dependencia.trim() && row.secuenciaFuncional.trim() === secuencia.trim() &&
                         row.tarea.trim() === tarea.trim() && row.cadenaGasto.trim() === cadenaGasto.trim()) {
-                    return "Los Datos que desea registrar ya existen, Revise!!";
+                    if (tipoNota === '005' && tipo.trim() === 'Crédito')
+                        return "";
+                    else
+                        return "Los Datos que desea registrar ya existen, Revise!!"+ tipo.trim();
                 }
             }
         }
@@ -1652,7 +1735,7 @@
                 <tr>
                     <td class="inputlabel">Motivo : </td>
                     <td colspan="5"><textarea id="txt_Motivo" name="txt_Motivo" style="text-transform: uppercase;"/></textarea></td>
-                </tr>          
+                </tr>
                 <tr>
                     <td class="Summit" colspan="6">
                         <div>
@@ -1774,19 +1857,6 @@
         </form>
     </div>
 </div>
-<div id="div_Reporte" style="display: none">
-    <div>
-        <span style="float: left">LISTADO DE REPORTES</span>
-    </div>
-    <div style="overflow: hidden">
-        <div id='div_EJE0022'>Nota Modificatoria</div>
-        <div id='div_EJE0023'>Informe - Anexo N° 3</div>
-        <div class="Summit">
-            <input type="submit" id="btn_Imprimir" name="btn_Imprimir" value="Ver" style="margin-right: 20px"/>
-            <input type="button" id="btn_CerrarImprimir" name="btn_CerrarImprimir" value="Cerrar" style="margin-right: 20px"/>
-        </div>
-    </div>
-</div>
 <div id="div_VentanaMetaFisica" style="display: none">
     <div>
         <span style="float: left">NOTA MODIFICATORIA - META FISICA</span>
@@ -1854,15 +1924,54 @@
         </form>
     </div>
 </div>
+<div id="div_VentanaCerrar" style="display: none">
+    <div>
+        <span style="float: left">CERRAR NOTA MODIFICATORIA</span>
+    </div>
+    <div style="overflow: hidden">
+        <form id="frm_NotaModificatoriaCerrar" name="frm_NotaModificatoriaCerrar" enctype="multipart/form-data" action="javascript:fn_GuardarCerrar();" method="post">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td class="inputlabel">Anexos : </td>
+                    <td>
+                        <input type="file" id="txt_Fichero" name="txt_Fichero" style="text-transform: uppercase;" accept="application/pdf"/>
+                    </td> 
+                </tr>
+                <tr>
+                    <td class="Summit" colspan="2">
+                        <div>
+                            <input type="button" id="btn_GuardarCerrar"  value="Guardar" style="margin-right: 20px"/>
+                            <input type="button" id="btn_CancelarCerrar" value="Cancelar" style="margin-right: 20px"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<div id="div_Reporte" style="display: none">
+    <div>
+        <span style="float: left">LISTADO DE REPORTES</span>
+    </div>
+    <div style="overflow: hidden">
+        <div id='div_EJE0022'>Nota Modificatoria</div>
+        <div id='div_EJE0023'>Informe - Anexo N° 3</div>
+        <div class="Summit">
+            <input type="submit" id="btn_Imprimir" name="btn_Imprimir" value="Ver" style="margin-right: 20px"/>
+            <input type="button" id="btn_CerrarImprimir" name="btn_CerrarImprimir" value="Cerrar" style="margin-right: 20px"/>
+        </div>
+    </div>
+</div>
 <div id='div_ContextMenu' style='display: none;'>
     <ul>
-        <li>Editar</li>
-        <li>Anular</li> 
-        <li>Meta Fisica</li> 
-        <li>Informe</li>
-        <li>Cerrar</li>
+        <li style="font-weight: bold;">Editar</li>
+        <li style="font-weight: bold;">Anular</li> 
+        <li style="font-weight: bold;">Meta Fisica</li> 
+        <li style="font-weight: bold;">Informe</li>
+        <li style="font-weight: bold;color: green;">Cerrar</li>
+        <li style="font-weight: bold;">Ver Anexo</li>
         <li type='separator'></li>
-        <li style="font-weight: bold">Verificar</li>
-        <li style="font-weight: bold;color: red">Rechazar</li>
+        <li style="font-weight: bold;color: blue;">Verificar</li>
+        <li style="font-weight: bold;color: red;">Rechazar</li>
     </ul>
 </div>

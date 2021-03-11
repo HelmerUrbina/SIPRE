@@ -48,14 +48,15 @@
         if (msg === "")
             msg = fn_validaCombos('#cbo_Mes', "Seleccione el Mes.");
         if (msg === "") {
-            $("#div_ContextMenu").remove();
-            $("#div_RegistroDetalle").remove();
             $("#div_GrillaPrincipal").remove();
             $("#div_VentanaPrincipal").remove();
-            $("#div_VentanaDetalle").remove();
+            $("#div_GrillaRegistro").remove();
             $("#div_VentanaMetaFisica").remove();
             $("#div_VentanaInforme").remove();
+            $("#div_VentanaDetalle").remove();
+            $("#div_VentanaCerrar").remove();
             $("#div_Reporte").remove();
+            $("#div_ContextMenu").remove();
             var $contenidoAjax = $('#div_Detalle').html('<img src="../Imagenes/Fondos/cargando.gif">');
             $.ajax({
                 type: "GET",

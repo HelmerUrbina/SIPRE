@@ -276,7 +276,6 @@
                         $("#div_SaldoHojaTrabajo").jqxNumberInput({width: 120, height: 20, max: 999999999, digits: 9, decimalDigits: 2, disabled: true});
                         $('#btn_CancelarHojaTrabajo').jqxButton({width: '65px', height: 25});
                         $('#btn_GuardarHojaTrabajo').jqxButton({width: '65px', height: 25});
-
                         $('#btn_GuardarHojaTrabajo').on('click', function (event) {
                             $('#frm_HojaTrabajo').jqxValidator('validate');
                         });
@@ -450,6 +449,7 @@
             url: "../TextoAjax",
             data: {mode: 'item', codigo: busca},
             success: function (data) {
+              //  alert(data);
                 $("#txt_ItemHojaTrabajo").html(data);
             }
         });
@@ -460,12 +460,12 @@
     <div>
         <span style="float: left">CUADRO DE NECESIDADES VALORIZADAS</span>
     </div>
-    <div style="overflow: hidden">        
+    <div style="overflow: hidden">
         <form id="frm_HojaTrabajo" name="frm_HojaTrabajo" method="post" >
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">                                    
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td class="inputlabel">Item : </td>
-                    <td colspan="3"><input type="text" id="txt_ItemHojaTrabajo" name="txt_ItemHojaTrabajo" style="text-transform: uppercase;"/></td>                          
+                    <td colspan="3"><input type="text" id="txt_ItemHojaTrabajo" name="txt_ItemHojaTrabajo" style="text-transform: uppercase;" autocomplete="off"/></td>
                 </tr> 
                 <tr>
                     <td class="inputlabel">Cadena Gasto : </td>
@@ -484,29 +484,29 @@
                         <select id="cbo_UnidadMedidaHojaTrabajo" name="cbo_UnidadMedidaHojaTrabajo">
                             <c:forEach var="e" items="${objUnidadMedida}">   
                                 <option value="${e.codigo}">${e.descripcion}</option>
-                            </c:forEach>                               
+                            </c:forEach>
                         </select>
-                    </td>                          
-                </tr>                
+                    </td>
+                </tr>
                 <tr>
                     <td class="inputlabel">Cantidad : </td>
-                    <td colspan="3"><div id="div_CantidadHojaTrabajo"></div></td>                          
+                    <td colspan="3"><div id="div_CantidadHojaTrabajo"></div></td>
                 </tr>
                 <tr>
                     <td class="inputlabel">Val. Ref. S/. : </td>
-                    <td colspan="3"><div id="div_PrecioHojaTrabajo"></div></td>                          
-                </tr>                
+                    <td colspan="3"><div id="div_PrecioHojaTrabajo"></div></td>
+                </tr>
                 <tr>
                     <td class="inputlabel">Total : </td>
-                    <td><div id="div_TotalHojaTrabajo"></div></td>                          
+                    <td><div id="div_TotalHojaTrabajo"></div></td>
                     <td class="inputlabel">Saldo : </td>
-                    <td><div id="div_SaldoHojaTrabajo"></div></td>  
+                    <td><div id="div_SaldoHojaTrabajo"></div></td>
                 </tr>
                 <tr>
                     <td class="Summit" colspan="4">
-                        <div>                            
+                        <div>
                             <input type="button" id="btn_GuardarHojaTrabajo"  value="Guardar" style="margin-right: 20px" />
-                            <input type="button" id="btn_CancelarHojaTrabajo" value="Cancelar" style="margin-right: 20px"/>                            
+                            <input type="button" id="btn_CancelarHojaTrabajo" value="Cancelar" style="margin-right: 20px"/>
                         </div>
                     </td>
                 </tr>

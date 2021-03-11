@@ -310,6 +310,9 @@
                                 <li class="link"> 1. <a href="Descarga/SIPRE_ManualUsuario.pdf" target="_blank">SIPRE - Manual</a></li>
                                 <li class="link"> 2. <a href="Descarga/SIPRE_ProgramacionMultianual.pdf" target="_blank">SIPRE - Programación Multianual</a></li>
                                 <li class="link"> 3. <a href="Descarga/FormatoConfidencialidadOPRE2021.pdf" target="_blank"><span class="inputlabelred">Formato de Confidencialidad AF-2021.</span></a></li>
+                                <li type='separator'>&nbsp;</li>
+                                    <%--<li class="link"> 3. <a href="Descarga/FaxMultiple2021-0008-OPRE.pdf" target="_blank"><span class="inputlabelred">Fax Mult. N° 0008 - Solicita registro en el SIPRE del Cuadro de Necesidades Valorizadas (CNV) del PIA AF-2021.</span></a></li>--%>
+                                <li class="link"> 3. <a href="Descarga/FaxMultiple2021-0008-OPRE.pdf" target="_blank">Fax Mult. N° 0008 - Solicita registro en el SIPRE del Cuadro de Necesidades Valorizadas (CNV) del PIA AF-2021.</a></li>
                             </ul>
                         </div>
                     </div>
@@ -376,13 +379,10 @@
                         <div style="text-align: center">PROGRAMACIÓN y FORMULACIÓN PRESUPUESTAL</div>
                         <div>
                             <ul>
-                                <li class="link"> 1. <a href="Descarga/Directiva001-2014PlaneamientoEstrategico-CEPLAN.pdf" target="_blank">Directiva General del Proceso de Planeamiento Estratégico - CEPLAN.</a></li>
-                                <li class="link"> 2. <a href="Descarga/VinculacióndelPlaneamientoconelPresupuesto-CEPLAN.pdf" target="_blank">Vinculación del Planeamiento con el Presupuesto - CEPLAN.</a></li>
-                                <li class="link"> 3. <a href="Descarga/FormatoProgramacionMultianualGastos2021.xlsx" target="_blank">Formato para el Sustento del Anteproyecto del PPTO AF-2021.</a></li>
-                                <li class="link"> 4. <a href="Descarga/DirectivaProgramacionMultianualFormulacionPPtal.pdf" target="_blank">Directiva de Programación Multianual y Formulación Presupuestaria.</a></li>
-                                <li class="link"> 5. <a href="Descarga/Anexo1-DefinicionesProgramacionMultianual.pdf" target="_blank">Definiciones - Programación Multianual.</a></li>
-                                <li class="link"> 6. <a href="Descarga/Anexo2-EquivalenciaClasificadoresGasto2021-2023.pdf" target="_blank">Equivalencia de los Clasificadores de Gasto para la P.M. 2021-2023.</a></li>
-                                <li class="link"> 7. <a href="Descarga/Directiva001-2020MEFProgramacionMultianual.pdf" target="_blank">Directiva de Programación Multianual Presupuestaria y Formulación Presupuestaria.</a></li>
+                                <li class="link"> 1. <a href="Descarga/DirectivaProgramacionMultianualFormulacionPPtal2021.pdf" target="_blank"><span class="inputlabelred">Directiva de Programación Multianual y Formulación Presupuestaria.</span></a></li>
+                                <li class="link"> 2. <a href="Descarga/Anexo2-EquivalenciaClasificadoresGasto2022-2024.pdf" target="_blank"><span class="inputlabelred">Equivalencia de los Clasificadores de Gasto para la P.M. 2021-2023.</span></a></li>
+                                <li class="link"> 3. <a href="Descarga/LineamientosProgramaciónMultianualFormulaciónPresupuestariaUE003EP.pdf" target="_blank"><span class="inputlabelred">Lineamientos para la Programación Multianual y Formulación Presupuestaria en la UE 003 EP.</span></a></li>
+                                <li class="link"> 4. <a href="Descarga/ANEXO04GuiaElaboraciónCNV.xlsx" target="_blank"><span class="inputlabelred">ANEXO N 04-Guia para elaboración de CNV.</span></a></li>
                             </ul>
                         </div>
                     </div>
@@ -390,7 +390,9 @@
                         <div style="text-align: center">EJECUCIÓN PRESUPUESTAL</div>
                         <div>
                             <ul>
-                                    <%--<li class="link"> 4. <a href="Descarga/FaxMultiple2020-0053-OPRE.pdf" target="_blank"><span class="inputlabelred">Fax Mult. N° 0053 - Evaluación Presupuestal al 1er Semestre AF-2020 “Lineamientos Complementarios para la Evaluación del Presupuesto Institucional del al UE 003: Ejercito Peruano AF-2020”.</span></a></li>--%>
+                                <li class="link"> 1. <a href="Descarga/FaxMultiple2021-0001-OPRE.pdf" target="_blank">Fax Mult. N° 0001 - Sobre Acuerdo de Confidencialidad para Proteccion de Datos de los Usuario del SIPRE.</a></li>
+                                <li class="link"> 2. <a href="Descarga/FaxMultiple2021-0007-OPRE.pdf" target="_blank">Fax Mult. N° 0007 - Sobre Modificaciones Presupuestales a nivel Espeficia de Gasto y Demandas Adicionales en el AF-2021.</a></li>
+                                <li class="link"> 3. <a href="Descarga/FaxMultiple2021-0008-OPRE.pdf" target="_blank">Fax Mult. N° 0008 - Solicita registro en el SIPRE del Cuadro de Necesidades Valorizadas (CNV) del PIA AF-2021.</a></li>
                             </ul>
                         </div>
                     </div>
@@ -481,5 +483,5 @@
 <script type="text/javascript">
     //fn_Aviso();
     //fn_verDocumento();
-   // window.open("Descarga/FaxMultiple2020-0084-OPRE.pdf", "Fax Multiple 0084-OPRE", "width=800, height=550, top=100, left=300");
+    // window.open("Descarga/FaxMultiple2020-0084-OPRE.pdf", "Fax Multiple 0084-OPRE", "width=800, height=550, top=100, left=300");
 </script>

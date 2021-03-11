@@ -14,7 +14,6 @@ import DataService.Despachadores.Impl.DecretoDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -36,7 +35,6 @@ public class DecretoServlet extends HttpServlet {
     private ServletContext context = null;
     private HttpSession session = null;
     private RequestDispatcher dispatcher = null;
-    private List objDocumentos;
     private BeanMesaParte objBnDecreto;
     private Connection objConnection;
     private DecretoDAO objDsDecreto;
@@ -48,11 +46,6 @@ public class DecretoServlet extends HttpServlet {
         context = config.getServletContext();
         session = request.getSession(false);
         BeanUsuario objUsuario = (BeanUsuario) session.getAttribute("objUsuario" + session.getId());
-        //VERIFICAMOS LA SESSION DEL USUARIO
-        if (objUsuario == null) {
-            dispatcher = request.getRequestDispatcher("/FinSession.jsp");
-            dispatcher.forward(request, response);
-        }
         objConnection = (Connection) context.getAttribute("objConnection");
         String result = null;
         objBnDecreto = new BeanMesaParte();
@@ -64,7 +57,6 @@ public class DecretoServlet extends HttpServlet {
         objBnDecreto.setNumero(request.getParameter("numero"));
         objDsDecreto = new DecretoDAOImpl(objConnection);
         if (objBnDecreto.getMode().equals("G")) {
-            objDocumentos = objDsDecreto.getConsultaDocumentos(objBnDecreto, objUsuario.getUsuario());
             objDsCombo = new CombosDAOImpl(objConnection);
             if (request.getAttribute("objArea") != null) {
                 request.removeAttribute("objArea");
@@ -74,22 +66,25 @@ public class DecretoServlet extends HttpServlet {
                 request.removeAttribute("objPrioridad");
             }
             request.setAttribute("objPrioridad", objDsCombo.getPrioridad());
+            if (request.getAttribute("objUsuarioJefatura") != null) {
+                request.removeAttribute("objUsuarioJefatura");
+            }
+            request.setAttribute("objUsuarioJefatura", objDsCombo.getUsuarioJefatura(objBnDecreto.getPeriodo()));
+            if (request.getAttribute("objDocumentos") != null) {
+                request.removeAttribute("objDocumentos");
+            }
+            request.setAttribute("objDocumentos", objDsDecreto.getConsultaDocumentos(objBnDecreto, objUsuario.getUsuario()));
         }
         if (objBnDecreto.getMode().equals("U")) {
             objBnDecreto = objDsDecreto.getDecretoDocumento(objBnDecreto, objUsuario.getUsuario());
             result = objBnDecreto.getUsuarioResponsable();
         }
         if (objBnDecreto.getMode().equals("B")) {
-            result = "" + objDsDecreto.getListaDetalleDocumentoDecretado(objBnDecreto, objUsuario.getUsuario());
+            result = "" + objDsDecreto.getListaDetalleDocumentoDecretado(objBnDecreto);
         }
-        if (request.getAttribute("objDocumentos") != null) {
-            request.removeAttribute("objDocumentos");
+        if (objBnDecreto.getMode().equals("S")) {
+            result = "" + objDsDecreto.getListaSeguimientoDecretado(objBnDecreto);
         }
-        if (request.getAttribute("objBnDecreto") != null) {
-            request.removeAttribute("objBnDecreto");
-        }
-        request.setAttribute("objDocumentos", objDocumentos);
-        request.setAttribute("objBnDecreto", objBnDecreto);
         //SE ENVIA DE ACUERDO AL MODO SELECCIONADO
         switch (request.getParameter("mode")) {
             case "decreto":

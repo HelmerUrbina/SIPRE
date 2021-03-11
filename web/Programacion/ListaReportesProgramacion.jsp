@@ -10,9 +10,6 @@
     var presupuesto = '${objBnReporte.presupuesto}';
     var unidadOperativa = '${objBnReporte.unidadOperativa}';
     var reporte = null;
-    if (autorizacion === 'false') {
-        window.location = "../Error/PaginaMantenimiento.jsp";
-    }
     $(document).ready(function () {
         var source = [
             {id: "PROG0005", label: "1. Programación Multianual de Gastos"},

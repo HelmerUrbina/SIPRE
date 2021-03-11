@@ -9,9 +9,6 @@
     var periodo = $("#cbo_Periodo").val();
     var presupuesto = $("#cbo_Presupuesto").val();
     var unidadOperativa = $("#cbo_UnidadOperativa").val();
-    if (autorizacion === 'false') {
-        window.location = "../Error/PaginaMantenimiento.jsp";
-    }
     var codigo = null;
     var mode = null;
     var tipo = null;

@@ -83,13 +83,6 @@ public class DecretoDAOImpl implements DecretoDAO {
             }
         } catch (SQLException e) {
             System.out.println("Error al obtener getConsultaDocumentos(objBnDecreto) : " + e.getMessage());
-            objDsMsgerr = new MsgerrDAOImpl(objConnection);
-            objBnMsgerr = new BeanMsgerr();
-            objBnMsgerr.setUsuario(usuario);
-            objBnMsgerr.setTabla("SIPE_DOCUMENTO");
-            objBnMsgerr.setTipo(objBnDecreto.getMode().toUpperCase());
-            objBnMsgerr.setDescripcion(e.getMessage());
-            s = objDsMsgerr.iduMsgerr(objBnMsgerr);
         } finally {
             try {
                 if (objResultSet != null) {
@@ -134,7 +127,39 @@ public class DecretoDAOImpl implements DecretoDAO {
     }
 
     @Override
-    public ArrayList getListaDetalleDocumentoDecretado(BeanMesaParte objBeanDecreto, String usuario) {
+    public BeanMesaParte getDecretoDocumento(BeanMesaParte objBeanDecreto, String usuario) {
+        sql = "SELECT VUSUARIO_EMISOR FROM SIPE_DECRETO_DOCUMENTO WHERE "
+                + "CPERIODO_CODIGO=? AND "
+                + "CDOCUMENTO_TIPO=? AND "
+                + "CDOCUMENTO_NUMERO=? AND "
+                + "NDECRETO_DOCUMENTO=1 "
+                + "GROUP BY VUSUARIO_EMISOR";
+        try {
+            objPreparedStatement = objConnection.prepareStatement(sql);
+            objPreparedStatement.setString(1, objBeanDecreto.getPeriodo());
+            objPreparedStatement.setString(2, objBeanDecreto.getTipo());
+            objPreparedStatement.setString(3, objBeanDecreto.getNumero());
+            objResultSet = objPreparedStatement.executeQuery();
+            if (objResultSet.next()) {
+                objBeanDecreto.setUsuarioResponsable(objResultSet.getString("VUSUARIO_EMISOR"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener getDecretoDocumento(objBeanDecreto) : " + e.getMessage());
+        } finally {
+            try {
+                if (objResultSet != null) {
+                    objResultSet.close();
+                    objPreparedStatement.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return objBeanDecreto;
+    }
+
+    @Override
+    public ArrayList getListaDetalleDocumentoDecretado(BeanMesaParte objBeanDecreto) {
         ArrayList<String> Arreglo = new ArrayList<>();
         ArrayList<String> Filas = new ArrayList<>();
         sql = "SELECT DD.NDECRETO_DOCUMENTO,UTIL_NEW.FUN_NOMUSU('0003',DD.VUSUARIO_RECEPCION) AS USUARIO,"
@@ -168,13 +193,6 @@ public class DecretoDAOImpl implements DecretoDAO {
             }
         } catch (SQLException e) {
             System.out.println("Error al obtener getListaDetalleDocumentoDecretado(objBnDecreto) : " + e.getMessage());
-            objDsMsgerr = new MsgerrDAOImpl(objConnection);
-            objBnMsgerr = new BeanMsgerr();
-            objBnMsgerr.setUsuario(usuario);
-            objBnMsgerr.setTabla("SIPE_DECRETO_DOCUMENTO");
-            objBnMsgerr.setTipo(objBeanDecreto.getMode().toUpperCase());
-            objBnMsgerr.setDescripcion(e.getMessage());
-            s = objDsMsgerr.iduMsgerr(objBnMsgerr);
         } finally {
             try {
                 if (objResultSet != null) {
@@ -189,31 +207,35 @@ public class DecretoDAOImpl implements DecretoDAO {
     }
 
     @Override
-    public BeanMesaParte getDecretoDocumento(BeanMesaParte objBeanDecreto, String usuario) {
-        sql = "SELECT VUSUARIO_EMISOR FROM SIPE_DECRETO_DOCUMENTO WHERE "
+    public ArrayList getListaSeguimientoDecretado(BeanMesaParte objBeanDecreto) {
+        ArrayList<String> Arreglo = new ArrayList<>();
+        ArrayList<String> Filas = new ArrayList<>();
+        sql = "SELECT  ROWNUM AS CODIGO, UTIL_NEW.FUN_NOMBRE_AREA_LABORAL(CAREA_CODIGO) AS AREA, "
+                + "UTIL_NEW.FUN_NOMUSU('0003', VUSUARIO_RECEPCION) USUARIO_RESPONSABLE, "
+                + "VDECRETO_OBSERVACION AS COMENTARIO, TO_CHAR(DFECHA_DECRETO,'DD/MM/YYYY') AS DFECHA_DECRETO "
+                + "FROM SIPE_DECRETO_DOCUMENTO WHERE "
                 + "CPERIODO_CODIGO=? AND "
                 + "CDOCUMENTO_TIPO=? AND "
-                + "CDOCUMENTO_NUMERO=? AND "
-                + "NDECRETO_DOCUMENTO=1 "
-                + "GROUP BY VUSUARIO_EMISOR";
+                + "CDOCUMENTO_NUMERO=? "
+                + "ORDER BY NDECRETO_DOCUMENTO ";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, objBeanDecreto.getPeriodo());
             objPreparedStatement.setString(2, objBeanDecreto.getTipo());
             objPreparedStatement.setString(3, objBeanDecreto.getNumero());
             objResultSet = objPreparedStatement.executeQuery();
-            if (objResultSet.next()) {
-                objBeanDecreto.setUsuarioResponsable(objResultSet.getString("VUSUARIO_EMISOR"));
+            while (objResultSet.next()) {
+                Filas.clear();
+                String arreglo = objResultSet.getString("CODIGO") + "+++"
+                        + objResultSet.getString("AREA") + "+++"
+                        + objResultSet.getString("USUARIO_RESPONSABLE") + "+++"
+                        + objResultSet.getString("COMENTARIO") + "+++"
+                        + objResultSet.getString("DFECHA_DECRETO");
+                Filas.add(arreglo);
+                Arreglo.add("" + Filas);
             }
         } catch (SQLException e) {
-            System.out.println("Error al obtener getDecretoDocumento(objBeanDecreto) : " + e.getMessage());
-            objDsMsgerr = new MsgerrDAOImpl(objConnection);
-            objBnMsgerr = new BeanMsgerr();
-            objBnMsgerr.setUsuario(usuario);
-            objBnMsgerr.setTabla("SIPE_DECRETO_DOCUMENTO");
-            objBnMsgerr.setTipo(objBeanDecreto.getMode().toUpperCase());
-            objBnMsgerr.setDescripcion(e.getMessage());
-            s = objDsMsgerr.iduMsgerr(objBnMsgerr);
+            System.out.println("Error al obtener getListaSeguimientoDecretado(objBnDecreto) : " + e.getMessage());
         } finally {
             try {
                 if (objResultSet != null) {
@@ -224,6 +246,6 @@ public class DecretoDAOImpl implements DecretoDAO {
                 System.out.println(e.getMessage());
             }
         }
-        return objBeanDecreto;
+        return Arreglo;
     }
 }

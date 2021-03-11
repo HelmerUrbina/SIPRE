@@ -6,10 +6,10 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
-    var periodo = '${objBnMesaParte.periodo}';
-    var tipo = '${objBnMesaParte.tipo}';
-    var mes = '${objBnMesaParte.mes}';
-    var codigo = '${objBnMesaParte.numero}';
+    var periodo = $("#cbo_Periodo").val();
+    var tipo = "E";
+    var mes = $("#cbo_Mes").val();
+    var codigo = null;
     var archivo = null;
     var codigoUsuario = '';
     var codInstitucion = '';

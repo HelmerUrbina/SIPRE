@@ -176,7 +176,7 @@ public class CombosDAOImpl implements CombosDAO {
         }
         return lista;
     }
-    
+
     @Override
     public List getGenericaGasto() {
         lista = new LinkedList<>();
@@ -1586,18 +1586,17 @@ public class CombosDAOImpl implements CombosDAO {
                             + "ESTREG='AC' "
                             + "ORDER BY COUUOO";
                 } else {
-                  /*  sql = "SELECT COUUOO AS CODIGO, COUUOO||':'||ABUUOO AS DESCRIPCION "
+                    sql = "SELECT COUUOO AS CODIGO, COUUOO||':'||ABUUOO AS DESCRIPCION "
                             + "FROM TAUUOO WHERE "
                             + "TIUUOO <> 'P' AND "
                             + "ESTREG='AC' AND "
                             + "COUUOO IN ('" + unidadOperativa + "','4001','1000','4288','4363') ORDER BY COUUOO";
-                            */
-                    
-                    sql = "SELECT COUUOO AS CODIGO, COUUOO||':'||ABUUOO AS DESCRIPCION "
+
+                    /* sql = "SELECT COUUOO AS CODIGO, COUUOO||':'||ABUUOO AS DESCRIPCION "
                             + "FROM TAUUOO WHERE "
                             + "ESTREG='AC' "
                             + "ORDER BY COUUOO";
-                    
+                     */
                 }
             }
         }
@@ -2785,7 +2784,8 @@ public class CombosDAOImpl implements CombosDAO {
         } else if (tipo.equals("C")) {
             sql = "SELECT CODDEP AS CODIGO, CODDEP||':'||ABRDEP AS DESCRIPCION "
                     + "FROM TABDEP WHERE "
-                    + "COUUOO=? "
+                    + "COUUOO=? AND "
+                    + "ESTREG='AC' "
                     + "ORDER BY DESCRIPCION";
         }
         try {
@@ -3450,7 +3450,8 @@ public class CombosDAOImpl implements CombosDAO {
                 || unidadOperativa.equals("0794") || unidadOperativa.equals("0795") || unidadOperativa.equals("0796") || unidadOperativa.equals("0797"))) {
             sql = "SELECT CODDEP AS CODIGO, CODDEP||':'||ABRDEP AS DESCRIPCION "
                     + "FROM TABDEP WHERE "
-                    + "COUUOO=? "
+                    + "COUUOO=? AND "
+                    + "ESTREG='AC' "
                     + "ORDER BY CODIGO";
         } else {
             sql = "SELECT DISTINCT CDEPENDENCIA_CODIGO AS CODIGO, CDEPENDENCIA_CODIGO||':'||UTIL_NEW.FUN_ABRDEP(CUNIDAD_OPERATIVA_CODIGO, CDEPENDENCIA_CODIGO) AS DESCRIPCION "
@@ -4776,6 +4777,38 @@ public class CombosDAOImpl implements CombosDAO {
             }
         } catch (SQLException e) {
             System.out.println("Error al obtener getDocumentoReferencia() " + e.getMessage());
+        } finally {
+            try {
+                if (objResultSet != null) {
+                    objResultSet.close();
+                    objPreparedStatement.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return lista;
+    }
+
+    @Override
+    public List getUsuarioJefatura(String periodo) {
+        lista = new LinkedList<>();
+        sql = "SELECT CODSIS AS CODIGO, APEPRS||' '||NOMPRS AS DESCRIPCION "
+                + "FROM TABPRS WHERE "
+                + "CODPER=? AND "
+                + "COARLB='01'";
+        try {
+            objPreparedStatement = objConnection.prepareStatement(sql);
+            objPreparedStatement.setString(1, periodo);
+            objResultSet = objPreparedStatement.executeQuery();
+            while (objResultSet.next()) {
+                comun = new BeanComun();
+                comun.setCodigo(objResultSet.getString("CODIGO"));
+                comun.setDescripcion(objResultSet.getString("DESCRIPCION"));
+                lista.add(comun);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener getUsuarioJefatura(" + periodo + ") " + e.getMessage());
         } finally {
             try {
                 if (objResultSet != null) {

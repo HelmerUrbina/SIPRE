@@ -3,13 +3,13 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.8150000000000008"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="356"/>
+	<property name="ireport.x" value="325"/>
+	<property name="ireport.y" value="68"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["2020"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["2021"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PRESUPUESTO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
@@ -18,10 +18,10 @@
 		<defaultValueExpression><![CDATA["43987155"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["124841A"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["120013A"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CODIGO2" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["124841A"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["120013A"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT 
@@ -434,7 +434,7 @@ ORDER BY comcab.nrocob, COMDET.COUUOO, COMDET.SECFUN, comdet.numsol, COMDET.COME
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{FIRMA2A}+", "+$F{FIRMA2B}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FIRMA2B}+" "+$F{FIRMA2A}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement key="textField-59" x="210" y="70" width="140" height="10" uuid="87db43e4-4368-4a82-a893-a7f74d3798dd"/>
@@ -486,7 +486,7 @@ ORDER BY comcab.nrocob, COMDET.COUUOO, COMDET.SECFUN, comdet.numsol, COMDET.COME
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{FIRMA3A}+", "+$F{FIRMA3B}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FIRMA3B}+" "+$F{FIRMA3A}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement key="textField-67" x="390" y="70" width="140" height="10" uuid="def4b6ec-4135-4863-a877-76af818658a8"/>
@@ -551,7 +551,7 @@ ORDER BY comcab.nrocob, COMDET.COUUOO, COMDET.SECFUN, comdet.numsol, COMDET.COME
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{FIRMA1A}+", "+$F{FIRMA1B}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FIRMA1B}+" "+$F{FIRMA1A}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement key="textField-57" x="20" y="50" width="140" height="10" uuid="74a1e52b-5486-424f-97ba-cfd911972fe6"/>

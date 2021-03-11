@@ -258,6 +258,8 @@ public interface CombosDAO {
 
     public List getDocumentoReferencia(String periodo, String tipo, String usuario);
 
+    public List getUsuarioJefatura(String periodo);
+    
     public List getUsuarioSubDecreto(String area, String codusu);
 
     public List getGenericaGastoUnidad(String periodo, Integer presupuesto, String unidadOperativa);

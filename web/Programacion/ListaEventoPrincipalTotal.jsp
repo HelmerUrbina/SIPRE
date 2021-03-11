@@ -10,9 +10,6 @@
     var periodo = $("#cbo_Periodo").val();
     var presupuesto = $("#cbo_Presupuesto").val();
     var unidadOperativa = $("#cbo_UnidadOperativa").val();
-    if (autorizacion === 'false') {
-        window.location = "../Error/PaginaMantenimiento.jsp";
-    }
     var codigo = null;
     var lista = new Array();
     <c:forEach var="c" items="${objEvento}">

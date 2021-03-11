@@ -2,29 +2,29 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Report_COBERTURAS_RANGO1" pageWidth="612" pageHeight="782" whenNoDataType="AllSectionsNoDetail" columnWidth="574" leftMargin="23" rightMargin="15" topMargin="22" bottomMargin="22" uuid="6924503d-60f9-4b7a-bcd6-87cfef896b39">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="3.7974983358324153"/>
-	<property name="ireport.x" value="1347"/>
-	<property name="ireport.y" value="715"/>
+	<property name="ireport.zoom" value="1.331000000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="206"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["2020"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["2021"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PRESUPUESTO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["9"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="USUARIO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["43305891"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["920252"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["1300062"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CODIGO2" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["920252"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["1300062"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="UNIDAD_OPERATIVA" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["0734"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["0702"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT comdet.numsol,
@@ -658,7 +658,7 @@ ORDER BY comcab.nrocob,
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{FIRMA2A}+", "+$F{FIRMA2B}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FIRMA2B}+" "+$F{FIRMA2A}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="false">
 					<reportElement key="textField-59" positionType="Float" x="78" y="77" width="132" height="13" uuid="ad1b1815-c559-4bf9-864f-c298af3bfd5f"/>
@@ -710,7 +710,7 @@ ORDER BY comcab.nrocob,
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{FIRMA3A}+", "+$F{FIRMA3B}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FIRMA3B}+" "+$F{FIRMA3A}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="false">
 					<reportElement key="textField-67" positionType="Float" x="362" y="77" width="132" height="13" uuid="4058acd9-4d75-43bd-b43c-c75e8ada1242"/>

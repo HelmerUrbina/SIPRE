@@ -21,6 +21,7 @@ public interface DecretoDAO {
 
     public BeanMesaParte getDecretoDocumento(BeanMesaParte objBeanDecreto, String usuario);
 
-    public ArrayList getListaDetalleDocumentoDecretado(BeanMesaParte objBeanDecreto, String usuario);
+    public ArrayList getListaDetalleDocumentoDecretado(BeanMesaParte objBeanDecreto);
 
+    public ArrayList getListaSeguimientoDecretado(BeanMesaParte objBeanDecreto);
 }

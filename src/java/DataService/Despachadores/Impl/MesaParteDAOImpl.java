@@ -54,7 +54,7 @@ public class MesaParteDAOImpl implements MesaParteDAO {
                 + "UTIL_NEW.FUN_NOMUSU('0003',VUSUARIO_RESPONSABLE) AS USUARIO_RESPUESTA, VUSUARIO_RESPONSABLE, "
                 + "PK_MESA_PARTES.FUN_DOCUMENTO_RESPUESTA(CPERIODO_CODIGO, CDOCUMENTO_TIPO, CDOCUMENTO_NUMERO) AS DOC_RESPUESTA, "
                 + "REPLACE(REGEXP_REPLACE(UPPER(VDOCUMENTO_DIGITAL),'''',''),'\n"
-                + "', ' ') AS DOCUMENTO  "
+                + "', ' ') AS DOCUMENTO, VDOCUMENTO_CORREO AS CORREO "
                 + "FROM SIPE_DOCUMENTO WHERE "
                 + "CPERIODO_CODIGO=? AND "
                 + "CMES_CODIGO=? AND "
@@ -86,6 +86,7 @@ public class MesaParteDAOImpl implements MesaParteDAO {
                 objBnMesaParte.setArea(objResultSet.getString("VUSUARIO_RESPONSABLE"));
                 objBnMesaParte.setReferencia(objResultSet.getString("DOC_RESPUESTA"));
                 objBnMesaParte.setArchivo(objResultSet.getString("DOCUMENTO"));
+                objBnMesaParte.setCorreo(objResultSet.getString("CORREO"));
                 lista.add(objBnMesaParte);
             }
         } catch (SQLException e) {
@@ -286,15 +287,16 @@ public class MesaParteDAOImpl implements MesaParteDAO {
                 + "DD.VDECRETO_OBSERVACION AS COMENTARIO "
                 + "FROM SIPE_DOCUMENTO D JOIN SIPE_DECRETO_DOCUMENTO DD ON "
                 + "(D.CPERIODO_CODIGO=DD.CPERIODO_CODIGO AND "
-                + "D.CDOCUMENTO_NUMERO=DD.CDOCUMENTO_NUMERO ) "
-                + "WHERE "
+                + "D.CDOCUMENTO_NUMERO=DD.CDOCUMENTO_NUMERO )  WHERE "
+                + "DD.CPERIODO_CODIGO=? AND "
                 + "DD.VUSUARIO_RECEPCION=? AND "
                 + "DD.CESTADO_DOCUMENTO IN ('DE','RE') AND "
                 + "D.CDOCUMENTO_TIPO='E' "
                 + "ORDER BY DD.CESTADO_DOCUMENTO, D.CDOCUMENTO_NUMERO DESC";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
-            objPreparedStatement.setString(1, objBeanMesaParte.getUsuarioResponsable());
+            objPreparedStatement.setString(1, objBeanMesaParte.getPeriodo());
+            objPreparedStatement.setString(2, objBeanMesaParte.getUsuarioResponsable());
             objResultSet = objPreparedStatement.executeQuery();
             while (objResultSet.next()) {
                 objBnMesaParte = new BeanMesaParte();
