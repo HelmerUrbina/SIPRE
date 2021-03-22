@@ -450,7 +450,7 @@
             $.ajax({
                 type: "POST",
                 url: "../DocumentosDecretados",
-                data: {mode: 'G'},
+                data: {mode: 'G', periodo: periodo, usuario: usuario},
                 success: function (data) {
                     $contenidoAjax.html(data);
                 }

@@ -252,6 +252,8 @@ public interface CombosDAO {
 
     public List getClasificacionDocumento();
 
+    public List getTipoDecreto();
+
     public List getDocumentoReferencia(String periodo, String tipo);
 
     public List getUsuarioDocumento(String usuario);

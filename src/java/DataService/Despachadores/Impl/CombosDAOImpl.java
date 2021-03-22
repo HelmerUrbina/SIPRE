@@ -4670,6 +4670,36 @@ public class CombosDAOImpl implements CombosDAO {
         }
         return lista;
     }
+    
+    @Override
+    public List getTipoDecreto() {
+        lista = new LinkedList<>();
+        sql = "SELECT NTIPO_DECRETO_CODIGO AS CODIGO, "
+                + "VTIPO_DECRETO_DESCRIPCION AS DESCRIPCION "
+                + "FROM SIPE_TIPO_DECRETO";
+        try {
+            objPreparedStatement = objConnection.prepareStatement(sql);
+            objResultSet = objPreparedStatement.executeQuery();
+            while (objResultSet.next()) {
+                comun = new BeanComun();
+                comun.setCodigo(objResultSet.getString("CODIGO"));
+                comun.setDescripcion(objResultSet.getString("DESCRIPCION"));
+                lista.add(comun);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener getClasificacionDocumento() " + e.getMessage());
+        } finally {
+            try {
+                if (objResultSet != null) {
+                    objResultSet.close();
+                    objPreparedStatement.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return lista;
+    }
 
     @Override
     public List getDocumentoReferencia(String periodo, String tipo) {

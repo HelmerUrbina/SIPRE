@@ -62,6 +62,10 @@ public class DecretoServlet extends HttpServlet {
                 request.removeAttribute("objArea");
             }
             request.setAttribute("objArea", objDsCombo.getAreaMesaPartes());
+            if (request.getAttribute("objTipoDecreto") != null) {
+                request.removeAttribute("objTipoDecreto");
+            }
+            request.setAttribute("objTipoDecreto", objDsCombo.getTipoDecreto());
             if (request.getAttribute("objPrioridad") != null) {
                 request.removeAttribute("objPrioridad");
             }

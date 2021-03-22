@@ -168,7 +168,7 @@
                         });
                         $('#frm_MesaParte').jqxValidator({
                             rules: [
-                                {input: '#txt_Institucion', message: 'Ingrese el nombre de la institución', action: 'keyup, blur', rule: 'required'},
+                                {input: '#txt_Institucion', message: 'Ingrese el nombre de la dependencia', action: 'keyup, blur', rule: 'required'},
                                 {input: '#txt_NumeroDocumento', message: 'Ingrese el Numero de Documento!', action: 'keyup, blur', rule: 'required'},
                                 {input: '#txt_Asunto', message: 'Ingrese el Asunto!', action: 'keyup, blur', rule: 'required'},
                                 {input: '#txt_FechaDocumento', message: 'Ingrese la fecha de documento', action: 'keyup, blur', rule: 'required'},
@@ -346,7 +346,7 @@
                         <form id="frm_MesaParte" name="frm_MesaParte" enctype="multipart/form-data" action="RegistrarMesaPartes" method="post">
                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
-                                    <td class="inputlabel">Instituci&oacute;n : </td>
+                                    <td class="inputlabel">Dependencia : </td>
                                     <td><input type="text" id="txt_Institucion" name="txt_Institucion" style="text-transform: uppercase;" autocomplete="off"/></td>
                                 </tr>
                                 <tr>

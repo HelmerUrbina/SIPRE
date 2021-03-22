@@ -81,7 +81,6 @@
             columnsresize: true,
             showfilterrow: true,
             editable: false,
-            pagesize: 30,
             rendertoolbar: function (toolbar) {
                 var container = $("<div style='overflow: hidden; position: relative; margin: 1px;'></div>");
                 var ButtonNuevo = $("<div style='float: left; margin-left: 5px;'><img style='position: relative; margin-top: 2px;' src='../Imagenes/Botones/nuevo42.gif' width=18 height=18 /><span style='margin-left: 4px; position: relative; top: -3px;'> </span></div>");
@@ -284,7 +283,7 @@
                                 fn_CorrelativoDocumento(codigo);
                             }
                         });
-                        $("#txt_NumeroDocumento").jqxInput({width: 120, height: 20, disabled: true});
+                        $("#txt_NumeroDocumento").jqxInput({width: 120, height: 20});
                         $("#cbo_Clasificacion").jqxDropDownList({animationType: 'fade', width: 200, height: 20});
                         $("#txt_FechaDocumento").jqxDateTimeInput({culture: 'es-PE', animationType: 'fade', width: 150, height: 20});
                         $("#txt_FechaRecepcion").jqxInput({width: 150, height: 20, disabled: true});
@@ -300,7 +299,7 @@
                             var msg = "";
                             msg += fn_validaCombos('#cbo_Prioridad', "Seleccione la Prioridad.");
                             msg += fn_validaCombos('#cbo_TipoDocumento', "Seleccione la Tipo de Documento.");
-                            msg += fn_validaCombos('#cbo_Clasificacion', "Seleccione la Clasificacion del Documento."); 
+                            msg += fn_validaCombos('#cbo_Clasificacion', "Seleccione la Clasificacion del Documento.");
                             if (msg === "")
                                 msg = fn_verificarInstitucion();
                             if (msg === "") {
@@ -363,8 +362,8 @@
             var anio = fec.getFullYear();
             var fecha = dia + '/' + mes + '/' + anio;
             $("#txt_FechaRecepcion").val(fecha);
-        }      
-       
+        }
+
         function fn_verificarInstitucion() {
             var msg = "";
             var dato = "";
@@ -506,49 +505,46 @@
             $.each(items, function (index) {
                 lista.push(this.value);
             });
-            alert(lista);
-
-            /* $.ajax({
-             type: "POST",
-             url: "../IduMesaParte",
-             data: {mode: mode, periodo: periodo, tipo: tipo, mes: mes, numero: numero, prioridad: prioridad,
-             tipoDocumento: tipoDocumento, numeroDocumento: numeroDocumento, clasificacion: clasificacion,
-             fechaDocumento: fechaDocumento, fechaRecepcion: fechaRecepcion, asunto: asunto, observacion: observacion,
-             firma: firma, legajos: legajos, folios: folios, lista: JSON.stringify(lista)}, codInstitucion: codInstitucion,
-             area: area, usuario: usuRemitente},
-             success: function (data) {
-             msg = data;
-             if (msg === "GUARDO") {
-             $.confirm({
-             title: 'AVISO DEL SISTEMA',
-             content: 'Datos procesados correctamente',
-             type: 'green',
-             typeAnimated: true,
-             autoClose: 'cerrarAction|1000',
-             buttons: {
-             cerrarAction: {
-             text: 'Cerrar',
-             action: function () {
-             $('#div_VentanaPrincipal').jqxWindow('close');
-             fn_Refrescar();
-             }
-             }
-             }
-             });
-             } else {
-             $.alert({
-             theme: 'material',
-             title: 'AVISO DEL SISTEMA',
-             content: msg,
-             animation: 'zoom',
-             closeAnimation: 'zoom',
-             type: 'red',
-             typeAnimated: true
-             });
-             }
-             }
-             });*/
-
+            $.ajax({
+                type: "POST",
+                url: "../IduMesaParte",
+                data: {mode: mode, periodo: periodo, tipo: tipo, mes: mes, numero: numero, prioridad: prioridad,
+                    tipoDocumento: tipoDocumento, numeroDocumento: numeroDocumento, clasificacion: clasificacion,
+                    fechaDocumento: fechaDocumento, fechaRecepcion: fechaRecepcion, asunto: asunto, observacion: observacion,
+                    firma: firma, legajos: legajos, folios: folios, lista: JSON.stringify(lista), codInstitucion: codInstitucion,
+                    area: area, usuario: usuRemitente},
+                success: function (data) {
+                    msg = data;
+                    if (msg === "GUARDO") {
+                        $.confirm({
+                            title: 'AVISO DEL SISTEMA',
+                            content: 'Datos procesados correctamente',
+                            type: 'green',
+                            typeAnimated: true,
+                            autoClose: 'cerrarAction|1000',
+                            buttons: {
+                                cerrarAction: {
+                                    text: 'Cerrar',
+                                    action: function () {
+                                        $('#div_VentanaPrincipal').jqxWindow('close');
+                                        fn_Refrescar();
+                                    }
+                                }
+                            }
+                        });
+                    } else {
+                        $.alert({
+                            theme: 'material',
+                            title: 'AVISO DEL SISTEMA',
+                            content: msg,
+                            animation: 'zoom',
+                            closeAnimation: 'zoom',
+                            type: 'red',
+                            typeAnimated: true
+                        });
+                    }
+                }
+            });
         }
     });
 </script>
@@ -557,15 +553,15 @@
     <div>
         <span style="float: left">REMISION DE DOCUMENTOS</span>
     </div>
-    <div style="overflow: hidden">        
+    <div style="overflow: hidden">
         <form id="frm_MesaParte" name="frm_MesaParte" method="post">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td class="inputlabel">Correlativo : </td>
-                    <td><input type="text" id="txt_Numero" name="txt_Numero"/></td>             
+                    <td><input type="text" id="txt_Numero" name="txt_Numero"/></td>
                 </tr>
                 <tr>
-                    <td class="inputlabel">Instituci&oacute;n : </td>
+                    <td class="inputlabel">Dependencia : </td>
                     <td><input type="text" id="txt_Institucion" name="txt_Institucion" style="text-transform: uppercase;"/></td>
                 </tr> 
                 <tr>
@@ -575,7 +571,7 @@
                             <option value="0">Seleccione</option>
                             <c:forEach var="d" items="${objPrioridad}">   
                                 <option value="${d.codigo}">${d.descripcion}</option>
-                            </c:forEach>                              
+                            </c:forEach>
                         </select>
                     </td>
                 </tr>
@@ -586,22 +582,22 @@
                             <option value="0">Seleccione</option>
                             <c:forEach var="d" items="${objTipoDocumento}">   
                                 <option value="${d.codigo}">${d.descripcion}</option>
-                            </c:forEach>                              
+                            </c:forEach>
                         </select>
                     </td>
                 </tr>
                 <tr>
                     <td class="inputlabel">Nro Documento : </td>
-                    <td><input type="text" id="txt_NumeroDocumento" name="txt_NumeroDocumento"/></td>             
+                    <td><input type="text" id="txt_NumeroDocumento" name="txt_NumeroDocumento"/></td>
                 </tr>
                 <tr>
                     <td class="inputlabel">Clasificaci&oacute;n : </td>
                     <td>
                         <select id="cbo_Clasificacion" name="cbo_Clasificacion">
                             <option value="0">Seleccione</option>
-                            <c:forEach var="d" items="${objClasificacion}">   
+                            <c:forEach var="d" items="${objClasificacion}">
                                 <option value="${d.codigo}">${d.descripcion}</option>
-                            </c:forEach>                              
+                            </c:forEach>
                         </select>
                     </td>
                 </tr>
@@ -627,20 +623,20 @@
                 </tr>
                 <tr>
                     <td class="inputlabel">Legajos : </td>
-                    <td><div id="div_Legajos"></div></td>                          
+                    <td><div id="div_Legajos"></div></td>
                 </tr>
                 <tr>
                     <td class="inputlabel">Folios : </td>
-                    <td><div id="div_Folios"></div></td>                          
+                    <td><div id="div_Folios"></div></td>
                 </tr> 
                 <tr>
                     <td class="inputlabel">Doc. Referencia : </td>
                     <td>
                         <select id="cbo_Referencia" name="cbo_Referencia">
-                            <option value="0">Seleccione</option>                                                 
+                            <option value="0">Seleccione</option>
                         </select>
                     </td>
-                </tr>     
+                </tr>
                 <tr>
                     <td class="Summit" colspan="4">
                         <div>
@@ -649,11 +645,10 @@
                         </div>
                     </td>
                 </tr>
-            </table>  
+            </table>
         </form>
     </div>
 </div>
-<div id="cbo_Ajax" style='display:none;'></div>
 <div id='div_ContextMenu' style='display:none;'>
     <ul>
         <li>Editar</li>

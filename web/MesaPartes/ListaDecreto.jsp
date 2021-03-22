@@ -244,7 +244,7 @@
                 //INICIA LOS VALORES DE LA VENTANA
                 var posicionX, posicionY;
                 var ancho = 600;
-                var alto = 250;
+                var alto = 275;
                 posicionX = ($(window).width() / 2) - (ancho / 2);
                 posicionY = ($(window).height() / 2) - (alto / 2);
                 $('#div_VentanaPrincipal').jqxWindow({
@@ -261,6 +261,7 @@
                             $("#cbo_Usuario").jqxDropDownList('clear');
                         });
                         $("#cbo_Prioridad").jqxDropDownList({animationType: 'fade', width: 200, height: 20});
+                        $("#cbo_TipoDecretos").jqxDropDownList({animationType: 'fade', checkboxes: true, width: 440, height: 20, dropDownWidth: 500});
                         $("#cbo_Usuario").jqxDropDownList({animationType: 'fade', width: 350, height: 20});
                         $('#btn_Cancelar').jqxButton({width: '65px', height: 25});
                         $('#btn_Guardar').jqxButton({width: '65px', height: 25});
@@ -530,7 +531,7 @@
                     <td>
                         <select id="cbo_UsuarioEmision" name="cbo_UsuarioEmision">
                             <option value="0">Seleccione</option>
-                            <c:forEach var="d" items="${objUsuarioJefatura}">   
+                            <c:forEach var="d" items="${objUsuarioJefatura}">
                                 <option value="${d.codigo}">${d.descripcion}</option>
                             </c:forEach>
                         </select>
@@ -541,7 +542,7 @@
                     <td>
                         <select id="cbo_Prioridad" name="cbo_Prioridad">
                             <option value="0">Seleccione</option>
-                            <c:forEach var="d" items="${objPrioridad}">   
+                            <c:forEach var="d" items="${objPrioridad}">
                                 <option value="${d.codigo}">${d.descripcion}</option>
                             </c:forEach>
                         </select>
@@ -552,7 +553,7 @@
                     <td>
                         <select id="cbo_Area" name="cbo_Area">
                             <option value="0">Seleccione</option>
-                            <c:forEach var="d" items="${objArea}">   
+                            <c:forEach var="d" items="${objArea}">
                                 <option value="${d.codigo}">${d.descripcion}</option>
                             </c:forEach>
                         </select>
@@ -563,6 +564,16 @@
                     <td>
                         <select id="cbo_Usuario" name="cbo_Usuario">
                             <option value="0">Seleccione</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="inputlabel">Decreto : </td>
+                    <td>
+                        <select id="cbo_TipoDecretos" name="cbo_TipoDecretos">
+                           <c:forEach var="d" items="${objTipoDecreto}">
+                                <option value="${d.codigo}">${d.descripcion}</option>
+                            </c:forEach>
                         </select>
                     </td>
                 </tr>
