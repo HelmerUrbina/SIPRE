@@ -29,7 +29,6 @@ public class BeanMesaParte implements Serializable {
     private String Estado;
     private String Usuario;
     private String Asunto;
-    private String Decreto;
     private String Observacion;
     private String Hora;
     private String CodigoArea;
@@ -41,6 +40,7 @@ public class BeanMesaParte implements Serializable {
     private String fechaServidor;
     private String Comentario;
     private String Correo;
+    private String Documento;
     private Date Fecha;
     private Date FechaRecepcion;
     private Date FechaRegistro;
@@ -48,6 +48,7 @@ public class BeanMesaParte implements Serializable {
     private Integer Legajo;
     private Integer Folio;
     private Integer DecretoDocumento;
+    private Integer Decreto;
 
     public String getMode() {
         return mode;
@@ -169,14 +170,6 @@ public class BeanMesaParte implements Serializable {
         this.Asunto = Asunto;
     }
 
-    public String getDecreto() {
-        return Decreto;
-    }
-
-    public void setDecreto(String Decreto) {
-        this.Decreto = Decreto;
-    }
-
     public String getObservacion() {
         return Observacion;
     }
@@ -265,6 +258,14 @@ public class BeanMesaParte implements Serializable {
         this.Correo = Correo;
     }
 
+    public String getDocumento() {
+        return Documento;
+    }
+
+    public void setDocumento(String Documento) {
+        this.Documento = Documento;
+    }
+
     public Date getFecha() {
         return Fecha;
     }
@@ -320,5 +321,14 @@ public class BeanMesaParte implements Serializable {
     public void setDecretoDocumento(Integer DecretoDocumento) {
         this.DecretoDocumento = DecretoDocumento;
     }
+
+    public Integer getDecreto() {
+        return Decreto;
+    }
+
+    public void setDecreto(Integer Decreto) {
+        this.Decreto = Decreto;
+    }
+
     
 }

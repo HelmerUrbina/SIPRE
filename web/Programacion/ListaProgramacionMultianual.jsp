@@ -904,8 +904,9 @@
             var importeA = parseFloat($("#div_ImporteRegistroA").val());
             var importeB = parseFloat($("#div_ImporteRegistroB").val());
             var importeC = parseFloat($("#div_ImporteRegistroC").val());
-            if ((presupuesto === '1' && codigo.substr(0, 4) === '0013') && (unidadOperativa === '0802' || unidadOperativa === '0804' || unidadOperativa === '0806' || unidadOperativa === '0809'
-                    || unidadOperativa === '0810' || unidadOperativa === '0812' || unidadOperativa === '0820' || unidadOperativa === '0822' || unidadOperativa === '0824'
+            if ((presupuesto === '1' && codigo.substr(0, 4) === '0013') && (
+                    unidadOperativa === '0802' || unidadOperativa === '0804' || unidadOperativa === '0806' || unidadOperativa === '0809'
+                    || unidadOperativa === '0808' || unidadOperativa === '0810' || unidadOperativa === '0812' || unidadOperativa === '0820' || unidadOperativa === '0822' || unidadOperativa === '0824'
                     || unidadOperativa === '0826' || unidadOperativa === '0828' || unidadOperativa === '0834' || unidadOperativa === '0838' || unidadOperativa === '0840'
                     || unidadOperativa === '0842' || unidadOperativa === '0843' || unidadOperativa === '0844' || unidadOperativa === '0845' || unidadOperativa === '0846'
                     || unidadOperativa === '0848' || unidadOperativa === '0854' || unidadOperativa === '0858' || unidadOperativa === '0860' || unidadOperativa === '0865'

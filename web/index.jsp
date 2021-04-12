@@ -309,10 +309,10 @@
                             <ul>
                                 <li class="link"> 1. <a href="Descarga/SIPRE_ManualUsuario.pdf" target="_blank">SIPRE - Manual</a></li>
                                 <li class="link"> 2. <a href="Descarga/SIPRE_ProgramacionMultianual.pdf" target="_blank">SIPRE - Programación Multianual</a></li>
-                                <li class="link"> 3. <a href="Descarga/FormatoConfidencialidadOPRE2021.pdf" target="_blank"><span class="inputlabelred">Formato de Confidencialidad AF-2021.</span></a></li>
-                                <li type='separator'>&nbsp;</li>
+                                <li class="link"> 3. <a href="Descarga/FormatoConfidencialidadOPRE2021.pdf" target="_blank">Formato de Confidencialidad AF-2021.</a></li>
+                                
                                     <%--<li class="link"> 3. <a href="Descarga/FaxMultiple2021-0008-OPRE.pdf" target="_blank"><span class="inputlabelred">Fax Mult. N° 0008 - Solicita registro en el SIPRE del Cuadro de Necesidades Valorizadas (CNV) del PIA AF-2021.</span></a></li>--%>
-                                <li class="link"> 3. <a href="Descarga/FaxMultiple2021-0008-OPRE.pdf" target="_blank">Fax Mult. N° 0008 - Solicita registro en el SIPRE del Cuadro de Necesidades Valorizadas (CNV) del PIA AF-2021.</a></li>
+                               
                             </ul>
                         </div>
                     </div>
@@ -379,10 +379,10 @@
                         <div style="text-align: center">PROGRAMACIÓN y FORMULACIÓN PRESUPUESTAL</div>
                         <div>
                             <ul>
-                                <li class="link"> 1. <a href="Descarga/DirectivaProgramacionMultianualFormulacionPPtal2021.pdf" target="_blank"><span class="inputlabelred">Directiva de Programación Multianual y Formulación Presupuestaria.</span></a></li>
-                                <li class="link"> 2. <a href="Descarga/Anexo2-EquivalenciaClasificadoresGasto2022-2024.pdf" target="_blank"><span class="inputlabelred">Equivalencia de los Clasificadores de Gasto para la P.M. 2021-2023.</span></a></li>
-                                <li class="link"> 3. <a href="Descarga/LineamientosProgramaciónMultianualFormulaciónPresupuestariaUE003EP.pdf" target="_blank"><span class="inputlabelred">Lineamientos para la Programación Multianual y Formulación Presupuestaria en la UE 003 EP.</span></a></li>
-                                <li class="link"> 4. <a href="Descarga/ANEXO04GuiaElaboraciónCNV.xlsx" target="_blank"><span class="inputlabelred">ANEXO N 04-Guia para elaboración de CNV.</span></a></li>
+                                <li class="link"> 1. <a href="Descarga/DirectivaProgramacionMultianualFormulacionPPtal2021.pdf" target="_blank">Directiva de Programación Multianual y Formulación Presupuestaria.</a></li>
+                                <li class="link"> 2. <a href="Descarga/Anexo2-EquivalenciaClasificadoresGasto2022-2024.pdf" target="_blank">Equivalencia de los Clasificadores de Gasto para la P.M. 2021-2023.</a></li>
+                                <li class="link"> 3. <a href="Descarga/LineamientosProgramaciónMultianualFormulaciónPresupuestariaUE003EP.pdf" target="_blank">Lineamientos para la Programación Multianual y Formulación Presupuestaria en la UE 003 EP.</a></li>
+                                <li class="link"> 4. <a href="Descarga/ANEXO04GuiaElaboraciónCNV.xlsx" target="_blank">ANEXO N 04-Guia para elaboración de CNV.</a></li>
                             </ul>
                         </div>
                     </div>

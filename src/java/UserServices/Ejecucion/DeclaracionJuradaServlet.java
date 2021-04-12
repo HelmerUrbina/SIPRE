@@ -75,7 +75,7 @@ public class DeclaracionJuradaServlet extends HttpServlet {
         objBnDeclaracionJurada.setCompromisoAnual(request.getParameter("compromisoAnual"));
         objDsDeclaracionJurada = new DeclaracionJuradaDAOImpl(objConnection);
         // DE ACUERO AL MODO, OBTENEMOS LOS DATOS NECESARIOS.
-        if (objBnDeclaracionJurada.getMode().equals("G")) {
+        if (objBnDeclaracionJurada.getMode().equals("G") || objBnDeclaracionJurada.getMode().equals("GC")) {
             objDeclaracionJurada = objDsDeclaracionJurada.getListaDeclaracionJurada(objBnDeclaracionJurada, objUsuario.getUsuario());
             objDeclaracionJuradaDetalle = objDsDeclaracionJurada.getListaDeclaracionJuradaDetalle(objBnDeclaracionJurada, objUsuario.getUsuario());
             objDsCombos = new CombosDAOImpl(objConnection);
@@ -111,7 +111,7 @@ public class DeclaracionJuradaServlet extends HttpServlet {
             objBnDeclaracionJurada = objDsDeclaracionJurada.getDeclaracionJurada(objBnDeclaracionJurada, objUsuario.getUsuario());
             result = objDsDeclaracionJurada.getNumeroDeclaracionJurada(objBnDeclaracionJurada, objUsuario.getUsuario()) + "+++"
                     + objBnDeclaracionJurada.getCompromisoAnual() + "+++"
-                    + objBnDeclaracionJurada.getDocumentoReferencia()+ "+++"
+                    + objBnDeclaracionJurada.getDocumentoReferencia() + "+++"
                     + objBnDeclaracionJurada.getTipoCambio();
         }
         if (request.getAttribute("objDeclaracionJurada") != null) {
@@ -126,6 +126,9 @@ public class DeclaracionJuradaServlet extends HttpServlet {
         switch (objBnDeclaracionJurada.getMode()) {
             case "G":
                 dispatcher = request.getRequestDispatcher("Ejecucion/ListaDeclaracionJurada.jsp");
+                break;
+            case "GC":
+                dispatcher = request.getRequestDispatcher("Ejecucion/ListaDeclaracionJuradaConsulta.jsp");
                 break;
             default:
                 dispatcher = request.getRequestDispatcher("error.jsp");

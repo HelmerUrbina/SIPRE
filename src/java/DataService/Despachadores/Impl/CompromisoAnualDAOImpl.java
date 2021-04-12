@@ -42,7 +42,8 @@ public class CompromisoAnualDAOImpl implements CompromisoAnualDAO {
     public List getListaCompromisosAnuales(BeanEjecucionPresupuestal objBeanEjecucionPresupuestal, String usuario) {
         lista = new LinkedList<>();
         sql = "SELECT "
-                + "NROCER_CA, NUMCOR AS COBERTURA, UTIL_NEW.FUN_CERTIFICADO_SIAF(CODPER, COPPTO, COUUOO, NROCOB) CERTIFICADO, "
+                + "NROCER_CA, NUMCOR AS COBERTURA, COUUOO, COUUOO||':'||UTIL_NEW.FUN_ABUUOO(COUUOO) AS UNIDAD_OPERATIVA, "
+                + "UTIL_NEW.FUN_CERTIFICADO_SIAF(CODPER, COPPTO, COUUOO, NROCOB) CERTIFICADO, "
                 + "REPLACE(REGEXP_REPLACE(UPPER(DESOCE),'[^A-Za-z0-9ÁÉÍÓÚáéíóú ]', ''),'\n"
                 + "', ' ') AS DESOCE, REPLACE(REGEXP_REPLACE(UPPER(DOCREF),'[^A-Za-z0-9ÁÉÍÓÚáéíóú ]', ''),'\n"
                 + "', ' ') AS DOCREF, TO_CHAR(DUSUARIO_CERRADO,'DD/MM/YYYY HH24:MM') FECHA, CASE TIPSOL WHEN 'RE' THEN (-1)*MOCRPR ELSE MOCRPR END AS IMPORTE, TIPCAM, CASE TIPSOL WHEN 'RE' THEN (-1)*IMPDOL ELSE IMPDOL END AS EXTRANJERA,  "
@@ -56,9 +57,9 @@ public class CompromisoAnualDAOImpl implements CompromisoAnualDAO {
                 + "', ' ') AS ARCHIVO "
                 + "FROM TASOCP_CA WHERE "
                 + "CODPER=? AND "
-                + "COUUOO=? AND "
+                + "COUUOO LIKE ? AND "
                 + "COPPTO=? "
-                + "ORDER BY NROCER_CA DESC";
+                + "ORDER BY COUUOO, NROCER_CA DESC";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, objBeanEjecucionPresupuestal.getPeriodo());
@@ -67,7 +68,9 @@ public class CompromisoAnualDAOImpl implements CompromisoAnualDAO {
             objResultSet = objPreparedStatement.executeQuery();
             while (objResultSet.next()) {
                 objBnCompromisoAnual = new BeanEjecucionPresupuestal();
+                objBnCompromisoAnual.setUnidad(objResultSet.getString("COUUOO"));
                 objBnCompromisoAnual.setCompromisoAnual(objResultSet.getString("NROCER_CA"));
+                objBnCompromisoAnual.setUnidadOperativa(objResultSet.getString("UNIDAD_OPERATIVA"));
                 objBnCompromisoAnual.setCobertura(objResultSet.getString("COBERTURA"));
                 objBnCompromisoAnual.setCertificado(objResultSet.getString("CERTIFICADO"));
                 objBnCompromisoAnual.setDetalle(objResultSet.getString("DESOCE"));
@@ -111,7 +114,7 @@ public class CompromisoAnualDAOImpl implements CompromisoAnualDAO {
     @Override
     public List getListaCompromisosAnualesDetalle(BeanEjecucionPresupuestal objBeanEjecucionPresupuestal, String usuario) {
         lista = new LinkedList<>();
-        sql = "SELECT NROCER_CA, CORDET, UTIL_NEW.FUN_ABRDEP(COUUOO, CODDEP) AS CODDEP, "
+        sql = "SELECT NROCER_CA, COUUOO, CORDET, UTIL_NEW.FUN_ABRDEP(COUUOO, CODDEP) AS CODDEP, "
                 + "COUOAB||':'||UTIL_NEW.FUN_ABUUOO(COUOAB) AS PROVEEDOR, "
                 + "SECFUN||':'||UTIL_NEW.FUN_CODIGO_COCAFU(CODPER,COPPTO, SECFUN) AS SECFUN, "
                 + "COMEOP||':'||UTIL_NEW.FUN_NOMEOP(COMEOP) AS COMEOP, "
@@ -119,9 +122,9 @@ public class CompromisoAnualDAOImpl implements CompromisoAnualDAO {
                 + "IMPORT, TIPCAM, IMPDOL "
                 + "FROM DESOCP_CA WHERE "
                 + "CODPER=? AND "
-                + "COUUOO=? AND "
+                + "COUUOO LIKE ? AND "
                 + "COPPTO=?  "
-                + "ORDER BY NROCER_CA, CORDET";
+                + "ORDER BY COUUOO, NROCER_CA, CORDET";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, objBeanEjecucionPresupuestal.getPeriodo());
@@ -130,6 +133,7 @@ public class CompromisoAnualDAOImpl implements CompromisoAnualDAO {
             objResultSet = objPreparedStatement.executeQuery();
             while (objResultSet.next()) {
                 objBnCompromisoAnual = new BeanEjecucionPresupuestal();
+                objBnCompromisoAnual.setUnidadOperativa(objResultSet.getString("COUUOO"));
                 objBnCompromisoAnual.setCompromisoAnual(objResultSet.getString("NROCER_CA"));
                 objBnCompromisoAnual.setCorrelativo(objResultSet.getInt("CORDET"));
                 objBnCompromisoAnual.setDependencia(objResultSet.getString("CODDEP"));

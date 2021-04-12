@@ -477,12 +477,19 @@
             var prioridad = $("#cbo_Prioridad").val();
             var area = $("#cbo_Area").val();
             var usuario = $("#cbo_Usuario").val();
+            var tipoDecretos = $("#cbo_TipoDecretos").jqxDropDownList('getCheckedItems');
             var comentario = $("#txt_Comentario").val();
+            var result = "";
+            var lista = new Array();
+            $.each(tipoDecretos, function (index) {
+                result = this.value;
+                lista.push(result);
+            });
             $.ajax({
                 type: "POST",
                 url: "../IduDecretarDocumentacion",
                 data: {mode: mode, periodo: periodo, numero: codigo, tipo: tipo, usuarioEmision: usuarioEmision, area: area,
-                    usuario: usuario, comentario: comentario, prioridad: prioridad},
+                    usuario: usuario, comentario: comentario, prioridad: prioridad, lista: JSON.stringify(lista), decreto: 0},
                 success: function (data) {
                     msg = data;
                     if (msg === "GUARDO") {
@@ -571,7 +578,7 @@
                     <td class="inputlabel">Decreto : </td>
                     <td>
                         <select id="cbo_TipoDecretos" name="cbo_TipoDecretos">
-                           <c:forEach var="d" items="${objTipoDecreto}">
+                            <c:forEach var="d" items="${objTipoDecreto}">
                                 <option value="${d.codigo}">${d.descripcion}</option>
                             </c:forEach>
                         </select>
@@ -627,7 +634,6 @@
         </table>
     </div>
 </div>
-<div id="cbo_Ajax" style='display:none;'></div>
 <div id='div_ContextMenu' style='display:none;'>
     <ul>
         <li style="font-weight: bold;">Decretar</li>

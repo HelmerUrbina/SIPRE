@@ -52,6 +52,9 @@ public class EjecucionPresupuestalServlet extends HttpServlet {
             case "ejePresupuestal":
                 dispatcher = request.getRequestDispatcher("Ejecucion/EjecucionPresupuestal.jsp");
                 break;
+            case "consultaEjecucion":
+                dispatcher = request.getRequestDispatcher("Ejecucion/EjecucionPresupuestalConsulta.jsp");
+                break;
             default:
                 dispatcher = request.getRequestDispatcher("error.jsp");
                 break;

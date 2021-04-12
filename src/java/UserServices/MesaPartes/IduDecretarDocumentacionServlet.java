@@ -12,6 +12,7 @@ import DataService.Despachadores.DecretoDAO;
 import DataService.Despachadores.Impl.DecretoDAOImpl;
 import DataService.Despachadores.Impl.MsgerrDAOImpl;
 import DataService.Despachadores.MsgerrDAO;
+import Utiles.Utiles;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -65,11 +66,22 @@ public class IduDecretarDocumentacionServlet extends HttpServlet {
         objBnDecreto.setPrioridad(request.getParameter("prioridad"));
         objBnDecreto.setArea(request.getParameter("area"));
         objBnDecreto.setUsuario(request.getParameter("usuario"));
-        objBnDecreto.setComentario(request.getParameter("comentario"));        
+        objBnDecreto.setComentario(request.getParameter("comentario"));
         objDsDecreto = new DecretoDAOImpl(objConnection);
         // EJECUTAMOS EL PROCEDIMIENTO SEGUN EL MODO QUE SE ESTA TRABAJANDO
         int k = objDsDecreto.iduDecretarDocumento(objBnDecreto, objUsuario.getUsuario());
         if (k != 0) {
+            if (objBnDecreto.getMode().equals("I") || objBnDecreto.getMode().equals("U")) {
+                objBnDecreto.setMode("D");
+                objBnDecreto.setDecreto(k);
+                k = objDsDecreto.iduDecretarTipoDecreto(objBnDecreto, objUsuario.getUsuario());
+                String lista[][] = Utiles.generaLista(request.getParameter("lista"), 1);
+                for (String[] item : lista) {
+                    objBnDecreto.setMode("I");
+                    objBnDecreto.setDocumento(item[0].trim());
+                    k = objDsDecreto.iduDecretarTipoDecreto(objBnDecreto, objUsuario.getUsuario());
+                }
+            }
         } else {
             // EN CASO DE HABER PROBLEMAS DESPACHAMOS UNA VENTANA DE ERROR, MOSTRANDO EL ERROR OCURRIDO.
             objBnMsgerr = new BeanMsgerr();

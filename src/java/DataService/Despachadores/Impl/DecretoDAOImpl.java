@@ -248,4 +248,31 @@ public class DecretoDAOImpl implements DecretoDAO {
         }
         return Arreglo;
     }
+    
+    @Override
+    public int iduDecretarTipoDecreto(BeanMesaParte objBnDecreto, String usuario) {
+        sql = "{CALL SP_IDU_DECRETO_TIPO_DECRETO(?,?,?,?,?,?,?)}";
+        try (CallableStatement cs = objConnection.prepareCall(sql)) {
+            cs.setString(1, objBnDecreto.getPeriodo());
+            cs.setString(2, objBnDecreto.getTipo());
+            cs.setString(3, objBnDecreto.getNumero());
+            cs.setInt(4, objBnDecreto.getDecreto());
+            cs.setString(5, objBnDecreto.getDocumento());
+            cs.setString(6, usuario);
+            cs.setString(7, objBnDecreto.getMode().toUpperCase());
+            s = cs.executeUpdate();
+            cs.close();
+        } catch (SQLException e) {
+            System.out.println("Error al ejecutar iduDecretar : " + e.getMessage());
+            objDsMsgerr = new MsgerrDAOImpl(objConnection);
+            objBnMsgerr = new BeanMsgerr();
+            objBnMsgerr.setUsuario(usuario);
+            objBnMsgerr.setTabla("IAFAS_MESA_PARTES_DECRETOS");
+            objBnMsgerr.setTipo(objBnDecreto.getMode().toUpperCase());
+            objBnMsgerr.setDescripcion(e.getMessage());
+            s = objDsMsgerr.iduMsgerr(objBnMsgerr);
+            return 0;
+        }
+        return s;
+    }
 }

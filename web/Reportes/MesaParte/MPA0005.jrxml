@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MPA0005" pageWidth="595" pageHeight="842" columnWidth="455" leftMargin="70" rightMargin="70" topMargin="70" bottomMargin="70" uuid="d822663f-58ee-42fe-a1ec-5dfcbf650307">
 	<property name="ireport.zoom" value="1.1000000000000016"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="305"/>
+	<property name="ireport.y" value="65"/>
 	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["01625"]]></defaultValueExpression>
 	</parameter>
@@ -92,7 +92,7 @@ MESA DE PARTES]]></text>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<text><![CDATA[INSTITUCIÓN]]></text>
+				<text><![CDATA[DEPENDENCIA]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="100" y="30" width="20" height="15" uuid="4872b676-8fb0-459a-bd5a-b2632c4566f0"/>

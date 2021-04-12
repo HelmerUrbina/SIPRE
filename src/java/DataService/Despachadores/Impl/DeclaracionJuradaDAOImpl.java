@@ -41,7 +41,8 @@ public class DeclaracionJuradaDAOImpl implements DeclaracionJuradaDAO {
     @Override
     public List getListaDeclaracionJurada(BeanEjecucionPresupuestal objBeanEjecucionPresupuestal, String usuario) {
         lista = new LinkedList<>();
-        sql = "SELECT NUMPED AS PEDIDO, NROCER AS COMPROMISO, REPLACE(REGEXP_REPLACE(UPPER(NUMOFI),'[^A-Za-z0-9ÁÉÍÓÚáéíóú ]', ''),'\n"
+        sql = "SELECT COUUOO, NUMPED AS PEDIDO, NROCER AS COMPROMISO, COUUOO||':'||UTIL_NEW.FUN_ABUUOO(COUUOO) AS UNIDAD_OPERATIVA, "
+                + "REPLACE(REGEXP_REPLACE(UPPER(NUMOFI),'[^A-Za-z0-9ÁÉÍÓÚáéíóú ]', ''),'\n"
                 + "', ' ') AS OFICIO, REPLACE(REGEXP_REPLACE(UPPER(DESGLO),'[^A-Za-z0-9ÁÉÍÓÚáéíóú ]', ''),'\n"
                 + "', ' ') AS DETALLE, "
                 + "NROCOB AS COBERTURA, CODTIP||'-'||COSTIP AS TIPO_CALENDARIO, TO_CHAR(DUSUARIO_CERRADO,'DD/MM/YYYY HH24:MM') AS FECHA, "
@@ -54,10 +55,10 @@ public class DeclaracionJuradaDAOImpl implements DeclaracionJuradaDAO {
                 + "', ' ') AS ARCHIVO "
                 + "FROM TAPECO WHERE "
                 + "CODPER=? AND "
-                + "COUUOO=? AND "
+                + "COUUOO LIKE ? AND "
                 + "COPPTO=? AND "
                 + "MESPER=? "
-                + "ORDER BY PEDIDO DESC";
+                + "ORDER BY COUUOO, PEDIDO DESC";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, objBeanEjecucionPresupuestal.getPeriodo());
@@ -67,7 +68,9 @@ public class DeclaracionJuradaDAOImpl implements DeclaracionJuradaDAO {
             objResultSet = objPreparedStatement.executeQuery();
             while (objResultSet.next()) {
                 objBnDeclaracionJurada = new BeanEjecucionPresupuestal();
+                objBnDeclaracionJurada.setUnidad(objResultSet.getString("COUUOO"));
                 objBnDeclaracionJurada.setDeclaracionJurada(objResultSet.getString("PEDIDO"));
+                objBnDeclaracionJurada.setUnidadOperativa(objResultSet.getString("UNIDAD_OPERATIVA"));
                 objBnDeclaracionJurada.setCompromisoAnual(objResultSet.getString("COMPROMISO"));
                 objBnDeclaracionJurada.setDocumentoReferencia(objResultSet.getString("OFICIO"));
                 objBnDeclaracionJurada.setDetalle(objResultSet.getString("DETALLE"));
@@ -110,7 +113,7 @@ public class DeclaracionJuradaDAOImpl implements DeclaracionJuradaDAO {
     @Override
     public List getListaDeclaracionJuradaDetalle(BeanEjecucionPresupuestal objBeanEjecucionPresupuestal, String usuario) {
         lista = new LinkedList<>();
-        sql = "SELECT NUMPED AS PEDIDO, CORDET AS CODIGO, UTIL_NEW.FUN_ABRDEP(COUOCO, CODDEP) AS ABRDEP, "
+        sql = "SELECT COUOCO, NUMPED AS PEDIDO, CORDET AS CODIGO, UTIL_NEW.FUN_ABRDEP(COUOCO, CODDEP) AS ABRDEP, "
                 + "SECFUN||':'||UTIL_NEW.FUN_CODIGO_COCAFU(CODPER,COPPTO, SECFUN) AS SECFUN, "
                 + "COMEOP||':'||UTIL_NEW.FUN_NOMEOP(COMEOP) AS COMEOP, "
                 + "COCAGA||':'||UTIL_NEW.FUN_NOCLAS(COCAGA) AS COCAGA, "
@@ -118,10 +121,10 @@ public class DeclaracionJuradaDAOImpl implements DeclaracionJuradaDAO {
                 + "IMPORT AS IMPORT, IMPDOL AS IMPDOL "
                 + "FROM DEPECO WHERE "
                 + "CODPER = ? AND "
-                + "COUOCO = ? AND "
+                + "COUOCO LIKE ? AND "
                 + "COPPTO = ? AND "
                 + "MESPER = ?  "
-                + "ORDER BY PEDIDO DESC, CODIGO ";
+                + "ORDER BY COUOCO, PEDIDO DESC, CODIGO ";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, objBeanEjecucionPresupuestal.getPeriodo());
@@ -131,6 +134,7 @@ public class DeclaracionJuradaDAOImpl implements DeclaracionJuradaDAO {
             objResultSet = objPreparedStatement.executeQuery();
             while (objResultSet.next()) {
                 objBnDeclaracionJurada = new BeanEjecucionPresupuestal();
+                objBnDeclaracionJurada.setUnidadOperativa(objResultSet.getString("COUOCO"));
                 objBnDeclaracionJurada.setDeclaracionJurada(objResultSet.getString("PEDIDO"));
                 objBnDeclaracionJurada.setCorrelativo(objResultSet.getInt("CODIGO"));
                 objBnDeclaracionJurada.setDependencia(objResultSet.getString("ABRDEP"));

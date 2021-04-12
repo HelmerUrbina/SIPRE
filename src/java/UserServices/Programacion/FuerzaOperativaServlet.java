@@ -74,7 +74,7 @@ public class FuerzaOperativaServlet extends HttpServlet {
         objBnFuerzaOperativa.setDependenciaDetalle(request.getParameter("codigoDetalle"));
         objDsFuerzaOperativa = new FuerzaOperativaDAOImpl(objConnection);
         objDsCombo = new CombosDAOImpl(objConnection);
-        // DE ACUERO AL MODO, OBTENEMOS LOS DATOS NECESARIOS.        
+        // DE ACUERO AL MODO, OBTENEMOS LOS DATOS NECESARIOS.
         if (objBnFuerzaOperativa.getMode().equals("G")) {
             objFuerzaOperativa = objDsFuerzaOperativa.getListaFuerzaOperativa(objBnFuerzaOperativa, objUsuario.getUsuario());
             if (request.getAttribute("objDepartamento") != null) {
@@ -84,14 +84,14 @@ public class FuerzaOperativaServlet extends HttpServlet {
             if (request.getAttribute("objTipoFuerza") != null) {
                 request.removeAttribute("objTipoFuerza");
             }
-            request.setAttribute("objTipoFuerza", objDsCombo.getTipoFuerzaOperativa());
+            request.setAttribute("objTipoFuerza", objDsCombo.getTipoFuerzaOperativa(objBnFuerzaOperativa.getPeriodo()));
         }
         if (objBnFuerzaOperativa.getMode().equals("GD")) {
             objFuerzaOperativa = objDsFuerzaOperativa.getListaFuerzaOperativaDetalle(objBnFuerzaOperativa, objUsuario.getUsuario());
             if (request.getAttribute("objTipoFuerza") != null) {
                 request.removeAttribute("objTipoFuerza");
             }
-            request.setAttribute("objTipoFuerza", objDsCombo.getTipoFuerzaOperativa());
+            request.setAttribute("objTipoFuerza", objDsCombo.getTipoFuerzaOperativa(objBnFuerzaOperativa.getPeriodo()));
         }
         if (objBnFuerzaOperativa.getMode().equals("U")) {
             objBnFuerzaOperativa = objDsFuerzaOperativa.getFuerzaOperativa(objBnFuerzaOperativa, objUsuario.getUsuario());

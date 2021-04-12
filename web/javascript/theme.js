@@ -1,3 +1,4 @@
+ // ui-start  -- ui-redmond -- ui-lightness -- arctic -- darkblue -- fresh
 function getTheme() {
     var theme = "ui-start";
     var url = "/SIPRE/css/styles/jqx." + theme + ".css";

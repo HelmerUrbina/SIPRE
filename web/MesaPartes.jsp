@@ -132,7 +132,6 @@
                                 }
                             }
                         });
-                        $("#cbo_Prioridad").jqxDropDownList({animationType: 'fade', width: 200, height: 20});
                         $("#cbo_TipoDocumento").jqxDropDownList({animationType: 'fade', width: 200, height: 20});
                         $("#txt_NumeroDocumento").jqxInput({width: 120, height: 20});
                         $("#cbo_Clasificacion").jqxDropDownList({animationType: 'fade', width: 200, height: 20});
@@ -203,7 +202,6 @@
                 //FUNCION PARA GRABAR LOS DATOS DE LA VENTANA PRINCIPAL
                 function fn_GrabarDatos() {
                     var fecha = new Date();
-                    var prioridad = $("#cbo_Prioridad").val();
                     var tipoDocumento = $("#cbo_TipoDocumento").val();
                     var numeroDocumento = $("#txt_NumeroDocumento").val();
                     var clasificacion = $("#cbo_Clasificacion").val();
@@ -223,7 +221,7 @@
                         formData.append("mes", fecha.getMonth());
                         formData.append("tipo", tipo);
                         formData.append("institucion", institucion);
-                        formData.append("prioridad", prioridad);
+                        formData.append("prioridad", "01");
                         formData.append("tipoDocumento", tipoDocumento);
                         formData.append("numeroDocumento", numeroDocumento);
                         formData.append("clasificacion", clasificacion);
@@ -350,15 +348,6 @@
                                     <td><input type="text" id="txt_Institucion" name="txt_Institucion" style="text-transform: uppercase;" autocomplete="off"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="inputlabel">Prioridad : </td>
-                                    <td>
-                                        <select id="cbo_Prioridad" name="cbo_Prioridad">
-                                            <option value="01" selected="true">TRAMITE NORMAL</option>
-                                            <option value="04">TRAMITE PERSONAL</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
                                     <td class="inputlabel">Tipo Documento : </td>
                                     <td>
                                         <select id="cbo_TipoDocumento" name="cbo_TipoDocumento">
@@ -439,7 +428,7 @@
                                 </tr>
                                 <tr>
                                     <td class="inputlabel">Archivo : </td>
-                                    <td><input type="file" name="txt_Archivo" id="txt_Archivo" style="text-transform: uppercase; width: 400px;height: 30px" class="name form-control"/></td>
+                                    <td><input type="file" name="txt_Archivo" id="txt_Archivo" style="text-transform: uppercase; width: 400px;height: 30px" accept="application/pdf"/></td>
                                 </tr>
                                 <tr>
                                     <td class="Summit" colspan="4">

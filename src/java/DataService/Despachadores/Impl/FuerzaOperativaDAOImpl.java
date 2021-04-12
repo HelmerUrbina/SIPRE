@@ -96,7 +96,7 @@ public class FuerzaOperativaDAOImpl implements FuerzaOperativaDAO {
         sql = "SELECT PF.CCODIGO_CORRELATIVO AS CODIGO,"
                 + "UTIL_NEW.FUN_ABRDEP(PF.CUNIDAD_OPERATIVA_CODIGO,PF.CDEPENDENCIA_CODIGO) AS DEPENDENCIA,"
                 + "PF.CDEPENDENCIA_CODIGO AS CODDEP,"
-                + "UTIL_NEW.FUN_DESCRIP_TIPO_FUERZA(PF.NTIPO_FUERZA_CODIGO) AS TIPO_FUERZA,"
+                + "UTIL_NEW.FUN_DESCRIP_TIPO_FUERZA(PF.CPERIODO_CODIGO, PF.NTIPO_FUERZA_CODIGO) AS TIPO_FUERZA,"
                 + "PF.CCOMENTARIO_RESOLUCION AS COMENTARIO,"
                 + "CASE PF.CESTADO_CODIGO WHEN 'AC' THEN 'ACTIVO' WHEN 'GE' THEN 'GENERADO' WHEN 'DE' THEN 'DESACTIVADO' ELSE '' END AS ESTADO,"
                 + "PF.VCOMENTARIO_DESACTIVACION AS DESACTIVACION, "
@@ -105,7 +105,8 @@ public class FuerzaOperativaDAOImpl implements FuerzaOperativaDAO {
                 + "CASE WHEN PF.NCANTIDAD_OFICINAS=0 THEN 1*TF.NIMPORTE_TIPO_FUERZA ELSE PF.NCANTIDAD_OFICINAS*TF.NIMPORTE_TIPO_FUERZA END AS IMP_MENSUAL, "
                 + "CASE WHEN PF.NTIPO_FUERZA_CODIGO=13 THEN (1*TF.NIMPORTE_TIPO_FUERZA) WHEN PF.NCANTIDAD_OFICINAS=0 THEN (1*TF.NIMPORTE_TIPO_FUERZA)*12  ELSE (PF.NCANTIDAD_OFICINAS*TF.NIMPORTE_TIPO_FUERZA)*12 END AS IMP_ANUAL "
                 + "FROM SIPE_PROGRAMACION_FUERZA_OPE PF JOIN SIPE_PROGRAMACION_TIPO_FUERZA TF ON "
-                + "(PF.NTIPO_FUERZA_CODIGO=TF.NTIPO_FUERZA_CODIGO)"
+                + "(PF.CPERIODO_CODIGO=TF.CPERIODO_CODIGO AND "
+                + "PF.NTIPO_FUERZA_CODIGO=TF.NTIPO_FUERZA_CODIGO)"
                 + "  WHERE "
                 + "PF.CPERIODO_CODIGO=? AND "
                 + "PF.CUNIDAD_OPERATIVA_CODIGO=? AND "
@@ -135,14 +136,7 @@ public class FuerzaOperativaDAOImpl implements FuerzaOperativaDAO {
             }
         } catch (SQLException e) {
             System.out.println("Error al obtener getListaFuerzaOperativaDetalle(objBeanPrgFuerzaOperativa) : " + e.getMessage());
-            objDsMsgerr = new MsgerrDAOImpl(objConnection);
-            objBnMsgerr = new BeanMsgerr();
-            objBnMsgerr.setUsuario(usuario);
-            objBnMsgerr.setTabla("SIPE_PROGRAMACION_FUERZA_OPE");
-            objBnMsgerr.setTipo(objBeanFuerzaOperativa.getMode().toUpperCase());
-            objBnMsgerr.setDescripcion(e.getMessage());
-            s = objDsMsgerr.iduMsgerr(objBnMsgerr);
-        } finally {
+            } finally {
             try {
                 if (objResultSet != null) {
                     objResultSet.close();

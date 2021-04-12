@@ -1513,7 +1513,7 @@ public class CombosDAOImpl implements CombosDAO {
     public List getSolicitudCreditoUnidad(String periodo, Integer presupuesto, String unidadOperativa) {
         lista = new LinkedList<>();
         /*
-         * OBTENEMOS LOS DATOS DEL TIPO DE CALENDARIO ASIGNADOS A LA UNIDAD OPERATIVA
+         * OBTENEMOS LOS DATOS DEL SOLICITUD DE CREDITO PRESUPUESTAL ASIGNADOS A LA UNIDAD OPERATIVA
          * Y LO ALMACENAMOS EN UNA LISTA
          */
         sql = "SELECT NROCER AS CODIGO,"
@@ -3888,14 +3888,16 @@ public class CombosDAOImpl implements CombosDAO {
     }
 
     @Override
-    public List getTipoFuerzaOperativa() {
+    public List getTipoFuerzaOperativa(String periodo) {
         lista = new LinkedList<>();
         sql = "SELECT NTIPO_FUERZA_CODIGO AS CODIGO,"
                 + "VTIPO_FUERZA_DESCRIPCION AS DESCRIPCION "
-                + "FROM SIPE_PROGRAMACION_TIPO_FUERZA "
+                + "FROM SIPE_PROGRAMACION_TIPO_FUERZA WHERE "
+                + "CPERIODO_CODIGO=? "
                 + "ORDER BY CODIGO";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
+            objPreparedStatement.setString(1, periodo);
             objResultSet = objPreparedStatement.executeQuery();
             while (objResultSet.next()) {
                 comun = new BeanComun();

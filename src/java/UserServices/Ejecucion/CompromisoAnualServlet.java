@@ -72,8 +72,8 @@ public class CompromisoAnualServlet extends HttpServlet {
         objBnCompromisoAnual.setUnidadOperativa(request.getParameter("unidadOperativa"));
         objBnCompromisoAnual.setCompromisoAnual(request.getParameter("codigo"));
         objDsCompromisoAnual = new CompromisoAnualDAOImpl(objConnection);
-        // DE ACUERO AL MODO, OBTENEMOS LOS DATOS NECESARIOS.        
-        if (objBnCompromisoAnual.getMode().equals("G")) {
+        // DE ACUERO AL MODO, OBTENEMOS LOS DATOS NECESARIOS.
+        if (objBnCompromisoAnual.getMode().equals("G") || objBnCompromisoAnual.getMode().equals("GC")) {
             objDsCombos = new CombosDAOImpl(objConnection);
             objCompromisoAnual = objDsCompromisoAnual.getListaCompromisosAnuales(objBnCompromisoAnual, objUsuario.getUsuario());
             objCompromisoAnualDetalle = objDsCompromisoAnual.getListaCompromisosAnualesDetalle(objBnCompromisoAnual, objUsuario.getUsuario());
@@ -117,6 +117,9 @@ public class CompromisoAnualServlet extends HttpServlet {
         switch (objBnCompromisoAnual.getMode()) {
             case "G":
                 dispatcher = request.getRequestDispatcher("Ejecucion/ListaCompromisoAnual.jsp");
+                break;
+            case "GC":
+                dispatcher = request.getRequestDispatcher("Ejecucion/ListaCompromisoAnualConsulta.jsp");
                 break;
             default:
                 dispatcher = request.getRequestDispatcher("error.jsp");

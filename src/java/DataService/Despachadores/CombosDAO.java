@@ -206,7 +206,7 @@ public interface CombosDAO {
 
     public List getCategoriaPresupuestal();
 
-    public List getTipoFuerzaOperativa();
+    public List getTipoFuerzaOperativa(String periodo);
 
     //ACTIVIDAD - TAREA PROGRAMACIÓN
     public List getCategoriaPresupuestalProgramacion(String periodo);

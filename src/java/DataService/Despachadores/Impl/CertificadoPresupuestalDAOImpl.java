@@ -41,7 +41,8 @@ public class CertificadoPresupuestalDAOImpl implements CertificadoPresupuestalDA
     @Override
     public List getListaCertificados(BeanEjecucionPresupuestal objBeanCertificado, String usuario) {
         lista = new LinkedList<>();
-        sql = "SELECT TIPSOL||'.'||NROCER AS ID,"
+        sql = "SELECT TIPSOL||'.'||NROCER AS ID, COUUOO AS COUUOO, "
+                + "COUUOO||':'||UTIL_NEW.FUN_ABUUOO(COUUOO) AS UNIDAD_OPERATIVA, "
                 + "NROCER, REPLACE(REGEXP_REPLACE(UPPER(DOCREF),'[^A-Za-z0-9ÁÉÍÓÚáéíóú ]', ''),'\n"
                 + "', ' ') AS DOCREF, REPLACE(REGEXP_REPLACE(UPPER(DESOCE),'[^A-Za-z0-9ÁÉÍÓÚáéíóú ]', ''),'\n"
                 + "', ' ') AS DESOCE, TO_CHAR(DUSUARIO_CERRADO,'DD/MM/YYYY HH24:MM') AS FECHA, "
@@ -59,9 +60,9 @@ public class CertificadoPresupuestalDAOImpl implements CertificadoPresupuestalDA
                 + "VTASOCP_ARCHIVO AS ARCHIVO "
                 + "FROM TASOCP WHERE "
                 + "CODPER=? AND "
-                + "COUUOO=? AND "
+                + "COUUOO LIKE ? AND "
                 + "COPPTO=? "
-                + "ORDER BY NROCER DESC";
+                + "ORDER BY COUUOO, NROCER DESC";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, objBeanCertificado.getPeriodo());
@@ -71,6 +72,8 @@ public class CertificadoPresupuestalDAOImpl implements CertificadoPresupuestalDA
             while (objResultSet.next()) {
                 objBnCertificado = new BeanEjecucionPresupuestal();
                 objBnCertificado.setMode(objResultSet.getString("ID"));
+                objBnCertificado.setTipoMoneda(objResultSet.getString("COUUOO"));
+                objBnCertificado.setUnidadOperativa(objResultSet.getString("UNIDAD_OPERATIVA"));
                 objBnCertificado.setSolicitudCredito(objResultSet.getString("NROCER"));
                 objBnCertificado.setDocumentoReferencia(objResultSet.getString("DOCREF"));
                 objBnCertificado.setDetalle(objResultSet.getString("DESOCE"));
@@ -113,16 +116,16 @@ public class CertificadoPresupuestalDAOImpl implements CertificadoPresupuestalDA
     @Override
     public List getListaCertificadosDetalle(BeanEjecucionPresupuestal objBeanCertificado, String usuario) {
         lista = new LinkedList<>();
-        sql = "SELECT NROCER, CORDET, UTIL_NEW.FUN_ABRDEP(COUUOO, CODDEP) AS CODDEP, "
+        sql = "SELECT COUUOO, NROCER, CORDET, UTIL_NEW.FUN_ABRDEP(COUUOO, CODDEP) AS CODDEP, "
                 + "SECFUN||':'||UTIL_NEW.FUN_CODIGO_COCAFU(CODPER,COPPTO, SECFUN) AS SECFUN, "
                 + "COMEOP||':'||UTIL_NEW.FUN_NTAREA(COMEOP) AS TAREA, "
-                + "COCAGA||':'||UTIL_NEW.FUN_NOMBRE_CADENA_GASTO(COCAGA) AS COCAGA,"
+                + "COCAGA||':'||UTIL_NEW.FUN_NOMBRE_CADENA_GASTO(COCAGA) AS COCAGA, "
                 + "IMPORT, TIPCAM, IMPDOL "
                 + "FROM DESOCP WHERE "
                 + "CODPER=? AND "
-                + "COUUOO=? AND "
+                + "COUUOO LIKE ? AND "
                 + "COPPTO=? "
-                + "ORDER BY CORDET";
+                + "ORDER BY COUUOO, NROCER, CORDET ";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, objBeanCertificado.getPeriodo());
@@ -131,6 +134,7 @@ public class CertificadoPresupuestalDAOImpl implements CertificadoPresupuestalDA
             objResultSet = objPreparedStatement.executeQuery();
             while (objResultSet.next()) {
                 objBnCertificado = new BeanEjecucionPresupuestal();
+                objBnCertificado.setUnidadOperativa(objResultSet.getString("COUUOO"));
                 objBnCertificado.setSolicitudCredito(objResultSet.getString("NROCER"));
                 objBnCertificado.setCorrelativo(objResultSet.getInt("CORDET"));
                 objBnCertificado.setDependencia(objResultSet.getString("CODDEP"));

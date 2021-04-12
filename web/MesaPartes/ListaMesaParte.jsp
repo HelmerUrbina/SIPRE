@@ -134,7 +134,7 @@
                 {text: 'CÓDIGO', dataField: 'numero', width: '6%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
                 {text: 'NRO DOCUMENTO', dataField: 'numeroDocumento', width: '8%', align: 'center', cellsAlign: 'left', cellclassname: cellclass},
                 {text: 'ASUNTO', dataField: 'asunto', width: '20%', align: 'center', cellsAlign: 'left', cellclassname: cellclass},
-                {text: 'INSTITUCIÓN', dataField: 'subGrupo', width: '10%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
+                {text: 'DEPENDENCIA', dataField: 'subGrupo', width: '10%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
                 {text: 'PRIORIDAD', dataField: 'prioridad', filtertype: 'checkedlist', width: '6%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
                 {text: 'FEC. DOC', dataField: 'fecha', columntype: 'datetimeinput', filtertype: 'date', width: '8%', align: 'center', cellsAlign: 'center', cellsFormat: 'd', cellclassname: cellclass},
                 {text: 'ESTADO', dataField: 'estado', filtertype: 'checkedlist', width: '9%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
@@ -879,7 +879,7 @@
                     <td><input type="text" id="txt_Numero" name="txt_Numero"/></td>
                 </tr>
                 <tr>
-                    <td class="inputlabel">Instituci&oacute;n : </td>
+                    <td class="inputlabel">Dependencia : </td>
                     <td><input type="text" id="txt_Institucion" name="txt_Institucion" style="text-transform: uppercase;"/></td>
                 </tr>
                 <tr>

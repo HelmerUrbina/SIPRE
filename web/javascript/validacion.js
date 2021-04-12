@@ -13,6 +13,10 @@ function fn_validaAutorizacion(autorizacion) {
 function fn_MenuPrincipal() {
     location.reload();
 }
+
+function fn_FinalizaSession(){
+    window.location = "../FinalizaSesion";
+}
 //FUNCION PARA VALIDAR UN CAMPO
 function fn_validaCampo(campo, msg) {
     if (campo === null || campo === "" || $.trim(campo).length === 0) {

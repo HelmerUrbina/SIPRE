@@ -73,7 +73,7 @@ public class CertificadoPresupuestalServlet extends HttpServlet {
         objBnCertificado.setSolicitudCredito(request.getParameter("codigo"));
         objDsCertificado = new CertificadoPresupuestalDAOImpl(objConnection);
         // DE ACUERO AL MODO, OBTENEMOS LOS DATOS NECESARIOS.    
-        if (objBnCertificado.getMode().equals("G")) {
+        if (objBnCertificado.getMode().equals("G") || objBnCertificado.getMode().equals("GC")) {
             objCertificado = objDsCertificado.getListaCertificados(objBnCertificado, objUsuario.getUsuario());
             objCertificadoDetalle = objDsCertificado.getListaCertificadosDetalle(objBnCertificado, objUsuario.getUsuario());
             objDsCombo = new CombosDAOImpl(objConnection);
@@ -116,6 +116,9 @@ public class CertificadoPresupuestalServlet extends HttpServlet {
         switch (objBnCertificado.getMode()) {
             case "G":
                 dispatcher = request.getRequestDispatcher("Ejecucion/ListaCertificadoPresupuestal.jsp");
+                break;
+            case "GC":
+                dispatcher = request.getRequestDispatcher("Ejecucion/ListaCertificadoPresupuestalConsulta.jsp");
                 break;
             default:
                 dispatcher = request.getRequestDispatcher("error.jsp");

@@ -4,24 +4,24 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.4641000000000062"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="144"/>
+	<property name="ireport.y" value="107"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["2020"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["2021"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PRESUPUESTO" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[9]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[6]]></defaultValueExpression>
 	</parameter>
 	<parameter name="USUARIO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["0000027A"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["0000002A"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="UNIDAD_OPERATIVA" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["0734"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["0826"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT  TC.CODPER AS CODPER,TC.NROCER_CA AS NROCER,TC.NROCER AS CER_CARGO,
@@ -199,7 +199,7 @@ ORDER BY COUUOO,SECFUN,COMEOP,COCAGA]]>
 					<textFieldExpression><![CDATA["DOCUMENTO SUSTENTATORIO : "+$F{NUMOFI}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-9" positionType="FixRelativeToBottom" x="65" y="140" width="400" height="10" uuid="f13d2cb1-87d2-4745-a5ae-e6fe3e61fe7f"/>
+					<reportElement key="textField-9" positionType="Float" x="65" y="140" width="400" height="10" uuid="f13d2cb1-87d2-4745-a5ae-e6fe3e61fe7f"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
