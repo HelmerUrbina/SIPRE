@@ -55,6 +55,7 @@
         <script type="text/javascript" src="javascript/jqwidgets/jqxgrid.edit.js"></script>
         <script type="text/javascript" src="javascript/jqwidgets/globalization/globalize.js"></script>
         <script type="text/javascript" src="javascript/jqwidgets/globalization/globalize.culture.es-PE.js"></script>
+        <script type="text/javascript" src="javascript/clock.js"></script>
         <script type="text/javascript">
             var tipo = "E";
             var institucion = '';
@@ -344,12 +345,18 @@
                         <form id="frm_MesaParte" name="frm_MesaParte" enctype="multipart/form-data" action="RegistrarMesaPartes" method="post">
                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
+                                    <td class="inputlabel">Fecha Recepci&oacute;n : </td>
+                                    <td ><div id="txt_FechaRecepcion"></div></td>
+                                    <td class="inputlabel">Hora : </td>
+                                    <td><div id="clock" style="color: red; font-weight: bold;"></div></td>
+                                </tr>
+                                <tr>
                                     <td class="inputlabel">Dependencia : </td>
-                                    <td><input type="text" id="txt_Institucion" name="txt_Institucion" style="text-transform: uppercase;" autocomplete="off"/></td>
+                                    <td colspan="3"><input type="text" id="txt_Institucion" name="txt_Institucion" style="text-transform: uppercase;" autocomplete="off"/></td>
                                 </tr>
                                 <tr>
                                     <td class="inputlabel">Tipo Documento : </td>
-                                    <td>
+                                    <td colspan="3">
                                         <select id="cbo_TipoDocumento" name="cbo_TipoDocumento">
                                             <option value="1" selected="true">OFICIO</option>
                                             <option value="2">SOLICITUD</option>
@@ -382,11 +389,11 @@
                                 </tr>
                                 <tr>
                                     <td class="inputlabel">Nro Documento : </td>
-                                    <td><input type="text" id="txt_NumeroDocumento" name="txt_NumeroDocumento"/></td>
+                                    <td colspan="3"><input type="text" id="txt_NumeroDocumento" name="txt_NumeroDocumento"/></td>
                                 </tr>
                                 <tr>
                                     <td class="inputlabel">Clasificaci&oacute;n : </td>
-                                    <td>
+                                    <td colspan="3">
                                         <select id="cbo_Clasificacion" name="cbo_Clasificacion">
                                             <option value="01" selected="true">COMUN</option>
                                             <option value="02">RESERVADO</option>
@@ -396,39 +403,36 @@
                                 </tr>
                                 <tr>
                                     <td class="inputlabel">Fecha Documento : </td>
-                                    <td ><div id="txt_FechaDocumento"></div>
+                                    <td colspan="3"><div id="txt_FechaDocumento"></div></td>
                                 </tr>
-                                <tr>
-                                    <td class="inputlabel">Fecha Recepci&oacute;n : </td>
-                                    <td ><div id="txt_FechaRecepcion"></td>
-                                </tr>
+                                
                                 <tr>
                                     <td class="inputlabel">Asunto : </td>
-                                    <td><input type="text" id="txt_Asunto" name="txt_Asunto" style="text-transform: uppercase;"/></td>
+                                    <td colspan="3"><input type="text" id="txt_Asunto" name="txt_Asunto" style="text-transform: uppercase;"/></td>
                                 </tr>
                                 <tr>
                                     <td class="inputlabel">Observaci&oacute;n : </td>
-                                    <td><input type="text" id="txt_Observacion" name="txt_Observacion" style="text-transform: uppercase;"/></td>
+                                    <td colspan="3"><input type="text" id="txt_Observacion" name="txt_Observacion" style="text-transform: uppercase;"/></td>
                                 </tr>
                                 <tr>
                                     <td class="inputlabel">Post Firma : </td>
-                                    <td><input type="text" id="txt_PostFirma" name="txt_PostFirma" style="text-transform: uppercase;"/></td>
+                                    <td colspan="3"><input type="text" id="txt_PostFirma" name="txt_PostFirma" style="text-transform: uppercase;"/></td>
                                 </tr>
                                 <tr>
                                     <td class="inputlabel">Legajos : </td>
-                                    <td><div id="div_Legajos"></div></td>
+                                    <td colspan="3"><div id="div_Legajos"></div></td>
                                 </tr>
                                 <tr>
                                     <td class="inputlabel">Folios : </td>
-                                    <td><div id="div_Folios"></div></td>
+                                    <td colspan="3"><div id="div_Folios"></div></td>
                                 </tr>
                                 <tr>
                                     <td class="inputlabel">Correo Electrónico : </td>
-                                    <td><input type="email" id="txt_Correo" name="txt_Correo" style="text-transform: uppercase;"/></td>
+                                    <td colspan="3"><input type="email" id="txt_Correo" name="txt_Correo" style="text-transform: uppercase;"/></td>
                                 </tr>
                                 <tr>
                                     <td class="inputlabel">Archivo : </td>
-                                    <td><input type="file" name="txt_Archivo" id="txt_Archivo" style="text-transform: uppercase; width: 400px;height: 30px" accept="application/pdf"/></td>
+                                    <td colspan="3"><input type="file" name="txt_Archivo" id="txt_Archivo" style="text-transform: uppercase; width: 400px;height: 30px" accept="application/pdf"/></td>
                                 </tr>
                                 <tr>
                                     <td class="Summit" colspan="4">

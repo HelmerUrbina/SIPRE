@@ -38,7 +38,10 @@ import javax.servlet.http.Part;
  * @author H-URBINA-M
  */
 @WebServlet(name = "IduCertificadoPresupuestalServlet", urlPatterns = {"/IduCertificadoPresupuestal"})
-@MultipartConfig(location = "D:/SIPRE/EJECUCION/CertificadoPresupuestal")
+@MultipartConfig(location = "D:/SIPRE/EJECUCION/CertificadoPresupuestal",
+        fileSizeThreshold = 1024 * 1024 * 10,       // 10 MB 
+        maxFileSize = 1024 * 1024 * 500,            // 500 MB
+        maxRequestSize = 1024 * 1024 * 1000)        // 1000 MB
 public class IduCertificadoPresupuestalServlet extends HttpServlet {
     
     private ServletConfig config = null;

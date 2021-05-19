@@ -4,7 +4,7 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="UNIDAD_OPERATIVA" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["0828"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["0750"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PRESUPUESTO" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[6]]></defaultValueExpression>
@@ -13,7 +13,7 @@
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["2021"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["2022"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT EG.CANIO_REGISTRO AS REGISTRO, 

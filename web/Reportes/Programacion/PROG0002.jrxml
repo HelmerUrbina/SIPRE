@@ -4,24 +4,24 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.3636363636363635"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="96"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<style name="Text Body"/>
-	<parameter name="PERIODO" class="java.lang.String">
-		<defaultValueExpression><![CDATA["2017"]]></defaultValueExpression>
+	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2022"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="PRESUPUESTO" class="java.lang.String">
+	<parameter name="PRESUPUESTO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="UNIDAD_OPERATIVA" class="java.lang.String">
-		<defaultValueExpression><![CDATA["0003"]]></defaultValueExpression>
+	<parameter name="UNIDAD_OPERATIVA" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["0754"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="CODIGO" class="java.lang.String">
-		<defaultValueExpression><![CDATA["CNV-0013-2"]]></defaultValueExpression>
+	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["CNV-0011-1"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="USUARIO" class="java.lang.String">
+	<parameter name="USUARIO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -32,7 +32,7 @@ CODEVE AS EVENTO, UTIL_NEW.FUN_NOMEVP($P{CODIGO},COMEOP,CODDEP,COUUOO,CODPER,COP
 COCAGA||'-'||UTIL_NEW.FUN_NOCLAS(COCAGA) AS CADENA_GASTO,
 DESITM AS ITEM,
 UTIL_NEW.FUN_NOMBRE_UNIDAD_MEDIDA(COUNME) AS UNIDAD_MEDIDA,
-UTIL_NEW.FUN_NOMEVF(CODEVE,COEVFI,COMEOP,CODDEP,COUUOO,CODPER,COPPTO) AS EVENTO_FINAL,
+CODEVE||' '||UTIL_NEW.FUN_NOMEVF(CODEVE,COEVFI,COMEOP,CODDEP,COUUOO,CODPER,COPPTO) AS EVENTO_FINAL,
 SD_PFE.FUN_ORDEN_EVENTO_FINAL(CODEVE,COEVFI,COMEOP,CODDEP,COUUOO,CODPER,COPPTO) AS ORDEN,
 SD_PFE.FUN_MONTO_TAEVFI(CODPER, COPPTO, COUUOO, '001',COMEOP, CODEVE,COEVFI) AS TOTAL_EVENTO_FINAL,
 OPRE_NEW.FUN_MONEVF(CODEVE,COEVFI,COMEOP,CODDEP,COUUOO,CODPER,COPPTO) AS MONTO_EVENTO_FINAL,
@@ -49,6 +49,7 @@ CODPER=$P{PERIODO} AND
 COPPTO=$P{PRESUPUESTO} AND
 COUUOO=$P{UNIDAD_OPERATIVA} AND
 CODEVE LIKE '%'||SUBSTR($P{CODIGO},4,LENGTH($P{CODIGO}))||'%'
+AND ESTREG!='AN'
 ORDER BY TO_NUMBER(COEVFI)]]>
 	</queryString>
 	<field name="PERIODO" class="java.lang.String"/>

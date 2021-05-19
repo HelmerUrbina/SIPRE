@@ -38,7 +38,10 @@ import javax.servlet.http.Part;
  * @author H-URBINA-M
  */
 @WebServlet(name = "IduCompromisoAnualServlet", urlPatterns = {"/IduCompromisoAnual"})
-@MultipartConfig(location = "D:/SIPRE/EJECUCION/CompromisoAnual")
+@MultipartConfig(location = "D:/SIPRE/EJECUCION/CompromisoAnual",
+        fileSizeThreshold = 1024 * 1024 * 10,       // 10 MB 
+        maxFileSize = 1024 * 1024 * 500,            // 500 MB
+        maxRequestSize = 1024 * 1024 * 1000)        // 1000 MB
 public class IduCompromisoAnualServlet extends HttpServlet {
 
     private ServletConfig config = null;

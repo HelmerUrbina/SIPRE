@@ -128,7 +128,8 @@ public class DecretoDAOImpl implements DecretoDAO {
 
     @Override
     public BeanMesaParte getDecretoDocumento(BeanMesaParte objBeanDecreto, String usuario) {
-        sql = "SELECT VUSUARIO_EMISOR FROM SIPE_DECRETO_DOCUMENTO WHERE "
+        sql = "SELECT VUSUARIO_EMISOR "
+                + "FROM SIPE_DECRETO_DOCUMENTO WHERE "
                 + "CPERIODO_CODIGO=? AND "
                 + "CDOCUMENTO_TIPO=? AND "
                 + "CDOCUMENTO_NUMERO=? AND "
@@ -248,7 +249,7 @@ public class DecretoDAOImpl implements DecretoDAO {
         }
         return Arreglo;
     }
-    
+
     @Override
     public int iduDecretarTipoDecreto(BeanMesaParte objBnDecreto, String usuario) {
         sql = "{CALL SP_IDU_DECRETO_TIPO_DECRETO(?,?,?,?,?,?,?)}";

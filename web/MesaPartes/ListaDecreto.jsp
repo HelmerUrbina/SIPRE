@@ -88,7 +88,7 @@
         };
         //DEFINIMOS LOS CAMPOS Y DATOS DE LA GRILLA
         $("#div_GrillaPrincipal").jqxGrid({
-            width: '99.8%',
+            width: '60%',
             height: ($(window).height() - 60),
             source: dataAdapter,
             autoheight: false,
@@ -116,20 +116,16 @@
             },
             columns: [
                 {text: ' ', sortable: false, filterable: false, editable: false, groupable: false, draggable: false, resizable: false,
-                    datafield: '', columntype: 'number', width: 10, pinned: true, cellsrenderer: function (row, column, value) {
+                    datafield: '', columntype: 'number', width: '4%', pinned: true, cellsrenderer: function (row, column, value) {
                         return "<div style='margin:4px; text-align: center;'>" + (value + 1) + "</div>";
                     }
                 },
-                {text: 'CÓDIGO', dataField: 'numero', width: '6%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
-                {text: 'DOCUMENTO', dataField: 'numeroDocumento', width: '9%', align: 'center', cellsAlign: 'left', cellclassname: cellclass},
-                {text: 'ASUNTO', dataField: 'asunto', width: '20%', align: 'center', cellsAlign: 'left', cellclassname: cellclass},
-                {text: 'INSTITUCIÓN', dataField: 'subGrupo', width: '10%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
-                {text: 'PRIORIDAD', dataField: 'prioridad', filtertype: 'checkedlist', width: '6%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
-                {text: 'FEC. DOC', dataField: 'fecha', columntype: 'datetimeinput', filtertype: 'date', width: '8%', align: 'center', cellsAlign: 'center', cellsFormat: 'd', cellclassname: cellclass},
-                {text: 'FIRMA', dataField: 'firma', width: '8%', align: 'center', cellsAlign: 'left', cellclassname: cellclass},
-                {text: 'RESPONSABLE', dataField: 'responsable', filtertype: 'checkedlist', width: '15%', align: 'center', cellsAlign: 'left', cellclassname: cellclass},
-                {text: 'REFERENCIA', dataField: 'referencia', width: '9%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
-                {text: 'ARCHIVO', dataField: 'archivo', width: '9%', align: 'center', cellsAlign: 'left', cellclassname: cellclass}
+                {text: 'CÓDIGO', dataField: 'numero', width: '8%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
+                {text: 'DOCUMENTO', dataField: 'numeroDocumento', width: '12%', align: 'center', cellsAlign: 'left', cellclassname: cellclass},
+                {text: 'ASUNTO', dataField: 'asunto', width: '40%', align: 'center', cellsAlign: 'left', cellclassname: cellclass},
+                {text: 'INSTITUCIÓN', dataField: 'subGrupo', width: '15%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
+                {text: 'PRIORIDAD', dataField: 'prioridad', filtertype: 'checkedlist', width: '11%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
+                {text: 'FEC. DOC', dataField: 'fecha', columntype: 'datetimeinput', filtertype: 'date', width: '10%', align: 'center', cellsAlign: 'center', cellsFormat: 'd', cellclassname: cellclass}
             ]
         });
         //DEFINIMOS CAMPOS DE LA GRILLA DE CONSULTA
@@ -145,7 +141,6 @@
             autoheight: false,
             autorowheight: false,
             sortable: true,
-            pagesize: 10,
             columns: [
                 {text: 'CODIGO', datafield: 'codDetalle', width: '10%', align: 'center', cellsAlign: 'center', cellclassname: cellclassDet},
                 {text: 'USUARIO', datafield: 'usuario', width: '25%', align: 'center', cellsAlign: 'left', cellclassname: cellclassDet},
@@ -237,6 +232,7 @@
             codigo = row['numero'];
             estado = row['estado'];
             archivo = row['archivo'];
+            fn_verDocumento(archivo);
         });
         //CREA LOS ELEMENTOS DE LAS VENTANAS
         var customButtonsDemo = (function () {
@@ -253,16 +249,16 @@
                     cancelButton: $('#btn_Cancelar'),
                     initContent: function () {
                         $("#txt_Comentario").jqxInput({placeHolder: "Ingrese un Comentario", height: 80, width: 400, minLength: 1});
-                        $("#cbo_UsuarioEmision").jqxDropDownList({animationType: 'fade', width: 350, height: 20});
-                        $("#cbo_Area").jqxDropDownList({animationType: 'fade', width: 200, height: 20});
+                        $("#cbo_UsuarioEmision").jqxDropDownList({animationType: 'fade', width: 350, height: 20, dropDownWidth: 450});
+                        $("#cbo_Area").jqxDropDownList({animationType: 'fade', width: 200, height: 20, dropDownWidth: 350});
                         $('#cbo_Area').on('change', function () {
                             var codigo = $("#cbo_Area").val();
                             fn_cargarComboAjax("#cbo_Usuario", {mode: 'usuarioMesaParte', periodo: periodo, codigo: codigo});
                             $("#cbo_Usuario").jqxDropDownList('clear');
                         });
-                        $("#cbo_Prioridad").jqxDropDownList({animationType: 'fade', width: 200, height: 20});
+                        $("#cbo_Prioridad").jqxDropDownList({animationType: 'fade', width: 200, height: 20, dropDownWidth: 350});
                         $("#cbo_TipoDecretos").jqxDropDownList({animationType: 'fade', checkboxes: true, width: 440, height: 20, dropDownWidth: 500});
-                        $("#cbo_Usuario").jqxDropDownList({animationType: 'fade', width: 350, height: 20});
+                        $("#cbo_Usuario").jqxDropDownList({animationType: 'fade', width: 350, height: 20,  dropDownWidth: 450});
                         $('#btn_Cancelar').jqxButton({width: '65px', height: 25});
                         $('#btn_Guardar').jqxButton({width: '65px', height: 25});
                         $('#btn_Guardar').on('click', function () {
@@ -292,8 +288,8 @@
                     }
                 });
                 //INICIALIZAMOS LOS VALORES DE LA VENTANA DE DETALLE
-                var ancho = 700;
-                var alto = 465;
+                ancho = 700;
+                alto = 465;
                 posicionX = ($(window).width() / 2) - (ancho / 2);
                 posicionY = ($(window).height() / 2) - (alto / 2);
                 $('#div_VentanaDetalle').jqxWindow({
@@ -305,6 +301,7 @@
                         $('#btn_Cancelar').jqxButton({width: '65px', height: 25});
                     }
                 });
+                $("#div_VisorDocumento").jqxExpander({width: '100%', height: '100%'});
             }
             return {init: function () {
                     _createElements();
@@ -364,9 +361,15 @@
         }
         //FUNCION PARA DECRETAR DOCUMENTACION
         function fn_Decretar() {
+            $("#cbo_UsuarioEmision").jqxDropDownList('selectIndex', 1);
+            $("#cbo_Prioridad").jqxDropDownList('selectIndex', 1);
             $("#cbo_Area").jqxDropDownList('selectItem', 0);
             $("#cbo_Usuario").jqxDropDownList('selectItem', 0);
-            $("#txt_Comentario").val('CONOCIMIENTO, EXPLOTACIÓN Y TRAMITE SEGUN NORMA.');
+            $("#cbo_TipoDecretos").jqxDropDownList('uncheckAll'); 
+            $("#cbo_TipoDecretos").jqxDropDownList('checkIndex',0);
+            $("#cbo_TipoDecretos").jqxDropDownList('checkIndex', 1);
+            $("#cbo_TipoDecretos").jqxDropDownList('checkIndex', 6);
+            $("#txt_Comentario").val('');
             $('#div_VentanaPrincipal').jqxWindow({isModal: true});
             $('#div_VentanaPrincipal').jqxWindow('open');
         }
@@ -523,9 +526,31 @@
                 }
             });
         }
+        function fn_verDocumento(archivo) {
+            var options = {
+                pdfOpenParams: {
+                    pagemode: "thumbs",
+                    navpanes: 1,
+                    toolbar: 1,
+                    statusbar: 0,
+                    view: "FitH"
+                }
+            };
+            PDFObject.embed("///Z:/SIPRE/DOCUMENTOS/MesaParte/" + periodo + "-" + tipo + "-" + codigo + "-"+archivo, "#div_ViewerPDF");
+        }
     });
 </script>
-<div id="div_GrillaPrincipal"></div>
+<div id="div_GrillaPrincipal" style="float: left; width: 60%"></div>
+<div style="float: right; width: 39.8%; height: 100%">
+    <div id="div_VisorDocumento" >
+        <div>
+            Fax Multiple 0029-OPRE
+        </div>
+        <div>
+            <div id="div_ViewerPDF" style="width: 100%; height: 100%"></div> 
+        </div>
+    </div>
+</div>
 <div id="div_VentanaPrincipal" style="display: none">
     <div>
         <span style="float: left">DECRETAR DOCUMENTACIÓN</span>

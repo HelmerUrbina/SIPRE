@@ -29,7 +29,7 @@
         <tr>
             <td width="100%" height="100%" rowspan="2"><p align="center" class="Estilo2">LA SESION HA FINALIZADO. </span>
                 <p align="center" class="Estilo2">
-                <p align="center" class="Estilo4"><a href="FinalizaSesion" target="_parent">INICIAR SESION</a>
+                <p align="center" class="Estilo4"><a href="FinalizaSesion" target="_parent">INICIAR SESIÓN</a>
             </td>
             <td width="20%"></td>
         </tr>

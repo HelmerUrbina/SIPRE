@@ -34,7 +34,10 @@ import javax.servlet.http.Part;
  * @author H-URBINA-M
  */
 @WebServlet(name = "IduDemandaAdicionalServlet", urlPatterns = {"/IduDemandaAdicional"})
-@MultipartConfig(location = "D:/SIPRE/PROGRAMACION/DemandaAdicional")
+@MultipartConfig(location = "D:/SIPRE/PROGRAMACION/DemandaAdicional",
+        fileSizeThreshold = 1024 * 1024 * 10,       // 10 MB 
+        maxFileSize = 1024 * 1024 * 500,            // 500 MB
+        maxRequestSize = 1024 * 1024 * 1000)        // 1000 MB
 public class IduDemandaAdicionalServlet extends HttpServlet {
 
     private ServletConfig config = null;

@@ -3,19 +3,19 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.7715610000000022"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="15"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["2020"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["2021"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PRESUPUESTO" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
 	</parameter>
 	<parameter name="UNIDAD_OPERATIVA" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["0003"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["0770"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="USUARIO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["325487900"]]></defaultValueExpression>
@@ -775,7 +775,7 @@ ORDER BY TIPO, META, TAREA, CADENA_GASTO]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="7" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<text><![CDATA[% EJE.]]></text>
+				<text><![CDATA[% EJE]]></text>
 			</staticText>
 			<staticText>
 				<reportElement key="staticText-25" x="0" y="0" width="160" height="7" forecolor="#000000" uuid="36b66308-a6e0-48c9-b8e0-815160a4de8d"/>
@@ -1250,7 +1250,7 @@ ORDER BY TIPO, META, TAREA, CADENA_GASTO]]>
 					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="6" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[( $V{PIM_TOTAL}.doubleValue() >0 ? new BigDecimal($V{EJE_TOTAL}.doubleValue() / $V{PIM_TOTAL}.doubleValue()):$F{CERO} )]]></textFieldExpression>
@@ -1278,7 +1278,7 @@ ORDER BY TIPO, META, TAREA, CADENA_GASTO]]>
 					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="6" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA[( $V{PCA_TOTAL}.doubleValue() >0 ? new BigDecimal($V{EJE_TOTAL}.doubleValue() / $V{PCA_TOTAL}.doubleValue()):$F{CERO} )]]></textFieldExpression>

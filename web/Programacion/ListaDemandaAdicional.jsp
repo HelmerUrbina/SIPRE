@@ -7,10 +7,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
     var autorizacion = '${autorizacion}';
-    var periodo = '${objBnDemandaAdicional.periodo}';
-    var presupuesto = '${objBnDemandaAdicional.presupuesto}';
-    var unidadOperativa = '${objBnDemandaAdicional.unidadOperativa}';
-    var codigo = '${objBnDemandaAdicional.codigo}';
+    var periodo = $("#cbo_Periodo").val();
+    var presupuesto = $("#cbo_Presupuesto").val();
+    var unidadOperativa = $("#cbo_UnidadOperativa").val();
+    var codigo = null;
     var estado = '';
     var archivo = '';
     var mode = null;

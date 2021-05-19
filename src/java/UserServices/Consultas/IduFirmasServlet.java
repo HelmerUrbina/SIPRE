@@ -111,7 +111,6 @@ public class IduFirmasServlet extends HttpServlet {
                 }
                 k = objDsFirma.iduFirma(objBnFirma, objUsuario.getUsuario());
         }
-
         if (k != 0) {
         } else {
             // EN CASO DE HABER PROBLEMAS DESPACHAMOS UNA VENTANA DE ERROR, MOSTRANDO EL ERROR OCURRIDO.

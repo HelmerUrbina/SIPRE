@@ -45,7 +45,8 @@ public class EventoSecundarioDAOImpl implements EventoSecundarioDAO {
                 + "COUUOO=? AND "
                 + "COPPTO=? AND "
                 + "COMEOP=? AND "
-                + "CODEVE LIKE ? ";        
+                + "CODEVE LIKE ? AND "
+                + "ESTREG!='AN' ";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, objBeanEvento.getPeriodo());
@@ -89,7 +90,8 @@ public class EventoSecundarioDAOImpl implements EventoSecundarioDAO {
                 + "COUUOO=? AND "
                 + "COPPTO=? AND "
                 + "COMEOP=? AND "
-                + "CODEVE=? ";        
+                + "CODEVE=? AND "
+                + "ESTREG!='AN' ";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, objBeanEvento.getPeriodo());
@@ -139,7 +141,8 @@ public class EventoSecundarioDAOImpl implements EventoSecundarioDAO {
                 + "COUUOO=? AND "
                 + "COPPTO=? AND "
                 + "COMEOP=? AND "
-                + "NIVEVE=0 "
+                + "NIVEVE=0 AND "
+                + "ESTREG!='AN' "
                 + "ORDER BY NUMEVE";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
@@ -206,7 +209,8 @@ public class EventoSecundarioDAOImpl implements EventoSecundarioDAO {
                 + "COUUOO=? AND "
                 + "COPPTO=? AND "
                 + "COMEOP=? AND "
-                + "CODEVE=? "
+                + "CODEVE=? AND "
+                + "ESTREG!='AN' "
                 + "ORDER BY ORDEN";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
@@ -263,8 +267,9 @@ public class EventoSecundarioDAOImpl implements EventoSecundarioDAO {
                 + "COPPTO=? AND "
                 + "COMEOP=? AND "
                 + "CODEVE LIKE ? AND "
-                + "NIVEVE=? "
-                + "ORDER BY NUMEVE";        
+                + "NIVEVE=? AND "
+                + "ESTREG!='AN' "
+                + "ORDER BY NUMEVE";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, objBeanEvento.getPeriodo());

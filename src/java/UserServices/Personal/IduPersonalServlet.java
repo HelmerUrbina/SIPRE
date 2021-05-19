@@ -102,7 +102,7 @@ public class IduPersonalServlet extends HttpServlet {
                     InputStream stream = context.getResourceAsStream("/Imagenes/Fondos/usuario.jpg");
                     objBnPersonal.setImage(stream);
                 }
-            } catch (IOException | ServletException e) {
+            } catch (IOException e) {
                 System.out.println("ERROR EN IMAGEN" + e.getMessage());
             }
         }

@@ -411,7 +411,7 @@
                                     break;
                             }
                             if (msg === "") {
-                                var url = '../Reportes?reporte=' + reporte + '&periodo=' + periodo + '&unidadOperativa=' + unidadOperativa + '&presupuesto=' + presupuesto + '&codigo=' + variable;
+                                var url = '../Reportes?reporte=' + reporte + '&periodo=' + periodo + '&unidadOperativa=' + unidadOperativa + '&presupuesto=' + presupuesto + '&codigo=' + variable+ '&codigo2=' + tarea;
                                 window.open(url, '_blank');
                             } else {
                                 $.alert({

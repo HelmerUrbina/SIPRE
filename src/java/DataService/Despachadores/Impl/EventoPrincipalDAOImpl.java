@@ -105,7 +105,8 @@ public class EventoPrincipalDAOImpl implements EventoPrincipalDAO {
                 + "COUUOO=? AND "
                 + "COPPTO=? AND "
                 + "COMEOP=? AND "
-                + "NIVEVE=0 "
+                + "NIVEVE=0 AND "
+                + "ESTREG!='AN' "
                 + "ORDER BY NUMEVE";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);

@@ -22,7 +22,6 @@
         <link type="text/css" rel="stylesheet" href="../css/jquery-confirm.css">
         <link type="text/css" rel="stylesheet" href="../css/scaf.css">
         <script type="text/javascript" src="../javascript/validacion.js"></script>
-        <script type="text/javascript" src="../javascript/bundled.js"></script>
         <script type="text/javascript" src="../javascript/jquery.js"></script>
         <script type="text/javascript" src="../javascript/jquery-confirm.js"></script>
         <script type="text/javascript" src="../javascript/theme.js"></script>
@@ -67,6 +66,8 @@
         <script type="text/javascript" src="../javascript/jqwidgets/jqxnotification.js"></script>
         <script type="text/javascript" src="../javascript/jqwidgets/jqxpopover.js"></script>
         <script type="text/javascript" src="../javascript/jqwidgets/jqxtabs.js"></script> 
+        <script type="text/javascript" src="../javascript/jqwidgets/jqxribbon.js"></script> 
+        <script type="text/javascript" src="../javascript/jqwidgets/jqxlayout.js"></script> 
         <script type="text/javascript" src="../javascript/jqwidgets/jqxfileupload.js"></script>
         <script type="text/javascript" src="../javascript/jqwidgets/globalization/globalize.js"></script>
         <script type="text/javascript" src="../javascript/jqwidgets/globalization/globalize.culture.es-PE.js"></script>
@@ -265,12 +266,15 @@
                     }
                 };
                 var myPDF = PDFObject.embed("../Descarga/FaxMultiple2020-0029-OPRE.pdf", "#div_ViewerPDF");
-                $('#div_Documento').jqxWindow({isModal: true, modalOpacity: 0.9});
+                $('#div_Documento').jqxWindow({isModal: true, modalOpacity: 0.5});
                 $('#div_Documento').jqxWindow('open');
             }
             function fn_verMensaje() {
-                $('#div_Mensaje').jqxWindow({isModal: true, modalOpacity: 0.9});
+                $('#div_Mensaje').jqxWindow({isModal: true, modalOpacity: 0.5});
                 $('#div_Mensaje').jqxWindow('open');
+            }
+            function fn_cerrarMensaje(){
+                $('#div_Mensaje').jqxWindow('close');
             }
         </script>
     </head> 
@@ -343,11 +347,13 @@
 </div>
 <div id="div_Mensaje" style="display: none">
     <div style="font-size: 20px; text-align: center;">
-        COMUNICADO
+        COMUNICADO N° 001-2021-OPRE
     </div>
     <div>
         <div style="font-size: 20px; text-align: justify; padding: 5px">
-            SE HA REALIZADO LA TRANSFERENCIA DE LOS FONDOS PARA EL PROCESO DE ELECCIONES PRESIDENCIALES Y CONGRESALES DEL 11 DE ABRIL 2021, SE SOLICITA HACER LAS GESTIONES NECESARIAS PARA REALIZAR LA CERTIFICACIÓN PRESUPUESTAL A LA BREVEDAD POSIBLE.
+            EN EL MARCO DE LA PROGRAMACIÓN MULTIANUAL PRESUPUESTARIA PERIODO 2022-2024, SE SOLICITA A LAS UNIDADES OPERATIVAS EL REGISTRO DE INFORMACIÓN EN EL MÓDULO DE PROGRAMACIÓN MULTIANUAL DE GASTOS 2022-2023-2024 Y CNV 2022 (EVENTOS, INSUMOS Y/O ÍTEM) <span style="color: red; font-weight: bold">HASTA EL DIA JUEVES 22 DE ABRIL DEL 2021</span>.
+        </div>
+        <div style="text-align: center"> <a href="javascript:fn_cerrarMensaje();">Cerrar</a></div>
     </div>
 </div>
 <script type="text/javascript">

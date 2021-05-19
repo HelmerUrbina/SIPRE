@@ -50,7 +50,8 @@ public class EventoFinalDAOImpl implements EventoFinalDAO {
                 + "COUUOO=? AND "
                 + "COPPTO=? AND "
                 + "COMEOP=? AND "
-                + "CODEVE=? "
+                + "CODEVE=? AND "
+                + "ESTREG!='AN' "
                 + "ORDER BY ORDEN";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);

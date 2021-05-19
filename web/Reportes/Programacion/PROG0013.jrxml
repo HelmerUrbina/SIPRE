@@ -2,21 +2,24 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PROG0013" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="99c87acb-d01c-42ba-99cd-91b414d44dc0">
 	<property name="ireport.zoom" value="1.6105100000000014"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
-	<parameter name="PERIODO" class="java.lang.String">
-		<defaultValueExpression><![CDATA["2017"]]></defaultValueExpression>
+	<property name="ireport.y" value="8"/>
+	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2022"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="UNIDAD_OPERATIVA" class="java.lang.String">
-		<defaultValueExpression><![CDATA["0003"]]></defaultValueExpression>
+	<parameter name="UNIDAD_OPERATIVA" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["0754"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="PRESUPUESTO" class="java.lang.Integer">
+	<parameter name="PRESUPUESTO" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CODIGO" class="java.lang.String">
-		<defaultValueExpression><![CDATA["HTS-0013-2-1-1"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["HTS-0013-1"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="USUARIO" class="java.lang.String">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CODIGO2" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["0011"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT 
@@ -34,7 +37,9 @@ FROM TAHOTR WHERE
 CODPER=$P{PERIODO} AND
 COPPTO=$P{PRESUPUESTO} AND
 COUUOO=$P{UNIDAD_OPERATIVA} AND
+COMEOP=$P{CODIGO2} AND
 CODEVE LIKE '%'||SUBSTR($P{CODIGO},4,LENGTH($P{CODIGO}))||'%' 
+AND ESTREG!='AN'
 ORDER BY CODEVE, CADENA_GASTO, ITEM]]>
 	</queryString>
 	<field name="PERIODO" class="java.lang.String"/>

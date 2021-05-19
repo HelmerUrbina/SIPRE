@@ -481,7 +481,7 @@
         <li>Editar</li>
         <li>Eliminar</li> 
         <li>Cerrar</li> 
-        <li>Duplicar Evento</li>         
+        <li>Duplicar Evento</li>
         <li><-- Regresar</li> 
         <li>Registrar Insumos</li>
         <li>Activar</li>

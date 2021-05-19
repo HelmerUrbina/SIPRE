@@ -1636,6 +1636,7 @@
         for (var i = 0; i < rows.length; i++) {
             var row = $('#div_GrillaRegistroJadpe').jqxGrid('getrowdata', rows[i]);
             result = row.uid + "---" + row.oficio + "---" + row.resolucion + "---" + row.subTipo + "---" + row.codigo;
+            alert(result);
             lista.push(result);
         }
         if (lista.length === 0) {

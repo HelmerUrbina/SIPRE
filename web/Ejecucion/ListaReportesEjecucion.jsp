@@ -6,6 +6,7 @@
 
 <script type="text/javascript">
     var autorizacion = '${autorizacion}';
+    var unidad = '${unidad}';
     var reporte = null;
     var codigo = null;
     var codigo2 = null;
@@ -91,6 +92,9 @@
             case "EJE0045":
                 break;
             case "EJE0047":
+                if (autorizacion === 'false')
+                    if (unidad !== "0870")
+                        msg = "Usuario no Autorizado.";
                 break;
             default:
                 msg = "Debe selecciona una opción";

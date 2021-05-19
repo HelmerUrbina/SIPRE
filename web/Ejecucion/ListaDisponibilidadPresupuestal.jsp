@@ -236,7 +236,7 @@
                 {text: 'TIPO', dataField: 'tipo', filtertype: 'checkedlist', width: '7%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
                 {text: 'NUMERO', dataField: 'numero', width: '4%', align: 'center', cellsAlign: 'center', cellclassname: cellclass},
                 {text: 'UU/OO', dataField: 'unidad', width: '8%', align: 'center', cellclassname: cellclass},
-                
+
                 {text: 'DOC. GESTION', dataField: 'oficio', width: '15%', align: 'center', cellclassname: cellclass},
                 {text: 'REQUERIMIENTO', dataField: 'concepto', width: '30%', align: 'center', cellclassname: cellclass},
                 {text: 'IMPORTE', dataField: 'importe', width: '10%', align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass},

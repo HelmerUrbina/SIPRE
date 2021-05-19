@@ -246,9 +246,10 @@ public class MesaParteDAOImpl implements MesaParteDAO {
     @Override
     public String getDocumentosPendientes(String usuario) {
         String result = "0";
-        sql = "SELECT COUNT(*) AS DOCUMENTO FROM SIPE_DECRETO_DOCUMENTO WHERE "
+        sql = "SELECT COUNT(*) AS DOCUMENTO "
+                + "FROM SIPE_DECRETO_DOCUMENTO WHERE "
                 + "VUSUARIO_RECEPCION=? AND "
-                + "CESTADO_DOCUMENTO IN ('DE')";
+                + "CESTADO_CODIGO IN ('DE')";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, usuario);
@@ -279,7 +280,7 @@ public class MesaParteDAOImpl implements MesaParteDAO {
                 + "D.VDOCUMENTO_ASUNTO AS ASUNTO, PK_MESA_PARTES.FUN_NOMBRE_PRIORIDAD(D.CPRIORIDAD_CODIGO) AS PRIORIDAD, "
                 + "PK_MESA_PARTES.FUN_NOMBRE_INSTITUCION(D.CORGANISMO_CODIGO, D.CINSTITUCION_CODIGO) AS INSTITUCION, "
                 + "D.DDOCUMENTO_FECHA_DOCUMENTO AS FECHA_DOCUMENTO, "
-                + "CASE DD.CESTADO_DOCUMENTO WHEN 'RE' THEN 'RECIBIDO' WHEN 'DE' THEN 'DECRETADO' "
+                + "CASE DD.CESTADO_CODIGO WHEN 'RE' THEN 'RECIBIDO' WHEN 'DE' THEN 'DECRETADO' "
                 + "WHEN 'RS' THEN 'RESPONDIDO' ELSE 'PENDIENTE' END AS ESTADO,"
                 + "D.VPOST_FIRMA AS FIRMA,D.NCANTIDAD_LEGAJOS AS LEGAJO,D.NCANTIDAD_FOLIOS AS FOLIO,"
                 + "UTIL_NEW.FUN_NOMUSU('0003',DD.VUSUARIO_RECEPCION) AS USUARIO_RESPUESTA,"
@@ -290,9 +291,9 @@ public class MesaParteDAOImpl implements MesaParteDAO {
                 + "D.CDOCUMENTO_NUMERO=DD.CDOCUMENTO_NUMERO )  WHERE "
                 + "DD.CPERIODO_CODIGO=? AND "
                 + "DD.VUSUARIO_RECEPCION=? AND "
-                + "DD.CESTADO_DOCUMENTO IN ('DE','RE') AND "
+                + "DD.CESTADO_CODIGO IN ('DE','RE') AND "
                 + "D.CDOCUMENTO_TIPO='E' "
-                + "ORDER BY DD.CESTADO_DOCUMENTO, D.CDOCUMENTO_NUMERO DESC";
+                + "ORDER BY DD.CESTADO_CODIGO, D.CDOCUMENTO_NUMERO DESC";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objPreparedStatement.setString(1, objBeanMesaParte.getPeriodo());

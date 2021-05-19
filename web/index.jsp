@@ -11,14 +11,14 @@
     session.invalidate();
 %>
 <!DOCTYPE html> 
-<html>
+<html X-Frame>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
         <meta http-equiv="Expires" content="0"/>
         <meta http-equiv="Last-Modified" content="0"/>
         <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
         <meta http-equiv="Pragma" content="no-cache"/>
-        <meta http-equiv="refresh" content="300; url=index.jsp">
+        <meta http-equiv="refresh" content="500; url=index.jsp">
         <title>.:: SIPRE - Sistema Integrado Presupuestal del Ejercito ::.</title>
         <link rel="shortcut icon" href="Imagenes/Logos/favicon.ico" type="image/x-icon">
         <link type="text/css" rel="stylesheet" href="css/styles/jqx.base.css">
@@ -27,7 +27,6 @@
         <link type="text/css" rel="stylesheet" href="css/bundled.css">
         <link type="text/css" rel="stylesheet" href="css/jquery-confirm.css"> 
         <script type="text/javascript" src="javascript/theme.js"></script>
-        <script type="text/javascript" src="javascript/bundled.js"></script>
         <script type="text/javascript" src="javascript/jquery.js"></script>
         <script type="text/javascript" src="javascript/jquery-confirm.js"></script>
         <script type="text/javascript" src="javascript/jquery.hoverplay.js"></script>
@@ -280,6 +279,7 @@
         </script>
     </head>
     <body oncontextmenu='return false'>
+        
         <table cellpadding="0" cellspacing="0" width="100%"  height="100%" >
             <tr>
                 <td colspan="3" height="30px"></td>
@@ -383,6 +383,8 @@
                                 <li class="link"> 2. <a href="Descarga/Anexo2-EquivalenciaClasificadoresGasto2022-2024.pdf" target="_blank">Equivalencia de los Clasificadores de Gasto para la P.M. 2021-2023.</a></li>
                                 <li class="link"> 3. <a href="Descarga/LineamientosProgramaciónMultianualFormulaciónPresupuestariaUE003EP.pdf" target="_blank">Lineamientos para la Programación Multianual y Formulación Presupuestaria en la UE 003 EP.</a></li>
                                 <li class="link"> 4. <a href="Descarga/ANEXO04GuiaElaboraciónCNV.xlsx" target="_blank">ANEXO N 04-Guia para elaboración de CNV.</a></li>
+                                <li class="link"> 5. <a href="Descarga/FaxMultiple2021-0044-OPRE.pdf" target="_blank">Fax Mult. N° 0044 - Solicita registro de información de la Programación Multianual Presupuestaria Periodo 2022-2024 en el SIPRE.</a></li>
+                                <li class="link"> 6. <a href="Descarga/ExpoCCFFAACapacPP0135.pptx" target="_blank"><span class="inputlabelred">Exposición del CCFFAA para capacitación del EP - PP 0135.</span></a></li>
                             </ul>
                         </div>
                     </div>

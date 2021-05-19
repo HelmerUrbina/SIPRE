@@ -46,7 +46,10 @@ import net.sf.jasperreports.engine.JasperPrint;
  * @author H-TECCSI-V
  */
 @WebServlet(name = "IduMesaParteServlet", urlPatterns = {"/IduMesaParte"})
-@MultipartConfig(location = "D:/SIPRE/DOCUMENTOS/MesaParte")
+@MultipartConfig(location = "D:/SIPRE/DOCUMENTOS/MesaParte",
+        fileSizeThreshold = 1024 * 1024 * 10,       // 10 MB 
+        maxFileSize = 1024 * 1024 * 500,            // 500 MB
+        maxRequestSize = 1024 * 1024 * 1000)        // 1000 MB
 public class IduMesaParteServlet extends HttpServlet {
 
     private ServletConfig config = null;

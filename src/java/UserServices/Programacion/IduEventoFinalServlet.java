@@ -91,7 +91,7 @@ public class IduEventoFinalServlet extends HttpServlet {
                 k = objDsEvento.iduEventoFinal(objBnEvento, objUsuario.getUsuario());
                 String codigo = objDsEvento.getUltimoEventoFinal(objBnEvento, objUsuario.getUsuario());
                 HojaTrabajoDAO objDsHojaTrabajo = new HojaTrabajoDAOImpl(objConnection);
-                lista.forEach((lista1) -> {                   
+                lista.forEach((lista1) -> {
                     BeanHojaTrabajo val = (BeanHojaTrabajo) lista1;
                     val.setPeriodo(request.getParameter("periodo"));
                     val.setUnidadOperativa(request.getParameter("unidadOperativa"));
@@ -100,7 +100,7 @@ public class IduEventoFinalServlet extends HttpServlet {
                     val.setEventoPrincipal(request.getParameter("codigo"));
                     val.setEventoFinal(codigo);
                     val.setCorrelativo(0);
-                    val.setMode("I");                    
+                    val.setMode("I");
                     int s = objDsHojaTrabajo.iduHojaTrabajo(val, objUsuario.getUsuario());
                 });
                 break;

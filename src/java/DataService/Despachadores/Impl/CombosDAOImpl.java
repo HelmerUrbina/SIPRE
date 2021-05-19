@@ -65,7 +65,7 @@ public class CombosDAOImpl implements CombosDAO {
         }
         return lista;
     }
-
+    
     @Override
     public List getMes() {
         lista = new LinkedList<>();
@@ -181,8 +181,7 @@ public class CombosDAOImpl implements CombosDAO {
     public List getGenericaGasto() {
         lista = new LinkedList<>();
         /*
-         * OBTENEMOS LOS DATOS DEL PRESUPUESTO O FUENTE DE FINANCIAMIENTO POR
-         * ORDEN DESCENDENTES Y LO ALMACENAMOS EN UNA LISTA
+         * OBTENEMOS LOS DATOS DE LA GENERICA DE GASTO Y LO ALMACENAMOS EN UNA LISTA
          */
         sql = "SELECT COGEGA AS CODIGO, COGEGA||'-'||NOGEGA AS DESCRIPCION "
                 + "FROM GENGAS WHERE "
@@ -216,7 +215,7 @@ public class CombosDAOImpl implements CombosDAO {
     public List getGenericaGasto(String periodo, Integer presupuesto) {
         lista = new LinkedList<>();
         /*
-         * OBTENEMOS LOS DATOS DEL PRESUPUESTO O FUENTE DE FINANCIAMIENTO POR
+         * OBTENEMOS LOS DATOS LA GENERICA DE GASTO POR PERIODO Y PRESUPUESO
          * ORDEN DESCENDENTES Y LO ALMACENAMOS EN UNA LISTA
          */
         sql = "SELECT TRIM(CODGEN) AS CODIGO, TRIM(CODGEN)||':'||UTIL_NEW.FUN_NOMGEN(TRIM(CODGEN)) AS DESCRIPCION "
@@ -290,7 +289,7 @@ public class CombosDAOImpl implements CombosDAO {
     public List getProveedores() {
         lista = new LinkedList<>();
         /*
-         * OBTENEMOS LOS DATOS DE LA TABLA DE UNIDAD OPERATIVA 
+         * OBTENEMOS LOS DATOS DE LA TABLA DE PROVEEDORES
          * ORDEN DESCENDENTES Y LO ALMACENAMOS EN UNA LISTA
          */
         sql = "SELECT COUUOO CODIGO, COUUOO||':'||ABUUOO AS DESCRIPCION "
@@ -466,7 +465,7 @@ public class CombosDAOImpl implements CombosDAO {
     public List getTipoResolucion() {
         lista = new LinkedList<>();
         /*
-         * OBTENEMOS LOS DATOS DE LA TABLA AREA LABORAL
+         * OBTENEMOS LOS DATOS DE LA TABLA TIPO DE RESOLUCION
          * Y LO ALMACENAMOS EN UNA LISTA
          */
         sql = "SELECT CTIPO_RESOLUCION_CODIGO AS CODIGO, VDESCRIPCION_RESOLUCION AS DESCRIPCION "
@@ -531,7 +530,7 @@ public class CombosDAOImpl implements CombosDAO {
     public List getGrados(String nivel) {
         lista = new LinkedList<>();
         /*
-         * OBTENEMOS LOS DATOS DE LA TABLA AREA LABORAL
+         * OBTENEMOS LOS DATOS DE LA TABLA GRADOS
          * Y LO ALMACENAMOS EN UNA LISTA
          */
         sql = "SELECT CODGRD AS CODIGO, DESCRIPCION AS DESCRIPCION "
@@ -4678,7 +4677,7 @@ public class CombosDAOImpl implements CombosDAO {
         lista = new LinkedList<>();
         sql = "SELECT NTIPO_DECRETO_CODIGO AS CODIGO, "
                 + "VTIPO_DECRETO_DESCRIPCION AS DESCRIPCION "
-                + "FROM SIPE_TIPO_DECRETO";
+                + "FROM SIPRE_TIPO_DECRETO";
         try {
             objPreparedStatement = objConnection.prepareStatement(sql);
             objResultSet = objPreparedStatement.executeQuery();
