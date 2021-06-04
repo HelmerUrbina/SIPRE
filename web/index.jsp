@@ -384,7 +384,7 @@
                                 <li class="link"> 3. <a href="Descarga/LineamientosProgramaciónMultianualFormulaciónPresupuestariaUE003EP.pdf" target="_blank">Lineamientos para la Programación Multianual y Formulación Presupuestaria en la UE 003 EP.</a></li>
                                 <li class="link"> 4. <a href="Descarga/ANEXO04GuiaElaboraciónCNV.xlsx" target="_blank">ANEXO N 04-Guia para elaboración de CNV.</a></li>
                                 <li class="link"> 5. <a href="Descarga/FaxMultiple2021-0044-OPRE.pdf" target="_blank">Fax Mult. N° 0044 - Solicita registro de información de la Programación Multianual Presupuestaria Periodo 2022-2024 en el SIPRE.</a></li>
-                                <li class="link"> 6. <a href="Descarga/ExpoCCFFAACapacPP0135.pptx" target="_blank"><span class="inputlabelred">Exposición del CCFFAA para capacitación del EP - PP 0135.</span></a></li>
+                                <li class="link"> 6. <a href="Descarga/ExpoCCFFAACapacPP0135.pptx" target="_blank">Exposición del CCFFAA para capacitación del EP - PP 0135.</a></li>
                             </ul>
                         </div>
                     </div>
