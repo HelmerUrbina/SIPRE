@@ -2,14 +2,14 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EJE0024" printOrder="Horizontal" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="525" leftMargin="40" rightMargin="30" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="2d7049c0-ede0-4769-aa90-549d4fbe5761">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="2.657341500000001"/>
-	<property name="ireport.x" value="796"/>
+	<property name="ireport.zoom" value="1.5000000000000002"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["2020"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["2021"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["0387"]]></defaultValueExpression>
@@ -25,33 +25,28 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT C.CPERIODO_CODIGO AS PERIODO, C.CCONSOLIDADO_NOTA AS CONSOLIDADO,
-D.NPRESUPUESTO_CODIGO||':'||UTIL_NEW.FUN_DEPPTO(D.NPRESUPUESTO_CODIGO) AS PRESUPUESTO,           
-CSECUENCIA_FUNCIONAL_CODIGO ||'-'|| UTIL_NEW.FUN_DESMET(C.CPERIODO_CODIGO, 
-D.NPRESUPUESTO_CODIGO, CSECUENCIA_FUNCIONAL_CODIGO) AS SECUENCIA_FUNCIONAL, 
-VCADENA_GASTO_CODIGO||'-'||UTIL_NEW.FUN_NOCLAS(VCADENA_GASTO_CODIGO) AS CADENA_GASTO, 
+D.NPRESUPUESTO_CODIGO||':'||UTIL_NEW.FUN_DEPPTO(D.NPRESUPUESTO_CODIGO) AS PRESUPUESTO,
+CSECUENCIA_FUNCIONAL_CODIGO ||'-'|| UTIL_NEW.FUN_DESMET(C.CPERIODO_CODIGO,
+D.NPRESUPUESTO_CODIGO, CSECUENCIA_FUNCIONAL_CODIGO) AS SECUENCIA_FUNCIONAL,
+VCADENA_GASTO_CODIGO||'-'||UTIL_NEW.FUN_NOCLAS(VCADENA_GASTO_CODIGO) AS CADENA_GASTO,
 CASE CNOTA_MODIFICATORIA_TIPO WHEN 'A' THEN 'ANULACIÓN' WHEN 'C' THEN 'CREDITO' ELSE ' ' END AS TIPO,
 SUM(CASE CNOTA_MODIFICATORIA_TIPO WHEN 'A' THEN  NNOTA_MODIFICATORIA_IMPORTE*(-1) ELSE NNOTA_MODIFICATORIA_IMPORTE END ) AS IMPORTE,
 CASE CESTADO_SIAF WHEN 'PE' THEN 'PENDIENTE' WHEN 'AP' THEN 'APROBADO' WHEN 'AN' THEN 'ANULADO' ELSE ' ' END AS ESTADO_SIAF,
 NVL(CNUMERO_SIAF_NOTA,' ') AS NUMSIAF ,
-(select  tabprs.codprs from tabprs,tapsre where tapsre.codper=tabprs.codper and tapsre.codprs=tabprs.codprs and tapsre.capsre='1' and tapsre.codrpt='046' and tabprs.codper = C.CPERIODO_CODIGO)  as firma1,
-(select  tabprs.apeprs from tabprs,tapsre where tapsre.codper=tabprs.codper and tapsre.codprs=tabprs.codprs and tapsre.capsre='1' and tapsre.codrpt='046' and tabprs.codper = C.CPERIODO_CODIGO) as firma1a,
-(select  tabprs.nomprs from tabprs,tapsre where tapsre.codper=tabprs.codper and tapsre.codprs=tabprs.codprs and tapsre.capsre='1' and tapsre.codrpt='046' and tabprs.codper = C.CPERIODO_CODIGO) as firma1b,
-(select  tabprs.graprs from tabprs,tapsre where tapsre.codper=tabprs.codper and tapsre.codprs=tabprs.codprs and tapsre.capsre='1' and tapsre.codrpt='046' and tabprs.codper = C.CPERIODO_CODIGO) as firma1c,
-(select  tabprs.carprs from tabprs,tapsre where tapsre.codper=tabprs.codper and tapsre.codprs=tabprs.codprs and tapsre.capsre='1' and tapsre.codrpt='046' and tabprs.codper = C.CPERIODO_CODIGO) as firma1d,
-(select DISTINCT tabprs.codprs from tabprs,tapsre where tapsre.codprs=tabprs.codprs AND TAPSRE.CODPER=TABPRS.CODPER and tapsre.capsre='2' and tapsre.codrpt='046' AND TABPRS.CODPER=C.CPERIODO_CODIGO) AS firma2,
-(select DISTINCT tabprs.apeprs from tabprs,tapsre where tapsre.codprs=tabprs.codprs AND TAPSRE.CODPER=TABPRS.CODPER and tapsre.capsre='2' and tapsre.codrpt='046' AND TABPRS.CODPER=C.CPERIODO_CODIGO) AS firma2a,
-(select DISTINCT tabprs.nomprs from tabprs,tapsre where tapsre.codprs=tabprs.codprs AND TAPSRE.CODPER=TABPRS.CODPER and tapsre.capsre='2' and tapsre.codrpt='046' AND TABPRS.CODPER=C.CPERIODO_CODIGO) AS firma2b,
-(select DISTINCT tabprs.graprs from tabprs,tapsre where tapsre.codprs=tabprs.codprs AND TAPSRE.CODPER=TABPRS.CODPER and tapsre.capsre='2' and tapsre.codrpt='046' AND TABPRS.CODPER=C.CPERIODO_CODIGO) AS firma2c,
-(select DISTINCT tabprs.carprs from tabprs,tapsre where tapsre.codprs=tabprs.codprs AND TAPSRE.CODPER=TABPRS.CODPER and tapsre.capsre='2' and tapsre.codrpt='046' AND TABPRS.CODPER=C.CPERIODO_CODIGO) AS firma2d,
-CASE WHEN $P{USUARIO} IN ('10714635','43305891','44469132') THEN 'Sección Telemática - OPRE' ELSE 
-UTIL_NEW.FUN_DESC_USUARIO($P{USUARIO}) END AS USU_IMPRESION 
+(select tabprs.codprs from tabprs where tabprs.CODSIS LIKE '%'||C.VUSUARIO_CODIGO||'%' and tabprs.codper = $P{PERIODO}) as firma3,
+(select tabprs.apeprs from tabprs where tabprs.CODSIS LIKE '%'||C.VUSUARIO_CODIGO||'%' and tabprs.codper = $P{PERIODO}) as firma3a,
+(select tabprs.nomprs from tabprs where tabprs.CODSIS LIKE '%'||C.VUSUARIO_CODIGO||'%' and tabprs.codper = $P{PERIODO}) as firma3b,
+(select tabprs.graprs from tabprs where tabprs.CODSIS LIKE '%'||C.VUSUARIO_CODIGO||'%' and tabprs.codper = $P{PERIODO}) as firma3c,
+(select tabprs.carprs from tabprs where tabprs.CODSIS LIKE '%'||C.VUSUARIO_CODIGO||'%' and tabprs.codper = $P{PERIODO}) as firma3d,
+CASE WHEN $P{USUARIO} IN ('10714635','43305891','44469132') THEN 'Sección Telemática - OPRE' ELSE
+UTIL_NEW.FUN_DESC_USUARIO($P{USUARIO}) END AS USU_IMPRESION
 FROM SIPE_CONSOLIDADO_NOTA C INNER JOIN SIPE_CONSOLIDADO_DETALLE_NOTA D ON (
-C.CPERIODO_CODIGO=D.CPERIODO_CODIGO AND 
-C.CCONSOLIDADO_NOTA=D.CCONSOLIDADO_NOTA) WHERE 
-C.CPERIODO_CODIGO=$P{PERIODO} AND 
-D.NPRESUPUESTO_CODIGO=$P{PRESUPUESTO} AND 
-C.CCONSOLIDADO_NOTA=$P{CODIGO} 
-GROUP BY C.CPERIODO_CODIGO, C.CCONSOLIDADO_NOTA, CESTADO_SIAF, CNOTA_MODIFICATORIA_TIPO,
+C.CPERIODO_CODIGO=D.CPERIODO_CODIGO AND
+C.CCONSOLIDADO_NOTA=D.CCONSOLIDADO_NOTA) WHERE
+C.CPERIODO_CODIGO=$P{PERIODO} AND
+D.NPRESUPUESTO_CODIGO=$P{PRESUPUESTO} AND
+C.CCONSOLIDADO_NOTA=$P{CODIGO}
+GROUP BY C.CPERIODO_CODIGO, C.CCONSOLIDADO_NOTA, CESTADO_SIAF, CNOTA_MODIFICATORIA_TIPO, C.VUSUARIO_CODIGO,
 D.NPRESUPUESTO_CODIGO, CSECUENCIA_FUNCIONAL_CODIGO, VCADENA_GASTO_CODIGO,CNUMERO_SIAF_NOTA
 ORDER BY CSECUENCIA_FUNCIONAL_CODIGO, VCADENA_GASTO_CODIGO]]>
 	</queryString>
@@ -64,16 +59,11 @@ ORDER BY CSECUENCIA_FUNCIONAL_CODIGO, VCADENA_GASTO_CODIGO]]>
 	<field name="IMPORTE" class="java.math.BigDecimal"/>
 	<field name="ESTADO_SIAF" class="java.lang.String"/>
 	<field name="NUMSIAF" class="java.lang.String"/>
-	<field name="FIRMA1" class="java.lang.String"/>
-	<field name="FIRMA1A" class="java.lang.String"/>
-	<field name="FIRMA1B" class="java.lang.String"/>
-	<field name="FIRMA1C" class="java.lang.String"/>
-	<field name="FIRMA1D" class="java.lang.String"/>
-	<field name="FIRMA2" class="java.lang.String"/>
-	<field name="FIRMA2A" class="java.lang.String"/>
-	<field name="FIRMA2B" class="java.lang.String"/>
-	<field name="FIRMA2C" class="java.lang.String"/>
-	<field name="FIRMA2D" class="java.lang.String"/>
+	<field name="FIRMA3" class="java.lang.String"/>
+	<field name="FIRMA3A" class="java.lang.String"/>
+	<field name="FIRMA3B" class="java.lang.String"/>
+	<field name="FIRMA3C" class="java.lang.String"/>
+	<field name="FIRMA3D" class="java.lang.String"/>
 	<field name="USU_IMPRESION" class="java.lang.String"/>
 	<group name="CODPER">
 		<groupExpression><![CDATA[$F{PERIODO}]]></groupExpression>
@@ -81,7 +71,7 @@ ORDER BY CSECUENCIA_FUNCIONAL_CODIGO, VCADENA_GASTO_CODIGO]]>
 			<band splitType="Stretch"/>
 		</groupHeader>
 		<groupFooter>
-			<band height="154" splitType="Stretch">
+			<band height="142" splitType="Stretch">
 				<crosstab>
 					<reportElement key="crosstab-1" x="0" y="0" width="525" height="57" uuid="a238bb8a-9a5f-4483-97cc-e67d409edc31"/>
 					<crosstabHeaderCell>
@@ -392,8 +382,8 @@ ORDER BY CSECUENCIA_FUNCIONAL_CODIGO, VCADENA_GASTO_CODIGO]]>
 						</cellContents>
 					</whenNoDataCell>
 				</crosstab>
-				<textField isBlankWhenNull="false">
-					<reportElement key="textField-10" positionType="Float" x="85" y="110" width="135" height="10" uuid="7a1dc1d5-4742-4a77-9926-abb5f8e0c8fa"/>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField-14" positionType="Float" x="209" y="95" width="129" height="10" uuid="b092159d-73e2-4e35-b68b-00541e0bf4eb"/>
 					<box>
 						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -403,72 +393,10 @@ ORDER BY CSECUENCIA_FUNCIONAL_CODIGO, VCADENA_GASTO_CODIGO]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{FIRMA1}]]></textFieldExpression>
-				</textField>
-				<textField isBlankWhenNull="false">
-					<reportElement key="textField-11" positionType="Float" x="85" y="120" width="135" height="10" uuid="8156b827-95c8-4407-ad7c-2446b84a41ed"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Arial" size="7"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{FIRMA1A}+", "+$F{FIRMA1B}]]></textFieldExpression>
-				</textField>
-				<textField isBlankWhenNull="false">
-					<reportElement key="textField-12" positionType="Float" x="85" y="130" width="135" height="10" uuid="8cf52392-e592-4469-8b95-e32f73d1efc2"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Arial" size="7"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{FIRMA1C}]]></textFieldExpression>
-				</textField>
-				<textField isBlankWhenNull="false">
-					<reportElement key="textField-13" positionType="Float" x="85" y="140" width="135" height="10" uuid="55c91f9b-b045-4df9-b188-d491b67b3c49"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Arial" size="7"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{FIRMA1D}]]></textFieldExpression>
-				</textField>
-				<image>
-					<reportElement key="image-2" positionType="Float" x="10" y="75" width="80" height="70" uuid="7616ae3e-15a7-4553-88aa-57e33fede6fd"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"/Imagenes/sello_opre.jpg"]]></imageExpression>
-				</image>
-				<textField isBlankWhenNull="true">
-					<reportElement key="textField-14" positionType="Float" x="348" y="95" width="129" height="10" uuid="b092159d-73e2-4e35-b68b-00541e0bf4eb"/>
-					<box>
-						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Arial" size="7"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{FIRMA2}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FIRMA3}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-15" positionType="Float" x="348" y="105" width="129" height="10" uuid="9b417c49-82f8-46da-a2f2-9dedbdefe930"/>
+					<reportElement key="textField-15" positionType="Float" x="209" y="105" width="129" height="10" uuid="9b417c49-82f8-46da-a2f2-9dedbdefe930"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -478,10 +406,10 @@ ORDER BY CSECUENCIA_FUNCIONAL_CODIGO, VCADENA_GASTO_CODIGO]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{FIRMA2A}+", "+$F{FIRMA2B}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FIRMA3A}+", "+$F{FIRMA3B}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-16" positionType="Float" x="348" y="115" width="129" height="10" uuid="b040e800-68c4-41bf-9d02-bf9d0ecb86d5"/>
+					<reportElement key="textField-16" positionType="Float" x="209" y="115" width="129" height="10" uuid="b040e800-68c4-41bf-9d02-bf9d0ecb86d5"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -491,10 +419,10 @@ ORDER BY CSECUENCIA_FUNCIONAL_CODIGO, VCADENA_GASTO_CODIGO]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{FIRMA2C}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FIRMA3C}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-17" positionType="Float" x="348" y="125" width="129" height="10" uuid="09435231-ce38-40f0-8f9d-ef6a6f5eba7e"/>
+					<reportElement key="textField-17" positionType="Float" x="209" y="125" width="129" height="10" uuid="09435231-ce38-40f0-8f9d-ef6a6f5eba7e"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -504,7 +432,7 @@ ORDER BY CSECUENCIA_FUNCIONAL_CODIGO, VCADENA_GASTO_CODIGO]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="7"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{FIRMA2D}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FIRMA3D}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
