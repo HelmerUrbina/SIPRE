@@ -298,7 +298,7 @@
                                 <li class="link"> 6. <a href="Descarga/GlosariodeTerminosFinancieros-MEF.pdf" target="_blank">Glosario de Términos Financieros - MEF</a></li>
                                 <li class="link"> 7. <a href="Descarga/DirectivaEjecucion_0003-2018-OPRE.pdf" target="_blank">Directiva General para la Ejecución del Proceso Presupuestario.</a></li>
                                 <li class="link"> 8. <a href="Descarga/DirectivaOGRE2016.pdf" target="_blank">Directiva N° 001-2016/OGRE.</a></li>
-                                <li class="link"> 9. <a href="Descarga/LineamientoComplentariosEvaluacion2020.pdf" target="_blank">Lineamientos para la Evaluación AF-2020.</a></li>
+                                <li class="link"> 9. <a href="Descarga/LineamientoComplementarioEvaluacion2021.pdf" target="_blank"><span class="inputlabelred">Lineamientos para la Evaluación AF-2021.</span></a></li>
                                     <%--<li class="link"> 9. <a href="Descarga/LineamientoComplentariosEvaluacion2020.pdf" target="_blank"><span class="inputlabelred">Lineamientos para la Evaluación AF-2020.</span></a></li>--%>
                             </ul>
                         </div>
@@ -392,10 +392,8 @@
                         <div style="text-align: center">EJECUCIÓN PRESUPUESTAL</div>
                         <div>
                             <ul>
-                                <li class="link"> 1. <a href="Descarga/FaxMultiple2021-0001-OPRE.pdf" target="_blank">Fax Mult. N° 0001 - Sobre Acuerdo de Confidencialidad para Proteccion de Datos de los Usuario del SIPRE.</a></li>
-                                <li class="link"> 2. <a href="Descarga/FaxMultiple2021-0007-OPRE.pdf" target="_blank">Fax Mult. N° 0007 - Sobre Modificaciones Presupuestales a nivel Espeficia de Gasto y Demandas Adicionales en el AF-2021.</a></li>
-                                <li class="link"> 3. <a href="Descarga/FaxMultiple2021-0008-OPRE.pdf" target="_blank">Fax Mult. N° 0008 - Solicita registro en el SIPRE del Cuadro de Necesidades Valorizadas (CNV) del PIA AF-2021.</a></li>
-                            </ul>
+                                <li class="link"> 1. <a href="Descarga/FaxMultiple2021-0056-OPRE.pdf" target="_blank"><span class="inputlabelred">Fax Mult. N° 0056 - Sobre Evaluación Anual del Presupuesto 2021.</span></a></li>
+                             </ul>
                         </div>
                     </div>
                 </td>
