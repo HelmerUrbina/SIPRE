@@ -5,10 +5,11 @@ Author     : H-URBINA-M
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
-    var periodo = '${objBnEnteGenerador.periodo}';
-    var presupuesto = '${objBnEnteGenerador.presupuesto}';
-    var unidadOperativa = '${objBnEnteGenerador.unidadOperativa}';
-    var codigo = '${objBnEnteGenerador.codigo}';
+    var periodo = $("#cbo_Periodo").val();
+    var presupuesto = $("#cbo_Presupuesto").val();
+    var unidadOperativa = $("#cbo_UnidadOperativa").val();
+    var mes = $("#cbo_Mes").val();
+    var codigo = null;
     var estado = '';
     var mode = null;
     var msg = '';

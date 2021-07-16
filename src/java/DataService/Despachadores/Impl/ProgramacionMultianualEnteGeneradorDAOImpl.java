@@ -5,7 +5,7 @@
  */
 package DataService.Despachadores.Impl;
 
-import BusinessServices.Beans.BeanEnteGenerador;
+import BusinessServices.Beans.BeanEnteRecaudador;
 import BusinessServices.Beans.BeanMsgerr;
 import DataService.Despachadores.MsgerrDAO;
 import DataService.Despachadores.ProgramacionMultianualEnteGeneradorDAO;
@@ -27,7 +27,7 @@ public class ProgramacionMultianualEnteGeneradorDAOImpl implements ProgramacionM
     private List lista;
     private String sql;
     private ResultSet objResultSet;
-    private BeanEnteGenerador objBnEnteGenerador;
+    private BeanEnteRecaudador objBnEnteGenerador;
     private PreparedStatement objPreparedStatement;
     private MsgerrDAO objDsMsgerr;
     private BeanMsgerr objBnMsgerr;
@@ -38,7 +38,7 @@ public class ProgramacionMultianualEnteGeneradorDAOImpl implements ProgramacionM
     }
 
     @Override
-    public List getListaProgramacionMultianualEnteGenerador(BeanEnteGenerador objBeanEnteGenerador, String usuario) {
+    public List getListaProgramacionMultianualEnteGenerador(BeanEnteRecaudador objBeanEnteGenerador, String usuario) {
         lista = new ArrayList();
         sql = "SELECT NPROG_MULTI_ENTE_CODIGO AS CODIGO, "
                 + "UTIL_NEW.FUN_NOMBRE_ESTIMACION_INGRESO(CANIO_REGISTRO, NPRESUPUESTO_CODIGO, NESTIMACION_INGRESO_CODIGO) AS CADENA_INGRESO, "
@@ -58,7 +58,7 @@ public class ProgramacionMultianualEnteGeneradorDAOImpl implements ProgramacionM
             objPreparedStatement.setInt(3, objBeanEnteGenerador.getPresupuesto());
             objResultSet = objPreparedStatement.executeQuery();
             while (objResultSet.next()) {
-                objBnEnteGenerador = new BeanEnteGenerador();
+                objBnEnteGenerador = new BeanEnteRecaudador();
                 objBnEnteGenerador.setCodigo(objResultSet.getInt("CODIGO"));
                 objBnEnteGenerador.setCadenaIngreso(objResultSet.getString("CADENA_INGRESO"));
                 objBnEnteGenerador.setDescripcion(objResultSet.getString("DESCRIPCION"));
@@ -88,7 +88,7 @@ public class ProgramacionMultianualEnteGeneradorDAOImpl implements ProgramacionM
     }
 
     @Override
-    public List getListaProgramacionMultianualEnteGeneradorDetalle(BeanEnteGenerador objBeanEnteGenerador, String usuario) {
+    public List getListaProgramacionMultianualEnteGeneradorDetalle(BeanEnteRecaudador objBeanEnteGenerador, String usuario) {
         lista = new ArrayList();
         sql = "SELECT EG.NPROG_MULTI_ENTE_CODIGO AS CODIGO, EG.CPERIODO_CODIGO AS PERIODO,  "
                 + "SUM(NPROG_MULTI_ENTE_RECAUDACION) AS RECAUDACION, "
@@ -115,7 +115,7 @@ public class ProgramacionMultianualEnteGeneradorDAOImpl implements ProgramacionM
             objPreparedStatement.setInt(3, objBeanEnteGenerador.getPresupuesto());
             objResultSet = objPreparedStatement.executeQuery();
             while (objResultSet.next()) {
-                objBnEnteGenerador = new BeanEnteGenerador();
+                objBnEnteGenerador = new BeanEnteRecaudador();
                 objBnEnteGenerador.setCodigo(objResultSet.getInt("CODIGO"));
                 objBnEnteGenerador.setPeriodo(objResultSet.getString("PERIODO"));
                 objBnEnteGenerador.setEnero(objResultSet.getDouble("RECAUDACION"));
@@ -149,7 +149,7 @@ public class ProgramacionMultianualEnteGeneradorDAOImpl implements ProgramacionM
     }
 
     @Override
-    public BeanEnteGenerador getProgramacionMultianualEnteGenerador(BeanEnteGenerador objBeanEnteGenerador, String usuario) {
+    public BeanEnteRecaudador getProgramacionMultianualEnteGenerador(BeanEnteRecaudador objBeanEnteGenerador, String usuario) {
         sql = "SELECT NESTIMACION_INGRESO_CODIGO AS CADENA_INGRESO, VPROG_MULTI_ENTE_DESCRIP AS DESCRIPCION, "
                 + "SUM(CASE TO_NUMBER(CPERIODO_CODIGO) WHEN TO_NUMBER(CANIO_REGISTRO) THEN NPROG_MULTI_ENTE_RECAUDACION ELSE 0 END) AS RECAUDACION_A, "
                 + "SUM(CASE TO_NUMBER(CPERIODO_CODIGO) WHEN TO_NUMBER(CANIO_REGISTRO+1) THEN NPROG_MULTI_ENTE_RECAUDACION ELSE 0 END) AS RECAUDACION_B, "
@@ -203,7 +203,7 @@ public class ProgramacionMultianualEnteGeneradorDAOImpl implements ProgramacionM
     }
 
     @Override
-    public int iduProgramacionMultianualEnteGenerador(BeanEnteGenerador objBeanEnteGenerador, String usuario) {
+    public int iduProgramacionMultianualEnteGenerador(BeanEnteRecaudador objBeanEnteGenerador, String usuario) {
         sql = "{CALL SP_IDU_PROGRAMACION_MULTI_ENTE(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         try (CallableStatement cs = objConnection.prepareCall(sql)) {
             cs.setString(1, objBeanEnteGenerador.getPeriodo());

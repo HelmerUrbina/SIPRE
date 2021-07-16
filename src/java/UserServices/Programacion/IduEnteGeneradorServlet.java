@@ -5,7 +5,7 @@
  */
 package UserServices.Programacion;
 
-import BusinessServices.Beans.BeanEnteGenerador;
+import BusinessServices.Beans.BeanEnteRecaudador;
 import BusinessServices.Beans.BeanMsgerr;
 import BusinessServices.Beans.BeanUsuario;
 import DataService.Despachadores.EnteGeneradorDAO;
@@ -37,7 +37,7 @@ public class IduEnteGeneradorServlet extends HttpServlet {
     private ServletContext context = null;
     private HttpSession session = null;
     private RequestDispatcher dispatcher = null;
-    private BeanEnteGenerador objBnEnteGenerador;
+    private BeanEnteRecaudador objBnEnteGenerador;
     private Connection objConnection;
     private EnteGeneradorDAO objDsEnteGenerador;
     private BeanMsgerr objBnMsgerr = null;
@@ -64,7 +64,7 @@ public class IduEnteGeneradorServlet extends HttpServlet {
         }
         objConnection = (Connection) context.getAttribute("objConnection");
         String result = null;
-        objBnEnteGenerador = new BeanEnteGenerador();
+        objBnEnteGenerador = new BeanEnteRecaudador();
         objBnEnteGenerador.setMode(request.getParameter("mode"));
         objBnEnteGenerador.setPeriodo(request.getParameter("periodo"));
         objBnEnteGenerador.setUnidadOperativa(request.getParameter("unidadOperativa"));

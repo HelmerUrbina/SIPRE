@@ -5,7 +5,7 @@
  */
 package DataService.Despachadores;
 
-import BusinessServices.Beans.BeanEnteGenerador;
+import BusinessServices.Beans.BeanEnteRecaudador;
 import java.util.List;
 
 /**
@@ -14,13 +14,13 @@ import java.util.List;
  */
 public interface EnteGeneradorDAO {
 
-    public List getListaEnteGenerador(BeanEnteGenerador objBeanEnteGenerador, String usuario);
+    public List getListaEnteGenerador(BeanEnteRecaudador objBeanEnteGenerador, String usuario);
 
-    public BeanEnteGenerador getEnteGenerador(BeanEnteGenerador objBeanEnteGenerador, String usuario);      
+    public BeanEnteRecaudador getEnteGenerador(BeanEnteRecaudador objBeanEnteGenerador, String usuario);      
 
-    public int iduEnteGenerador(BeanEnteGenerador objBeanEnteGenerador, String usuario);
+    public int iduEnteGenerador(BeanEnteRecaudador objBeanEnteGenerador, String usuario);
 
-    public int iduGeneraCNV(BeanEnteGenerador objBeanEnteGenerador, String usuario);
+    public int iduGeneraCNV(BeanEnteRecaudador objBeanEnteGenerador, String usuario);
 
-    public String getCNV(BeanEnteGenerador objBeanEnteGenerador, String usuario);
+    public String getCNV(BeanEnteRecaudador objBeanEnteGenerador, String usuario);
 }

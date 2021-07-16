@@ -5,7 +5,7 @@
  */
 package DataService.Despachadores.Impl;
 
-import BusinessServices.Beans.BeanEnteGenerador;
+import BusinessServices.Beans.BeanEnteRecaudador;
 import BusinessServices.Beans.BeanMsgerr;
 import DataService.Despachadores.EnteGeneradorDAO;
 import DataService.Despachadores.MsgerrDAO;
@@ -27,7 +27,7 @@ public class EnteGeneradorDAOImpl implements EnteGeneradorDAO {
     private List lista;
     private String sql;
     private ResultSet objResultSet;
-    private BeanEnteGenerador objBnEnteGenerador;
+    private BeanEnteRecaudador objBnEnteGenerador;
     private PreparedStatement objPreparedStatement;
     private MsgerrDAO objDsMsgerr;
     private BeanMsgerr objBnMsgerr;
@@ -38,7 +38,7 @@ public class EnteGeneradorDAOImpl implements EnteGeneradorDAO {
     }
 
     @Override
-    public List getListaEnteGenerador(BeanEnteGenerador objBeanEnteGenerador, String usuario) {
+    public List getListaEnteGenerador(BeanEnteRecaudador objBeanEnteGenerador, String usuario) {
         lista = new ArrayList();
         sql = "SELECT EG.NCOD_ENTE_GENERADOR AS CODIGO, "
                 + "EI.VCADENA_INGRESO_CODIGO||'-'||UTIL_NEW.FUN_NOMBRE_CADENA_GASTO(EI.VCADENA_INGRESO_CODIGO) AS CADENA_INGRESO, "
@@ -70,7 +70,7 @@ public class EnteGeneradorDAOImpl implements EnteGeneradorDAO {
             objPreparedStatement.setInt(3, objBeanEnteGenerador.getPresupuesto());
             objResultSet = objPreparedStatement.executeQuery();
             while (objResultSet.next()) {
-                objBnEnteGenerador = new BeanEnteGenerador();
+                objBnEnteGenerador = new BeanEnteRecaudador();
                 objBnEnteGenerador.setCodigo(objResultSet.getInt("CODIGO"));
                 objBnEnteGenerador.setCadenaIngreso(objResultSet.getString("CADENA_INGRESO"));
                 objBnEnteGenerador.setDescripcion(objResultSet.getString("DESCRIPCION"));
@@ -107,7 +107,7 @@ public class EnteGeneradorDAOImpl implements EnteGeneradorDAO {
     }
 
     @Override
-    public BeanEnteGenerador getEnteGenerador(BeanEnteGenerador objBeanEnteGenerador, String usuario) {
+    public BeanEnteRecaudador getEnteGenerador(BeanEnteRecaudador objBeanEnteGenerador, String usuario) {
         sql = "SELECT EG.NESTIMACION_INGRESO_CODIGO AS CADENA_INGRESO, EG.VENTE_GENERADOR_DESCRIP AS DESCRIPCION, "
                 + "SUM(CASE CMES_CODIGO WHEN '01' THEN NIMPORTE_RECAUDACION ELSE 0 END) AS REC_ENE, "
                 + "SUM(CASE CMES_CODIGO WHEN '02' THEN NIMPORTE_RECAUDACION ELSE 0 END) AS REC_FEB, "
@@ -199,7 +199,7 @@ public class EnteGeneradorDAOImpl implements EnteGeneradorDAO {
     }
 
     @Override
-    public int iduEnteGenerador(BeanEnteGenerador objBeanEnteGenerador, String usuario) {
+    public int iduEnteGenerador(BeanEnteRecaudador objBeanEnteGenerador, String usuario) {
         sql = "{CALL SP_IDU_ENTE_GENERADOR(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         try {
             CallableStatement cs = objConnection.prepareCall(sql);
@@ -260,7 +260,7 @@ public class EnteGeneradorDAOImpl implements EnteGeneradorDAO {
     }
 
     @Override
-    public int iduGeneraCNV(BeanEnteGenerador objBeanEnteGenerador, String usuario) {
+    public int iduGeneraCNV(BeanEnteRecaudador objBeanEnteGenerador, String usuario) {
         sql = "{CALL SP_IDU_GENERA_CNV(?,?,?,?,?)}";
         try {
             CallableStatement cs = objConnection.prepareCall(sql);
@@ -294,7 +294,7 @@ public class EnteGeneradorDAOImpl implements EnteGeneradorDAO {
     }
 
     @Override
-    public String getCNV(BeanEnteGenerador objBeanEnteGenerador, String usuario) {
+    public String getCNV(BeanEnteRecaudador objBeanEnteGenerador, String usuario) {
         String result = "";
         sql = "SELECT MAX(CODEVE) AS EVENTO_PRINCIPAL, MAX(COEVFI) AS EVENTO_FINAL "
                 + "FROM TAEVFI WHERE "

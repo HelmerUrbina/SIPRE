@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UserServices.Programacion;
+package UserServices.Ejecucion;
 
-import BusinessServices.Beans.BeanEnteGenerador;
+import BusinessServices.Beans.BeanEnteRecaudador;
 import BusinessServices.Beans.BeanUsuario;
 import DataService.Despachadores.EnteGeneradorDAO;
 import DataService.Despachadores.Impl.EnteGeneradorDAOImpl;
@@ -27,15 +27,15 @@ import javax.servlet.http.HttpSession;
  *
  * @author H-URBINA-M
  */
-@WebServlet(name = "EnteGeneradorServlet", urlPatterns = {"/EnteGenerador"})
-public class EnteGeneradorServlet extends HttpServlet {
+@WebServlet(name = "EnteRecaudadorServlet", urlPatterns = {"/EnteRecaudador"})
+public class EnteRecaudadorServlet extends HttpServlet {
 
     private ServletConfig config = null;
     private ServletContext context = null;
     private HttpSession session = null;
     private RequestDispatcher dispatcher = null;
     private List objEnteGenerador;
-    private BeanEnteGenerador objBnEnteGenerador;
+    private BeanEnteRecaudador objBnEnteGenerador;
     private Connection objConnection;
     private EnteGeneradorDAO objDsEnteGenerador;
 
@@ -61,7 +61,7 @@ public class EnteGeneradorServlet extends HttpServlet {
         }
         objConnection = (Connection) context.getAttribute("objConnection");
         String result = null;
-        objBnEnteGenerador = new BeanEnteGenerador();
+        objBnEnteGenerador = new BeanEnteRecaudador();
         objBnEnteGenerador.setMode(request.getParameter("mode"));
         objBnEnteGenerador.setPeriodo(request.getParameter("periodo"));
         objBnEnteGenerador.setUnidadOperativa(request.getParameter("unidadOperativa"));
@@ -71,6 +71,10 @@ public class EnteGeneradorServlet extends HttpServlet {
         // DE ACUERO AL MODO, OBTENEMOS LOS DATOS NECESARIOS.        
         if (objBnEnteGenerador.getMode().equals("G")) {
             objEnteGenerador = objDsEnteGenerador.getListaEnteGenerador(objBnEnteGenerador, objUsuario.getUsuario());
+            if (request.getAttribute("objBnEnteRecaudador") != null) {
+                request.removeAttribute("objBnEnteRecaudador");
+            }
+            request.setAttribute("objBnEnteRecaudador", objEnteGenerador);
         }
         if (objBnEnteGenerador.getMode().equals("U")) {
             objBnEnteGenerador = objDsEnteGenerador.getEnteGenerador(objBnEnteGenerador, objUsuario.getUsuario());
@@ -100,22 +104,14 @@ public class EnteGeneradorServlet extends HttpServlet {
                     + objBnEnteGenerador.getCostoOctubre() + "+++"
                     + objBnEnteGenerador.getCostoNoviembre() + "+++"
                     + objBnEnteGenerador.getCostoDiciembre();
-        }
-        if (request.getAttribute("objEnteGenerador") != null) {
-            request.removeAttribute("objEnteGenerador");
-        }
-        if (request.getAttribute("objBnEnteGenerador") != null) {
-            request.removeAttribute("objBnEnteGenerador");
-        }
-        request.setAttribute("objEnteGenerador", objEnteGenerador);
-        request.setAttribute("objBnEnteGenerador", objBnEnteGenerador);
+        }        
         //SE ENVIA DE ACUERDO AL MODO SELECCIONADO
         switch (request.getParameter("mode")) {
-            case "enteGenerador":
-                dispatcher = request.getRequestDispatcher("Programacion/EnteGenerador.jsp");
+            case "enteRecaudador":
+                dispatcher = request.getRequestDispatcher("Ejecucion/EnteRecaudador.jsp");
                 break;
             case "G":
-                dispatcher = request.getRequestDispatcher("Programacion/ListaEnteGenerador.jsp");
+                dispatcher = request.getRequestDispatcher("Ejecucion/ListaEnteRecaudador.jsp");
                 break;
             default:
                 dispatcher = request.getRequestDispatcher("error.jsp");

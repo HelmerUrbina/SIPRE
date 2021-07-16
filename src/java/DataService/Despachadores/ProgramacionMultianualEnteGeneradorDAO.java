@@ -5,7 +5,7 @@
  */
 package DataService.Despachadores;
 
-import BusinessServices.Beans.BeanEnteGenerador;
+import BusinessServices.Beans.BeanEnteRecaudador;
 import java.util.List;
 
 /**
@@ -14,12 +14,12 @@ import java.util.List;
  */
 public interface ProgramacionMultianualEnteGeneradorDAO {
 
-    public List getListaProgramacionMultianualEnteGenerador(BeanEnteGenerador objBeanEnteGenerador, String usuario);
+    public List getListaProgramacionMultianualEnteGenerador(BeanEnteRecaudador objBeanEnteGenerador, String usuario);
     
-    public List getListaProgramacionMultianualEnteGeneradorDetalle(BeanEnteGenerador objBeanEnteGenerador, String usuario);
+    public List getListaProgramacionMultianualEnteGeneradorDetalle(BeanEnteRecaudador objBeanEnteGenerador, String usuario);
 
-    public BeanEnteGenerador getProgramacionMultianualEnteGenerador(BeanEnteGenerador objBeanEnteGenerador, String usuario);
+    public BeanEnteRecaudador getProgramacionMultianualEnteGenerador(BeanEnteRecaudador objBeanEnteGenerador, String usuario);
 
-    public int iduProgramacionMultianualEnteGenerador(BeanEnteGenerador objBeanEnteGenerador, String usuario);
+    public int iduProgramacionMultianualEnteGenerador(BeanEnteRecaudador objBeanEnteGenerador, String usuario);
 
 }

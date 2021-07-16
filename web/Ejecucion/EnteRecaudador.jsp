@@ -1,6 +1,6 @@
 <%-- 
     Document   : EnteGenerador
-    Created on : 08/02/2017, 04:36:20 PM
+    Created on : 16/07/2021, 04:36:20 PM
     Author     : H-URBINA-M
 --%>
 <!DOCTYPE html>
@@ -11,7 +11,9 @@
         $("#div_Titulo").jqxExpander({theme: theme, width: '100%'});
         $("#cbo_Periodo").jqxComboBox({theme: theme, autoOpen: true, promptText: "Seleccione", width: 100, dropDownWidth: 150, height: 20});
         $("#cbo_Presupuesto").jqxComboBox({theme: theme, autoOpen: true, promptText: "Seleccione", width: 350, dropDownWidth: 350, height: 20});
-        $("#cbo_UnidadOperativa").jqxComboBox({theme: theme, autoOpen: true, promptText: "Seleccione", width: 200, dropDownWidth: 220, height: 20});
+        $("#cbo_UnidadOperativa").jqxComboBox({theme: theme, autoOpen: true, promptText: "Seleccione", width: 200, dropDownWidth: 300, height: 20});
+        $("#cbo_Mes").jqxComboBox({theme: theme, autoOpen: true, promptText: "Seleccione", width: 200, dropDownWidth: 250, height: 20});
+        var fecha = new Date();
         $('#cbo_Periodo').on('change', function () {
             fn_CargarBusqueda();
         });
@@ -21,26 +23,28 @@
         $('#cbo_UnidadOperativa').on('change', function () {
             fn_CargarBusqueda();
         });
+        $('#cbo_Mes').on('change', function () {
+            fn_CargarBusqueda();
+        });
+        $("#cbo_Periodo").jqxComboBox('selectItem', fecha.getFullYear());
+        $("#cbo_Mes").jqxComboBox('selectIndex', fecha.getMonth());
     });
     function fn_CargarBusqueda() {
         var msg = "";
-        if (msg === "")
-            msg = fn_validaCombos('#cbo_Periodo', "Seleccione el Periodo.");
-        if (msg === "")
-            msg = fn_validaCombos('#cbo_Presupuesto', "Seleccione la Fuente de Financiamiento.");
         if (msg === "")
             msg = fn_validaCombos('#cbo_UnidadOperativa', "Seleccione la Unidad Operativa.");
         if (msg === "") {
             var periodo = $("#cbo_Periodo").val();
             var presupuesto = $("#cbo_Presupuesto").val();
-            var unidadOperativa = $("#cbo_UnidadOperativa").val();
+            var unidadOperativa = $("#cbo_Mes").val();
+            var mes = $("#cbo_UnidadOperativa").val();
             $("#div_VentanaPrincipal").remove();
             $("#div_ContextMenu").remove();
             var $contenidoAjax = $('#div_Detalle').html('<img src="../Imagenes/Fondos/cargando.gif">');
             $.ajax({
                 type: "GET",
-                url: "../EnteGenerador",
-                data: {mode: "G", periodo: periodo, presupuesto: presupuesto, unidadOperativa: unidadOperativa},
+                url: "../EnteRecaudador",
+                data: {mode: "G", periodo: periodo, presupuesto: presupuesto, unidadOperativa: unidadOperativa, mes: mes},
                 success: function (data) {
                     $contenidoAjax.html(data);
                 }
@@ -51,7 +55,7 @@
     }
 </script>
 <div style="border: none;" id='div_Titulo'>
-    <div class="jqx-hideborder">ENTE GENERADOR DE INGRESOS</div>
+    <div class="jqx-hideborder">ENTE RECAUDADOR</div>
     <div>
         <div id="div_Cabecera">
             <table class="navy">
@@ -74,7 +78,15 @@
                         <td>UU/OO : </td>
                         <td>
                             <select id="cbo_UnidadOperativa" name="cbo_UnidadOperativa">
-                                <c:forEach var="c" items="${objUnidadesOperativas}">
+                                <c:forEach var="b" items="${objUnidadesOperativas}">
+                                    <option value="${b.codigo}">${b.descripcion}</option>
+                                </c:forEach>
+                            </select>
+                        </td>
+                        <td>Mes : </td>
+                        <td>
+                            <select id="cbo_Mes" name="cbo_Mes">
+                                <c:forEach var="c" items="${objMes}">
                                     <option value="${c.codigo}">${c.descripcion}</option>
                                 </c:forEach>
                             </select>
