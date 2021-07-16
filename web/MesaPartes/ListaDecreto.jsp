@@ -258,7 +258,7 @@
                         });
                         $("#cbo_Prioridad").jqxDropDownList({animationType: 'fade', width: 200, height: 20, dropDownWidth: 350});
                         $("#cbo_TipoDecretos").jqxDropDownList({animationType: 'fade', checkboxes: true, width: 440, height: 20, dropDownWidth: 500});
-                        $("#cbo_Usuario").jqxDropDownList({animationType: 'fade', width: 350, height: 20,  dropDownWidth: 450});
+                        $("#cbo_Usuario").jqxDropDownList({animationType: 'fade', width: 350, height: 20, dropDownWidth: 450});
                         $('#btn_Cancelar').jqxButton({width: '65px', height: 25});
                         $('#btn_Guardar').jqxButton({width: '65px', height: 25});
                         $('#btn_Guardar').on('click', function () {
@@ -365,8 +365,8 @@
             $("#cbo_Prioridad").jqxDropDownList('selectIndex', 1);
             $("#cbo_Area").jqxDropDownList('selectItem', 0);
             $("#cbo_Usuario").jqxDropDownList('selectItem', 0);
-            $("#cbo_TipoDecretos").jqxDropDownList('uncheckAll'); 
-            $("#cbo_TipoDecretos").jqxDropDownList('checkIndex',0);
+            $("#cbo_TipoDecretos").jqxDropDownList('uncheckAll');
+            $("#cbo_TipoDecretos").jqxDropDownList('checkIndex', 0);
             $("#cbo_TipoDecretos").jqxDropDownList('checkIndex', 1);
             $("#cbo_TipoDecretos").jqxDropDownList('checkIndex', 6);
             $("#txt_Comentario").val('');
@@ -528,6 +528,7 @@
         }
         function fn_verDocumento(archivo) {
             var options = {
+                height: "400px",
                 pdfOpenParams: {
                     pagemode: "thumbs",
                     navpanes: 1,
@@ -536,7 +537,10 @@
                     view: "FitH"
                 }
             };
-            PDFObject.embed("///Z:/SIPRE/DOCUMENTOS/MesaParte/" + periodo + "-" + tipo + "-" + codigo + "-"+archivo, "#div_ViewerPDF");
+            var documento = "file:///V:\\DOCUMENTOS\\MesaParte\\"+ periodo + "-" + tipo + "-" + codigo + "-"+archivo;
+                    alert(documento);
+            //PDFObject.embed("../Descarga/FaxMultiple2020-0029-OPRE.pdf", "#div_ViewerPDF");
+            PDFObject.embed(documento, "#div_ViewerPDF");
         }
     });
 </script>
@@ -546,8 +550,7 @@
         <div>
             Fax Multiple 0029-OPRE
         </div>
-        <div>
-            <div id="div_ViewerPDF" style="width: 100%; height: 100%"></div> 
+        <div id="div_ViewerPDF" style="height: 100%">            
         </div>
     </div>
 </div>

@@ -979,13 +979,13 @@
             }
             totalCadena += importe;
             if (parseInt(importe) > parseInt(monto)) {
-                return "No puede ingresar un importe superior a S/. " + monto + ". Revise!!!";
+                return "";//"No puede ingresar un importe superior a S/. " + monto + ". Revise!!!";
             } else if (parseInt(importe) === parseInt('0')) {
-                return "No puede ingresar un importe Cero. Revise!!!";
+                return "";//"No puede ingresar un importe Cero. Revise!!!";
             } else if (parseInt(importe) < 0) {
-                return "Debe ingresar un importe superior a Cero!!!";
+                return "";//"Debe ingresar un importe superior a Cero!!!";
             } else if (parseInt(totalCadena) > parseInt(monto)) {
-                return "Cadena de Gasto Cargo sin Saldo S/. " + monto + ". Revise!!!";
+                return "";//"Cadena de Gasto Cargo sin Saldo S/. " + monto + ". Revise!!!";
             }
         } else {
             return "Seleccione la Cadena de Gasto";

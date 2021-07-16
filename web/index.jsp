@@ -57,7 +57,7 @@
                 $("#btn_Ingresar").jqxButton({theme: theme, template: "success", width: '150'});
                 $("#btn_MesaPartes").jqxButton({theme: theme, template: "info", width: '150'});
                 $("#btn_MesaPartes").on('click', function () {
-                    window.location = "MesaPartes.jsp";
+                   // window.location = "MesaPartes.jsp";
                 });
                 $("#btn_Ingresar").on('click', function () {
                     $('#frm_Login').jqxValidator('validate');
@@ -298,7 +298,7 @@
                                 <li class="link"> 6. <a href="Descarga/GlosariodeTerminosFinancieros-MEF.pdf" target="_blank">Glosario de Términos Financieros - MEF</a></li>
                                 <li class="link"> 7. <a href="Descarga/DirectivaEjecucion_0003-2018-OPRE.pdf" target="_blank">Directiva General para la Ejecución del Proceso Presupuestario.</a></li>
                                 <li class="link"> 8. <a href="Descarga/DirectivaOGRE2016.pdf" target="_blank">Directiva N° 001-2016/OGRE.</a></li>
-                                <li class="link"> 9. <a href="Descarga/LineamientoComplementarioEvaluacion2021.pdf" target="_blank"><span class="inputlabelred">Lineamientos para la Evaluación AF-2021.</span></a></li>
+                                <li class="link"> 9. <a href="Descarga/LineamientoComplementarioEvaluacion2021.pdf" target="_blank">Lineamientos para la Evaluación AF-2021.</a></li>
                                     <%--<li class="link"> 9. <a href="Descarga/LineamientoComplentariosEvaluacion2020.pdf" target="_blank"><span class="inputlabelred">Lineamientos para la Evaluación AF-2020.</span></a></li>--%>
                             </ul>
                         </div>
@@ -320,8 +320,8 @@
                 <td align="center" style="width: 400px">
                     <form action="" method="post" id="frm_Login" >
                         <div class="header">INGRESO AL SISTEMA</div>
-                        <div style="float: left; margin-top: 60px; margin-left: 10px "> 
-                            <img src="Imagenes/Logos/candado.png" alt="Icon-Login" width="130px" height="150px"/>
+                        <div style="float: left; margin-top: 50px; margin-left: 5px "> 
+                            <img src="Imagenes/Logos/escudoOpre.jpg" alt="Icon-Login" width="130px" height="130px"/>
                         </div>
                         <div id="content">
                             <table >
@@ -392,7 +392,7 @@
                         <div style="text-align: center">EJECUCIÓN PRESUPUESTAL</div>
                         <div>
                             <ul>
-                                <li class="link"> 1. <a href="Descarga/FaxMultiple2021-0056-OPRE.pdf" target="_blank"><span class="inputlabelred">Fax Mult. N° 0056 - Sobre Evaluación Anual del Presupuesto 2021.</span></a></li>
+                                <%-- <li class="link"> 1. <a href="Descarga/FaxMultiple2021-0056-OPRE.pdf" target="_blank"><span class="inputlabelred">Fax Mult. N° 0056 - Sobre Evaluación Anual del Presupuesto 2021.</span></a></li>--%>
                              </ul>
                         </div>
                     </div>

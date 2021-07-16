@@ -21,13 +21,12 @@
 		<defaultValueExpression><![CDATA["44469132"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[159]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[161]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT CPERIODO_CODIGO PERIODO,
 NPRESUPUESTO_CODIGO||'-'||UTIL_NEW.FUN_DEPPTO(NPRESUPUESTO_CODIGO) PRESUPUESTO,
 CUNIDAD_OPERATIVA_CODIGO||'-'||UTIL_NEW.FUN_ABUUOO(CUNIDAD_OPERATIVA_CODIGO) UNIDAD_OPERATIVA,
-CDEPENDENCIA_CODIGO||'-'||UTIL_NEW.FUN_ABRDEP(CUNIDAD_OPERATIVA_CODIGO, CDEPENDENCIA_CODIGO) AS DEPENDENCIA,
 UTIL.FUN_DESCRIPCION_RESOLUCION(CPERIODO_CODIGO, NRESOLUCION_CODIGO) AS RESOLUCION,
 CSECUENCIA_FUNCIONAL_CODIGO||'-'||UTIL_NEW.FUN_DESMET(CPERIODO_CODIGO, NPRESUPUESTO_CODIGO, CSECUENCIA_FUNCIONAL_CODIGO) SECUENCIA_FUNCIONAL,
 CTAREA_CODIGO||'-'||UTIL_NEW.FUN_NOMEOP(TRIM(CTAREA_CODIGO)) TAREA,
@@ -42,13 +41,12 @@ CPERIODO_CODIGO=$P{PERIODO} AND
 NPRESUPUESTO_CODIGO=$P{PRESUPUESTO} AND
 CUNIDAD_OPERATIVA_CODIGO LIKE $P{UNIDAD_OPERATIVA} AND
 NPCA_AUTORIZACION=$P{CODIGO} AND NPCA_AUTORIZACION IS NOT NULL
-GROUP BY CPERIODO_CODIGO, NPRESUPUESTO_CODIGO, CUNIDAD_OPERATIVA_CODIGO, CDEPENDENCIA_CODIGO, NRESOLUCION_CODIGO, CSECUENCIA_FUNCIONAL_CODIGO, CTAREA_CODIGO, VCADENA_GASTO_CODIGO, NPCA_AUTORIZACION, VPCA_DOCUMENTO
-ORDER BY NRESOLUCION_CODIGO, CDEPENDENCIA_CODIGO, CSECUENCIA_FUNCIONAL_CODIGO, CTAREA_CODIGO, VCADENA_GASTO_CODIGO]]>
+GROUP BY CPERIODO_CODIGO, NPRESUPUESTO_CODIGO, CUNIDAD_OPERATIVA_CODIGO, NRESOLUCION_CODIGO, CSECUENCIA_FUNCIONAL_CODIGO, CTAREA_CODIGO, VCADENA_GASTO_CODIGO, NPCA_AUTORIZACION, VPCA_DOCUMENTO
+ORDER BY NRESOLUCION_CODIGO, CUNIDAD_OPERATIVA_CODIGO, CSECUENCIA_FUNCIONAL_CODIGO, CTAREA_CODIGO, VCADENA_GASTO_CODIGO]]>
 	</queryString>
 	<field name="PERIODO" class="java.lang.String"/>
 	<field name="PRESUPUESTO" class="java.lang.String"/>
 	<field name="UNIDAD_OPERATIVA" class="java.lang.String"/>
-	<field name="DEPENDENCIA" class="java.lang.String"/>
 	<field name="RESOLUCION" class="java.lang.String"/>
 	<field name="SECUENCIA_FUNCIONAL" class="java.lang.String"/>
 	<field name="TAREA" class="java.lang.String"/>
@@ -95,13 +93,13 @@ ORDER BY NRESOLUCION_CODIGO, CDEPENDENCIA_CODIGO, CSECUENCIA_FUNCIONAL_CODIGO, C
 	<variable name="PCA_TOTAL" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{PCA}]]></variableExpression>
 	</variable>
-	<variable name="PCA_INICIAL_DEPENDENCIA" class="java.math.BigDecimal" resetType="Group" resetGroup="DEPENDENCIA" calculation="Sum">
+	<variable name="PCA_INICIAL_DEPENDENCIA" class="java.math.BigDecimal" resetType="Group" resetGroup="UUOO" calculation="Sum">
 		<variableExpression><![CDATA[$F{PCA_INICIAL}]]></variableExpression>
 	</variable>
-	<variable name="PCA_DEPENDENCIA" class="java.math.BigDecimal" resetType="Group" resetGroup="DEPENDENCIA" calculation="Sum">
+	<variable name="PCA_DEPENDENCIA" class="java.math.BigDecimal" resetType="Group" resetGroup="UUOO" calculation="Sum">
 		<variableExpression><![CDATA[$F{PCA}]]></variableExpression>
 	</variable>
-	<variable name="PCA_MODIF_DEPENDENCIA" class="java.math.BigDecimal" resetType="Group" resetGroup="DEPENDENCIA" calculation="Sum">
+	<variable name="PCA_MODIF_DEPENDENCIA" class="java.math.BigDecimal" resetType="Group" resetGroup="UUOO" calculation="Sum">
 		<variableExpression><![CDATA[$F{PCA_MODIFICADA}]]></variableExpression>
 	</variable>
 	<group name="RESOLUCION">
@@ -170,8 +168,8 @@ ORDER BY NRESOLUCION_CODIGO, CDEPENDENCIA_CODIGO, CSECUENCIA_FUNCIONAL_CODIGO, C
 			<band splitType="Stretch"/>
 		</groupFooter>
 	</group>
-	<group name="DEPENDENCIA">
-		<groupExpression><![CDATA[$F{DEPENDENCIA}]]></groupExpression>
+	<group name="UUOO">
+		<groupExpression><![CDATA[$F{UNIDAD_OPERATIVA}]]></groupExpression>
 		<groupHeader>
 			<band height="10">
 				<textField>
@@ -186,7 +184,7 @@ ORDER BY NRESOLUCION_CODIGO, CDEPENDENCIA_CODIGO, CSECUENCIA_FUNCIONAL_CODIGO, C
 					<textElement verticalAlignment="Middle">
 						<font fontName="Arial" size="6" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{DEPENDENCIA}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{UNIDAD_OPERATIVA}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Auto" pattern="#,##0.00;-#,##0.00">
 					<reportElement mode="Opaque" x="342" y="0" width="75" height="10" backcolor="#99FFCC" uuid="dc76bd1b-ada3-44ca-8ce1-5c1f78130343"/>
@@ -538,32 +536,6 @@ ORDER BY NRESOLUCION_CODIGO, CDEPENDENCIA_CODIGO, CSECUENCIA_FUNCIONAL_CODIGO, C
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
-			<textField isBlankWhenNull="false">
-				<reportElement key="textField-21" x="150" y="50" width="417" height="10" uuid="1ff48422-84db-4348-a0a1-458ece089256"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{UNIDAD_OPERATIVA}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement key="staticText-25" x="0" y="50" width="140" height="10" uuid="275158d6-cf8b-4e9a-8dc4-5264bda7a476"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
-				</textElement>
-				<text><![CDATA[UNIDAD DE OPERACIÓN]]></text>
-			</staticText>
 			<staticText>
 				<reportElement key="staticText-26" x="0" y="60" width="140" height="10" uuid="89e643ed-276c-4cae-b616-deca187ab2a5"/>
 				<box>
@@ -576,19 +548,6 @@ ORDER BY NRESOLUCION_CODIGO, CDEPENDENCIA_CODIGO, CSECUENCIA_FUNCIONAL_CODIGO, C
 					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[FUENTE DE FINANCIAMIENTO ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-30" x="140" y="50" width="10" height="10" uuid="1f8ce00f-c7c1-4c44-a4b4-3ef23375439c"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
-				</textElement>
-				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-22" x="150" y="60" width="417" height="10" uuid="9e23f1bd-5c9c-4ee9-b55c-331d0ae82a28"/>

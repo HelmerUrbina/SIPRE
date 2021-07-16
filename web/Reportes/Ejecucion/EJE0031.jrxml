@@ -9,13 +9,13 @@
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<parameter name="CODIGO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["121054"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["1204861"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CODIGO2" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["121054"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["1204861"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PERIODO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["2016"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["2021"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PRESUPUESTO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
@@ -27,45 +27,32 @@
 		<![CDATA[SELECT DISTINCT COMCAB.COPPTO, UTIL.FUN_DEPPTO(COMCAB.COPPTO) DEPPTO,
 COMCAB.NROCOB, UTIL_NEW.FUN_NUM_CERTIFICADO_SIAF(COMCAB.CODPER,COMCAB.COPPTO,'',COMCAB.NUCOCA) AS NSIAF,
 COMDET.COUUOO||': '|| UTIL.FUN_ABUUOO(COMDET.COUUOO) UNIDAD,COMCAB.FECPRO,COMCAB.DESGLO,
-CASE SUBSTR(COMCAB.NROCOB,7,1) WHEN 'A' THEN 'ANUAL' ELSE UTIL.FUN_NONMES(COMCAB.MESPER) END MES, 
+CASE SUBSTR(COMCAB.NROCOB,7,1) WHEN 'A' THEN 'ANUAL' ELSE UTIL.FUN_NONMES(COMCAB.MESPER) END MES,
 COMCAB.TOTCOB, SUM(COMDET.IMPORT) IMPORT, COMCAB.CODPER,
-case COMCAB.ESTENV WHEN 'EN' THEN 'T' ELSE 'X' END AS ESTCOB,
+(SELECT CASE COUNT(*) WHEN 0 THEN 'X' ELSE 'T' END FROM CFPCADLEN_NEW@DBLINK_ECON WHERE AA=COMCAB.CODPER AND PTO=COMCAB.COPPTO AND COBERTURA=COMCAB.NROCOB) ESTCOB,
 
        (select  tabprs.codprs from tabprs where tabprs.codsis LIKE '%'||CASE WHEN comcab.codusu='118628000' THEN 'O-21622262-O' ELSE COMCAB.CODUSU END ||'%' and tabprs.codper = $P{PERIODO}) as firma5,
-       (select  tabprs.apeprs from tabprs where tabprs.codsis LIKE '%'||CASE WHEN comcab.codusu='118628000' THEN 'O-21622262-O' ELSE COMCAB.CODUSU END ||'%' and tabprs.codper = $P{PERIODO}) as firma5a, 
+       (select  tabprs.apeprs from tabprs where tabprs.codsis LIKE '%'||CASE WHEN comcab.codusu='118628000' THEN 'O-21622262-O' ELSE COMCAB.CODUSU END ||'%' and tabprs.codper = $P{PERIODO}) as firma5a,
        (select  tabprs.nomprs from tabprs where tabprs.codsis LIKE '%'||CASE WHEN comcab.codusu='118628000' THEN 'O-21622262-O' ELSE COMCAB.CODUSU END ||'%' and tabprs.codper = $P{PERIODO}) as firma5b,
        (select  tabprs.graprs from tabprs where tabprs.codsis LIKE '%'||CASE WHEN comcab.codusu='118628000' THEN 'O-21622262-O' ELSE COMCAB.CODUSU END ||'%' and tabprs.codper = $P{PERIODO}) as firma5c,
        (select  CASE TO_CHAR(COMCAB.COPPTO) WHEN '9' THEN 'JEFE DPTO. ROOC' WHEN '5' THEN 'JEFE DPTO. RD' WHEN '3' THEN 'JEFE DPTO. DT' ELSE tabprs.carprs END
  from tabprs where tabprs.codprs LIKE '%'||CASE WHEN comcab.codusu='118628000' THEN 'O-21622262-O' ELSE COMCAB.CODUSU END ||'%' and tabprs.codper = $P{PERIODO}) as firma5d,
 
-CASE WHEN $P{USUARIO} IN ('10714635','43305891','44469132') THEN 'Sección Telemática - OPRE' ELSE 
-UTIL_NEW.FUN_DESC_USUARIO($P{USUARIO}) END AS USU_IMPRESION 
-FROM COMCAB JOIN COMDET ON 
+CASE WHEN $P{USUARIO} IN ('10714635','43305891','44469132') THEN 'Sección Telemática - OPRE' ELSE
+UTIL_NEW.FUN_DESC_USUARIO($P{USUARIO}) END AS USU_IMPRESION
+FROM COMCAB JOIN COMDET ON
 (COMCAB.CODPER=COMDET.CODPER
 AND COMCAB.NROCOB=COMDET.NROCOB
-AND COMCAB.COPPTO=COMDET.COPPTO  ) JOIN CFPCADLEN_NEW@dblink_econ ON 
-(COMDET.CODPER=CFPCADLEN_NEW.AA
-AND COMDET.COPPTO=CFPCADLEN_NEW.PTO
-AND COMDET.MESPER=CFPCADLEN_NEW.MES
-AND COMDET.NROCOB=CFPCADLEN_NEW.COBERTURA
-AND '1' = CFPCADLEN_NEW.CODTIPOCAL
-AND COMDET.CODFUN=CFPCADLEN_NEW.FUN
-AND COMDET.CODPRG=CFPCADLEN_NEW.PRO
-AND COMDET.COSPRG=CFPCADLEN_NEW.SPR
-AND COMDET.CODACT=CFPCADLEN_NEW.ACT
-AND COMDET.CODCOM=CFPCADLEN_NEW.COM
-AND COMDET.CODMET=CFPCADLEN_NEW.MET AND COMDET.SECFUN=CFPCADLEN_NEW.SECFUN 
-AND CFPCADLEN_NEW.cotitr||'.'||CFPCADLEN_NEW.cogega||'.'||CFPCADLEN_NEW.cogeg1||'.'||CFPCADLEN_NEW.cogeg2||'.'||CFPCADLEN_NEW.coesg1||'.'||CFPCADLEN_NEW.coesg2 = comdet.cocaga 
-AND COMDET.COMEOP='0'|| CFPCADLEN_NEW.METAOPE  )
-WHERE 
+AND COMCAB.COPPTO=COMDET.COPPTO)
+WHERE
 COMCAB.ESTCOB <> 'AN'
-AND COMCAB.NROCOB BETWEEN $P{CODIGO} AND $P{CODIGO2} 
+AND COMCAB.NROCOB BETWEEN $P{CODIGO} AND $P{CODIGO2}
 AND COMCAB.CODPER = $P{PERIODO}
 AND COMCAB.COPPTO = $P{PRESUPUESTO}
-AND COMCAB.NROCOB NOT LIKE '%A' 
-GROUP BY COMCAB.CODPER, COMCAB.COPPTO, COMCAB.NROCOB, COMCAB.MESPER, 
+AND COMCAB.NROCOB NOT LIKE '%A'
+GROUP BY COMCAB.CODPER, COMCAB.COPPTO, COMCAB.NROCOB, COMCAB.MESPER,
      COMCAB.ESTENV, COMCAB.CODUSU, COMCAB.TOTCOB,COMCAB.FECPRO,
-     COMCAB.DESGLO, 
+     COMCAB.DESGLO,
      COMDET.COUUOO,COMCAB.NUCOCA
 ORDER BY COMCAB.NROCOB, UNIDAD]]>
 	</queryString>
