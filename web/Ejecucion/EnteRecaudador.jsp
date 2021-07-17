@@ -14,10 +14,9 @@
         $("#cbo_UnidadOperativa").jqxComboBox({theme: theme, autoOpen: true, promptText: "Seleccione", width: 200, dropDownWidth: 300, height: 20});
         $("#cbo_Mes").jqxComboBox({theme: theme, autoOpen: true, promptText: "Seleccione", width: 200, dropDownWidth: 250, height: 20});
         var fecha = new Date();
+        $("#cbo_Periodo").jqxComboBox('selectItem', fecha.getFullYear());
+        $("#cbo_Mes").jqxComboBox('selectIndex', fecha.getMonth());
         $('#cbo_Periodo').on('change', function () {
-            fn_CargarBusqueda();
-        });
-        $('#cbo_Presupuesto').on('change', function () {
             fn_CargarBusqueda();
         });
         $('#cbo_UnidadOperativa').on('change', function () {
@@ -26,8 +25,7 @@
         $('#cbo_Mes').on('change', function () {
             fn_CargarBusqueda();
         });
-        $("#cbo_Periodo").jqxComboBox('selectItem', fecha.getFullYear());
-        $("#cbo_Mes").jqxComboBox('selectIndex', fecha.getMonth());
+        fn_CargarBusqueda();
     });
     function fn_CargarBusqueda() {
         var msg = "";
@@ -36,8 +34,9 @@
         if (msg === "") {
             var periodo = $("#cbo_Periodo").val();
             var presupuesto = $("#cbo_Presupuesto").val();
-            var unidadOperativa = $("#cbo_Mes").val();
-            var mes = $("#cbo_UnidadOperativa").val();
+            var unidadOperativa = $("#cbo_UnidadOperativa").val();
+            var mes = $("#cbo_Mes").val();
+            $("#div_GrillaPrincipal").remove();
             $("#div_VentanaPrincipal").remove();
             $("#div_ContextMenu").remove();
             var $contenidoAjax = $('#div_Detalle').html('<img src="../Imagenes/Fondos/cargando.gif">');

@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UserServices.Programacion;
+package UserServices.Ejecucion;
 
 import BusinessServices.Beans.BeanEnteRecaudador;
 import BusinessServices.Beans.BeanMsgerr;
 import BusinessServices.Beans.BeanUsuario;
-import DataService.Despachadores.EnteGeneradorDAO;
-import DataService.Despachadores.Impl.EnteGeneradorDAOImpl;
+import DataService.Despachadores.Impl.EnteRecaudadorDAOImpl;
 import DataService.Despachadores.Impl.MsgerrDAOImpl;
 import DataService.Despachadores.MsgerrDAO;
 import Utiles.Utiles;
@@ -25,13 +24,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import DataService.Despachadores.EnteRecaudadorDAO;
 
 /**
  *
  * @author OPRE
  */
-@WebServlet(name = "IduEnteGeneradorServlet", urlPatterns = {"/IduEnteGenerador"})
-public class IduEnteGeneradorServlet extends HttpServlet {
+@WebServlet(name = "IduEnteRecaudadorServlet", urlPatterns = {"/IduEnteRecaudador"})
+public class IduEnteRecaudadorServlet extends HttpServlet {
 
     private ServletConfig config = null;
     private ServletContext context = null;
@@ -39,7 +39,7 @@ public class IduEnteGeneradorServlet extends HttpServlet {
     private RequestDispatcher dispatcher = null;
     private BeanEnteRecaudador objBnEnteGenerador;
     private Connection objConnection;
-    private EnteGeneradorDAO objDsEnteGenerador;
+    private EnteRecaudadorDAO objDsEnteGenerador;
     private BeanMsgerr objBnMsgerr = null;
     private MsgerrDAO objDsMsgerr;
 
@@ -67,55 +67,23 @@ public class IduEnteGeneradorServlet extends HttpServlet {
         objBnEnteGenerador = new BeanEnteRecaudador();
         objBnEnteGenerador.setMode(request.getParameter("mode"));
         objBnEnteGenerador.setPeriodo(request.getParameter("periodo"));
-        objBnEnteGenerador.setUnidadOperativa(request.getParameter("unidadOperativa"));
         objBnEnteGenerador.setPresupuesto(Utiles.checkNum(request.getParameter("presupuesto")));
+        objBnEnteGenerador.setUnidadOperativa(request.getParameter("unidadOperativa"));
+        objBnEnteGenerador.setMes(request.getParameter("mes"));
         objBnEnteGenerador.setCodigo(Utiles.checkNum(request.getParameter("codigo")));
-        objBnEnteGenerador.setCadenaIngreso(request.getParameter("cadenaIngreso"));
+        objBnEnteGenerador.setEstimacionIngreso(Utiles.checkNum(request.getParameter("estimacionIngreso")));
         objBnEnteGenerador.setDescripcion(request.getParameter("descripcion"));
-
-        objBnEnteGenerador.setEnero(Utiles.checkDouble(request.getParameter("enero")));
-        objBnEnteGenerador.setFebrero(Utiles.checkDouble(request.getParameter("febrero")));
-        objBnEnteGenerador.setMarzo(Utiles.checkDouble(request.getParameter("marzo")));
-        objBnEnteGenerador.setAbril(Utiles.checkDouble(request.getParameter("abril")));
-        objBnEnteGenerador.setMayo(Utiles.checkDouble(request.getParameter("mayo")));
-        objBnEnteGenerador.setJunio(Utiles.checkDouble(request.getParameter("junio")));
-        objBnEnteGenerador.setJulio(Utiles.checkDouble(request.getParameter("julio")));
-        objBnEnteGenerador.setAgosto(Utiles.checkDouble(request.getParameter("agosto")));
-        objBnEnteGenerador.setSetiembre(Utiles.checkDouble(request.getParameter("setiembre")));
-        objBnEnteGenerador.setOctubre(Utiles.checkDouble(request.getParameter("octubre")));
-        objBnEnteGenerador.setNoviembre(Utiles.checkDouble(request.getParameter("noviembre")));
-        objBnEnteGenerador.setDiciembre(Utiles.checkDouble(request.getParameter("diciembre")));
-
-        objBnEnteGenerador.setCostoEnero(Utiles.checkDouble(request.getParameter("costoEnero")));
-        objBnEnteGenerador.setCostoFebrero(Utiles.checkDouble(request.getParameter("costoFebrero")));
-        objBnEnteGenerador.setCostoMarzo(Utiles.checkDouble(request.getParameter("costoMarzo")));
-        objBnEnteGenerador.setCostoAbril(Utiles.checkDouble(request.getParameter("costoAbril")));
-        objBnEnteGenerador.setCostoMayo(Utiles.checkDouble(request.getParameter("costoMayo")));
-        objBnEnteGenerador.setCostoJunio(Utiles.checkDouble(request.getParameter("costoJunio")));
-        objBnEnteGenerador.setCostoJulio(Utiles.checkDouble(request.getParameter("costoJulio")));
-        objBnEnteGenerador.setCostoAgosto(Utiles.checkDouble(request.getParameter("costoAgosto")));
-        objBnEnteGenerador.setCostoSetiembre(Utiles.checkDouble(request.getParameter("costoSetiembre")));
-        objBnEnteGenerador.setCostoOctubre(Utiles.checkDouble(request.getParameter("costoOctubre")));
-        objBnEnteGenerador.setCostoNoviembre(Utiles.checkDouble(request.getParameter("costoNoviembre")));
-        objBnEnteGenerador.setCostoDiciembre(Utiles.checkDouble(request.getParameter("costoDiciembre")));
-        objDsEnteGenerador = new EnteGeneradorDAOImpl(objConnection);
-        int k;
+        objBnEnteGenerador.setImporte(Utiles.checkDouble(request.getParameter("importe")));
+        objBnEnteGenerador.setCostoOperativo(Utiles.checkDouble(request.getParameter("costoOperativo")));
+        objDsEnteGenerador = new EnteRecaudadorDAOImpl(objConnection);
         // EJECUTAMOS EL PROCEDIMIENTO SEGUN EL MODO QUE SE ESTA TRABAJANDO
-        if (objBnEnteGenerador.getMode().equals("H")) {
-            k = objDsEnteGenerador.iduGeneraCNV(objBnEnteGenerador, objUsuario.getUsuario());
-            if (k != 0) {
-                objBnEnteGenerador.setTarea("0001");
-                result = objDsEnteGenerador.getCNV(objBnEnteGenerador, objUsuario.getUsuario());
-            }
-        } else {
-            k = objDsEnteGenerador.iduEnteGenerador(objBnEnteGenerador, objUsuario.getUsuario());
-        }
+        int k = objDsEnteGenerador.iduEnteRecaudador(objBnEnteGenerador, objUsuario.getUsuario());
         if (k != 0) {
         } else {
             // EN CASO DE HABER PROBLEMAS DESPACHAMOS UNA VENTANA DE ERROR, MOSTRANDO EL ERROR OCURRIDO.
             objBnMsgerr = new BeanMsgerr();
             objBnMsgerr.setUsuario(objUsuario.getUsuario());
-            objBnMsgerr.setTabla("SIPE_ENTE_GENERADOR");
+            objBnMsgerr.setTabla("SIPRE_ENTE_RECAUDADOR");
             objBnMsgerr.setTipo(objBnEnteGenerador.getMode());
             objDsMsgerr = new MsgerrDAOImpl(objConnection);
             objBnMsgerr = objDsMsgerr.getMsgerr(objBnMsgerr);

@@ -7,12 +7,10 @@ package UserServices.Ejecucion;
 
 import BusinessServices.Beans.BeanEnteRecaudador;
 import BusinessServices.Beans.BeanUsuario;
-import DataService.Despachadores.EnteGeneradorDAO;
-import DataService.Despachadores.Impl.EnteGeneradorDAOImpl;
+import DataService.Despachadores.Impl.EnteRecaudadorDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -22,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import DataService.Despachadores.EnteRecaudadorDAO;
 
 /**
  *
@@ -34,10 +33,9 @@ public class EnteRecaudadorServlet extends HttpServlet {
     private ServletContext context = null;
     private HttpSession session = null;
     private RequestDispatcher dispatcher = null;
-    private List objEnteGenerador;
     private BeanEnteRecaudador objBnEnteGenerador;
     private Connection objConnection;
-    private EnteGeneradorDAO objDsEnteGenerador;
+    private EnteRecaudadorDAO objDsEnteGenerador;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -64,47 +62,25 @@ public class EnteRecaudadorServlet extends HttpServlet {
         objBnEnteGenerador = new BeanEnteRecaudador();
         objBnEnteGenerador.setMode(request.getParameter("mode"));
         objBnEnteGenerador.setPeriodo(request.getParameter("periodo"));
-        objBnEnteGenerador.setUnidadOperativa(request.getParameter("unidadOperativa"));
         objBnEnteGenerador.setPresupuesto(Utiles.Utiles.checkNum(request.getParameter("presupuesto")));
+        objBnEnteGenerador.setUnidadOperativa(request.getParameter("unidadOperativa"));
+        objBnEnteGenerador.setMes(request.getParameter("mes"));
         objBnEnteGenerador.setCodigo(Utiles.Utiles.checkNum(request.getParameter("codigo")));
-        objDsEnteGenerador = new EnteGeneradorDAOImpl(objConnection);
-        // DE ACUERO AL MODO, OBTENEMOS LOS DATOS NECESARIOS.        
+        objDsEnteGenerador = new EnteRecaudadorDAOImpl(objConnection);
+        // DE ACUERO AL MODO, OBTENEMOS LOS DATOS NECESARIOS.
         if (objBnEnteGenerador.getMode().equals("G")) {
-            objEnteGenerador = objDsEnteGenerador.getListaEnteGenerador(objBnEnteGenerador, objUsuario.getUsuario());
-            if (request.getAttribute("objBnEnteRecaudador") != null) {
-                request.removeAttribute("objBnEnteRecaudador");
+            if (request.getAttribute("objEnteRecaudador") != null) {
+                request.removeAttribute("objEnteRecaudador");
             }
-            request.setAttribute("objBnEnteRecaudador", objEnteGenerador);
+            request.setAttribute("objEnteRecaudador", objDsEnteGenerador.getListaEnteRecaudador(objBnEnteGenerador));
         }
         if (objBnEnteGenerador.getMode().equals("U")) {
-            objBnEnteGenerador = objDsEnteGenerador.getEnteGenerador(objBnEnteGenerador, objUsuario.getUsuario());
-            result = objBnEnteGenerador.getCadenaIngreso() + "+++"
+            objBnEnteGenerador = objDsEnteGenerador.getEnteRecaudador(objBnEnteGenerador);
+            result = objBnEnteGenerador.getEstimacionIngreso() + "+++"
                     + objBnEnteGenerador.getDescripcion() + "+++"
-                    + objBnEnteGenerador.getEnero() + "+++"
-                    + objBnEnteGenerador.getFebrero() + "+++"
-                    + objBnEnteGenerador.getMarzo() + "+++"
-                    + objBnEnteGenerador.getAbril() + "+++"
-                    + objBnEnteGenerador.getMayo() + "+++"
-                    + objBnEnteGenerador.getJunio() + "+++"
-                    + objBnEnteGenerador.getJulio() + "+++"
-                    + objBnEnteGenerador.getAgosto() + "+++"
-                    + objBnEnteGenerador.getSetiembre() + "+++"
-                    + objBnEnteGenerador.getOctubre() + "+++"
-                    + objBnEnteGenerador.getNoviembre() + "+++"
-                    + objBnEnteGenerador.getDiciembre() + "+++"
-                    + objBnEnteGenerador.getCostoEnero() + "+++"
-                    + objBnEnteGenerador.getCostoFebrero() + "+++"
-                    + objBnEnteGenerador.getCostoMarzo() + "+++"
-                    + objBnEnteGenerador.getCostoAbril() + "+++"
-                    + objBnEnteGenerador.getCostoMayo() + "+++"
-                    + objBnEnteGenerador.getCostoJunio() + "+++"
-                    + objBnEnteGenerador.getCostoJulio() + "+++"
-                    + objBnEnteGenerador.getCostoAgosto() + "+++"
-                    + objBnEnteGenerador.getCostoSetiembre() + "+++"
-                    + objBnEnteGenerador.getCostoOctubre() + "+++"
-                    + objBnEnteGenerador.getCostoNoviembre() + "+++"
-                    + objBnEnteGenerador.getCostoDiciembre();
-        }        
+                    + objBnEnteGenerador.getImporte() + "+++"
+                    + objBnEnteGenerador.getCostoOperativo();
+        }
         //SE ENVIA DE ACUERDO AL MODO SELECCIONADO
         switch (request.getParameter("mode")) {
             case "enteRecaudador":

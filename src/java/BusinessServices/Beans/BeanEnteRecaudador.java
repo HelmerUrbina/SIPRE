@@ -6,24 +6,29 @@
 package BusinessServices.Beans;
 
 import java.io.Serializable;
+import lombok.Data;
 
 /**
  *
  * @author H-URBINA-M
  */
+@Data
 public class BeanEnteRecaudador implements Serializable {
 
     private String Mode;
     private String Periodo;
     private String UnidadOperativa;
-    private String CadenaIngreso;
-    private String EnteGenerador;
+    private String Mes;
+    private String Clasificador;
     private String Descripcion;
     private String Estado;
-    private String Tarea;
-    private String Mes;
     private Integer Presupuesto;
+    private Integer EstimacionIngreso;
     private Integer Codigo;
+    private Double Importe;
+    private Double CostoOperativo;
+    private Double UtilidadNeta;
+    private Double UtilidadUO;
+    private Double UtilidadUE;
 
-    
 }

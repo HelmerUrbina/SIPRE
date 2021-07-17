@@ -5,7 +5,7 @@
  */
 package UserServices.Programacion;
 
-import BusinessServices.Beans.BeanEnteRecaudador;
+import BusinessServices.Beans.BeanEnteGenerador;
 import BusinessServices.Beans.BeanMsgerr;
 import BusinessServices.Beans.BeanUsuario;
 import DataService.Despachadores.Impl.MsgerrDAOImpl;
@@ -37,7 +37,7 @@ public class IduProgramacionMultianualEnteGeneradorServlet extends HttpServlet {
     private ServletContext context = null;
     private HttpSession session = null;
     private RequestDispatcher dispatcher = null;
-    private BeanEnteRecaudador objBnProgramacionMultianualEnteGenerador;
+    private BeanEnteGenerador objBnProgramacionMultianualEnteGenerador;
     private Connection objConnection;
     private ProgramacionMultianualEnteGeneradorDAO objDsProgramacionMultianualEnteGenerador;
     private BeanMsgerr objBnMsgerr = null;
@@ -65,7 +65,7 @@ public class IduProgramacionMultianualEnteGeneradorServlet extends HttpServlet {
         }
         objConnection = (Connection) context.getAttribute("objConnection");
         String result = null;
-        objBnProgramacionMultianualEnteGenerador = new BeanEnteRecaudador();
+        objBnProgramacionMultianualEnteGenerador = new BeanEnteGenerador();
         objBnProgramacionMultianualEnteGenerador.setMode(request.getParameter("mode"));
         objBnProgramacionMultianualEnteGenerador.setPeriodo(request.getParameter("periodo"));
         objBnProgramacionMultianualEnteGenerador.setUnidadOperativa(request.getParameter("unidadOperativa"));

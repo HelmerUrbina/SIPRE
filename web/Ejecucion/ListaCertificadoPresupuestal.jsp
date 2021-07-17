@@ -1741,8 +1741,8 @@
 </div>
 <div id='div_ContextMenu' style='display: none;'>
     <ul>
-        <li>Editar</li>
-        <li>Anular</li>
+        <li style="font-weight: bold;">Editar</li>
+        <li style="font-weight: bold;">Anular</li>
         <li style="color: blue; font-weight: bold;">Cerrar</li>
         <li>Ver Anexos</li>
         <li type='separator'></li>
