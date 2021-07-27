@@ -73,8 +73,10 @@ public class IduEnteRecaudadorServlet extends HttpServlet {
         objBnEnteGenerador.setCodigo(Utiles.checkNum(request.getParameter("codigo")));
         objBnEnteGenerador.setEstimacionIngreso(Utiles.checkNum(request.getParameter("estimacionIngreso")));
         objBnEnteGenerador.setDescripcion(request.getParameter("descripcion"));
-        objBnEnteGenerador.setImporte(Utiles.checkDouble(request.getParameter("importe")));
-        objBnEnteGenerador.setCostoOperativo(Utiles.checkDouble(request.getParameter("costoOperativo")));
+        objBnEnteGenerador.setRecaudacion(Utiles.checkDouble(request.getParameter("recaudacion")));
+        objBnEnteGenerador.setDetraccion(Utiles.checkDouble(request.getParameter("detraccion")));
+        objBnEnteGenerador.setIGV(Utiles.checkDouble(request.getParameter("igv")));
+        objBnEnteGenerador.setUtilidadNeta(Utiles.checkDouble(request.getParameter("utilidad")));
         objDsEnteGenerador = new EnteRecaudadorDAOImpl(objConnection);
         // EJECUTAMOS EL PROCEDIMIENTO SEGUN EL MODO QUE SE ESTA TRABAJANDO
         int k = objDsEnteGenerador.iduEnteRecaudador(objBnEnteGenerador, objUsuario.getUsuario());
@@ -143,3 +145,4 @@ public class IduEnteRecaudadorServlet extends HttpServlet {
     }// </editor-fold>
 
 }
+

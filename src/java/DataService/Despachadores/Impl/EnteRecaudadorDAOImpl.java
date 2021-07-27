@@ -44,11 +44,11 @@ public class EnteRecaudadorDAOImpl implements EnteRecaudadorDAO {
                 + "UTIL_NEW.FUN_NOMBRE_ESTIMACION_INGRESO(EI.CPERIODO_CODIGO, ER.NPRESUPUESTO_CODIGO, ER.NESTIMACION_INGRESO_CODIGO) AS CLASIFICADOR,"
                 + "EI.VESTIMACION_INGRESO_DESCRIP AS CONCEPTO, "
                 + "ER.VENTE_RECAUDADOR_DESCRIPCION AS DESCRIPCION, "
-                + "SUM(NENTE_RECAUDADOR_IMPORTE) AS RECAUDACION, "
-                + "SUM(NENTE_RECAUDADOR_COSTO_OPERATI) AS COSTO_OPERATIVO, "
-                + "SUM(NENTE_RECAUDADOR_IMPORTE-NENTE_RECAUDADOR_COSTO_OPERATI) AS UTILIDAD_NETA, "
-                + "ROUND(SUM(NENTE_RECAUDADOR_IMPORTE-NENTE_RECAUDADOR_COSTO_OPERATI)*(EI.NPORCENTAJE_RDR_UO/100)) AS UTILIDAD_UO, "
-                + "TRUNC(SUM(NENTE_RECAUDADOR_IMPORTE-NENTE_RECAUDADOR_COSTO_OPERATI)*(EI.NPORCENTAJE_RDR_UE/100)) AS UTILIDAD_UE "
+                + "SUM(NENTE_RECAUDADOR_RECAUDACION) AS RECAUDACION, "
+                + "SUM(NENTE_RECAUDADOR_DETRACCION) AS DETRACCION, "
+                + "SUM(NENTE_RECAUDADOR_IGV) AS IGV, SUM(NENTE_RECAUDADOR_UTILIDAD) AS UTILIDAD_NETA, "
+                + "ROUND(SUM(NENTE_RECAUDADOR_UTILIDAD)*(EI.NPORCENTAJE_RDR_UO/100)) AS UTILIDAD_UO, "
+                + "TRUNC(SUM(NENTE_RECAUDADOR_UTILIDAD)*(EI.NPORCENTAJE_RDR_UE/100)) AS UTILIDAD_UE "
                 + "FROM SIPRE_ENTE_RECAUDADOR ER LEFT OUTER JOIN SIPE_ESTIMACION_INGRESOS EI ON ("
                 + "EI.CPERIODO_CODIGO=ER.CPERIODO_CODIGO AND "
                 + "ER.NPRESUPUESTO_CODIGO=EI.NPRESUPUESTO_CODIGO AND "
@@ -74,8 +74,9 @@ public class EnteRecaudadorDAOImpl implements EnteRecaudadorDAO {
                 objBnEnteGenerador.setClasificador(objResultSet.getString("CLASIFICADOR"));
                 objBnEnteGenerador.setEstado(objResultSet.getString("CONCEPTO"));
                 objBnEnteGenerador.setDescripcion(objResultSet.getString("DESCRIPCION"));
-                objBnEnteGenerador.setImporte(objResultSet.getDouble("RECAUDACION"));
-                objBnEnteGenerador.setCostoOperativo(objResultSet.getDouble("COSTO_OPERATIVO"));
+                objBnEnteGenerador.setRecaudacion(objResultSet.getDouble("RECAUDACION"));
+                objBnEnteGenerador.setDetraccion(objResultSet.getDouble("DETRACCION"));
+                objBnEnteGenerador.setIGV(objResultSet.getDouble("IGV"));
                 objBnEnteGenerador.setUtilidadNeta(objResultSet.getDouble("UTILIDAD_NETA"));
                 objBnEnteGenerador.setUtilidadUE(objResultSet.getDouble("UTILIDAD_UE"));
                 objBnEnteGenerador.setUtilidadUO(objResultSet.getDouble("UTILIDAD_UO"));
@@ -100,7 +101,7 @@ public class EnteRecaudadorDAOImpl implements EnteRecaudadorDAO {
     @Override
     public BeanEnteRecaudador getEnteRecaudador(BeanEnteRecaudador objBeanEnteGenerador) {
         sql = "SELECT NESTIMACION_INGRESO_CODIGO, VENTE_RECAUDADOR_DESCRIPCION, "
-                + "NENTE_RECAUDADOR_IMPORTE, NENTE_RECAUDADOR_COSTO_OPERATI "
+                + "NENTE_RECAUDADOR_RECAUDACION, NENTE_RECAUDADOR_DETRACCION, NENTE_RECAUDADOR_IGV, NENTE_RECAUDADOR_UTILIDAD "
                 + "FROM SIPRE_ENTE_RECAUDADOR WHERE "
                 + "CPERIODO_CODIGO=? AND "
                 + "NPRESUPUESTO_CODIGO=?  AND "
@@ -118,8 +119,10 @@ public class EnteRecaudadorDAOImpl implements EnteRecaudadorDAO {
             if (objResultSet.next()) {
                 objBeanEnteGenerador.setEstimacionIngreso(objResultSet.getInt("NESTIMACION_INGRESO_CODIGO"));
                 objBeanEnteGenerador.setDescripcion(objResultSet.getString("VENTE_RECAUDADOR_DESCRIPCION"));
-                objBeanEnteGenerador.setImporte(objResultSet.getDouble("NENTE_RECAUDADOR_IMPORTE"));
-                objBeanEnteGenerador.setCostoOperativo(objResultSet.getDouble("NENTE_RECAUDADOR_COSTO_OPERATI"));
+                objBeanEnteGenerador.setRecaudacion(objResultSet.getDouble("NENTE_RECAUDADOR_RECAUDACION"));
+                objBeanEnteGenerador.setDetraccion(objResultSet.getDouble("NENTE_RECAUDADOR_DETRACCION"));
+                objBeanEnteGenerador.setIGV(objResultSet.getDouble("NENTE_RECAUDADOR_IGV"));
+                objBeanEnteGenerador.setUtilidadNeta(objResultSet.getDouble("NENTE_RECAUDADOR_UTILIDAD"));
             }
         } catch (SQLException e) {
             System.out.println("Error al obtener getEnteRecaudador(objBeanEnteGenerador) : " + e.getMessage());
@@ -148,8 +151,10 @@ public class EnteRecaudadorDAOImpl implements EnteRecaudadorDAO {
             cs.setInt(5, objBeanEnteGenerador.getCodigo());
             cs.setInt(6, objBeanEnteGenerador.getEstimacionIngreso());
             cs.setString(7, objBeanEnteGenerador.getDescripcion());
-            cs.setDouble(8, objBeanEnteGenerador.getImporte());
-            cs.setDouble(9, objBeanEnteGenerador.getCostoOperativo());
+            cs.setDouble(8, objBeanEnteGenerador.getRecaudacion());
+            cs.setDouble(9, objBeanEnteGenerador.getDetraccion());
+            cs.setDouble(9, objBeanEnteGenerador.getIGV());
+            cs.setDouble(9, objBeanEnteGenerador.getUtilidadNeta());
             cs.setString(10, usuario);
             cs.setString(11, objBeanEnteGenerador.getMode());
             objResultSet = cs.executeQuery();

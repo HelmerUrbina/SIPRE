@@ -25,8 +25,9 @@ public class BeanEnteRecaudador implements Serializable {
     private Integer Presupuesto;
     private Integer EstimacionIngreso;
     private Integer Codigo;
-    private Double Importe;
-    private Double CostoOperativo;
+    private Double Recaudacion;
+    private Double Detraccion;
+    private Double IGV;
     private Double UtilidadNeta;
     private Double UtilidadUO;
     private Double UtilidadUE;

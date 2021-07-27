@@ -336,4 +336,31 @@ public class TextoDAOImpl implements TextoDAO {
         }
         return result;
     }
+    
+    @Override
+    public String getIGV(String codigo) {
+        sql = "SELECT NPERIODO_IGV AS DESCRIPCION "
+                + "FROM SIPRE_PERIODO WHERE "
+                + "CPERIODO_CODIGO=?";
+        try {
+            objPreparedStatement = objConnection.prepareStatement(sql);
+            objPreparedStatement.setString(1, codigo);
+            objResultSet = objPreparedStatement.executeQuery();
+            if (objResultSet.next()) {
+                result = objResultSet.getString("DESCRIPCION");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener getIGV(codigo) " + e.getMessage());
+        } finally {
+            try {
+                if (objResultSet != null) {
+                    objResultSet.close();
+                    objPreparedStatement.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return result;
+    }
 }

@@ -78,8 +78,10 @@ public class EnteRecaudadorServlet extends HttpServlet {
             objBnEnteGenerador = objDsEnteGenerador.getEnteRecaudador(objBnEnteGenerador);
             result = objBnEnteGenerador.getEstimacionIngreso() + "+++"
                     + objBnEnteGenerador.getDescripcion() + "+++"
-                    + objBnEnteGenerador.getImporte() + "+++"
-                    + objBnEnteGenerador.getCostoOperativo();
+                    + objBnEnteGenerador.getRecaudacion() + "+++"
+                    + objBnEnteGenerador.getDetraccion() + "+++"
+                    + objBnEnteGenerador.getIGV() + "+++"
+                    + objBnEnteGenerador.getUtilidadNeta();
         }
         //SE ENVIA DE ACUERDO AL MODO SELECCIONADO
         switch (request.getParameter("mode")) {

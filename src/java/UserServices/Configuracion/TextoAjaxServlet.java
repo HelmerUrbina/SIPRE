@@ -85,6 +85,9 @@ public class TextoAjaxServlet extends HttpServlet {
                         request.getParameter("resolucion"), request.getParameter("tipoCalendario"), request.getParameter("dependencia"), request.getParameter("secuenciaFuncional"),
                         request.getParameter("tarea"), request.getParameter("cadenaGasto"));
                 break;
+            case "igv":
+                result = objDsTexto.getIGV(codigo);
+                break;
             default:
         }
         if (result != null) {

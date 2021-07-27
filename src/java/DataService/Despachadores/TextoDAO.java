@@ -33,5 +33,7 @@ public interface TextoDAO {
     //EJECUCION PRESUPUESTAL    
     public String getMensualizarNotaModificatoria(String periodo, String presupuesto, String unidadOperativa, String resolucion,
             String tipoCalendario, String dependencia, String secuenciaFuncional, String tarea, String cadenaGasto);
+    
+    public String getIGV(String codigo);
 
 }

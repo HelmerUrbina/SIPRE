@@ -1,6 +1,6 @@
 <%-- 
-Document   : ListaEnteGenerador
-Created on : 08/02/2017, 04:50:07 PM
+Document   : ListaEnteRecaudador
+Created on : 17/07/2021, 03:50:07 PM
 Author     : H-URBINA-M
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -10,13 +10,13 @@ Author     : H-URBINA-M
     var unidadOperativa = $("#cbo_UnidadOperativa").val();
     var mes = $("#cbo_Mes").val();
     var codigo = 0;
-    var estado = '';
     var mode = null;
     var msg = '';
     var lista = new Array();
     <c:forEach var="d" items="${objEnteRecaudador}">
-    var result = {codigo: '${d.codigo}', clasificador: '${d.clasificador}', descripcion: '${d.descripcion}', recaudacion: '${d.importe}',
-        costoOperativo: '${d.costoOperativo}', utilidadNeta: '${d.utilidadNeta}', utilidadUO: '${d.utilidadUO}', utilidadUE: '${d.utilidadUE}', concepto: '${d.estado}'};
+    var result = {codigo: '${d.codigo}', clasificador: '${d.clasificador}', descripcion: '${d.descripcion}',
+        recaudacion: '${d.recaudacion}', detraccion: '${d.detraccion}', igv: '${d.IGV}', utilidadNeta: '${d.utilidadNeta}',
+        utilidadUO: '${d.utilidadUO}', utilidadUE: '${d.utilidadUE}', concepto: '${d.estado}'};
     lista.push(result);
     </c:forEach>
     $(document).ready(function () {
@@ -31,7 +31,8 @@ Author     : H-URBINA-M
                         {name: 'concepto', type: "string"},
                         {name: 'descripcion', type: "string"},
                         {name: 'recaudacion', type: "number"},
-                        {name: 'costoOperativo', type: "number"},
+                        {name: 'detraccion', type: "number"},
+                        {name: 'igv', type: "number"},
                         {name: 'utilidadNeta', type: "number"},
                         {name: 'utilidadUO', type: "number"},
                         {name: 'utilidadUE', type: "number"}
@@ -43,9 +44,6 @@ Author     : H-URBINA-M
         var dataAdapter = new $.jqx.dataAdapter(source);
         //ESTILOS A LAS CELDAS DE LA GRILLA 
         var cellclass = function (row, datafield, value, rowdata) {
-            if (rowdata['estado'] === "ANULADO") {
-                return "RowAnulado";
-            }
             if (datafield === "recaudacion" || datafield === "utilidadNeta") {
                 return "RowBold";
             }
@@ -100,6 +98,7 @@ Author     : H-URBINA-M
                     $('#txt_Descripcion').val('');
                     $("#div_Importe").val(0);
                     $("#div_CostoOperativo").val(0);
+                    $("#div_Utilidad").val(0);
                     $('#div_VentanaPrincipal').jqxWindow({isModal: true, modalOpacity: 0.9});
                     $('#div_VentanaPrincipal').jqxWindow('open');
                 });
@@ -120,16 +119,17 @@ Author     : H-URBINA-M
                     }
                 },
                 {text: 'CLASIFICADOR', dataField: 'clasificador', filtertype: 'checkedlist', width: '16%', align: 'center', cellsAlign: 'left', cellclassname: cellclass},
-                {text: 'CONCEPTO', dataField: 'concepto', filtertype: 'checkedlist', width: '17%', align: 'center', cellsAlign: 'left', cellclassname: cellclass},
-                {text: 'DESCRIPCIÓN', dataField: 'descripcion', width: '20%', align: 'center', cellsAlign: 'left', cellclassname: cellclass, aggregates: [{'<b>Totales : </b>':
+                {text: 'CONCEPTO', dataField: 'concepto', filtertype: 'checkedlist', width: '16%', align: 'center', cellsAlign: 'left', cellclassname: cellclass},
+                {text: 'DESCRIPCIÓN', dataField: 'descripcion', width: '18%', align: 'center', cellsAlign: 'left', cellclassname: cellclass, aggregates: [{'<b>Totales : </b>':
                                     function () {
                                         return  "";
                                     }}]},
-                {text: 'RECAUDACIÓN', dataField: 'recaudacion', width: '10%', align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass, aggregates: ['sum']},
-                {text: 'COSTO OPERAT.', dataField: 'costoOperativo', width: '8%', align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass, aggregates: ['sum']},
-                {text: 'SALDO NETO', dataField: 'utilidadNeta', width: '9%', align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass, aggregates: ['sum']},
-                {text: 'SALDO UE', dataField: 'utilidadUE', width: '8.5%', align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass, aggregates: ['sum']},
-                {text: 'SALDO UO', dataField: 'utilidadUO', width: '8.5%', align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass, aggregates: ['sum']}
+                {text: 'RECAUDACIÓN', dataField: 'recaudacion', width: '8%', align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass, aggregates: ['sum']},
+                {text: 'DETRACCIÓN', dataField: 'detraccion', width: '7%', align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass, aggregates: ['sum']},
+                {text: 'I.G.V.', dataField: 'igv', width: '7%', align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass, aggregates: ['sum']},
+                {text: 'UTILIDAD', dataField: 'utilidadNeta', width: '9%', align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass, aggregates: ['sum']},
+                {text: 'UTILIDAD UE', dataField: 'utilidadUE', width: '8%', align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass, aggregates: ['sum']},
+                {text: 'UTILIDAD UO', dataField: 'utilidadUO', width: '8%', align: 'center', cellsAlign: 'right', cellsFormat: 'f2', cellclassname: cellclass, aggregates: ['sum']}
             ]
         });
         // DEFINIMOS EL MENU CONTEXTUAL 
@@ -150,54 +150,43 @@ Author     : H-URBINA-M
         });
         $("#div_ContextMenu").on('itemclick', function (event) {
             var opcion = event.args;
-            if (estado === 'ANULADO') {
-                $.alert({
+            if ($.trim($(opcion).text()) === "Editar") {
+                mode = 'U';
+                fn_EditarRegistro();
+            } else if ($.trim($(opcion).text()) === "Anular") {
+                $.confirm({
                     theme: 'material',
                     title: 'AVISO DEL SISTEMA',
-                    content: 'SELECCIONE UN REGISTRO QUE NO ESTE ANULADO',
+                    content: '¿Desea Anular este registro?',
                     animation: 'zoom',
                     closeAnimation: 'zoom',
                     type: 'red',
-                    typeAnimated: true
+                    typeAnimated: true,
+                    buttons: {
+                        aceptar: {
+                            text: 'Aceptar',
+                            btnClass: 'btn-primary',
+                            keys: ['enter', 'shift'],
+                            action: function () {
+                                mode = 'D';
+                                fn_GrabarDatos();
+                            }
+                        },
+                        cancelar: function () {
+                        }
+                    }
                 });
             } else {
-                if ($.trim($(opcion).text()) === "Editar") {
-                    mode = 'U';
-                    fn_EditarRegistro();
-                } else if ($.trim($(opcion).text()) === "Anular") {
-                    $.confirm({
-                        theme: 'material',
-                        title: 'AVISO DEL SISTEMA',
-                        content: '¿Desea Anular este registro?',
-                        animation: 'zoom',
-                        closeAnimation: 'zoom',
-                        type: 'red',
-                        typeAnimated: true,
-                        buttons: {
-                            aceptar: {
-                                text: 'Aceptar',
-                                btnClass: 'btn-primary',
-                                keys: ['enter', 'shift'],
-                                action: function () {
-                                    mode = 'D';
-                                    fn_GrabarDatos();
-                                }
-                            },
-                            cancelar: function () {
-                            }
-                        }
-                    });
-                } else {
-                    $.alert({
-                        theme: 'material',
-                        title: 'AVISO DEL SISTEMA',
-                        content: 'No hay Opcion a Mostar',
-                        animation: 'zoom',
-                        closeAnimation: 'zoom',
-                        type: 'orange',
-                        typeAnimated: true
-                    });
-                }
+                $.alert({
+                    theme: 'material',
+                    title: 'AVISO DEL SISTEMA',
+                    content: 'No hay Opcion a Mostar',
+                    animation: 'zoom',
+                    closeAnimation: 'zoom',
+                    type: 'orange',
+                    typeAnimated: true
+                });
+
             }
         });
         //SELECCIONAMOS UN REGISTRO DE LA GRILLA
@@ -205,7 +194,6 @@ Author     : H-URBINA-M
             var args = event.args;
             var row = $("#div_GrillaPrincipal").jqxGrid('getrowdata', args.rowindex);
             codigo = row['codigo'];
-            estado = row['estado'];
         });
         //CREA LOS ELEMENTOS DE LAS VENTANAS
         var customButtonsDemo = (function () {
@@ -213,7 +201,7 @@ Author     : H-URBINA-M
                 //INICIA LOS VALORES DE LA VENTANA
                 var posicionX, posicionY;
                 var ancho = 600;
-                var alto = 190;
+                var alto = 210;
                 posicionX = ($(window).width() / 2) - (ancho / 2);
                 posicionY = ($(window).height() / 2) - (alto / 2);
                 $('#div_VentanaPrincipal').jqxWindow({
@@ -223,12 +211,16 @@ Author     : H-URBINA-M
                     initContent: function () {
                         $("#cbo_EstimacionIngreso").jqxDropDownList({width: 400, height: 20, dropDownWidth: 600});
                         $("#txt_Descripcion").jqxInput({placeHolder: 'ENTE GENERADOR', width: 400, height: 20});
-                        $("#div_Importe").jqxNumberInput({width: 120, height: 20, max: 999999999, digits: 9, decimalDigits: 2});
-                        $('#div_Importe').on('textchanged', function (event) {
+                        $("#div_Recaudacion").jqxNumberInput({width: 120, height: 20, max: 999999999, digits: 9, decimalDigits: 2});
+                        $('#div_Recaudacion').on('textchanged', function (event) {
                             fn_verSaldos();
                         });
-                        $("#div_CostoOperativo").jqxNumberInput({width: 120, height: 20, max: 999999999, digits: 9, decimalDigits: 2});
-                        $('#div_CostoOperativo').on('textchanged', function (event) {
+                        $("#div_Detraccion").jqxNumberInput({width: 120, height: 20, max: 999999999, digits: 9, decimalDigits: 2});
+                        $('#div_Detraccion').on('textchanged', function (event) {
+                            fn_verSaldos();
+                        });
+                        $("#div_IGV").jqxNumberInput({width: 120, height: 20, max: 999999999, digits: 9, decimalDigits: 2});
+                        $('#div_IGV').on('textchanged', function (event) {
                             fn_verSaldos();
                         });
                         $("#div_Utilidad").jqxNumberInput({width: 120, height: 20, max: 999999999, digits: 9, decimalDigits: 2, disabled: true});
@@ -239,7 +231,7 @@ Author     : H-URBINA-M
                         });
                         $('#frm_EnteRecaudador').jqxValidator({
                             rules: [
-                                {input: '#txt_Descripcion', message: 'Ingrese el Ente Generador!', action: 'keyup, blur', rule: 'required'}
+                                {input: '#txt_Descripcion', message: 'Ingrese el Ente Recaudador!', action: 'keyup, blur', rule: 'required'}
                             ]
                         });
                         $('#frm_EnteRecaudador').jqxValidator({
@@ -283,11 +275,13 @@ Author     : H-URBINA-M
             data: {mode: mode, periodo: periodo, presupuesto: presupuesto, unidadOperativa: unidadOperativa, mes: mes, codigo: codigo},
             success: function (data) {
                 var dato = data.split("+++");
-                if (dato.length === 4) {
+                if (dato.length === 5) {
                     $("#cbo_EstimacionIngreso").jqxDropDownList('selectItem', dato[0]);
                     $('#txt_Descripcion').val(dato[1]);
-                    $("#div_Importe").val(dato[2]);
-                    $("#div_CostoOperativo").val(dato[3]);
+                    $("#div_Recaudacion").val(dato[2]);
+                    $("#div_Detraccion").val(dato[3]);
+                    $("#div_IGV").val(dato[4]);
+                    $("#div_Utilidad").val(dato[5]);
                     fn_verSaldos();
                 }
             }
@@ -299,9 +293,11 @@ Author     : H-URBINA-M
     function fn_GrabarDatos() {
         var estimacionIngreso = $("#cbo_EstimacionIngreso").val();
         var descripcion = $("#txt_Descripcion").val();
-        var importe = $("#div_Importe").val();
-        var costoOperativo = $("#div_CostoOperativo").val();
-        if (importe === 0.0 && (mode === 'I' || mode === 'U')) {
+        var recaudacion = $("#div_Recaudacion").val();
+        var detraccion = $("#div_Detraccion").val();
+        var igv = $("#div_IGV").val();
+        var utilidad = $("#div_Utilidad").val();
+        if (recaudacion === 0.0 && (mode === 'I' || mode === 'U')) {
             $.alert({
                 theme: 'material',
                 title: 'AVISO DEL SISTEMA',
@@ -316,7 +312,7 @@ Author     : H-URBINA-M
                 type: "POST",
                 url: "../IduEnteRecaudador",
                 data: {mode: mode, periodo: periodo, presupuesto: presupuesto, unidadOperativa: unidadOperativa, mes: mes, codigo: codigo,
-                    estimacionIngreso: estimacionIngreso, descripcion: descripcion, importe: importe, costoOperativo: costoOperativo},
+                    estimacionIngreso: estimacionIngreso, descripcion: descripcion, recaudacion: recaudacion, detraccion: detraccion, igv: igv, utilidad: utilidad},
                 success: function (data) {
                     msg = data;
                     if (msg === "GUARDO") {
@@ -352,7 +348,7 @@ Author     : H-URBINA-M
         }
     }
     function fn_verSaldos() {
-        $("#div_Utilidad").val(parseFloat($("#div_Importe").val()) - parseFloat($("#div_CostoOperativo").val()));
+        $("#div_Utilidad").val(parseFloat($("#div_Recaudacion").val()) - parseFloat($("#div_Recaudacion").val()));
     }
 </script>
 <div id="div_GrillaPrincipal"></div>
@@ -377,11 +373,15 @@ Author     : H-URBINA-M
                 </tr>
                 <tr>
                     <td class="inputlabel">Recaudación : </td>
-                    <td><div id="div_Importe"></div></td>
+                    <td><div id="div_Recaudacion"></div></td>
                 </tr>
                 <tr>
-                    <td class="inputlabel">Costo Operativo : </td>
-                    <td><div id="div_CostoOperativo"></div></td>
+                    <td class="inputlabel">Detracción : </td>
+                    <td><div id="div_Detraccion"></div></td>
+                </tr>
+                <tr>
+                    <td class="inputlabel">I.G.V. : </td>
+                    <td><div id="div_IGV"></div></td>
                 </tr>
                 <tr>
                     <td class="inputlabel">Utilidad : </td>
@@ -405,3 +405,4 @@ Author     : H-URBINA-M
         <li style="font-weight: bold;">Anular</li>
     </ul>
 </div>
+
